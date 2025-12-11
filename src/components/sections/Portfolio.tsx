@@ -1,25 +1,25 @@
 import { motion } from "framer-motion";
-import { Wrench, TrendingUp, Users, Rocket, ArrowRight } from "lucide-react";
+import { Briefcase, Target, UsersRound, Lightbulb, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const audiences = [
   {
-    icon: Wrench,
+    icon: Briefcase,
     title: "Service-Based Businesses",
     description: "Streamline scheduling, automate follow-ups, and simplify client communication.",
   },
   {
-    icon: TrendingUp,
+    icon: Target,
     title: "Sales Professionals",
     description: "Capture, qualify, and nurture leads automatically — even while you're off the clock.",
   },
   {
-    icon: Users,
+    icon: UsersRound,
     title: "Growing Teams",
     description: "Centralize workflows, reduce manual tasks, and keep your operations running smoothly.",
   },
   {
-    icon: Rocket,
+    icon: Lightbulb,
     title: "Entrepreneurs & SMB Owners",
     description: "Get a website that acts like an employee — not a digital business card.",
   },
@@ -52,13 +52,15 @@ export const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group p-10 rounded-2xl border border-border/50 hover:border-primary/30 bg-card/50 backdrop-blur-sm transition-all duration-500"
+              className="group p-8 rounded-2xl border border-border/50 hover:border-primary/30 bg-card/50 backdrop-blur-sm transition-all duration-500"
             >
-              <div className="icon-container w-14 h-14 mb-6">
-                <audience.icon className="w-6 h-6 text-primary" strokeWidth={1.5} />
+              <div className="flex items-center gap-4 mb-4">
+                <div className="icon-container w-12 h-12 shrink-0">
+                  <audience.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold group-hover:text-gradient transition-all duration-300">{audience.title}</h3>
               </div>
-              <h3 className="text-3xl font-bold mb-3 group-hover:text-gradient transition-all duration-300">{audience.title}</h3>
-              <p className="text-muted-foreground text-lg">{audience.description}</p>
+              <p className="text-muted-foreground">{audience.description}</p>
             </motion.div>
           ))}
         </div>
