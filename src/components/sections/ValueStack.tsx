@@ -53,8 +53,8 @@ export const ValueStack = () => {
               transition={{ duration: 0.4, delay: index * 0.05 }}
               className="flex items-center gap-3 p-4 rounded-xl border border-border/50 bg-background/50 backdrop-blur-sm"
             >
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center shrink-0">
-                <feature.icon className="w-5 h-5 text-primary" />
+              <div className="icon-container w-10 h-10 shrink-0">
+                <feature.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
               </div>
               <span className="text-sm font-medium">{feature.label}</span>
             </motion.div>

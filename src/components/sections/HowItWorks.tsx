@@ -54,8 +54,8 @@ export const HowItWorks = () => {
               </div>
               
               {/* Icon */}
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mx-auto mb-6">
-                <step.icon className="w-8 h-8 text-primary" />
+              <div className="icon-container w-16 h-16 mx-auto mb-6">
+                <step.icon className="w-7 h-7 text-primary" strokeWidth={1.5} />
               </div>
 
               {/* Content */}
