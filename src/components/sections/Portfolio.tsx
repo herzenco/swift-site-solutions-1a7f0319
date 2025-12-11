@@ -72,9 +72,8 @@ export const Portfolio = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center"
         >
-          <Button variant="link" className="text-primary hover:text-primary/80 text-lg group">
-            See how we support growth-focused businesses
-            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl">
+            Use cases
           </Button>
         </motion.div>
       </div>
