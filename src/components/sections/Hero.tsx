@@ -27,7 +27,7 @@ export const Hero = () => {
         >
           {/* Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]">
-            Custom AI-powered websites
+            AI-powered websites
             <br />
             <span className="text-gradient">delivered in 5–10 days</span>
           </h1>
