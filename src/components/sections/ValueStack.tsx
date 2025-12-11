@@ -29,7 +29,7 @@ const features = [
 
 export const ValueStack = () => {
   return (
-    <section id="value" className="pt-16 pb-32 bg-card/30 relative">
+    <section id="value" className="pt-6 pb-32 bg-card/30 relative">
       <div className="container-tight px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
