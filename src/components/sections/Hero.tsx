@@ -2,6 +2,13 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
+const trustLogos = [
+  "Real Estate Pros",
+  "Law Firms",
+  "Studios",
+  "Consultants",
+];
+
 export const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
@@ -19,15 +26,20 @@ export const Hero = () => {
           className="text-center max-w-4xl mx-auto"
         >
           {/* Headline */}
-          <h1 className="text-5xl sm:text-6xl lg:text-8xl font-extrabold tracking-tight mb-8 leading-[1.05]">
-            Websites that
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]">
+            Custom AI-powered websites
             <br />
-            <span className="text-gradient">work for you</span>
+            <span className="text-gradient">delivered in 5–10 days</span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-xl sm:text-2xl text-muted-foreground max-w-xl mx-auto mb-12 leading-relaxed font-light">
-            Custom sites with AI tools. Built in weeks, not months.
+          <p className="text-2xl sm:text-3xl font-semibold text-foreground/90 mb-4">
+            Built fast. Built right. Automations included.
+          </p>
+
+          {/* Supporting line */}
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+            We build modern websites with integrated AI tools, automation, scheduling, CRM, and more.
           </p>
 
           {/* CTA */}
@@ -35,13 +47,36 @@ export const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
+            className="mb-16"
           >
             <Button variant="hero" size="xl" asChild>
               <a href="#contact">
-                Start a project
+                Start your 10-day build
                 <ArrowRight className="w-5 h-5" />
               </a>
             </Button>
+          </motion.div>
+
+          {/* Trust indicators */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="space-y-4"
+          >
+            <p className="text-sm text-muted-foreground">
+              Trusted by real estate professionals, law firms, studios, and consultants
+            </p>
+            <div className="flex flex-wrap justify-center gap-6">
+              {trustLogos.map((logo, index) => (
+                <div
+                  key={index}
+                  className="px-4 py-2 rounded-lg bg-card/50 border border-border/50 text-sm text-muted-foreground"
+                >
+                  {logo}
+                </div>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       </div>

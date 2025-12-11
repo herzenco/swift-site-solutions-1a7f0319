@@ -19,7 +19,7 @@ export const Contact = () => {
     
     toast({
       title: "Message sent",
-      description: "We'll be in touch within 24 hours.",
+      description: "We'll respond within 24 hours.",
     });
     
     setIsSubmitting(false);
@@ -27,7 +27,7 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-32 bg-background relative">
+    <section id="contact" className="py-32 bg-card/30 relative">
       {/* Background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-3xl" />
       
@@ -40,10 +40,10 @@ export const Contact = () => {
           className="text-center mb-12"
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-            Let's <span className="text-gradient">talk</span>
+            Get your <span className="text-gradient">free project plan</span>
           </h2>
           <p className="text-xl text-muted-foreground">
-            Tell us about your project
+            Tell us what you need — we'll respond within 24 hours.
           </p>
         </motion.div>
 
@@ -55,28 +55,28 @@ export const Contact = () => {
           onSubmit={handleSubmit}
           className="space-y-5"
         >
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
               name="name"
               placeholder="Name"
               required
-              className="bg-card/50 border-border/50 h-14 text-base"
+              className="bg-background/50 border-border/50 h-14 text-base"
             />
             <Input
               name="email"
               type="email"
               placeholder="Email"
               required
-              className="bg-card/50 border-border/50 h-14 text-base"
+              className="bg-background/50 border-border/50 h-14 text-base"
             />
           </div>
 
           <Textarea
             name="message"
-            placeholder="What can we build for you?"
+            placeholder="Tell us about your project..."
             rows={4}
             required
-            className="bg-card/50 border-border/50 resize-none text-base"
+            className="bg-background/50 border-border/50 resize-none text-base"
           />
 
           <Button
@@ -86,9 +86,13 @@ export const Contact = () => {
             className="w-full"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Sending..." : "Send message"}
+            {isSubmitting ? "Sending..." : "Get my quote"}
             <ArrowRight className="w-5 h-5" />
           </Button>
+
+          <p className="text-center text-sm text-muted-foreground">
+            No pressure. No sales pitch.
+          </p>
         </motion.form>
       </div>
     </section>

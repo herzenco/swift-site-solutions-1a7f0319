@@ -5,28 +5,28 @@ const tools = [
   {
     icon: Calendar,
     title: "Scheduling",
-    description: "Automated booking & reminders",
+    description: "Automated booking, reminders, and calendar syncing",
   },
   {
     icon: MessageSquare,
     title: "AI Chat",
-    description: "24/7 lead qualification",
+    description: "24/7 lead qualification and instant responses",
   },
   {
     icon: Users,
     title: "Lead CRM",
-    description: "Capture & nurture contacts",
+    description: "Centralized inquiries and contact management",
   },
   {
     icon: BarChart3,
     title: "Analytics",
-    description: "Track what matters",
+    description: "Insights into traffic, conversions, and performance",
   },
 ];
 
 export const Tools = () => {
   return (
-    <section id="tools" className="py-32 bg-card/30 relative overflow-hidden">
+    <section id="tools" className="py-32 bg-background relative overflow-hidden">
       <div className="container-tight px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -36,10 +36,10 @@ export const Tools = () => {
           className="text-center mb-20"
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-            Built-in <span className="text-gradient">tools</span>
+            Built-in tools to <span className="text-gradient">automate your workflow</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-md mx-auto">
-            Everything you need to automate your workflow
+          <p className="text-xl text-muted-foreground max-w-xl mx-auto">
+            Everything is configured during your build — no waiting weeks for setup.
           </p>
         </motion.div>
 
@@ -51,13 +51,13 @@ export const Tools = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group p-8 rounded-2xl border border-border/50 hover:border-primary/30 bg-background/50 backdrop-blur-sm transition-all duration-500"
+              className="group p-8 rounded-2xl border border-border/50 hover:border-primary/30 bg-card/50 backdrop-blur-sm transition-all duration-500"
             >
               <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <tool.icon className="w-7 h-7 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">{tool.title}</h3>
-              <p className="text-muted-foreground text-sm">{tool.description}</p>
+              <h3 className="text-xl font-semibold mb-3">{tool.title}</h3>
+              <p className="text-muted-foreground">{tool.description}</p>
             </motion.div>
           ))}
         </div>

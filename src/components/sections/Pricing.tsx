@@ -7,28 +7,47 @@ const plans = [
     name: "Starter",
     setupFee: "$1,500",
     monthly: "$200",
-    features: ["Custom website", "AI chatbot", "Scheduling", "Maintenance"],
+    description: "For businesses needing a fast, modern website with core automations.",
+    features: [
+      "Custom website",
+      "AI chatbot",
+      "Scheduling automation",
+      "Maintenance",
+      "Delivered in 5–10 days",
+    ],
     popular: false,
   },
   {
     name: "Growth",
     setupFee: "$2,000",
     monthly: "$400",
-    features: ["Everything in Starter", "Full SEO optimization", "Monthly reports", "Priority support"],
+    description: "For businesses wanting SEO visibility and insights.",
+    features: [
+      "Everything in Starter",
+      "Full SEO optimization",
+      "Monthly reports",
+      "Priority support",
+    ],
     popular: true,
   },
   {
     name: "Scale",
     setupFee: "$2,000",
     monthly: "$600",
-    features: ["Everything in Growth", "Blog content", "Strategy calls", "Dedicated manager"],
+    description: "For businesses wanting ongoing content and strategy.",
+    features: [
+      "Everything in Growth",
+      "1–2 SEO-optimized blog posts monthly",
+      "Strategy calls",
+      "Dedicated manager",
+    ],
     popular: false,
   },
 ];
 
 export const Pricing = () => {
   return (
-    <section id="pricing" className="py-32 bg-background relative">
+    <section id="pricing" className="py-32 bg-card/30 relative">
       <div className="container-tight px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -56,7 +75,7 @@ export const Pricing = () => {
               className={`relative p-8 rounded-2xl border transition-all duration-300 ${
                 plan.popular
                   ? "bg-gradient-card border-primary/50 shadow-glow"
-                  : "bg-card/50 border-border hover:border-primary/30"
+                  : "bg-background/50 border-border hover:border-primary/30"
               }`}
             >
               {plan.popular && (
@@ -67,22 +86,26 @@ export const Pricing = () => {
                 </div>
               )}
 
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
+                <p className="text-muted-foreground text-sm">{plan.description}</p>
+              </div>
+
               <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-6">{plan.name}</h3>
                 <div className="flex items-baseline gap-2 mb-1">
                   <span className="text-5xl font-bold">{plan.setupFee}</span>
                   <span className="text-muted-foreground">setup</span>
                 </div>
                 <div className="flex items-baseline gap-2">
                   <span className="text-2xl font-semibold text-primary">{plan.monthly}</span>
-                  <span className="text-muted-foreground">/mo</span>
+                  <span className="text-muted-foreground">/month</span>
                 </div>
               </div>
 
               <ul className="space-y-3 mb-8">
                 {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-primary shrink-0" />
+                  <li key={i} className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                     <span className="text-muted-foreground">{feature}</span>
                   </li>
                 ))}
@@ -102,6 +125,16 @@ export const Pricing = () => {
             </motion.div>
           ))}
         </div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="text-center text-muted-foreground mt-12"
+        >
+          No long-term contracts. Cancel anytime.
+        </motion.p>
       </div>
     </section>
   );
