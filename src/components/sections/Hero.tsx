@@ -2,13 +2,6 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
-const trustLogos = [
-  "Real Estate Pros",
-  "Law Firms",
-  "Studios",
-  "Consultants",
-];
-
 export const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
@@ -42,7 +35,6 @@ export const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="mb-16"
           >
             <Button variant="hero" size="xl" asChild>
               <a href="#contact">
@@ -50,28 +42,6 @@ export const Hero = () => {
                 <ArrowRight className="w-5 h-5" />
               </a>
             </Button>
-          </motion.div>
-
-          {/* Trust indicators */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="space-y-4"
-          >
-            <p className="text-sm text-muted-foreground">
-              Trusted by real estate professionals, law firms, studios, and consultants
-            </p>
-            <div className="flex flex-wrap justify-center gap-6">
-              {trustLogos.map((logo, index) => (
-                <div
-                  key={index}
-                  className="px-4 py-2 rounded-lg bg-card/50 border border-border/50 text-sm text-muted-foreground"
-                >
-                  {logo}
-                </div>
-              ))}
-            </div>
           </motion.div>
         </motion.div>
       </div>
