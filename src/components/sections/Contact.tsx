@@ -27,7 +27,7 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-background relative">
+    <section id="contact" className="py-32 bg-background relative">
       {/* Background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-3xl" />
       
@@ -37,9 +37,9 @@ export const Contact = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10"
+          className="text-center mb-12"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
             Let's <span className="text-gradient">talk</span>
           </h2>
           <p className="text-xl text-muted-foreground">
@@ -53,21 +53,21 @@ export const Contact = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
           onSubmit={handleSubmit}
-          className="space-y-4"
+          className="space-y-5"
         >
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-4">
             <Input
               name="name"
               placeholder="Name"
               required
-              className="bg-card/50 border-border/50 h-12"
+              className="bg-card/50 border-border/50 h-14 text-base"
             />
             <Input
               name="email"
               type="email"
               placeholder="Email"
               required
-              className="bg-card/50 border-border/50 h-12"
+              className="bg-card/50 border-border/50 h-14 text-base"
             />
           </div>
 

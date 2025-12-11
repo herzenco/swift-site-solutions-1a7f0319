@@ -26,16 +26,16 @@ const tools = [
 
 export const Tools = () => {
   return (
-    <section id="tools" className="py-20 bg-card/30 relative overflow-hidden">
+    <section id="tools" className="py-32 bg-card/30 relative overflow-hidden">
       <div className="container-tight px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-20"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
             Built-in <span className="text-gradient">tools</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-md mx-auto">
@@ -51,12 +51,12 @@ export const Tools = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group p-6 rounded-xl border border-border/50 hover:border-primary/30 bg-background/50 backdrop-blur-sm transition-all duration-500"
+              className="group p-8 rounded-2xl border border-border/50 hover:border-primary/30 bg-background/50 backdrop-blur-sm transition-all duration-500"
             >
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                <tool.icon className="w-6 h-6 text-primary" />
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <tool.icon className="w-7 h-7 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold mb-1">{tool.title}</h3>
+              <h3 className="text-xl font-semibold mb-2">{tool.title}</h3>
               <p className="text-muted-foreground text-sm">{tool.description}</p>
             </motion.div>
           ))}

@@ -26,9 +26,9 @@ const benefits = [
 
 export const Benefits = () => {
   return (
-    <section id="benefits" className="py-20 bg-background relative">
+    <section id="benefits" className="py-32 bg-background relative">
       <div className="container-tight px-6">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {benefits.map((benefit, index) => (
             <motion.div
               key={index}
@@ -38,10 +38,10 @@ export const Benefits = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="text-center"
             >
-              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <benefit.icon className="w-6 h-6 text-primary" />
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                <benefit.icon className="w-7 h-7 text-primary" />
               </div>
-              <h3 className="text-xl font-bold mb-1">{benefit.title}</h3>
+              <h3 className="text-2xl font-bold mb-2">{benefit.title}</h3>
               <p className="text-muted-foreground">{benefit.description}</p>
             </motion.div>
           ))}
