@@ -38,8 +38,8 @@ export const Benefits = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="text-center"
             >
-              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
-                <benefit.icon className="w-7 h-7 text-primary" />
+              <div className="icon-container w-16 h-16 mx-auto mb-6">
+                <benefit.icon className="w-7 h-7 text-primary" strokeWidth={1.5} />
               </div>
               <h3 className="text-2xl font-bold mb-2">{benefit.title}</h3>
               <p className="text-muted-foreground">{benefit.description}</p>
