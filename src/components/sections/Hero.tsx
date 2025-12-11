@@ -19,14 +19,14 @@ export const Hero = () => {
           className="text-center max-w-4xl mx-auto"
         >
           {/* Headline */}
-          <h1 className="text-5xl sm:text-6xl lg:text-8xl font-extrabold tracking-tight mb-8 leading-[1.05]">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.05]">
             Websites that
             <br />
             <span className="text-gradient">work for you</span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-xl sm:text-2xl text-muted-foreground max-w-xl mx-auto mb-12 leading-relaxed font-light">
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto mb-10 leading-relaxed font-light">
             Custom sites with AI tools. Built in weeks, not months.
           </p>
 
