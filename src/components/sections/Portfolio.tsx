@@ -39,11 +39,8 @@ export const Portfolio = () => {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
             Who We <span className="text-gradient">Build For</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-4">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Modern businesses that need more than a website — they need a system that works for them.
-          </p>
-          <p className="text-muted-foreground max-w-3xl mx-auto">
-            If your business depends on leads, scheduling, client communication, or repeat customers, we design the tools that remove the bottlenecks. Whether you're a growing SMB or a sales-driven professional, we build fast, automated systems that help you scale without adding more hours to your day.
           </p>
         </motion.div>
 
