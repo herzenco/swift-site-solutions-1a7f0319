@@ -1,10 +1,13 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/sections/Hero";
+import { ValueStack } from "@/components/sections/ValueStack";
 import { Tools } from "@/components/sections/Tools";
-import { Pricing } from "@/components/sections/Pricing";
 import { Portfolio } from "@/components/sections/Portfolio";
-import { Contact } from "@/components/sections/Contact";
+import { SocialProof } from "@/components/sections/SocialProof";
+import { HowItWorks } from "@/components/sections/HowItWorks";
+import { Pricing } from "@/components/sections/Pricing";
 import { FAQ } from "@/components/sections/FAQ";
+import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 
 const Index = () => {
@@ -12,9 +15,12 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       <Hero />
+      <ValueStack />
       <Tools />
-      <Pricing />
       <Portfolio />
+      <SocialProof />
+      <HowItWorks />
+      <Pricing />
       <FAQ />
       <Contact />
       <Footer />
