@@ -43,18 +43,7 @@ export const Navbar = () => {
               <span className="text-xl font-bold">Velocit</span>
             </a>
 
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
+            {/* Desktop CTA */}
 
             {/* Desktop CTA */}
             <div className="hidden md:block">
