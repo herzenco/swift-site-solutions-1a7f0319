@@ -7,68 +7,41 @@ const plans = [
     name: "Starter",
     setupFee: "$1,500",
     monthly: "$200",
-    description: "Perfect for small businesses ready to go digital",
-    features: [
-      "Custom responsive website",
-      "AI-powered chatbot",
-      "Scheduling integration",
-      "Lead capture forms",
-      "Monthly maintenance & updates",
-      "SSL security certificate",
-      "1-2 week delivery",
-    ],
+    features: ["Custom website", "AI chatbot", "Scheduling", "Maintenance"],
     popular: false,
   },
   {
     name: "Growth",
     setupFee: "$2,000",
     monthly: "$400",
-    description: "For businesses focused on organic growth",
-    features: [
-      "Everything in Starter",
-      "Full SEO optimization",
-      "Keyword research & strategy",
-      "Technical SEO setup",
-      "Local SEO (if applicable)",
-      "Monthly SEO reports",
-      "Priority support",
-    ],
+    features: ["Everything in Starter", "Full SEO optimization", "Monthly reports", "Priority support"],
     popular: true,
   },
   {
     name: "Scale",
     setupFee: "$2,000",
     monthly: "$600",
-    description: "Maximum visibility and content marketing",
-    features: [
-      "Everything in Growth",
-      "1-2 SEO-optimized blog posts/month",
-      "Content strategy planning",
-      "Internal linking optimization",
-      "Competitor analysis",
-      "Quarterly strategy calls",
-      "Dedicated account manager",
-    ],
+    features: ["Everything in Growth", "Blog content", "Strategy calls", "Dedicated manager"],
     popular: false,
   },
 ];
 
 export const Pricing = () => {
   return (
-    <section id="pricing" className="section-padding bg-background relative">
-      <div className="container-tight">
+    <section id="pricing" className="py-32 bg-background relative">
+      <div className="container-tight px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Simple, <span className="text-gradient">transparent pricing</span>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+            Simple <span className="text-gradient">pricing</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            One-time setup fee, predictable monthly costs. No surprises, no hidden fees.
+          <p className="text-xl text-muted-foreground">
+            One-time setup. Predictable monthly cost.
           </p>
         </motion.div>
 
@@ -89,32 +62,28 @@ export const Pricing = () => {
               {plan.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                   <span className="px-4 py-1 rounded-full bg-primary text-primary-foreground text-sm font-semibold">
-                    Most Popular
+                    Popular
                   </span>
                 </div>
               )}
 
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                <p className="text-muted-foreground text-sm">{plan.description}</p>
-              </div>
-
-              <div className="mb-6">
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold mb-6">{plan.name}</h3>
                 <div className="flex items-baseline gap-2 mb-1">
-                  <span className="text-4xl font-bold">{plan.setupFee}</span>
+                  <span className="text-5xl font-bold">{plan.setupFee}</span>
                   <span className="text-muted-foreground">setup</span>
                 </div>
                 <div className="flex items-baseline gap-2">
                   <span className="text-2xl font-semibold text-primary">{plan.monthly}</span>
-                  <span className="text-muted-foreground">/month</span>
+                  <span className="text-muted-foreground">/mo</span>
                 </div>
               </div>
 
               <ul className="space-y-3 mb-8">
                 {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <span className="text-sm text-muted-foreground">{feature}</span>
+                  <li key={i} className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-muted-foreground">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -126,7 +95,7 @@ export const Pricing = () => {
                 asChild
               >
                 <a href="#contact">
-                  Get Started
+                  Get started
                   <ArrowRight className="w-4 h-4" />
                 </a>
               </Button>
