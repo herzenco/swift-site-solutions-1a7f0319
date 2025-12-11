@@ -26,7 +26,7 @@ export const Hero = () => {
           </h1>
 
           {/* Subheadline */}
-          <p className="text-2xl sm:text-3xl font-semibold text-foreground/90 mb-4">
+          <p className="text-2xl sm:text-3xl font-semibold text-foreground/90 mb-10">
             Built fast. Built right. Automations included.
           </p>
 
