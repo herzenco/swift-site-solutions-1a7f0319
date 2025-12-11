@@ -11,7 +11,9 @@ export const Hero = () => {
       {/* Single subtle orb */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
 
-      <div className="container-tight section-padding relative z-10">
+      <div className="container-tight section-padding relative z-10 flex flex-col items-center justify-between min-h-[80vh]">
+        <div /> {/* Spacer */}
+        
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -26,23 +28,24 @@ export const Hero = () => {
           </h1>
 
           {/* Subheadline */}
-          <p className="text-2xl sm:text-3xl font-semibold text-foreground/90 mb-10">
+          <p className="text-2xl sm:text-3xl font-semibold text-foreground/90">
             Built fast. Built right. Automations included.
           </p>
+        </motion.div>
 
-          {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <Button variant="hero" size="xl" asChild>
-              <a href="#contact">
-                Start your 10-day build
-                <ArrowRight className="w-5 h-5" />
-              </a>
-            </Button>
-          </motion.div>
+        {/* CTA at bottom */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="pb-8"
+        >
+          <Button variant="hero" size="xl" asChild>
+            <a href="#contact">
+              Start your 10-day build
+              <ArrowRight className="w-5 h-5" />
+            </a>
+          </Button>
         </motion.div>
       </div>
 
