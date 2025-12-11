@@ -37,11 +37,6 @@ export const Hero = () => {
             Built fast. Built right. Automations included.
           </p>
 
-          {/* Supporting line */}
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            We build modern websites with integrated AI tools, automation, scheduling, CRM, and more.
-          </p>
-
           {/* CTA */}
           <motion.div
             initial={{ opacity: 0 }}
