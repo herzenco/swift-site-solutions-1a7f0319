@@ -45,9 +45,6 @@ const RealEstate = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <div className="icon-container w-16 h-16 mx-auto mb-6">
-              <Building2 className="w-7 h-7 text-primary" strokeWidth={1.5} />
-            </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
               A Smarter Website for <span className="text-gradient">Real Estate Professionals</span>
             </h1>
