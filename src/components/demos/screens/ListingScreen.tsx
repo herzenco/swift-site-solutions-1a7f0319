@@ -34,6 +34,7 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
+            className="text-center"
           >
             <p className="text-[8px] tracking-[0.3em] text-neutral-700 uppercase mb-3 font-semibold">
               Private Real Estate Advisory
