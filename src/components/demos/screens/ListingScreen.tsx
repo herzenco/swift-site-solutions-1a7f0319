@@ -4,9 +4,10 @@ import luxuryEstateHero from "@/assets/luxury-estate-hero.jpg";
 
 interface ListingScreenProps {
   onRequestShowing: () => void;
+  onViewListings: () => void;
 }
 
-export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
+export const ListingScreen = ({ onRequestShowing, onViewListings }: ListingScreenProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, x: 50 }}
@@ -141,9 +142,18 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
           <h2 className="text-[11px] text-neutral-900 mb-2" style={{ fontFamily: 'Georgia, serif' }}>
             Built on Trust
           </h2>
-          <p className="text-[9px] text-neutral-600 leading-[1.7]">
+          <p className="text-[9px] text-neutral-600 leading-[1.7] mb-3">
             Clients work with me not for access — but for judgment, discretion, and outcomes. Many relationships span multiple transactions.
           </p>
+          
+          <motion.button
+            whileTap={{ scale: 0.98 }}
+            onClick={onViewListings}
+            className="w-full py-2.5 font-medium rounded-sm transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2 border border-neutral-300 text-neutral-700 hover:bg-neutral-50"
+          >
+            View Listings
+            <ChevronRight className="w-3 h-3" />
+          </motion.button>
         </motion.div>
       </div>
 

@@ -2,16 +2,17 @@ import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { PhoneFrame } from "./PhoneFrame";
 import { ListingScreen } from "./screens/ListingScreen";
+import { ListingsScreen } from "./screens/ListingsScreen";
 import { RequestFormScreen } from "./screens/RequestFormScreen";
 import { ConfirmationScreen } from "./screens/ConfirmationScreen";
 import { AgentDashboardScreen } from "./screens/AgentDashboardScreen";
 
-type Screen = "listing" | "request" | "confirmation" | "dashboard";
+type Screen = "listing" | "listings" | "request" | "confirmation" | "dashboard";
 
 export const RealEstateDemo = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>("listing");
 
-  const screens: Screen[] = ["listing", "request", "confirmation", "dashboard"];
+  const screens: Screen[] = ["listing", "listings", "request", "confirmation", "dashboard"];
   const currentIndex = screens.indexOf(currentScreen);
 
   return (
@@ -21,6 +22,14 @@ export const RealEstateDemo = () => {
           {currentScreen === "listing" && (
             <ListingScreen
               key="listing"
+              onRequestShowing={() => setCurrentScreen("request")}
+              onViewListings={() => setCurrentScreen("listings")}
+            />
+          )}
+          {currentScreen === "listings" && (
+            <ListingsScreen
+              key="listings"
+              onBack={() => setCurrentScreen("listing")}
               onRequestShowing={() => setCurrentScreen("request")}
             />
           )}
@@ -65,11 +74,12 @@ export const RealEstateDemo = () => {
       </div>
 
       {/* Screen Labels */}
-      <div className="flex items-center justify-center gap-6 mt-3 text-xs text-muted-foreground">
-        <span className={currentIndex >= 0 ? "text-foreground font-medium" : ""}>Listing</span>
-        <span className={currentIndex >= 1 ? "text-foreground font-medium" : ""}>Request</span>
-        <span className={currentIndex >= 2 ? "text-foreground font-medium" : ""}>Confirm</span>
-        <span className={currentIndex >= 3 ? "text-foreground font-medium" : ""}>Dashboard</span>
+      <div className="flex items-center justify-center gap-4 mt-3 text-xs text-muted-foreground">
+        <span className={currentIndex >= 0 ? "text-foreground font-medium" : ""}>Home</span>
+        <span className={currentIndex >= 1 ? "text-foreground font-medium" : ""}>Listings</span>
+        <span className={currentIndex >= 2 ? "text-foreground font-medium" : ""}>Request</span>
+        <span className={currentIndex >= 3 ? "text-foreground font-medium" : ""}>Confirm</span>
+        <span className={currentIndex >= 4 ? "text-foreground font-medium" : ""}>Dashboard</span>
       </div>
     </div>
   );
