@@ -51,11 +51,8 @@ const RealEstate = () => {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
               A Smarter Website for <span className="text-gradient">Real Estate Professionals</span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-4">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
               Designed to capture leads, manage showings, and keep every conversation organized — automatically.
-            </p>
-            <p className="text-sm font-medium text-primary mb-8">
-              Built and launched in days, not months.
             </p>
             <Button 
               className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
@@ -64,9 +61,6 @@ const RealEstate = () => {
               Start Your Build
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
-            <p className="text-sm text-muted-foreground mt-6">
-              See how it works for real estate
-            </p>
           </motion.div>
 
           {/* Features Grid */}
