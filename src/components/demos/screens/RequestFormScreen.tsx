@@ -23,6 +23,7 @@ export const RequestFormScreen = ({ onSubmit, onBack }: RequestFormScreenProps) 
       {/* Header */}
       <div className="flex items-center gap-3 p-4 border-b border-gray-100">
         <button 
+          type="button"
           onClick={onBack}
           className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"
         >

@@ -61,6 +61,7 @@ export const ListingsScreen = ({ onBack, onRequestShowing }: ListingsScreenProps
       {/* Header */}
       <div className="flex items-center gap-3 px-4 py-3 border-b border-neutral-100">
         <button 
+          type="button"
           onClick={onBack}
           className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-neutral-100"
         >
