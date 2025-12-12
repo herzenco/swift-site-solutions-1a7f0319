@@ -25,7 +25,7 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
             alt="Luxury Estate" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-white/75 to-white" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-white/90 to-white" />
         </div>
 
         {/* Hero Content */}
