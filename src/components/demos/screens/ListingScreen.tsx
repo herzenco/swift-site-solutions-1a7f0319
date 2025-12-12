@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ChevronRight, MapPin, ArrowDown } from "lucide-react";
+import { ChevronRight, MapPin } from "lucide-react";
 import luxuryEstateHero from "@/assets/luxury-estate-hero.jpg";
 
 interface ListingScreenProps {
@@ -29,7 +29,7 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 flex-1 flex flex-col justify-start px-5 pt-10">
+        <div className="relative z-10 flex-1 flex flex-col justify-between px-5 pt-10 pb-5">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -42,37 +42,22 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
             <h1 className="text-[17px] font-medium text-neutral-900 leading-[1.3] mb-3 drop-shadow-sm" style={{ fontFamily: 'Georgia, serif' }}>
               Private Representation in Los Angeles' Most Coveted Homes
             </h1>
-            
-            <p className="text-[10px] text-neutral-700 leading-relaxed mb-5 max-w-[95%] drop-shadow-sm">
-              Discreet, data-informed advisory for buyers and sellers who value clarity and control.
-            </p>
-
-            <motion.button
-              whileTap={{ scale: 0.98 }}
-              onClick={onRequestShowing}
-              className="w-full py-3 font-medium rounded-sm transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2"
-              style={{ backgroundColor: '#1a1a1a', color: '#ffffff' }}
-            >
-              Request a Consultation
-              <ChevronRight className="w-3 h-3" />
-            </motion.button>
           </motion.div>
-        </div>
 
-        {/* Scroll Indicator */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.5 }}
-          className="relative z-10 flex justify-center pb-3"
-        >
-          <motion.div
-            animate={{ y: [0, 4, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
+          {/* CTA at bottom of hero */}
+          <motion.button
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={onRequestShowing}
+            className="w-full py-3 font-medium rounded-sm transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2"
+            style={{ backgroundColor: '#1a1a1a', color: '#ffffff' }}
           >
-            <ArrowDown className="w-4 h-4 text-neutral-400" />
-          </motion.div>
-        </motion.div>
+            Request a Consultation
+            <ChevronRight className="w-3 h-3" />
+          </motion.button>
+        </div>
       </div>
 
       {/* Philosophy Section */}
