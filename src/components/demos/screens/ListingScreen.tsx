@@ -49,10 +49,10 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
 
             <div className="flex flex-col gap-3">
               <motion.button
-                whileHover={{ backgroundColor: "#262626" }}
                 whileTap={{ scale: 0.98 }}
                 onClick={onRequestShowing}
-                className="w-full py-3 text-white font-medium rounded-sm transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2 bg-neutral-900"
+                className="w-full py-3 font-medium rounded-sm transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2"
+                style={{ backgroundColor: '#1a1a1a', color: '#ffffff' }}
               >
                 Request a Consultation
                 <ChevronRight className="w-3 h-3" />
@@ -184,10 +184,10 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
           </p>
           
           <motion.button
-            whileHover={{ backgroundColor: "#262626" }}
             whileTap={{ scale: 0.98 }}
             onClick={onRequestShowing}
-            className="w-full py-3 text-white font-medium rounded-sm transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2 bg-neutral-900"
+            className="w-full py-3 font-medium rounded-sm transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2"
+            style={{ backgroundColor: '#1a1a1a', color: '#ffffff' }}
           >
             Schedule a Private Call
             <ChevronRight className="w-3 h-3" />
