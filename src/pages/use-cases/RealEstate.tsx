@@ -85,12 +85,14 @@ const RealEstate = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="p-8 rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm"
+                  className="p-8 rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300"
                 >
-                  <div className="icon-container w-12 h-12 mb-4">
-                    <feature.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+                      <feature.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                    </div>
+                    <h3 className="text-xl font-bold">{feature.title}</h3>
                   </div>
-                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
                   <p className="text-muted-foreground">{feature.description}</p>
                 </motion.div>
               ))}
