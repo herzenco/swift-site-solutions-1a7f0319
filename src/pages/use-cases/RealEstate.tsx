@@ -8,18 +8,18 @@ import { Building2, Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } f
 const features = [
   {
     icon: Calendar,
-    title: "Automated Showing Scheduler",
-    description: "Buyers book showings directly from your listings — no inbox chaos, no back-and-forth, no missed opportunities.",
+    title: "Instant Inquiry-to-Showing Flow",
+    description: "Turn listing views into booked showings automatically. Buyers can inquire, schedule, and confirm without back-and-forth emails or calls.",
   },
   {
     icon: MessageSquare,
-    title: "AI Lead Qualification",
-    description: "Instantly filter serious buyers from casual browsers. Your time goes to the conversations that matter.",
+    title: "Lead Filtering That Protects Your Time",
+    description: "Automatically separate serious buyers from casual browsers, so your attention goes to conversations that actually move deals forward.",
   },
   {
     icon: Users,
-    title: "Client Communication Hub",
-    description: "Every inquiry, every conversation, every follow-up — visible and organized in one place. Nothing slips through.",
+    title: "One Place for Every Buyer & Seller Conversation",
+    description: "Keep every inquiry, follow-up, and message organized in one place, so nothing gets missed and every relationship stays visible.",
   },
 ];
 
@@ -62,13 +62,21 @@ const RealEstate = () => {
 
           {/* Features Grid */}
           <div className="mb-28">
-            <motion.p
+            <motion.h2
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
+              className="text-center text-3xl font-bold mb-4"
+            >
+              Designed for Real Estate Workflows
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
               className="text-center text-lg text-muted-foreground mb-12"
             >
-              Everything works together to turn property interest into booked conversations.
+              Every part of the system is built to reduce friction and move deals forward.
             </motion.p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {features.map((feature, index) => (
