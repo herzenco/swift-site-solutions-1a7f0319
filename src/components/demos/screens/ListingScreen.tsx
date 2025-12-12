@@ -15,9 +15,12 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
       transition={{ duration: 0.3 }}
       className="h-full flex flex-col bg-[#0f1214] overflow-hidden"
     >
-      {/* Minimal Navbar */}
+      {/* Personal Realtor Navbar */}
       <div className="flex items-center justify-between px-5 py-3 absolute top-0 left-0 right-0 z-20">
-        <span className="text-[10px] font-light tracking-[0.3em] text-white/90 uppercase">Sterling</span>
+        <div className="flex flex-col">
+          <span className="text-[10px] font-light tracking-[0.25em] text-white/90 uppercase">James Sterling</span>
+          <span className="text-[6px] tracking-[0.15em] text-white/40 uppercase">Luxury Real Estate</span>
+        </div>
         <div className="w-4 h-[1px] bg-white/30" />
       </div>
 
@@ -33,14 +36,14 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
 
       {/* Content Section */}
       <div className="flex-1 flex flex-col px-5 -mt-4 relative z-10">
-        {/* Tagline */}
+        {/* Personal Tagline */}
         <motion.p 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
           className="text-[8px] tracking-[0.35em] text-white/40 uppercase mb-2"
         >
-          Beverly Hills
+          Your Beverly Hills Agent
         </motion.p>
 
         {/* Main Headline */}
@@ -50,8 +53,8 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
           transition={{ delay: 0.3, duration: 0.6 }}
           className="text-lg font-extralight text-white leading-tight tracking-wide mb-4"
         >
-          Where vision<br />
-          meets address.
+          Finding your<br />
+          forever address.
         </motion.h1>
 
         {/* Subtle Divider */}
@@ -107,9 +110,9 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
             <ChevronRight className="w-3 h-3 opacity-50" />
           </motion.button>
 
-          {/* Trust Line */}
+          {/* Personal Trust Line */}
           <p className="text-[7px] text-white/20 text-center tracking-wider">
-            Discretion. Trust. Results.
+            15+ years serving Beverly Hills & Bel Air
           </p>
         </motion.div>
       </div>
