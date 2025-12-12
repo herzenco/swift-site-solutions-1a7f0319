@@ -6,10 +6,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import ServiceBusinesses from "./pages/use-cases/ServiceBusinesses";
-import SalesProfessionals from "./pages/use-cases/SalesProfessionals";
-import GrowingTeams from "./pages/use-cases/GrowingTeams";
-import Entrepreneurs from "./pages/use-cases/Entrepreneurs";
+import RealEstate from "./pages/use-cases/RealEstate";
+import ProfessionalServices from "./pages/use-cases/ProfessionalServices";
+import HomeServices from "./pages/use-cases/HomeServices";
+import EducationCoaching from "./pages/use-cases/EducationCoaching";
 
 const queryClient = new QueryClient();
 
@@ -22,10 +22,10 @@ const App = () => (
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/use-cases/service-businesses" element={<ServiceBusinesses />} />
-          <Route path="/use-cases/sales-professionals" element={<SalesProfessionals />} />
-          <Route path="/use-cases/growing-teams" element={<GrowingTeams />} />
-          <Route path="/use-cases/entrepreneurs" element={<Entrepreneurs />} />
+          <Route path="/use-cases/real-estate" element={<RealEstate />} />
+          <Route path="/use-cases/professional-services" element={<ProfessionalServices />} />
+          <Route path="/use-cases/home-services" element={<HomeServices />} />
+          <Route path="/use-cases/education-coaching" element={<EducationCoaching />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
