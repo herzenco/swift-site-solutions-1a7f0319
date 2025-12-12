@@ -3,16 +3,17 @@ import { AnimatePresence } from "framer-motion";
 import { PhoneFrame } from "./PhoneFrame";
 import { ListingScreen } from "./screens/ListingScreen";
 import { ListingsScreen } from "./screens/ListingsScreen";
+import { ListingDetailScreen } from "./screens/ListingDetailScreen";
 import { RequestFormScreen } from "./screens/RequestFormScreen";
 import { ConfirmationScreen } from "./screens/ConfirmationScreen";
 import { AgentDashboardScreen } from "./screens/AgentDashboardScreen";
 
-type Screen = "listing" | "listings" | "request" | "confirmation" | "dashboard";
+type Screen = "listing" | "listings" | "detail" | "request" | "confirmation" | "dashboard";
 
 export const RealEstateDemo = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>("listing");
 
-  const screens: Screen[] = ["listing", "listings", "request", "confirmation", "dashboard"];
+  const screens: Screen[] = ["listing", "listings", "detail", "request", "confirmation", "dashboard"];
   const currentIndex = screens.indexOf(currentScreen);
 
   return (
@@ -30,6 +31,13 @@ export const RealEstateDemo = () => {
             <ListingsScreen
               key="listings"
               onBack={() => setCurrentScreen("listing")}
+              onRequestShowing={() => setCurrentScreen("detail")}
+            />
+          )}
+          {currentScreen === "detail" && (
+            <ListingDetailScreen
+              key="detail"
+              onBack={() => setCurrentScreen("listings")}
               onRequestShowing={() => setCurrentScreen("request")}
             />
           )}
@@ -37,7 +45,7 @@ export const RealEstateDemo = () => {
             <RequestFormScreen
               key="request"
               onSubmit={() => setCurrentScreen("confirmation")}
-              onBack={() => setCurrentScreen("listing")}
+              onBack={() => setCurrentScreen("detail")}
             />
           )}
           {currentScreen === "confirmation" && (
