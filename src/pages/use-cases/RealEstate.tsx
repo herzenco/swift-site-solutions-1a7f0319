@@ -8,8 +8,8 @@ import { Building2, Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } f
 const features = [
   {
     icon: Calendar,
-    title: "Instant Inquiry-to-Showing Flow",
-    description: "Turn listing views into booked showings automatically. Buyers can inquire, schedule, and confirm without back-and-forth emails or calls.",
+    title: "Controlled Showing Requests",
+    description: "Let buyers request showings while you stay in control. Gather intent, approve requests, and confirm appointments without endless back-and-forth.",
   },
   {
     icon: MessageSquare,
