@@ -52,11 +52,11 @@ export const ListingScreen = ({ onRequestShowing, onViewListings }: ListingScree
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
             whileTap={{ scale: 0.98 }}
-            onClick={onRequestShowing}
+            onClick={onViewListings}
             className="w-full py-3 font-medium rounded-sm transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2"
             style={{ backgroundColor: '#1a1a1a', color: '#ffffff' }}
           >
-            Request a Consultation
+            View Listings
             <ChevronRight className="w-3 h-3" />
           </motion.button>
         </div>
@@ -142,18 +142,9 @@ export const ListingScreen = ({ onRequestShowing, onViewListings }: ListingScree
           <h2 className="text-[11px] text-neutral-900 mb-2" style={{ fontFamily: 'Georgia, serif' }}>
             Built on Trust
           </h2>
-          <p className="text-[9px] text-neutral-600 leading-[1.7] mb-3">
+          <p className="text-[9px] text-neutral-600 leading-[1.7]">
             Clients work with me not for access — but for judgment, discretion, and outcomes. Many relationships span multiple transactions.
           </p>
-          
-          <motion.button
-            whileTap={{ scale: 0.98 }}
-            onClick={onViewListings}
-            className="w-full py-2.5 font-medium rounded-sm transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2 border border-neutral-300 text-neutral-700 hover:bg-neutral-50"
-          >
-            View Listings
-            <ChevronRight className="w-3 h-3" />
-          </motion.button>
         </motion.div>
       </div>
 
