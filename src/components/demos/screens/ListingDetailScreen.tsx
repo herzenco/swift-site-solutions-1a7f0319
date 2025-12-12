@@ -17,7 +17,7 @@ export const ListingDetailScreen = ({ onBack, onRequestShowing }: ListingDetailS
     >
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-100">
-        <button onClick={onBack} className="flex items-center gap-1 text-neutral-600">
+        <button type="button" onClick={onBack} className="flex items-center gap-1 text-neutral-600">
           <ChevronLeft className="w-4 h-4" />
           <span className="text-[9px] uppercase tracking-wider">Back</span>
         </button>
