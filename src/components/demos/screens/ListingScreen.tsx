@@ -17,7 +17,7 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
       style={{ scrollbarWidth: 'none' }}
     >
       {/* Hero Section */}
-      <div className="relative min-h-[80%] flex flex-col">
+      <div className="relative min-h-[70%] flex flex-col">
         {/* Background */}
         <div className="absolute inset-0">
           <img 
@@ -47,21 +47,15 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
               Discreet, data-informed advisory for buyers and sellers who value clarity and control.
             </p>
 
-            <div className="flex flex-col gap-3">
-              <motion.button
-                whileTap={{ scale: 0.98 }}
-                onClick={onRequestShowing}
-                className="w-full py-3 font-medium rounded-sm transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2"
-                style={{ backgroundColor: '#1a1a1a', color: '#ffffff' }}
-              >
-                Request a Consultation
-                <ChevronRight className="w-3 h-3" />
-              </motion.button>
-              
-              <button className="text-[8px] text-neutral-500 tracking-[0.1em] uppercase hover:text-neutral-800 transition-colors font-medium">
-                View Select Properties →
-              </button>
-            </div>
+            <motion.button
+              whileTap={{ scale: 0.98 }}
+              onClick={onRequestShowing}
+              className="w-full py-3 font-medium rounded-sm transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2"
+              style={{ backgroundColor: '#1a1a1a', color: '#ffffff' }}
+            >
+              Request a Consultation
+              <ChevronRight className="w-3 h-3" />
+            </motion.button>
           </motion.div>
         </div>
 
