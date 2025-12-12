@@ -36,14 +36,14 @@ const RealEstate = () => {
       <Navbar />
       <BackButton />
       
-      <main className="pt-32 pb-20">
-        <div className="container-tight px-6">
+      <main className="pt-40 pb-32">
+        <div className="container-tight px-6 lg:px-8">
           {/* Hero Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-16"
+            className="text-center mb-24"
           >
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
               A Smarter Website for <span className="text-gradient">Real Estate Professionals</span>
@@ -61,16 +61,16 @@ const RealEstate = () => {
           </motion.div>
 
           {/* Features Grid */}
-          <div className="mb-20">
+          <div className="mb-28">
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-center text-lg text-muted-foreground mb-8"
+              className="text-center text-lg text-muted-foreground mb-12"
             >
               Everything works together to turn property interest into booked conversations.
             </motion.p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {features.map((feature, index) => (
                 <motion.div
                   key={index}
@@ -98,13 +98,13 @@ const RealEstate = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-card/30 rounded-3xl p-8 md:p-12 border border-border/50"
+            className="bg-card/30 rounded-3xl p-10 md:p-16 border border-border/50"
           >
-            <h2 className="text-3xl font-bold mb-4 text-center">Why This Works for Real Estate Professionals</h2>
-            <p className="text-center text-muted-foreground mb-8 max-w-xl mx-auto">
+            <h2 className="text-3xl font-bold mb-6 text-center">Why This Works for Real Estate Professionals</h2>
+            <p className="text-center text-muted-foreground mb-10 max-w-xl mx-auto">
               Built for professionals who rely on speed, follow-up, and visibility to close deals.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {benefits.map((benefit, index) => (
                 <motion.div
                   key={index}
@@ -127,7 +127,7 @@ const RealEstate = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mt-20"
+            className="text-center mt-28"
           >
             <h2 className="text-3xl font-bold mb-4">See What This Would Look Like for Your Business</h2>
             <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
