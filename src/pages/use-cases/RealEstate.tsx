@@ -87,9 +87,6 @@ const RealEstate = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="p-8 rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm"
                 >
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="text-xs font-semibold text-primary/60">Step {index + 1}</span>
-                  </div>
                   <div className="icon-container w-12 h-12 mb-4">
                     <feature.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
                   </div>
