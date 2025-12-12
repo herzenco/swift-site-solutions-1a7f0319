@@ -9,26 +9,25 @@ const features = [
   {
     icon: Calendar,
     title: "Automated Showing Scheduler",
-    description: "Let buyers book property showings 24/7 without back-and-forth calls or emails.",
+    description: "Buyers book showings directly from your listings — no inbox chaos, no back-and-forth, no missed opportunities.",
   },
   {
     icon: MessageSquare,
     title: "AI Lead Qualification",
-    description: "Instantly qualify leads and route serious buyers to your attention automatically.",
+    description: "Instantly filter serious buyers from casual browsers. Your time goes to the conversations that matter.",
   },
   {
     icon: Users,
     title: "Client Communication Hub",
-    description: "Manage all buyer and seller communications in one centralized dashboard.",
+    description: "Every inquiry, every conversation, every follow-up — visible and organized in one place. Nothing slips through.",
   },
 ];
 
 const benefits = [
-  "Capture leads from property listings automatically",
-  "Reduce no-shows with automated showing reminders",
-  "Nurture prospects with intelligent follow-up sequences",
-  "Track every inquiry and interaction in real-time",
-  "Scale your business without adding admin overhead",
+  "Capture leads from listings instantly — no delays, no friction",
+  "Reduce no-shows with automated reminders and confirmations",
+  "See every inquiry and interaction in real-time",
+  "Scale your client base without adding admin staff",
 ];
 
 const RealEstate = () => {
@@ -52,8 +51,11 @@ const RealEstate = () => {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
               Websites for <span className="text-gradient">Real Estate</span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-4">
               Automate inquiries, manage showings, and capture leads without manual follow-ups — all from one powerful website.
+            </p>
+            <p className="text-sm font-medium text-primary mb-8">
+              Built and launched in days, not months.
             </p>
             <Button 
               className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
@@ -62,25 +64,41 @@ const RealEstate = () => {
               Start Your Build
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
+            <p className="text-sm text-muted-foreground mt-6">
+              Scroll to see how it works
+            </p>
           </motion.div>
 
           {/* Features Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="p-8 rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm"
-              >
-                <div className="icon-container w-12 h-12 mb-4">
-                  <feature.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
-                </div>
-                <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-                <p className="text-muted-foreground">{feature.description}</p>
-              </motion.div>
-            ))}
+          <div className="mb-20">
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center text-lg text-muted-foreground mb-8"
+            >
+              Everything works together to turn interest into booked conversations.
+            </motion.p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="p-8 rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-xs font-semibold text-primary/60">Step {index + 1}</span>
+                  </div>
+                  <div className="icon-container w-12 h-12 mb-4">
+                    <feature.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.description}</p>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
           {/* Benefits Section */}
@@ -91,7 +109,10 @@ const RealEstate = () => {
             transition={{ duration: 0.6 }}
             className="bg-card/30 rounded-3xl p-8 md:p-12 border border-border/50"
           >
-            <h2 className="text-3xl font-bold mb-8 text-center">Why Real Estate Professionals Choose Us</h2>
+            <h2 className="text-3xl font-bold mb-4 text-center">Why Real Estate Professionals Choose Us</h2>
+            <p className="text-center text-muted-foreground mb-8 max-w-xl mx-auto">
+              Built for professionals who rely on speed, follow-up, and visibility to close deals.
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {benefits.map((benefit, index) => (
                 <motion.div
@@ -117,8 +138,10 @@ const RealEstate = () => {
             transition={{ duration: 0.6 }}
             className="text-center mt-20"
           >
-            <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Business?</h2>
-            <p className="text-muted-foreground mb-8">Get a website that works as hard as you do.</p>
+            <h2 className="text-3xl font-bold mb-4">Turn Your Website Into a Lead-Handling System</h2>
+            <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
+              Get a clear project plan with timeline and pricing — no pressure, no long-term contracts.
+            </p>
             <Button 
               className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
               onClick={() => window.location.href = '/#contact'}
@@ -126,6 +149,9 @@ const RealEstate = () => {
               Get Your Free Project Plan
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
+            <p className="text-sm text-muted-foreground mt-4 max-w-md mx-auto">
+              We'll outline exactly what your system includes and how fast it can go live.
+            </p>
           </motion.div>
         </div>
       </main>
