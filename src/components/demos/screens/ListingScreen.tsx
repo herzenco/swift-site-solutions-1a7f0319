@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { MapPin, Menu, Search, ChevronRight } from "lucide-react";
+import { MapPin, Bed, Bath, Square, ChevronRight } from "lucide-react";
 
 interface ListingScreenProps {
   onRequestShowing: () => void;
@@ -12,82 +12,92 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}
       transition={{ duration: 0.3 }}
-      className="h-full flex flex-col bg-white overflow-hidden"
+      className="h-full flex flex-col bg-stone-50 overflow-hidden"
     >
-      {/* Navbar */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-stone-100">
-        <div className="flex items-center gap-1.5">
-          <div className="w-5 h-5 bg-amber-600 rounded-sm" />
-          <span className="text-xs font-semibold tracking-wide text-stone-900 uppercase">Sterling</span>
+      {/* Minimal Navbar */}
+      <div className="flex items-center justify-between px-4 py-3 bg-white border-b border-stone-100">
+        <div className="flex items-center gap-1">
+          <div className="w-1 h-4 bg-amber-700" />
+          <span className="text-[10px] font-semibold tracking-[0.2em] text-stone-800 uppercase">Sterling</span>
         </div>
-        <Menu className="w-4 h-4 text-stone-600" />
+        <nav className="flex items-center gap-3 text-[8px] text-stone-500 uppercase tracking-wider">
+          <span>Properties</span>
+          <span>About</span>
+          <span className="text-amber-700 font-medium">Contact</span>
+        </nav>
       </div>
 
-      {/* Hero Section */}
-      <div className="relative px-4 pt-6 pb-4">
-        <p className="text-[10px] text-amber-600 uppercase tracking-widest font-medium mb-1">Beverly Hills</p>
-        <h1 className="text-xl font-semibold text-stone-900 leading-tight mb-2">
-          Find Your <br />Dream Home
-        </h1>
-        <p className="text-[11px] text-stone-500 leading-relaxed mb-4">
-          Exclusive luxury properties curated for discerning buyers.
-        </p>
-        
-        {/* Search Bar */}
-        <div className="flex items-center gap-2 bg-stone-50 rounded-xl px-3 py-2.5 border border-stone-100">
-          <Search className="w-3.5 h-3.5 text-stone-400" />
-          <span className="text-[11px] text-stone-400">Search by location or address...</span>
+      {/* Hero Image Section */}
+      <div className="relative h-28 bg-gradient-to-br from-stone-300 via-stone-400 to-stone-500 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent)]" />
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-stone-900/60 to-transparent" />
+        <div className="absolute bottom-3 left-4 right-4">
+          <p className="text-[8px] text-amber-300 uppercase tracking-[0.25em] font-medium mb-0.5">Beverly Hills</p>
+          <h1 className="text-sm font-light text-white tracking-wide">Exceptional Living</h1>
         </div>
       </div>
 
-      {/* Featured Listing */}
-      <div className="px-4 flex-1 flex flex-col">
-        <div className="flex items-center justify-between mb-2">
-          <p className="text-[10px] text-stone-500 uppercase tracking-wider font-medium">Featured Listing</p>
-          <span className="text-[10px] text-amber-600 font-medium">View All</span>
-        </div>
-        
-        <div className="bg-stone-100 rounded-xl overflow-hidden flex-1 max-h-28 relative mb-3">
-          <div className="absolute inset-0 bg-gradient-to-br from-stone-200 via-stone-300 to-stone-400" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
-              <p className="text-stone-500/60 text-2xl mb-1">🏛️</p>
-              <p className="text-[9px] text-stone-500/80 font-medium uppercase tracking-wider">Luxury Estate</p>
+      {/* Featured Property Card */}
+      <div className="px-4 -mt-4 relative z-10 flex-1 flex flex-col">
+        <div className="bg-white rounded-lg shadow-lg border border-stone-100 p-3 mb-3">
+          <div className="flex items-start justify-between mb-2">
+            <div>
+              <p className="text-[8px] text-amber-700 uppercase tracking-widest font-medium mb-0.5">Featured</p>
+              <h2 className="text-xs font-semibold text-stone-900">The Hillcrest Estate</h2>
+            </div>
+            <span className="text-sm font-light text-stone-800">$4.2M</span>
+          </div>
+          
+          <div className="flex items-center gap-1 text-stone-400 mb-2">
+            <MapPin className="w-2 h-2" />
+            <span className="text-[8px]">2847 Hillcrest Drive, Beverly Hills</span>
+          </div>
+
+          {/* Property Stats */}
+          <div className="flex items-center gap-3 py-2 border-t border-stone-100">
+            <div className="flex items-center gap-1">
+              <Bed className="w-2.5 h-2.5 text-stone-400" />
+              <span className="text-[9px] text-stone-600">5 Beds</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Bath className="w-2.5 h-2.5 text-stone-400" />
+              <span className="text-[9px] text-stone-600">4 Baths</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Square className="w-2.5 h-2.5 text-stone-400" />
+              <span className="text-[9px] text-stone-600">6,200 sqft</span>
             </div>
           </div>
-          <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-white/90 backdrop-blur-sm rounded text-[8px] font-semibold text-amber-700 uppercase tracking-wider">
-            New
-          </div>
         </div>
 
+        {/* Services Section */}
         <div className="mb-3">
-          <div className="flex items-start justify-between mb-1">
-            <h3 className="text-sm font-semibold text-stone-900">$1,250,000</h3>
-            <span className="text-amber-500 text-xs">★</span>
-          </div>
-          <div className="flex items-center gap-1 text-stone-500 mb-1.5">
-            <MapPin className="w-2.5 h-2.5" />
-            <span className="text-[10px]">2847 Hillcrest Drive</span>
-          </div>
-          <div className="flex items-center gap-2 text-[10px] text-stone-500">
-            <span>4 Beds</span>
-            <span className="text-stone-300">•</span>
-            <span>3 Baths</span>
-            <span className="text-stone-300">•</span>
-            <span>3,200 sqft</span>
+          <p className="text-[8px] text-stone-400 uppercase tracking-widest mb-2">Our Services</p>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="bg-white rounded-md p-2 border border-stone-100">
+              <p className="text-[9px] font-medium text-stone-800">Buyer Services</p>
+              <p className="text-[7px] text-stone-400">Find your dream home</p>
+            </div>
+            <div className="bg-white rounded-md p-2 border border-stone-100">
+              <p className="text-[9px] font-medium text-stone-800">Seller Services</p>
+              <p className="text-[7px] text-stone-400">Maximize your value</p>
+            </div>
           </div>
         </div>
 
-        {/* CTA */}
+        {/* CTA Section */}
         <div className="mt-auto pb-3">
+          <div className="text-center mb-2">
+            <p className="text-[9px] text-stone-500">Ready to find your perfect home?</p>
+          </div>
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={onRequestShowing}
-            className="w-full py-3 bg-stone-900 hover:bg-stone-800 text-white font-medium rounded-xl transition-colors text-xs tracking-wide flex items-center justify-center gap-2"
+            className="w-full py-2.5 bg-amber-700 hover:bg-amber-800 text-white font-medium rounded-md transition-colors text-[10px] uppercase tracking-wider flex items-center justify-center gap-1.5"
           >
-            Schedule Private Tour
-            <ChevronRight className="w-3.5 h-3.5" />
+            Schedule a Consultation
+            <ChevronRight className="w-3 h-3" />
           </motion.button>
         </div>
       </div>
