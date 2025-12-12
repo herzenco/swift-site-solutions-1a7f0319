@@ -3,7 +3,8 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/BackButton";
-import { Building2, Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } from "lucide-react";
+import { RealEstateDemo } from "@/components/demos/RealEstateDemo";
 
 const features = [
   {
@@ -98,6 +99,23 @@ const RealEstate = () => {
               ))}
             </div>
           </div>
+
+          {/* Interactive Demo Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-28"
+          >
+            <h2 className="text-center text-3xl font-bold mb-4">
+              See It in Action
+            </h2>
+            <p className="text-center text-lg text-muted-foreground mb-10 max-w-xl mx-auto">
+              Click through the demo to experience how buyers request showings — and how you manage them.
+            </p>
+            <RealEstateDemo />
+          </motion.div>
 
           {/* Benefits Section */}
           <motion.div
