@@ -9,17 +9,17 @@ const features = [
   {
     icon: Calendar,
     title: "Controlled Showing Requests",
-    description: "Let buyers request showings while you stay in control. Gather intent, approve requests, and confirm appointments without endless back-and-forth.",
+    description: "Capture serious buyer interest without opening your calendar to everyone. Collect intent, approve requests, and confirm showings only when it makes sense.",
   },
   {
     icon: MessageSquare,
     title: "Lead Filtering That Protects Your Time",
-    description: "Automatically separate serious buyers from casual browsers, so your attention goes to conversations that actually move deals forward.",
+    description: "Automatically identify serious buyers and reduce noise, so you spend less time qualifying and more time having conversations that move deals forward.",
   },
   {
     icon: Users,
     title: "One Place for Every Buyer & Seller Conversation",
-    description: "Keep every inquiry, follow-up, and message organized in one place, so nothing gets missed and every relationship stays visible.",
+    description: "Keep inquiries, follow-ups, and messages organized in one place, so every client experience feels professional, responsive, and reliable.",
   },
 ];
 
@@ -76,7 +76,7 @@ const RealEstate = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-center text-lg text-muted-foreground mb-12"
             >
-              Every part of the system is built to reduce friction and move deals forward.
+              Every part of the system is built to capture real interest, save time, and support trust at every step.
             </motion.p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {features.map((feature, index) => (
