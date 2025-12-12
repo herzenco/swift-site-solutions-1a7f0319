@@ -13,19 +13,19 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}
       transition={{ duration: 0.3 }}
-      className="h-full flex flex-col bg-[#faf9f7] overflow-y-auto overflow-x-hidden"
+      className="h-full flex flex-col bg-white overflow-y-auto overflow-x-hidden"
       style={{ scrollbarWidth: 'none' }}
     >
       {/* Hero Section */}
-      <div className="relative min-h-[85%] flex flex-col">
+      <div className="relative min-h-[82%] flex flex-col">
         {/* Background */}
         <div className="absolute inset-0">
           <img 
             src={luxuryEstateHero} 
             alt="Luxury Estate" 
-            className="w-full h-full object-cover opacity-60"
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#faf9f7]/70 via-[#faf9f7]/50 to-[#faf9f7]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-white/75 to-white" />
         </div>
 
         {/* Hero Content */}
@@ -35,30 +35,30 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <p className="text-[7px] tracking-[0.35em] text-[#1a1a1a]/50 uppercase mb-4">
+            <p className="text-[8px] tracking-[0.3em] text-neutral-500 uppercase mb-3 font-medium">
               Private Real Estate Advisory
             </p>
             
-            <h1 className="text-[15px] font-light text-[#1a1a1a] leading-[1.4] mb-4 tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+            <h1 className="text-[16px] font-normal text-neutral-900 leading-[1.35] mb-4" style={{ fontFamily: 'Georgia, serif' }}>
               Private Representation in Los Angeles' Most Coveted Homes
             </h1>
             
-            <p className="text-[9px] font-light text-[#1a1a1a]/60 leading-relaxed mb-6 max-w-[90%]">
+            <p className="text-[10px] text-neutral-600 leading-relaxed mb-6 max-w-[95%]">
               Discreet, data-informed real estate advisory for buyers and sellers who value clarity and control.
             </p>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-3">
               <motion.button
-                whileHover={{ backgroundColor: "rgba(26,26,26,0.95)" }}
+                whileHover={{ backgroundColor: "#262626" }}
                 whileTap={{ scale: 0.98 }}
                 onClick={onRequestShowing}
-                className="w-full py-2.5 border border-[#1a1a1a] text-white font-light rounded-none transition-all duration-300 text-[8px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 bg-[#1a1a1a]"
+                className="w-full py-3 text-white font-medium rounded-sm transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2 bg-neutral-900"
               >
-                Request a Private Consultation
-                <ChevronRight className="w-2.5 h-2.5 opacity-70" />
+                Request a Consultation
+                <ChevronRight className="w-3 h-3" />
               </motion.button>
               
-              <button className="text-[7px] text-[#1a1a1a]/50 tracking-[0.15em] uppercase hover:text-[#1a1a1a]/80 transition-colors">
+              <button className="text-[8px] text-neutral-500 tracking-[0.1em] uppercase hover:text-neutral-800 transition-colors font-medium">
                 View Select Properties →
               </button>
             </div>
@@ -70,43 +70,43 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.5 }}
-          className="relative z-10 flex justify-center pb-4"
+          className="relative z-10 flex justify-center pb-3"
         >
           <motion.div
             animate={{ y: [0, 4, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <ArrowDown className="w-3 h-3 text-[#1a1a1a]/30" />
+            <ArrowDown className="w-4 h-4 text-neutral-400" />
           </motion.div>
         </motion.div>
       </div>
 
       {/* Philosophy Section */}
-      <div className="px-5 py-8 border-t border-[#1a1a1a]/[0.08]">
+      <div className="px-5 py-6 border-t border-neutral-200 bg-neutral-50">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-[10px] font-light text-[#1a1a1a] mb-3 tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+          <h2 className="text-[11px] text-neutral-900 mb-2" style={{ fontFamily: 'Georgia, serif' }}>
             A Different Kind of Experience
           </h2>
-          <p className="text-[8px] text-[#1a1a1a]/55 leading-[1.7] font-light">
-            Luxury real estate isn't about volume — it's about precision. Every decision, showing, and negotiation is handled with discretion, insight, and a long-term view of value.
+          <p className="text-[9px] text-neutral-600 leading-[1.7]">
+            Luxury real estate isn't about volume — it's about precision. Every decision, showing, and negotiation is handled with discretion and insight.
           </p>
         </motion.div>
       </div>
 
       {/* Services Section */}
-      <div className="px-5 py-6 border-t border-[#1a1a1a]/[0.08]">
+      <div className="px-5 py-5 border-t border-neutral-200">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-[6px] tracking-[0.3em] text-[#1a1a1a]/40 uppercase mb-4">Services</p>
+          <p className="text-[7px] tracking-[0.25em] text-neutral-400 uppercase mb-4 font-semibold">Services</p>
           
           <div className="space-y-3">
             {[
@@ -114,9 +114,9 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
               { title: "Seller Advisory", desc: "Positioning, pricing, and private marketing" },
               { title: "Off-Market Access", desc: "Properties never publicly listed" },
             ].map((service, i) => (
-              <div key={i} className="group">
-                <p className="text-[8px] text-[#1a1a1a]/80 font-light mb-0.5">{service.title}</p>
-                <p className="text-[7px] text-[#1a1a1a]/40">{service.desc}</p>
+              <div key={i}>
+                <p className="text-[9px] text-neutral-800 font-medium mb-0.5">{service.title}</p>
+                <p className="text-[8px] text-neutral-500">{service.desc}</p>
               </div>
             ))}
           </div>
@@ -124,7 +124,7 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
       </div>
 
       {/* Experience Section */}
-      <div className="px-5 py-6 border-t border-[#1a1a1a]/[0.08] bg-[#1a1a1a]/[0.03]">
+      <div className="px-5 py-5 border-t border-neutral-200 bg-neutral-900 text-white">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -133,15 +133,15 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
           className="flex justify-between items-start"
         >
           <div>
-            <p className="text-[14px] font-extralight text-[#1a1a1a]">$2B+</p>
-            <p className="text-[6px] tracking-[0.2em] text-[#1a1a1a]/35 uppercase">Career Volume</p>
+            <p className="text-[16px] font-light">$2B+</p>
+            <p className="text-[7px] tracking-[0.15em] text-neutral-400 uppercase">Career Volume</p>
           </div>
           <div className="text-center">
-            <p className="text-[14px] font-extralight text-[#1a1a1a]">15+</p>
-            <p className="text-[6px] tracking-[0.2em] text-[#1a1a1a]/35 uppercase">Years</p>
+            <p className="text-[16px] font-light">15+</p>
+            <p className="text-[7px] tracking-[0.15em] text-neutral-400 uppercase">Years</p>
           </div>
           <div className="text-right">
-            <p className="text-[8px] text-[#1a1a1a]/60 leading-relaxed">
+            <p className="text-[9px] text-neutral-300 leading-relaxed">
               Beverly Hills<br />
               Bel Air<br />
               Holmby Hills
@@ -151,24 +151,24 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
       </div>
 
       {/* Trust Section */}
-      <div className="px-5 py-6 border-t border-[#1a1a1a]/[0.08]">
+      <div className="px-5 py-5 border-t border-neutral-200">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-[10px] font-light text-[#1a1a1a] mb-3 tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+          <h2 className="text-[11px] text-neutral-900 mb-2" style={{ fontFamily: 'Georgia, serif' }}>
             Built on Trust
           </h2>
-          <p className="text-[8px] text-[#1a1a1a]/55 leading-[1.7] font-light">
-            Clients work with me not for access — but for judgment, discretion, and outcomes. Many relationships span multiple transactions over years.
+          <p className="text-[9px] text-neutral-600 leading-[1.7]">
+            Clients work with me not for access — but for judgment, discretion, and outcomes. Many relationships span multiple transactions.
           </p>
         </motion.div>
       </div>
 
       {/* Final CTA */}
-      <div className="px-5 py-8 border-t border-[#1a1a1a]/[0.08]">
+      <div className="px-5 py-6 border-t border-neutral-200 bg-neutral-50">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -176,32 +176,32 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <h2 className="text-[11px] font-light text-[#1a1a1a] mb-2 tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+          <h2 className="text-[12px] text-neutral-900 mb-2" style={{ fontFamily: 'Georgia, serif' }}>
             Let's Discuss Your Goals
           </h2>
-          <p className="text-[7px] text-[#1a1a1a]/45 mb-4">
+          <p className="text-[8px] text-neutral-500 mb-4">
             Every conversation begins with clarity — no pressure, no obligation.
           </p>
           
           <motion.button
-            whileHover={{ backgroundColor: "rgba(26,26,26,0.95)" }}
+            whileHover={{ backgroundColor: "#262626" }}
             whileTap={{ scale: 0.98 }}
             onClick={onRequestShowing}
-            className="w-full py-2.5 border border-[#1a1a1a] text-white font-light rounded-none transition-all duration-300 text-[8px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 bg-[#1a1a1a]"
+            className="w-full py-3 text-white font-medium rounded-sm transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2 bg-neutral-900"
           >
             Schedule a Private Call
-            <ChevronRight className="w-2.5 h-2.5 opacity-60" />
+            <ChevronRight className="w-3 h-3" />
           </motion.button>
         </motion.div>
       </div>
 
       {/* Footer */}
-      <div className="px-5 py-4 border-t border-[#1a1a1a]/[0.06] flex items-center justify-between">
-        <div className="flex items-center gap-1 text-[#1a1a1a]/30">
-          <MapPin className="w-2.5 h-2.5" />
-          <span className="text-[6px] tracking-wider">Los Angeles, CA</span>
+      <div className="px-5 py-3 border-t border-neutral-200 flex items-center justify-between bg-white">
+        <div className="flex items-center gap-1.5 text-neutral-400">
+          <MapPin className="w-3 h-3" />
+          <span className="text-[7px] tracking-wider font-medium">Los Angeles, CA</span>
         </div>
-        <p className="text-[6px] text-[#1a1a1a]/25 tracking-wider">
+        <p className="text-[7px] text-neutral-300 tracking-wider">
           © 2024
         </p>
       </div>
