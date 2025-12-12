@@ -72,15 +72,6 @@ export const RealEstateDemo = () => {
           />
         ))}
       </div>
-
-      {/* Screen Labels */}
-      <div className="flex items-center justify-center gap-4 mt-3 text-xs text-muted-foreground">
-        <span className={currentIndex >= 0 ? "text-foreground font-medium" : ""}>Home</span>
-        <span className={currentIndex >= 1 ? "text-foreground font-medium" : ""}>Listings</span>
-        <span className={currentIndex >= 2 ? "text-foreground font-medium" : ""}>Request</span>
-        <span className={currentIndex >= 3 ? "text-foreground font-medium" : ""}>Confirm</span>
-        <span className={currentIndex >= 4 ? "text-foreground font-medium" : ""}>Dashboard</span>
-      </div>
     </div>
   );
 };
