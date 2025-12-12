@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
+import { BackButton } from "@/components/BackButton";
 import { Briefcase, Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } from "lucide-react";
-
 const features = [
   {
     icon: Calendar,
@@ -34,6 +34,7 @@ const ServiceBusinesses = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      <BackButton />
       
       <main className="pt-32 pb-20">
         <div className="container-tight px-6">
