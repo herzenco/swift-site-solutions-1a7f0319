@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Briefcase, Target, UsersRound, Lightbulb, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const audiences = [
@@ -49,7 +48,7 @@ export const Portfolio = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {audiences.map((audience, index) => (
             <motion.div
               key={index}
@@ -78,17 +77,6 @@ export const Portfolio = () => {
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center"
-        >
-          <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl">
-            Use cases
-          </Button>
-        </motion.div>
       </div>
     </section>
   );
