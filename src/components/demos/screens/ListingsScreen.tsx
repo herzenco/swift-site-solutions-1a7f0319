@@ -80,7 +80,9 @@ export const ListingsScreen = ({ onBack, onRequestShowing }: ListingsScreenProps
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1, duration: 0.4 }}
-            className="bg-neutral-50 rounded-lg overflow-hidden"
+            whileTap={{ scale: 0.98 }}
+            onClick={onRequestShowing}
+            className="bg-neutral-50 rounded-lg overflow-hidden cursor-pointer hover:bg-neutral-100 transition-colors"
           >
             <div className="relative h-24">
               <img 
