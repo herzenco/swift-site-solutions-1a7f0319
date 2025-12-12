@@ -8,18 +8,18 @@ import { Building2, Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } f
 const features = [
   {
     icon: Calendar,
-    title: "Controlled Showing Requests",
-    description: "Capture serious buyer interest without opening your calendar to everyone. Collect intent, approve requests, and confirm showings only when it makes sense.",
+    title: "Intent-Driven Showings",
+    description: "Capture buyer intent before anything hits your calendar. Collect details, review requests, and approve showings only when interest is real — without back-and-forth emails or calls.",
   },
   {
     icon: MessageSquare,
-    title: "Lead Filtering That Protects Your Time",
-    description: "Automatically identify serious buyers and reduce noise, so you spend less time qualifying and more time having conversations that move deals forward.",
+    title: "Focus on Serious Buyers",
+    description: "Automatically separate serious buyers from casual browsers, so your time is spent on conversations that actually move deals forward.",
   },
   {
     icon: Users,
-    title: "One Place for Every Buyer & Seller Conversation",
-    description: "Keep inquiries, follow-ups, and messages organized in one place, so every client experience feels professional, responsive, and reliable.",
+    title: "Nothing Slips Through",
+    description: "Keep every inquiry, follow-up, and message organized in one place, so each buyer and seller experience feels professional, responsive, and reliable.",
   },
 ];
 
