@@ -49,10 +49,10 @@ const RealEstate = () => {
               <Building2 className="w-7 h-7 text-primary" strokeWidth={1.5} />
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-              Websites for <span className="text-gradient">Real Estate</span>
+              A Smarter Website for <span className="text-gradient">Real Estate Professionals</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-4">
-              Automate inquiries, manage showings, and capture leads without manual follow-ups — all from one powerful website.
+              Designed to capture leads, manage showings, and keep every conversation organized — automatically.
             </p>
             <p className="text-sm font-medium text-primary mb-8">
               Built and launched in days, not months.
@@ -65,7 +65,7 @@ const RealEstate = () => {
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             <p className="text-sm text-muted-foreground mt-6">
-              Scroll to see how it works
+              See how it works for real estate
             </p>
           </motion.div>
 
@@ -77,7 +77,7 @@ const RealEstate = () => {
               transition={{ duration: 0.5 }}
               className="text-center text-lg text-muted-foreground mb-8"
             >
-              Everything works together to turn interest into booked conversations.
+              Everything works together to turn property interest into booked conversations.
             </motion.p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {features.map((feature, index) => (
@@ -109,7 +109,7 @@ const RealEstate = () => {
             transition={{ duration: 0.6 }}
             className="bg-card/30 rounded-3xl p-8 md:p-12 border border-border/50"
           >
-            <h2 className="text-3xl font-bold mb-4 text-center">Why Real Estate Professionals Choose Us</h2>
+            <h2 className="text-3xl font-bold mb-4 text-center">Why This Works for Real Estate Professionals</h2>
             <p className="text-center text-muted-foreground mb-8 max-w-xl mx-auto">
               Built for professionals who rely on speed, follow-up, and visibility to close deals.
             </p>
@@ -138,7 +138,7 @@ const RealEstate = () => {
             transition={{ duration: 0.6 }}
             className="text-center mt-20"
           >
-            <h2 className="text-3xl font-bold mb-4">Turn Your Website Into a Lead-Handling System</h2>
+            <h2 className="text-3xl font-bold mb-4">See What This Would Look Like for Your Business</h2>
             <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
               Get a clear project plan with timeline and pricing — no pressure, no long-term contracts.
             </p>
@@ -150,7 +150,7 @@ const RealEstate = () => {
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             <p className="text-sm text-muted-foreground mt-4 max-w-md mx-auto">
-              We'll outline exactly what your system includes and how fast it can go live.
+              We'll outline exactly what your real estate system includes and how fast it can go live.
             </p>
           </motion.div>
         </div>
