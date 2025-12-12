@@ -17,7 +17,7 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
       style={{ scrollbarWidth: 'none' }}
     >
       {/* Hero Section */}
-      <div className="relative min-h-[82%] flex flex-col">
+      <div className="relative min-h-[80%] flex flex-col">
         {/* Background */}
         <div className="absolute inset-0">
           <img 
@@ -25,26 +25,26 @@ export const ListingScreen = ({ onRequestShowing }: ListingScreenProps) => {
             alt="Luxury Estate" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-white/90 to-white" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/50 to-white/90" />
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 flex-1 flex flex-col justify-center px-5 pt-6">
+        <div className="relative z-10 flex-1 flex flex-col justify-start px-5 pt-10">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <p className="text-[8px] tracking-[0.3em] text-neutral-500 uppercase mb-3 font-medium">
+            <p className="text-[8px] tracking-[0.3em] text-neutral-700 uppercase mb-3 font-semibold">
               Private Real Estate Advisory
             </p>
             
-            <h1 className="text-[16px] font-normal text-neutral-900 leading-[1.35] mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+            <h1 className="text-[17px] font-medium text-neutral-900 leading-[1.3] mb-3 drop-shadow-sm" style={{ fontFamily: 'Georgia, serif' }}>
               Private Representation in Los Angeles' Most Coveted Homes
             </h1>
             
-            <p className="text-[10px] text-neutral-600 leading-relaxed mb-6 max-w-[95%]">
-              Discreet, data-informed real estate advisory for buyers and sellers who value clarity and control.
+            <p className="text-[10px] text-neutral-700 leading-relaxed mb-5 max-w-[95%] drop-shadow-sm">
+              Discreet, data-informed advisory for buyers and sellers who value clarity and control.
             </p>
 
             <div className="flex flex-col gap-3">
