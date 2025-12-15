@@ -124,6 +124,9 @@ export default function Dashboard() {
   const heroModalLeads = leads.filter((l) => l.source === "hero_modal").length;
   const projectPlanLeads = leads.filter((l) => l.source === "project_plan_modal").length;
   const realEstateLeads = leads.filter((l) => l.source === "real_estate_page").length;
+  const professionalServicesLeads = leads.filter((l) => l.source === "professional_services_page").length;
+  const homeServicesLeads = leads.filter((l) => l.source === "home_services_page").length;
+  const educationCoachingLeads = leads.filter((l) => l.source === "education_coaching_page").length;
 
   // Generate leads by day for chart
   const leadsPerDay = Array.from({ length: 14 }, (_, i) => {
@@ -309,7 +312,7 @@ export default function Dashboard() {
                   <span className="bg-primary/20 text-primary px-1.5 py-0.5 rounded-full text-xs">{totalLeads}</span>
                 </TabsTrigger>
                 <TabsTrigger value="hero_modal" className="gap-2 text-xs sm:text-sm">
-                  Hero Modal
+                  Hero
                   <span className="bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded-full text-xs">{heroModalLeads}</span>
                 </TabsTrigger>
                 <TabsTrigger value="project_plan_modal" className="gap-2 text-xs sm:text-sm">
@@ -320,9 +323,21 @@ export default function Dashboard() {
                   Real Estate
                   <span className="bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded-full text-xs">{realEstateLeads}</span>
                 </TabsTrigger>
+                <TabsTrigger value="professional_services_page" className="gap-2 text-xs sm:text-sm">
+                  Law Firms
+                  <span className="bg-purple-500/20 text-purple-400 px-1.5 py-0.5 rounded-full text-xs">{professionalServicesLeads}</span>
+                </TabsTrigger>
+                <TabsTrigger value="home_services_page" className="gap-2 text-xs sm:text-sm">
+                  Home Services
+                  <span className="bg-yellow-500/20 text-yellow-400 px-1.5 py-0.5 rounded-full text-xs">{homeServicesLeads}</span>
+                </TabsTrigger>
+                <TabsTrigger value="education_coaching_page" className="gap-2 text-xs sm:text-sm">
+                  Education
+                  <span className="bg-pink-500/20 text-pink-400 px-1.5 py-0.5 rounded-full text-xs">{educationCoachingLeads}</span>
+                </TabsTrigger>
               </TabsList>
 
-              {["all", "hero_modal", "real_estate_page"].map((tabValue) => (
+              {["all", "hero_modal", "real_estate_page", "professional_services_page", "home_services_page", "education_coaching_page"].map((tabValue) => (
                 <TabsContent key={tabValue} value={tabValue}>
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
@@ -422,14 +437,26 @@ export default function Dashboard() {
                                         ? "bg-orange-500/10 text-orange-400"
                                         : lead.source === "real_estate_page"
                                         ? "bg-green-500/10 text-green-400"
+                                        : lead.source === "professional_services_page"
+                                        ? "bg-purple-500/10 text-purple-400"
+                                        : lead.source === "home_services_page"
+                                        ? "bg-yellow-500/10 text-yellow-400"
+                                        : lead.source === "education_coaching_page"
+                                        ? "bg-pink-500/10 text-pink-400"
                                         : "bg-muted text-muted-foreground"
                                     }`}>
                                       {lead.source === "hero_modal" 
-                                        ? "Hero Modal" 
+                                        ? "Hero" 
                                         : lead.source === "project_plan_modal"
                                         ? "Project Plan"
                                         : lead.source === "real_estate_page"
                                         ? "Real Estate"
+                                        : lead.source === "professional_services_page"
+                                        ? "Law Firms"
+                                        : lead.source === "home_services_page"
+                                        ? "Home Services"
+                                        : lead.source === "education_coaching_page"
+                                        ? "Education"
                                         : lead.source || "unknown"}
                                     </span>
                                   </td>
