@@ -10,13 +10,13 @@ const steps = [
   },
   {
     icon: Paintbrush,
-    day: "Days 2–7",
+    day: "Days 2 to 7",
     title: "Design & Build",
     description: "Custom design, integrations, and automations.",
   },
   {
     icon: PartyPopper,
-    day: "Days 8–10",
+    day: "Days 8 to 10",
     title: "Launch",
     description: "Final tweaks, go-live, and training.",
   },

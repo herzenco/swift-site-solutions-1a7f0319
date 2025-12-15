@@ -111,7 +111,7 @@ export const ProgramDetailScreen = ({ onBack, onEnroll }: ProgramDetailScreenPro
         <p className="text-[9px] text-gray-600 italic leading-relaxed">
           "This program gave me the tools and confidence to step into my CEO role. Sarah's coaching is transformative."
         </p>
-        <p className="text-[8px] text-gray-400 mt-1">— Amanda R., CEO</p>
+        <p className="text-[8px] text-gray-400 mt-1">Amanda R., CEO</p>
       </div>
 
       {/* Spacer */}
@@ -127,7 +127,7 @@ export const ProgramDetailScreen = ({ onBack, onEnroll }: ProgramDetailScreenPro
         >
           Apply for This Program
         </motion.button>
-        <p className="text-[7px] text-gray-400 text-center mt-2">Free discovery call first — no commitment</p>
+        <p className="text-[7px] text-gray-400 text-center mt-2">Free discovery call first, no commitment</p>
       </div>
     </motion.div>
   );

@@ -9,7 +9,7 @@ import {
 const faqs = [
   {
     question: "How long does it take?",
-    answer: "Most projects are completed within 5–10 days. Complex projects may take up to 2 weeks.",
+    answer: "Most projects are completed within 5 to 10 days. Complex projects may take up to 2 weeks.",
   },
   {
     question: "What's included in maintenance?",

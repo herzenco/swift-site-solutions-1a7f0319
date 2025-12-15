@@ -53,7 +53,7 @@ const Entrepreneurs = () => {
               Websites for <span className="text-gradient">Entrepreneurs & SMB Owners</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              Get a website that acts like an employee — not a digital business card.
+              Get a website that acts like an employee. Not a digital business card.
             </p>
             <Button 
               className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"

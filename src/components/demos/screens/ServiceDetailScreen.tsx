@@ -42,7 +42,7 @@ export const ServiceDetailScreen = ({ onBack, onBookNow }: ServiceDetailScreenPr
           </div>
         </div>
         <p className="text-[9px] text-emerald-100/80 leading-relaxed">
-          When disaster strikes, we're there. Burst pipes, major leaks, sewage backups — our emergency team responds fast to minimize damage.
+          When disaster strikes, we're there. Burst pipes, major leaks, sewage backups: our emergency team responds fast to minimize damage.
         </p>
       </div>
 
@@ -110,7 +110,7 @@ export const ServiceDetailScreen = ({ onBack, onBookNow }: ServiceDetailScreenPr
         <p className="text-[9px] text-gray-600 italic leading-relaxed">
           "Called at 2am with a burst pipe. They were here in 30 minutes and had it fixed within the hour. Saved our home from serious damage."
         </p>
-        <p className="text-[8px] text-gray-400 mt-1">— Jennifer T.</p>
+        <p className="text-[8px] text-gray-400 mt-1">Jennifer T.</p>
       </div>
 
       {/* Spacer */}

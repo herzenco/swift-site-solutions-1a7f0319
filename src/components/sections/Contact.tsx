@@ -43,7 +43,7 @@ export const Contact = () => {
             Get your <span className="text-gradient">free project plan</span>
           </h2>
           <p className="text-xl text-muted-foreground">
-            Tell us what you need — we'll respond within 24 hours.
+            Tell us what you need. We'll respond within 24 hours.
           </p>
         </motion.div>
 

@@ -32,7 +32,7 @@ export const Hero = () => {
 
           {/* Subheadline */}
           <p className="text-lg sm:text-xl lg:text-2xl text-foreground/80 max-w-2xl mx-auto">
-            We build modern websites that capture leads, book meetings, and follow up automatically — launched in 5–10 days.
+            We build modern websites that capture leads, book meetings, and follow up automatically. Launched in 5 to 10 days.
           </p>
         </motion.div>
 

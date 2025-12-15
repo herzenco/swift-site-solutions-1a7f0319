@@ -25,7 +25,7 @@ const features = [
 ];
 
 const benefits = [
-  "Capture consultation requests 24/7 — even after hours",
+  "Capture consultation requests 24/7, even after hours",
   "Reduce no-shows with automated reminders",
   "See every inquiry and case status in real-time",
   "Scale your practice without adding admin staff",
@@ -55,7 +55,7 @@ const ProfessionalServices = () => {
                 Websites for <span className="text-gradient">Law Firms</span>
               </h1>
               <p className="text-lg text-muted-foreground mb-4">
-                Capture leads, manage consultations, and keep every case organized — automatically.
+                Capture leads, manage consultations, and keep every case organized. Automatically.
               </p>
               <p className="text-sm text-muted-foreground/80 mb-8">
                 Built and launched in days, not months.
@@ -89,7 +89,7 @@ const ProfessionalServices = () => {
             className="mb-20"
           >
             <p className="text-center text-muted-foreground mb-8">
-              Everything works together — from intake to consultation to case management.
+              Everything works together, from intake to consultation to case management.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {features.map((feature, index) => (

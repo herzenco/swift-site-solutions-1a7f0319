@@ -25,7 +25,7 @@ const features = [
 ];
 
 const benefits = [
-  "Capture leads from listings instantly — no delays",
+  "Capture leads from listings instantly, no delays",
   "Reduce no-shows with automated reminders",
   "See every inquiry and interaction in real-time",
   "Scale your client base without adding admin staff",
@@ -55,7 +55,7 @@ const RealEstate = () => {
                 Websites for <span className="text-gradient">Real Estate Professionals</span>
               </h1>
               <p className="text-lg text-muted-foreground mb-4">
-                Capture leads, manage showings, and keep every conversation organized — automatically.
+                Capture leads, manage showings, and keep every conversation organized. Automatically.
               </p>
               <p className="text-sm text-muted-foreground/80 mb-8">
                 Built and launched in days, not months.
@@ -89,7 +89,7 @@ const RealEstate = () => {
             className="mb-20"
           >
             <p className="text-center text-muted-foreground mb-8">
-              Everything works together — from discovery to showing to closing.
+              Everything works together, from discovery to showing to closing.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {features.map((feature, index) => (
