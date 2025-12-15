@@ -17,6 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 interface HeroWorkflowModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  source?: string;
 }
 
 type Step = "process" | "form" | "success";
@@ -42,7 +43,7 @@ const processSteps = [
   },
 ];
 
-export const HeroWorkflowModal = ({ open, onOpenChange }: HeroWorkflowModalProps) => {
+export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }: HeroWorkflowModalProps) => {
   const [step, setStep] = useState<Step>("process");
   const [formData, setFormData] = useState({
     fullName: "",
@@ -73,7 +74,7 @@ export const HeroWorkflowModal = ({ open, onOpenChange }: HeroWorkflowModalProps
         phone: formData.phone.trim() || null,
         website: formData.website.trim() || null,
         notes: formData.notes.trim() || null,
-        source: "hero_modal",
+        source: source,
       });
 
       if (error) {

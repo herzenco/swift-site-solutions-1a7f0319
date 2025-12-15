@@ -123,6 +123,7 @@ export default function Dashboard() {
   }).length;
   const heroModalLeads = leads.filter((l) => l.source === "hero_modal").length;
   const projectPlanLeads = leads.filter((l) => l.source === "project_plan_modal").length;
+  const realEstateLeads = leads.filter((l) => l.source === "real_estate_page").length;
 
   // Generate leads by day for chart
   const leadsPerDay = Array.from({ length: 14 }, (_, i) => {
@@ -302,7 +303,7 @@ export default function Dashboard() {
 
             {/* Leads Tables with Sub-tabs */}
             <Tabs value={leadsSubTab} onValueChange={setLeadsSubTab} className="w-full">
-              <TabsList className="mb-4 bg-muted/50">
+              <TabsList className="mb-4 bg-muted/50 flex-wrap h-auto gap-1">
                 <TabsTrigger value="all" className="gap-2 text-xs sm:text-sm">
                   All
                   <span className="bg-primary/20 text-primary px-1.5 py-0.5 rounded-full text-xs">{totalLeads}</span>
@@ -315,9 +316,13 @@ export default function Dashboard() {
                   Project Plan
                   <span className="bg-orange-500/20 text-orange-400 px-1.5 py-0.5 rounded-full text-xs">{projectPlanLeads}</span>
                 </TabsTrigger>
+                <TabsTrigger value="real_estate_page" className="gap-2 text-xs sm:text-sm">
+                  Real Estate
+                  <span className="bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded-full text-xs">{realEstateLeads}</span>
+                </TabsTrigger>
               </TabsList>
 
-              {["all", "hero_modal"].map((tabValue) => (
+              {["all", "hero_modal", "real_estate_page"].map((tabValue) => (
                 <TabsContent key={tabValue} value={tabValue}>
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
@@ -415,12 +420,16 @@ export default function Dashboard() {
                                         ? "bg-blue-500/10 text-blue-400" 
                                         : lead.source === "project_plan_modal"
                                         ? "bg-orange-500/10 text-orange-400"
+                                        : lead.source === "real_estate_page"
+                                        ? "bg-green-500/10 text-green-400"
                                         : "bg-muted text-muted-foreground"
                                     }`}>
                                       {lead.source === "hero_modal" 
                                         ? "Hero Modal" 
                                         : lead.source === "project_plan_modal"
                                         ? "Project Plan"
+                                        : lead.source === "real_estate_page"
+                                        ? "Real Estate"
                                         : lead.source || "unknown"}
                                     </span>
                                   </td>
