@@ -27,7 +27,7 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-32 bg-card/30 relative">
+    <section id="contact" className="py-16 md:py-20 bg-card/30 relative">
       {/* Background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-3xl" />
       
