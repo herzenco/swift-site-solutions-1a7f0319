@@ -12,19 +12,19 @@ import { Footer } from "@/components/sections/Footer";
 import { SEO } from "@/components/SEO";
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="h-screen overflow-y-auto snap-y snap-mandatory bg-background">
       <SEO canonical="/" />
       <Navbar />
-      <Hero />
-      <HowWeThink />
-      <Portfolio />
-      <Tools />
-      <Pricing />
-      <SocialProof />
-      <HowItWorks />
-      <FAQ />
-      <Contact />
-      <Footer />
+      <section className="snap-start"><Hero /></section>
+      <section className="snap-start"><HowWeThink /></section>
+      <section className="snap-start"><Portfolio /></section>
+      <section className="snap-start"><Tools /></section>
+      <section className="snap-start"><Pricing /></section>
+      <section className="snap-start"><SocialProof /></section>
+      <section className="snap-start"><HowItWorks /></section>
+      <section className="snap-start"><FAQ /></section>
+      <section className="snap-start"><Contact /></section>
+      <section className="snap-start"><Footer /></section>
     </div>
   );
 };
