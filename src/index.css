@@ -71,6 +71,10 @@
     @apply bg-background text-foreground font-sans antialiased;
     font-family: "Plus Jakarta Sans", system-ui, sans-serif;
   }
+
+  h1, h2, h3 {
+    text-shadow: 0 0 40px hsl(190 100% 50% / 0.3), 0 0 80px hsl(190 100% 50% / 0.15);
+  }
 }
 
 @layer utilities {
