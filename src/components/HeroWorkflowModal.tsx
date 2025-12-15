@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { ArrowRight, Phone, FileText, Rocket, CheckCircle2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface HeroWorkflowModalProps {
   open: boolean;
@@ -50,6 +52,7 @@ export const HeroWorkflowModal = ({ open, onOpenChange }: HeroWorkflowModalProps
     notes: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -62,20 +65,48 @@ export const HeroWorkflowModal = ({ open, onOpenChange }: HeroWorkflowModalProps
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate brief delay for UX
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    
-    setIsSubmitting(false);
-    setStep("success");
-    
-    // Redirect to Calendly after showing success
-    setTimeout(() => {
-      window.open("https://calendly.com/herzenco/website-consultation", "_blank");
-      onOpenChange(false);
-      // Reset for next time
-      setStep("process");
-      setFormData({ fullName: "", email: "", phone: "", website: "", notes: "" });
-    }, 2000);
+    try {
+      // Save lead to database
+      const { error } = await supabase.from("leads").insert({
+        full_name: formData.fullName.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim() || null,
+        website: formData.website.trim() || null,
+        notes: formData.notes.trim() || null,
+        source: "hero_modal",
+      });
+
+      if (error) {
+        console.error("Error saving lead:", error);
+        toast({
+          title: "Something went wrong",
+          description: "Please try again or contact us directly.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      setIsSubmitting(false);
+      setStep("success");
+      
+      // Redirect to Calendly after showing success
+      setTimeout(() => {
+        window.open("https://calendly.com/herzenco/website-consultation", "_blank");
+        onOpenChange(false);
+        // Reset for next time
+        setStep("process");
+        setFormData({ fullName: "", email: "", phone: "", website: "", notes: "" });
+      }, 2000);
+    } catch (err) {
+      console.error("Unexpected error:", err);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again or contact us directly.",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+    }
   };
 
   const handleClose = (open: boolean) => {
