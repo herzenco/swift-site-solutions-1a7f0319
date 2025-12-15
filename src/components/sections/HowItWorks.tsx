@@ -24,7 +24,7 @@ const steps = [
 
 export const HowItWorks = () => {
   return (
-    <section id="process" className="py-32 bg-background relative overflow-hidden">
+    <section id="process" className="py-16 md:py-20 bg-background relative overflow-hidden">
       <div className="container-tight px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

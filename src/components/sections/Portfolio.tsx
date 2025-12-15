@@ -31,7 +31,7 @@ const industries = [
 
 export const Portfolio = () => {
   return (
-    <section id="portfolio" className="pt-32 pb-16 bg-background relative">
+    <section id="portfolio" className="pt-16 pb-12 bg-background relative">
       <div className="container-tight px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

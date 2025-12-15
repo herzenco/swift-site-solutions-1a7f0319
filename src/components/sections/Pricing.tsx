@@ -47,7 +47,7 @@ const plans = [
 
 export const Pricing = () => {
   return (
-    <section id="pricing" className="py-32 bg-card/30 relative">
+    <section id="pricing" className="py-16 md:py-20 bg-card/30 relative">
       <div className="container-tight px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

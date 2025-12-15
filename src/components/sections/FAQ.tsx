@@ -31,7 +31,7 @@ const faqs = [
 
 export const FAQ = () => {
   return (
-    <section id="faq" className="py-32 bg-background relative">
+    <section id="faq" className="py-16 md:py-20 bg-background relative">
       <div className="container-tight max-w-2xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
