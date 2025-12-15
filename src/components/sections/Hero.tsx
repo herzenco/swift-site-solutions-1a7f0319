@@ -22,14 +22,14 @@ export const Hero = () => {
         >
           {/* Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]">
-            AI-powered websites
+            If your website isn't bringing in leads,
             <br />
-            <span className="text-gradient">delivered in 5–10 days</span>
+            <span className="text-gradient">it's not working</span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-2xl sm:text-3xl font-semibold text-foreground/90">
-            Built fast. Built right. Automations included.
+          <p className="text-lg sm:text-xl lg:text-2xl text-foreground/80 max-w-2xl mx-auto">
+            We build modern websites that capture leads, book meetings, and follow up automatically — launched in 5–10 days.
           </p>
         </motion.div>
 
@@ -42,7 +42,7 @@ export const Hero = () => {
         >
           <Button variant="hero" size="xl" asChild>
             <a href="#contact">
-              Start your 10-day build
+              Get a website that works
               <ArrowRight className="w-5 h-5" />
             </a>
           </Button>
