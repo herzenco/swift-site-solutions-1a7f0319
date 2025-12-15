@@ -22,8 +22,8 @@ export const Hero = () => {
         >
           {/* Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[0.95]">
-            <span className="block text-foreground/90">No leads?</span>
-            <span className="block text-gradient font-black">Your website isn't working.</span>
+            <span className="block text-foreground/90">Your website isn't a system.</span>
+            <span className="block text-gradient font-black">That's the problem.</span>
           </h1>
 
           {/* Subheadline */}
