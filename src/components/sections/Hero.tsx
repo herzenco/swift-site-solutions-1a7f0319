@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { HeroWorkflowModal } from "@/components/HeroWorkflowModal";
 
 export const Hero = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
       {/* Background glow effect */}
@@ -39,13 +43,13 @@ export const Hero = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="pb-8"
         >
-          <Button variant="hero" size="xl" asChild>
-            <a href="#contact">
-              Get a website that works
-              <ArrowRight className="w-5 h-5" />
-            </a>
+          <Button variant="hero" size="xl" onClick={() => setIsModalOpen(true)}>
+            Get a website that works
+            <ArrowRight className="w-5 h-5" />
           </Button>
         </motion.div>
+
+        <HeroWorkflowModal open={isModalOpen} onOpenChange={setIsModalOpen} />
       </div>
 
       {/* Bottom gradient fade */}
