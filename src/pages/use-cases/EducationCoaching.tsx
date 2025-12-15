@@ -4,6 +4,7 @@ import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/BackButton";
 import { EducationCoachingDemo } from "@/components/demos/EducationCoachingDemo";
+import { SEO } from "@/components/SEO";
 import { GraduationCap, Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } from "lucide-react";
 
 const features = [
@@ -35,6 +36,11 @@ const benefits = [
 const EducationCoaching = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Education & Coaching Websites"
+        description="Custom websites for coaches, consultants, and educators. Turn interest into booked calls and clients with automated workflows. Delivered in 5-10 days."
+        canonical="/use-cases/education-coaching"
+      />
       <Navbar />
       <BackButton />
       

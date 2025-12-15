@@ -4,6 +4,7 @@ import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/BackButton";
 import { RealEstateDemo } from "@/components/demos/RealEstateDemo";
+import { SEO } from "@/components/SEO";
 import { Home, Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } from "lucide-react";
 
 const features = [
@@ -35,6 +36,11 @@ const benefits = [
 const RealEstate = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Real Estate Websites"
+        description="Custom websites for real estate professionals. Capture leads, manage showings, and keep every conversation organized automatically. Delivered in 5-10 days."
+        canonical="/use-cases/real-estate"
+      />
       <Navbar />
       <BackButton />
       
