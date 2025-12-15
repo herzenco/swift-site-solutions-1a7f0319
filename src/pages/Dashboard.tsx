@@ -17,6 +17,7 @@ import {
   Eye,
   MousePointerClick,
   Globe,
+  Filter,
 } from "lucide-react";
 import { format, subDays } from "date-fns";
 import { User, Session } from "@supabase/supabase-js";
@@ -49,6 +50,7 @@ export default function Dashboard() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("leads");
+  const [sourceFilter, setSourceFilter] = useState<string>("all");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -305,11 +307,28 @@ export default function Dashboard() {
               transition={{ delay: 0.4 }}
               className="bg-card border border-border rounded-xl overflow-hidden"
             >
-              <div className="p-6 border-b border-border">
-                <h2 className="text-lg font-semibold text-foreground">All Leads</h2>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Recent form submissions from your website
-                </p>
+              <div className="p-6 border-b border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <h2 className="text-lg font-semibold text-foreground">All Leads</h2>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Recent form submissions from your website
+                  </p>
+                </div>
+                <div className="relative">
+                  <Filter className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+                  <select
+                    value={sourceFilter}
+                    onChange={(e) => setSourceFilter(e.target.value)}
+                    className="appearance-none bg-background border border-border rounded-lg pl-9 pr-8 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 cursor-pointer"
+                  >
+                    <option value="all">All Sources</option>
+                    <option value="hero_modal">Hero Modal</option>
+                    <option value="project_plan_modal">Project Plan</option>
+                  </select>
+                  <svg className="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               </div>
 
               {isLoading ? (
@@ -350,7 +369,9 @@ export default function Dashboard() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-border">
-                      {leads.map((lead) => (
+                      {leads
+                        .filter((lead) => sourceFilter === "all" || lead.source === sourceFilter)
+                        .map((lead) => (
                         <tr
                           key={lead.id}
                           className="hover:bg-muted/30 transition-colors"
