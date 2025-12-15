@@ -397,20 +397,8 @@ export default function Dashboard() {
                           <td className="px-6 py-4 text-muted-foreground hidden md:table-cell">
                             {lead.phone || "—"}
                           </td>
-                          <td className="px-6 py-4 hidden lg:table-cell">
-                            {lead.website ? (
-                              <a
-                                href={lead.website}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-primary hover:underline inline-flex items-center gap-1"
-                              >
-                                Visit
-                                <ExternalLink className="w-3 h-3" />
-                              </a>
-                            ) : (
-                              <span className="text-muted-foreground">—</span>
-                            )}
+                          <td className="px-6 py-4 hidden lg:table-cell text-sm text-muted-foreground max-w-[200px] truncate">
+                            {lead.website || "—"}
                           </td>
                           <td className="px-6 py-4 hidden sm:table-cell">
                             <span className={`text-xs px-2 py-1 rounded-full ${
