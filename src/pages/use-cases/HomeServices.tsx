@@ -4,6 +4,7 @@ import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/BackButton";
 import { HomeServicesDemo } from "@/components/demos/HomeServicesDemo";
+import { SEO } from "@/components/SEO";
 import { Wrench, Calendar, MessageSquare, ClipboardList, ArrowRight, CheckCircle2 } from "lucide-react";
 
 const features = [
@@ -35,6 +36,11 @@ const benefits = [
 const HomeServices = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Home Services Websites"
+        description="Custom websites for plumbers, electricians, HVAC, and home service providers. Convert visitors into booked jobs with automated scheduling. Delivered in 5-10 days."
+        canonical="/use-cases/home-services"
+      />
       <Navbar />
       <BackButton />
       

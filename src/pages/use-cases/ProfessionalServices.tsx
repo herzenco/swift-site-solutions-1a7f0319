@@ -4,6 +4,7 @@ import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/BackButton";
 import { LawFirmDemo } from "@/components/demos/LawFirmDemo";
+import { SEO } from "@/components/SEO";
 import { Scale, Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } from "lucide-react";
 
 const features = [
@@ -35,6 +36,11 @@ const benefits = [
 const ProfessionalServices = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Law Firm Websites"
+        description="Custom websites for law firms and professional services. Capture consultation requests, qualify leads, and manage client intake automatically. Delivered in 5-10 days."
+        canonical="/use-cases/professional-services"
+      />
       <Navbar />
       <BackButton />
       

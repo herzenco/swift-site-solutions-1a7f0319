@@ -12,3 +12,10 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# Disallow admin/auth pages
+Disallow: /auth
+Disallow: /dashboard
+
+# Sitemap
+Sitemap: https://xyren.herzenco.co/sitemap.xml
