@@ -120,6 +120,7 @@ export default function Dashboard() {
     return leadDate >= weekAgo;
   }).length;
   const heroModalLeads = leads.filter((l) => l.source === "hero_modal").length;
+  const projectPlanLeads = leads.filter((l) => l.source === "project_plan_modal").length;
 
   // Generate leads by day for chart
   const leadsPerDay = Array.from({ length: 14 }, (_, i) => {
@@ -243,11 +244,9 @@ export default function Dashboard() {
                   <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center">
                     <Calendar className="w-5 h-5 text-orange-500" />
                   </div>
-                  <span className="text-sm text-muted-foreground">Conversion</span>
+                  <span className="text-sm text-muted-foreground">Project Plan</span>
                 </div>
-                <p className="text-3xl font-bold text-foreground">
-                  {totalLeads > 0 ? `${Math.round((heroModalLeads / totalLeads) * 100)}%` : "0%"}
-                </p>
+                <p className="text-3xl font-bold text-foreground">{projectPlanLeads}</p>
               </motion.div>
             </div>
 
@@ -393,8 +392,18 @@ export default function Dashboard() {
                             )}
                           </td>
                           <td className="px-6 py-4 hidden sm:table-cell">
-                            <span className="text-xs bg-muted px-2 py-1 rounded-full text-muted-foreground">
-                              {lead.source || "unknown"}
+                            <span className={`text-xs px-2 py-1 rounded-full ${
+                              lead.source === "hero_modal" 
+                                ? "bg-blue-500/10 text-blue-400" 
+                                : lead.source === "project_plan_modal"
+                                ? "bg-orange-500/10 text-orange-400"
+                                : "bg-muted text-muted-foreground"
+                            }`}>
+                              {lead.source === "hero_modal" 
+                                ? "Hero Modal" 
+                                : lead.source === "project_plan_modal"
+                                ? "Project Plan"
+                                : lead.source || "unknown"}
                             </span>
                           </td>
                           <td className="px-6 py-4 text-sm text-muted-foreground">
