@@ -21,10 +21,15 @@ export const Hero = () => {
           className="text-center max-w-4xl mx-auto"
         >
           {/* Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[0.95]">
-            <span className="block text-foreground/90">If your website isn't bringing in leads,</span>
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-[0.95]">
+            <span className="block text-foreground/90 whitespace-nowrap">If your website isn't bringing in leads,</span>
             <span className="block text-gradient font-black">it's not working.</span>
           </h1>
+
+          {/* Subheadline */}
+          <p className="text-lg sm:text-xl lg:text-2xl text-foreground/80 max-w-2xl mx-auto">
+            We build modern websites that capture leads, book meetings, and follow up automatically — launched in 5–10 days.
+          </p>
         </motion.div>
 
         {/* CTA at bottom */}
