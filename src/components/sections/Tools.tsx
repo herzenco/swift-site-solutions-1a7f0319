@@ -26,7 +26,7 @@ const tools = [
 
 export const Tools = () => {
   return (
-    <section id="tools" className="py-32 bg-background relative overflow-hidden">
+    <section id="tools" className="pt-16 pb-32 bg-background relative overflow-hidden">
       <div className="container-tight px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
