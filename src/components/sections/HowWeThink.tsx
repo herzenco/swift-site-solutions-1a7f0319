@@ -21,7 +21,7 @@ const principles = [
 
 export const HowWeThink = () => {
   return (
-    <section className="py-24 md:py-32 bg-background">
+    <section className="pt-12 md:pt-16 pb-24 md:pb-32 bg-background">
       <div className="container-tight">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
