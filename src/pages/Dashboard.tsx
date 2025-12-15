@@ -17,7 +17,6 @@ import {
   Eye,
   MousePointerClick,
   Globe,
-  Filter,
 } from "lucide-react";
 import { format, subDays } from "date-fns";
 import { User, Session } from "@supabase/supabase-js";
@@ -50,7 +49,7 @@ export default function Dashboard() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("leads");
-  const [sourceFilter, setSourceFilter] = useState<string>("all");
+  const [leadsSubTab, setLeadsSubTab] = useState<string>("all");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -300,131 +299,144 @@ export default function Dashboard() {
               </div>
             </motion.div>
 
-            {/* Leads Table */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="bg-card border border-border rounded-xl overflow-hidden"
-            >
-              <div className="p-6 border-b border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div>
-                  <h2 className="text-lg font-semibold text-foreground">All Leads</h2>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Recent form submissions from your website
-                  </p>
-                </div>
-                <div className="relative">
-                  <Filter className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
-                  <select
-                    value={sourceFilter}
-                    onChange={(e) => setSourceFilter(e.target.value)}
-                    className="appearance-none bg-background border border-border rounded-lg pl-9 pr-8 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 cursor-pointer"
-                  >
-                    <option value="all">All Sources</option>
-                    <option value="hero_modal">Hero Modal</option>
-                    <option value="project_plan_modal">Project Plan</option>
-                  </select>
-                  <svg className="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
-              </div>
+            {/* Leads Tables with Sub-tabs */}
+            <Tabs value={leadsSubTab} onValueChange={setLeadsSubTab} className="w-full">
+              <TabsList className="mb-4 bg-muted/50">
+                <TabsTrigger value="all" className="gap-2 text-xs sm:text-sm">
+                  All
+                  <span className="bg-primary/20 text-primary px-1.5 py-0.5 rounded-full text-xs">{totalLeads}</span>
+                </TabsTrigger>
+                <TabsTrigger value="hero_modal" className="gap-2 text-xs sm:text-sm">
+                  Hero Modal
+                  <span className="bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded-full text-xs">{heroModalLeads}</span>
+                </TabsTrigger>
+                <TabsTrigger value="project_plan_modal" className="gap-2 text-xs sm:text-sm">
+                  Project Plan
+                  <span className="bg-orange-500/20 text-orange-400 px-1.5 py-0.5 rounded-full text-xs">{projectPlanLeads}</span>
+                </TabsTrigger>
+              </TabsList>
 
-              {isLoading ? (
-                <div className="p-12 text-center">
-                  <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto" />
-                </div>
-              ) : leads.length === 0 ? (
-                <div className="p-12 text-center">
-                  <Users className="w-12 h-12 text-muted-foreground/50 mx-auto mb-4" />
-                  <p className="text-muted-foreground">No leads yet</p>
-                  <p className="text-sm text-muted-foreground/70 mt-1">
-                    Leads will appear here when visitors submit the form
-                  </p>
-                </div>
-              ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead className="bg-muted/50">
-                      <tr>
-                        <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
-                          Name
-                        </th>
-                        <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
-                          Email
-                        </th>
-                        <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden md:table-cell">
-                          Phone
-                        </th>
-                        <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden lg:table-cell">
-                          Website
-                        </th>
-                        <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden sm:table-cell">
-                          Source
-                        </th>
-                        <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
-                          Date
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-border">
-                      {leads
-                        .filter((lead) => sourceFilter === "all" || lead.source === sourceFilter)
-                        .map((lead) => (
-                        <tr
-                          key={lead.id}
-                          className="hover:bg-muted/30 transition-colors"
-                        >
-                          <td className="px-6 py-4">
-                            <span className="font-medium text-foreground">
-                              {lead.full_name}
-                            </span>
-                            {lead.notes && (
-                              <p className="text-xs text-muted-foreground mt-1 line-clamp-1 max-w-[200px]">
-                                {lead.notes}
-                              </p>
-                            )}
-                          </td>
-                          <td className="px-6 py-4">
-                            <a
-                              href={`mailto:${lead.email}`}
-                              className="text-primary hover:underline"
-                            >
-                              {lead.email}
-                            </a>
-                          </td>
-                          <td className="px-6 py-4 text-muted-foreground hidden md:table-cell">
-                            {lead.phone || "—"}
-                          </td>
-                          <td className="px-6 py-4 hidden lg:table-cell text-sm text-muted-foreground max-w-[200px] truncate">
-                            {lead.website || "—"}
-                          </td>
-                          <td className="px-6 py-4 hidden sm:table-cell">
-                            <span className={`text-xs px-2 py-1 rounded-full ${
-                              lead.source === "hero_modal" 
-                                ? "bg-blue-500/10 text-blue-400" 
-                                : lead.source === "project_plan_modal"
-                                ? "bg-orange-500/10 text-orange-400"
-                                : "bg-muted text-muted-foreground"
-                            }`}>
-                              {lead.source === "hero_modal" 
-                                ? "Hero Modal" 
-                                : lead.source === "project_plan_modal"
-                                ? "Project Plan"
-                                : lead.source || "unknown"}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 text-sm text-muted-foreground">
-                            {format(new Date(lead.created_at), "MMM d, yyyy")}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </motion.div>
+              {["all", "hero_modal", "project_plan_modal"].map((tabValue) => (
+                <TabsContent key={tabValue} value={tabValue}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-card border border-border rounded-xl overflow-hidden"
+                  >
+                    <div className="p-6 border-b border-border">
+                      <h2 className="text-lg font-semibold text-foreground">
+                        {tabValue === "all" ? "All Leads" : tabValue === "hero_modal" ? "Hero Modal Leads" : "Project Plan Leads"}
+                      </h2>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        {tabValue === "all" 
+                          ? "All form submissions from your website" 
+                          : tabValue === "hero_modal"
+                          ? "Leads from the hero CTA modal"
+                          : "Leads from the project plan questionnaire"}
+                      </p>
+                    </div>
+
+                    {isLoading ? (
+                      <div className="p-12 text-center">
+                        <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto" />
+                      </div>
+                    ) : leads.filter((l) => tabValue === "all" || l.source === tabValue).length === 0 ? (
+                      <div className="p-12 text-center">
+                        <Users className="w-12 h-12 text-muted-foreground/50 mx-auto mb-4" />
+                        <p className="text-muted-foreground">No leads yet</p>
+                        <p className="text-sm text-muted-foreground/70 mt-1">
+                          Leads will appear here when visitors submit the form
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="overflow-x-auto">
+                        <table className="w-full">
+                          <thead className="bg-muted/50">
+                            <tr>
+                              <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
+                                Name
+                              </th>
+                              <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
+                                Email
+                              </th>
+                              <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden md:table-cell">
+                                Phone
+                              </th>
+                              <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden lg:table-cell">
+                                Website
+                              </th>
+                              {tabValue === "all" && (
+                                <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden sm:table-cell">
+                                  Source
+                                </th>
+                              )}
+                              <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
+                                Date
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-border">
+                            {leads
+                              .filter((lead) => tabValue === "all" || lead.source === tabValue)
+                              .map((lead) => (
+                              <tr
+                                key={lead.id}
+                                className="hover:bg-muted/30 transition-colors"
+                              >
+                                <td className="px-6 py-4">
+                                  <span className="font-medium text-foreground">
+                                    {lead.full_name}
+                                  </span>
+                                  {lead.notes && (
+                                    <p className="text-xs text-muted-foreground mt-1 line-clamp-1 max-w-[200px]">
+                                      {lead.notes}
+                                    </p>
+                                  )}
+                                </td>
+                                <td className="px-6 py-4">
+                                  <a
+                                    href={`mailto:${lead.email}`}
+                                    className="text-primary hover:underline"
+                                  >
+                                    {lead.email}
+                                  </a>
+                                </td>
+                                <td className="px-6 py-4 text-muted-foreground hidden md:table-cell">
+                                  {lead.phone || "—"}
+                                </td>
+                                <td className="px-6 py-4 hidden lg:table-cell text-sm text-muted-foreground max-w-[200px] truncate">
+                                  {lead.website || "—"}
+                                </td>
+                                {tabValue === "all" && (
+                                  <td className="px-6 py-4 hidden sm:table-cell">
+                                    <span className={`text-xs px-2 py-1 rounded-full ${
+                                      lead.source === "hero_modal" 
+                                        ? "bg-blue-500/10 text-blue-400" 
+                                        : lead.source === "project_plan_modal"
+                                        ? "bg-orange-500/10 text-orange-400"
+                                        : "bg-muted text-muted-foreground"
+                                    }`}>
+                                      {lead.source === "hero_modal" 
+                                        ? "Hero Modal" 
+                                        : lead.source === "project_plan_modal"
+                                        ? "Project Plan"
+                                        : lead.source || "unknown"}
+                                    </span>
+                                  </td>
+                                )}
+                                <td className="px-6 py-4 text-sm text-muted-foreground">
+                                  {format(new Date(lead.created_at), "MMM d, yyyy")}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+                  </motion.div>
+                </TabsContent>
+              ))}
+            </Tabs>
           </TabsContent>
 
           {/* Analytics Tab */}
