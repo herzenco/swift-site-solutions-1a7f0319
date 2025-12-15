@@ -24,6 +24,7 @@ interface FormData {
   businessType: string;
   primaryGoal: string;
   hasWebsite: string;
+  websiteUrl: string;
   biggestChallenge: string;
   timeline: string;
   preference: string;
@@ -104,6 +105,7 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
     businessType: "",
     primaryGoal: "",
     hasWebsite: "",
+    websiteUrl: "",
     biggestChallenge: "",
     timeline: "",
     preference: "",
@@ -115,11 +117,28 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
   const handleOptionSelect = (questionId: string, option: string) => {
     setFormData((prev) => ({ ...prev, [questionId]: option }));
     
+    // For hasWebsite question with "Yes" options, don't auto-advance (wait for URL input)
+    const isWebsiteQuestion = questionId === "hasWebsite";
+    const needsUrl = option.startsWith("Yes");
+    
+    if (isWebsiteQuestion && needsUrl) {
+      // Don't auto-advance, wait for URL input
+      return;
+    }
+    
     // Auto-advance to next question
     if (currentQuestion < questions.length - 1) {
       setTimeout(() => setCurrentQuestion(currentQuestion + 1), 300);
     } else {
       setTimeout(() => setStep("contact"), 300);
+    }
+  };
+
+  const handleContinueWithUrl = () => {
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      setStep("contact");
     }
   };
 
@@ -137,7 +156,7 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
     setIsSubmitting(true);
 
     try {
-      const notes = `Business: ${formData.businessType}\nGoal: ${formData.primaryGoal}\nHas website: ${formData.hasWebsite}\nChallenge: ${formData.biggestChallenge}\nTimeline: ${formData.timeline}\nPreference: ${formData.preference}`;
+      const notes = `Business: ${formData.businessType}\nGoal: ${formData.primaryGoal}\nHas website: ${formData.hasWebsite}${formData.websiteUrl ? ` (${formData.websiteUrl})` : ""}\nChallenge: ${formData.biggestChallenge}\nTimeline: ${formData.timeline}\nPreference: ${formData.preference}`;
 
       const { error } = await supabase.from("leads").insert({
         full_name: formData.name,
@@ -171,6 +190,7 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
         businessType: "",
         primaryGoal: "",
         hasWebsite: "",
+        websiteUrl: "",
         biggestChallenge: "",
         timeline: "",
         preference: "",
@@ -230,6 +250,31 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
                     </button>
                   ))}
                 </div>
+
+                {/* URL input for website question when "Yes" option is selected */}
+                {currentQ.id === "hasWebsite" && formData.hasWebsite.startsWith("Yes") && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    className="mt-4 space-y-3"
+                  >
+                    <Input
+                      type="url"
+                      placeholder="Enter your website URL (e.g., https://example.com)"
+                      value={formData.websiteUrl}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, websiteUrl: e.target.value }))}
+                      className="bg-background/50 border-border/50 h-12"
+                    />
+                    <Button
+                      onClick={handleContinueWithUrl}
+                      variant="hero"
+                      className="w-full"
+                    >
+                      Continue
+                      <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </motion.div>
+                )}
 
                 {currentQuestion > 0 && (
                   <button
