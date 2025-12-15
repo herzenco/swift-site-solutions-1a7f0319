@@ -31,7 +31,7 @@ export const HowWeThink = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Websites aren't pages. They're systems.
+            Websites aren't pages. <span className="text-gradient">They're systems.</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Most websites are static. They look fine, but they rely on manual follow-ups, 
