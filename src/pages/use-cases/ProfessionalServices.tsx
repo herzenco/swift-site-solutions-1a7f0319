@@ -3,24 +3,24 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/BackButton";
-import { Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } from "lucide-react";
 import { LawFirmDemo } from "@/components/demos/LawFirmDemo";
+import { Scale, Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } from "lucide-react";
 
 const features = [
   {
     icon: Calendar,
     title: "Streamlined Client Intake",
-    description: "Capture case details before the first call. Clients submit their situation online, so your team arrives prepared — no wasted consultations.",
+    description: "Capture case details before the first call. Clients submit their situation online, so your team arrives prepared.",
   },
   {
     icon: MessageSquare,
     title: "Qualify Leads Automatically",
-    description: "Filter serious inquiries from casual browsers. Focus your billable hours on cases that match your practice areas and fee structure.",
+    description: "Filter serious inquiries from casual browsers. Focus your billable hours on cases that match your practice areas.",
   },
   {
     icon: Users,
     title: "Never Miss a Follow-Up",
-    description: "Track every consultation request, case inquiry, and client communication in one place. Nothing falls through the cracks.",
+    description: "Track every consultation request, case inquiry, and client communication in one place.",
   },
 ];
 
@@ -29,6 +29,7 @@ const benefits = [
   "Reduce no-shows with automated reminders",
   "See every inquiry and case status in real-time",
   "Scale your practice without adding admin staff",
+  "Build trust with a professional online presence",
 ];
 
 const ProfessionalServices = () => {
@@ -37,84 +38,77 @@ const ProfessionalServices = () => {
       <Navbar />
       <BackButton />
       
-      <main className="pt-40 pb-32">
-        <div className="container-tight px-6 lg:px-8">
-          {/* Hero Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-24"
-          >
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-              A Smarter Website for <span className="text-gradient">Law Firms</span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              Designed to capture leads, manage consultations, and keep every case organized — automatically.
-            </p>
-            <Button 
-              className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+      <main className="pt-32 pb-20">
+        <div className="container-tight px-6">
+          {/* Hero Section with Demo */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-20">
+            {/* Left Column - Content */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
             >
-              Start Your Build
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-          </motion.div>
+              <div className="icon-container w-14 h-14 mb-6">
+                <Scale className="w-6 h-6 text-primary" strokeWidth={1.5} />
+              </div>
+              <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
+                Websites for <span className="text-gradient">Law Firms</span>
+              </h1>
+              <p className="text-lg text-muted-foreground mb-4">
+                Capture leads, manage consultations, and keep every case organized — automatically.
+              </p>
+              <p className="text-sm text-muted-foreground/80 mb-8">
+                Built and launched in days, not months.
+              </p>
+              <Button 
+                className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Start Your Build
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </motion.div>
 
-          {/* Features Grid */}
-          <div className="mb-28">
-            <motion.h2
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-center text-3xl font-bold mb-4"
+            {/* Right Column - Interactive Demo */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex justify-center"
             >
-              Designed for Legal Workflows
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-center text-lg text-muted-foreground mb-12"
-            >
-              Every part of the system is built to capture real interest, save time, and support trust at every step.
-            </motion.p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {features.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="p-8 rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300"
-                >
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
-                      <feature.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
-                    </div>
-                    <h3 className="text-xl font-bold">{feature.title}</h3>
-                  </div>
-                  <p className="text-muted-foreground">{feature.description}</p>
-                </motion.div>
-              ))}
-            </div>
+              <LawFirmDemo />
+            </motion.div>
           </div>
 
-          {/* Interactive Demo Section */}
+          {/* Features Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mb-28"
+            className="mb-20"
           >
-            <h2 className="text-center text-3xl font-bold mb-4">
-              See It in Action
-            </h2>
-            <p className="text-center text-lg text-muted-foreground mb-10 max-w-xl mx-auto">
-              Click through the demo to experience how clients request consultations — and how attorneys manage them.
+            <p className="text-center text-muted-foreground mb-8">
+              Everything works together — from intake to consultation to case management.
             </p>
-            <LawFirmDemo />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="p-8 rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm"
+                >
+                  <div className="icon-container w-12 h-12 mb-4">
+                    <feature.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.description}</p>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
 
           {/* Benefits Section */}
@@ -123,13 +117,10 @@ const ProfessionalServices = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-card/30 rounded-3xl p-10 md:p-16 border border-border/50"
+            className="bg-card/30 rounded-3xl p-8 md:p-12 border border-border/50"
           >
-            <h2 className="text-3xl font-bold mb-6 text-center">Why This Works for Law Firms</h2>
-            <p className="text-center text-muted-foreground mb-10 max-w-xl mx-auto">
-              Built for attorneys who rely on speed, follow-up, and visibility to win cases.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <h2 className="text-3xl font-bold mb-8 text-center">Why Law Firms Choose Us</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {benefits.map((benefit, index) => (
                 <motion.div
                   key={index}
@@ -152,12 +143,10 @@ const ProfessionalServices = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mt-28"
+            className="text-center mt-20"
           >
-            <h2 className="text-3xl font-bold mb-4">See What This Would Look Like for Your Firm</h2>
-            <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-              Get a clear project plan with timeline and pricing — no pressure, no long-term contracts.
-            </p>
+            <h2 className="text-3xl font-bold mb-4">Turn Your Website Into a Client Intake System</h2>
+            <p className="text-muted-foreground mb-8">Get a website that works as hard as you do.</p>
             <Button 
               className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
               onClick={() => window.location.href = '/#contact'}
@@ -165,9 +154,7 @@ const ProfessionalServices = () => {
               Get Your Free Project Plan
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
-            <p className="text-sm text-muted-foreground mt-4 max-w-md mx-auto">
-              We'll outline exactly what your law firm system includes and how fast it can go live.
-            </p>
+            <p className="text-sm text-muted-foreground/70 mt-4">No pressure. No sales pitch.</p>
           </motion.div>
         </div>
       </main>
