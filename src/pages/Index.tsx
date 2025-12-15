@@ -4,7 +4,7 @@ import { HowWeThink } from "@/components/sections/HowWeThink";
 import { Tools } from "@/components/sections/Tools";
 import { Portfolio } from "@/components/sections/Portfolio";
 import { SocialProof } from "@/components/sections/SocialProof";
-import { HowItWorks } from "@/components/sections/HowItWorks";
+
 import { Pricing } from "@/components/sections/Pricing";
 import { FAQ } from "@/components/sections/FAQ";
 import { Contact } from "@/components/sections/Contact";
@@ -21,7 +21,7 @@ const Index = () => {
       <section className="snap-start"><Tools /></section>
       <section className="snap-start"><Pricing /></section>
       <section className="snap-start"><SocialProof /></section>
-      <section className="snap-start"><HowItWorks /></section>
+      
       <section className="snap-start"><FAQ /></section>
       <section className="snap-start"><Contact /></section>
       <section className="snap-start"><Footer /></section>
