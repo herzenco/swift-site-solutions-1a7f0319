@@ -36,11 +36,9 @@ export const Navbar = () => {
         <div className="container-tight px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <a href="#" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <Sparkles className="w-4 h-4 text-primary-foreground" />
-              </div>
-              <span className="text-xl font-bold">Xyren</span>
+            <a href="#" className="flex flex-col">
+              <span className="text-xl font-bold leading-tight">Xyren</span>
+              <span className="text-xs text-muted-foreground leading-tight">By Herzen Co.</span>
             </a>
 
             {/* Desktop CTA */}
