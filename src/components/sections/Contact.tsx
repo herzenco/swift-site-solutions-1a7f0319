@@ -1,30 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { ProjectPlanModal } from "@/components/ProjectPlanModal";
 
 export const Contact = () => {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Message sent",
-      description: "We'll respond within 24 hours.",
-    });
-    
-    setIsSubmitting(false);
-    (e.target as HTMLFormElement).reset();
-  };
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <section id="contact" className="py-16 md:py-20 bg-card/30 relative">
@@ -37,64 +18,31 @@ export const Contact = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center"
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
             Get your <span className="text-gradient">free project plan</span>
           </h2>
-          <p className="text-xl text-muted-foreground">
-            Tell us what you need. We'll respond within 24 hours.
+          <p className="text-xl text-muted-foreground mb-10">
+            Answer a few quick questions. We'll review and send back a clear plan. No sales pitch.
           </p>
-        </motion.div>
-
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          onSubmit={handleSubmit}
-          className="space-y-5"
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Input
-              name="name"
-              placeholder="Name"
-              required
-              className="bg-background/50 border-border/50 h-14 text-base"
-            />
-            <Input
-              name="email"
-              type="email"
-              placeholder="Email"
-              required
-              className="bg-background/50 border-border/50 h-14 text-base"
-            />
-          </div>
-
-          <Textarea
-            name="message"
-            placeholder="Tell us about your project..."
-            rows={4}
-            required
-            className="bg-background/50 border-border/50 resize-none text-base"
-          />
 
           <Button
-            type="submit"
             variant="hero"
             size="xl"
-            className="w-full"
-            disabled={isSubmitting}
+            onClick={() => setModalOpen(true)}
           >
-            {isSubmitting ? "Sending..." : "Get my quote"}
+            Start your project plan
             <ArrowRight className="w-5 h-5" />
           </Button>
 
-          <p className="text-center text-sm text-muted-foreground">
-            No pressure. No sales pitch.
+          <p className="mt-6 text-sm text-muted-foreground">
+            Takes about 60 seconds.
           </p>
-        </motion.form>
+        </motion.div>
       </div>
+
+      <ProjectPlanModal open={modalOpen} onOpenChange={setModalOpen} />
     </section>
   );
 };
