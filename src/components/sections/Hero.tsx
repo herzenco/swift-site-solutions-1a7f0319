@@ -25,11 +25,6 @@ export const Hero = () => {
             <span className="block text-foreground/90">If your website isn't bringing in leads,</span>
             <span className="block text-gradient font-black">it's not working.</span>
           </h1>
-
-          {/* Subheadline */}
-          <p className="text-lg sm:text-xl lg:text-2xl text-foreground/80 max-w-2xl mx-auto">
-            We build modern websites that capture leads, book meetings, and follow up automatically — launched in 5–10 days.
-          </p>
         </motion.div>
 
         {/* CTA at bottom */}
