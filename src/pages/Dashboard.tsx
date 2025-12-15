@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ProjectPlanLeadsTable } from "@/components/dashboard/ProjectPlanLeadsTable";
 import { useToast } from "@/hooks/use-toast";
 import {
   LogOut,
@@ -316,7 +317,7 @@ export default function Dashboard() {
                 </TabsTrigger>
               </TabsList>
 
-              {["all", "hero_modal", "project_plan_modal"].map((tabValue) => (
+              {["all", "hero_modal"].map((tabValue) => (
                 <TabsContent key={tabValue} value={tabValue}>
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
@@ -436,6 +437,11 @@ export default function Dashboard() {
                   </motion.div>
                 </TabsContent>
               ))}
+
+              {/* Project Plan Tab with dedicated expandable table */}
+              <TabsContent value="project_plan_modal">
+                <ProjectPlanLeadsTable leads={leads} isLoading={isLoading} />
+              </TabsContent>
             </Tabs>
           </TabsContent>
 
