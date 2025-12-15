@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
@@ -5,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/BackButton";
 import { EducationCoachingDemo } from "@/components/demos/EducationCoachingDemo";
 import { SEO } from "@/components/SEO";
+import { HeroWorkflowModal } from "@/components/HeroWorkflowModal";
 import { GraduationCap, Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } from "lucide-react";
 
 const features = [
@@ -34,6 +36,8 @@ const benefits = [
 ];
 
 const EducationCoaching = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
       <SEO
@@ -68,7 +72,7 @@ const EducationCoaching = () => {
               </p>
               <Button 
                 className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => setIsModalOpen(true)}
               >
                 Start Your Build
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -155,7 +159,7 @@ const EducationCoaching = () => {
             <p className="text-muted-foreground mb-8">Get a website that works as hard as you do.</p>
             <Button 
               className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
-              onClick={() => window.location.href = '/#contact'}
+              onClick={() => setIsModalOpen(true)}
             >
               Get Your Free Project Plan
               <ArrowRight className="ml-2 w-5 h-5" />
@@ -166,6 +170,12 @@ const EducationCoaching = () => {
       </main>
 
       <Footer />
+
+      <HeroWorkflowModal 
+        open={isModalOpen} 
+        onOpenChange={setIsModalOpen} 
+        source="education_coaching_page" 
+      />
     </div>
   );
 };
