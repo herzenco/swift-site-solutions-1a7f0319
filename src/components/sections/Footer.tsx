@@ -4,7 +4,7 @@ export const Footer = () => {
       <div className="container-tight px-6 py-12">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
           <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} Velocit
+            © {new Date().getFullYear()} Xyren by Herzen Co.
           </p>
           <div className="flex items-center gap-8">
             <a href="#portfolio" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
