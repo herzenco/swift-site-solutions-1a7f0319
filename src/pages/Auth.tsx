@@ -14,6 +14,8 @@ const authSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
+const ALLOWED_DOMAIN = "herzenco.co";
+
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
@@ -63,6 +65,19 @@ export default function Auth() {
     e.preventDefault();
     
     if (!validateForm()) return;
+
+    // Check domain for signups
+    if (!isLogin) {
+      const emailDomain = email.trim().split("@")[1]?.toLowerCase();
+      if (emailDomain !== ALLOWED_DOMAIN) {
+        toast({
+          title: "Access restricted",
+          description: `Only @${ALLOWED_DOMAIN} email addresses can create accounts.`,
+          variant: "destructive",
+        });
+        return;
+      }
+    }
     
     setIsLoading(true);
 
