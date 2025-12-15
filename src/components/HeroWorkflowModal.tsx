@@ -237,9 +237,12 @@ export const HeroWorkflowModal = ({ open, onOpenChange }: HeroWorkflowModalProps
                   <Input
                     id="website"
                     name="website"
-                    type="url"
+                    type="text"
                     value={formData.website}
-                    onChange={handleInputChange}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\s/g, '');
+                      setFormData((prev) => ({ ...prev, website: value }));
+                    }}
                     placeholder="https://yoursite.com"
                   />
                 </div>
