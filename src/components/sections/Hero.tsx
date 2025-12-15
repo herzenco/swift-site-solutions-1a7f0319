@@ -21,10 +21,9 @@ export const Hero = () => {
           className="text-center max-w-4xl mx-auto"
         >
           {/* Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]">
-            If your website isn't bringing in leads,
-            <br />
-            <span className="text-gradient">it's not working</span>
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[0.95]">
+            <span className="block text-foreground/90">If your website isn't bringing in leads,</span>
+            <span className="block text-gradient font-black">it's not working.</span>
           </h1>
 
           {/* Subheadline */}
