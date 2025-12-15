@@ -26,7 +26,7 @@ const features = [
   { icon: BarChart3, label: "Analytics dashboard" },
   { icon: Video, label: "Training videos" },
   { icon: Headphones, label: "Ongoing support" },
-  { icon: Clock, label: "5–10 day delivery" },
+  { icon: Clock, label: "5 to 10 day delivery" },
 ];
 
 export const ValueStack = () => {

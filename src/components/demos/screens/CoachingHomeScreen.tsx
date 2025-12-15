@@ -145,7 +145,7 @@ export const CoachingHomeScreen = ({ onViewPrograms, onBookSession }: CoachingHo
           <p className="text-[9px] text-gray-600 leading-[1.7] italic mb-2">
             "Working with Dr. Chen transformed not just my career, but how I show up in every area of my life. Her insights are profound."
           </p>
-          <p className="text-[8px] text-gray-400">— David K., CEO</p>
+          <p className="text-[8px] text-gray-400">David K., CEO</p>
         </motion.div>
       </div>
 

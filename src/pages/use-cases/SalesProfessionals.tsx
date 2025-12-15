@@ -53,7 +53,7 @@ const SalesProfessionals = () => {
               Websites for <span className="text-gradient">Sales Professionals</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              Capture, qualify, and nurture leads automatically — even while you're off the clock.
+              Capture, qualify, and nurture leads automatically. Even while you're off the clock.
             </p>
             <Button 
               className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"

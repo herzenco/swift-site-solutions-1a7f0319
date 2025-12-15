@@ -55,7 +55,7 @@ const EducationCoaching = () => {
                 Websites for <span className="text-gradient">Education & Coaching</span>
               </h1>
               <p className="text-lg text-muted-foreground mb-4">
-                Turn interest into booked calls, clients, or students with automated workflows — all from one powerful website.
+                Turn interest into booked calls, clients, or students with automated workflows. All from one powerful website.
               </p>
               <p className="text-sm text-muted-foreground/80 mb-8">
                 Built and launched in days, not months.
@@ -89,7 +89,7 @@ const EducationCoaching = () => {
             className="mb-20"
           >
             <p className="text-center text-muted-foreground mb-8">
-              Everything works together — from discovery to enrollment to ongoing engagement.
+              Everything works together, from discovery to enrollment to ongoing engagement.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {features.map((feature, index) => (

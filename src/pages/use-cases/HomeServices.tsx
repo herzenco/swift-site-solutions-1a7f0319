@@ -55,7 +55,7 @@ const HomeServices = () => {
                 Websites for <span className="text-gradient">Home & Local Services</span>
               </h1>
               <p className="text-lg text-muted-foreground mb-4">
-                Convert inbound traffic into booked jobs with automated scheduling and follow-ups — all from one powerful website.
+                Convert inbound traffic into booked jobs with automated scheduling and follow-ups. All from one powerful website.
               </p>
               <p className="text-sm text-muted-foreground/80 mb-8">
                 Built and launched in days, not months.
@@ -89,7 +89,7 @@ const HomeServices = () => {
             className="mb-20"
           >
             <p className="text-center text-muted-foreground mb-8">
-              Everything works together — from discovery to booking to follow-up.
+              Everything works together, from discovery to booking to follow-up.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {features.map((feature, index) => (

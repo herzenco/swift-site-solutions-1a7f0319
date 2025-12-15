@@ -13,7 +13,7 @@ const plans = [
       "AI chatbot",
       "Scheduling automation",
       "Maintenance",
-      "Delivered in 5–10 days",
+      "Delivered in 5 to 10 days",
     ],
     popular: false,
   },
@@ -37,7 +37,7 @@ const plans = [
     description: "For businesses wanting ongoing content and strategy.",
     features: [
       "Everything in Growth",
-      "1–2 SEO-optimized blog posts monthly",
+      "1 to 2 SEO-optimized blog posts monthly",
       "Strategy calls",
       "Dedicated manager",
     ],
