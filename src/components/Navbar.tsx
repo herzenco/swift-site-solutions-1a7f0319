@@ -37,7 +37,7 @@ export const Navbar = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <a href="#">
-              <img src={logo} alt="Xyren by Herzen Co." className="h-8 w-auto" />
+              <img src={logo} alt="Xyren by Herzen Co." className="h-12 w-auto" />
             </a>
 
 
