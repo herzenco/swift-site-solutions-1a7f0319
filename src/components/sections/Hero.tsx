@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { HeroWorkflowModal } from "@/components/HeroWorkflowModal";
 
 export const Hero = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
       {/* Background glow effect */}
@@ -21,15 +25,14 @@ export const Hero = () => {
           className="text-center max-w-4xl mx-auto"
         >
           {/* Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]">
-            AI-powered websites
-            <br />
-            <span className="text-gradient">delivered in 5–10 days</span>
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[0.95]">
+            <span className="block text-foreground/90">Your website isn't a system.</span>
+            <span className="block text-gradient font-black">That's the problem.</span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-2xl sm:text-3xl font-semibold text-foreground/90">
-            Built fast. Built right. Automations included.
+          <p className="text-lg sm:text-xl lg:text-2xl text-foreground/80 max-w-2xl mx-auto">
+            We build modern websites that capture leads, book meetings, and follow up automatically. Launched in 5 to 10 days.
           </p>
         </motion.div>
 
@@ -40,13 +43,13 @@ export const Hero = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="pb-8"
         >
-          <Button variant="hero" size="xl" asChild>
-            <a href="#contact">
-              Start your 10-day build
-              <ArrowRight className="w-5 h-5" />
-            </a>
+          <Button variant="hero" size="xl" onClick={() => setIsModalOpen(true)}>
+            Get a website that works
+            <ArrowRight className="w-5 h-5" />
           </Button>
         </motion.div>
+
+        <HeroWorkflowModal open={isModalOpen} onOpenChange={setIsModalOpen} />
       </div>
 
       {/* Bottom gradient fade */}

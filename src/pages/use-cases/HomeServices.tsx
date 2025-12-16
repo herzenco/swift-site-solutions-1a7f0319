@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/BackButton";
 import { HomeServicesDemo } from "@/components/demos/HomeServicesDemo";
+import { SEO } from "@/components/SEO";
+import { HeroWorkflowModal } from "@/components/HeroWorkflowModal";
 import { Wrench, Calendar, MessageSquare, ClipboardList, ArrowRight, CheckCircle2 } from "lucide-react";
 
 const features = [
@@ -33,8 +36,15 @@ const benefits = [
 ];
 
 const HomeServices = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Home Services Websites"
+        description="Custom websites for plumbers, electricians, HVAC, and home service providers. Convert visitors into booked jobs with automated scheduling. Delivered in 5-10 days."
+        canonical="/use-cases/home-services"
+      />
       <Navbar />
       <BackButton />
       
@@ -55,14 +65,14 @@ const HomeServices = () => {
                 Websites for <span className="text-gradient">Home & Local Services</span>
               </h1>
               <p className="text-lg text-muted-foreground mb-4">
-                Convert inbound traffic into booked jobs with automated scheduling and follow-ups — all from one powerful website.
+                Convert inbound traffic into booked jobs with automated scheduling and follow-ups. All from one powerful website.
               </p>
               <p className="text-sm text-muted-foreground/80 mb-8">
                 Built and launched in days, not months.
               </p>
               <Button 
                 className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => setIsModalOpen(true)}
               >
                 Start Your Build
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -89,7 +99,7 @@ const HomeServices = () => {
             className="mb-20"
           >
             <p className="text-center text-muted-foreground mb-8">
-              Everything works together — from discovery to booking to follow-up.
+              Everything works together, from discovery to booking to follow-up.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {features.map((feature, index) => (
@@ -149,7 +159,7 @@ const HomeServices = () => {
             <p className="text-muted-foreground mb-8">Get a website that works as hard as you do.</p>
             <Button 
               className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
-              onClick={() => window.location.href = '/#contact'}
+              onClick={() => setIsModalOpen(true)}
             >
               Get Your Free Project Plan
               <ArrowRight className="ml-2 w-5 h-5" />
@@ -160,6 +170,12 @@ const HomeServices = () => {
       </main>
 
       <Footer />
+
+      <HeroWorkflowModal 
+        open={isModalOpen} 
+        onOpenChange={setIsModalOpen} 
+        source="home_services_page" 
+      />
     </div>
   );
 };

@@ -52,7 +52,7 @@ const ServiceBusinesses = () => {
               Websites for <span className="text-gradient">Service Businesses</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              Streamline scheduling, automate follow-ups, and simplify client communication — all from one powerful website.
+              Streamline scheduling, automate follow-ups, and simplify client communication. All from one powerful website.
             </p>
             <Button 
               className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"

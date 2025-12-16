@@ -10,13 +10,13 @@ const steps = [
   },
   {
     icon: Paintbrush,
-    day: "Days 2–7",
+    day: "Days 2 to 7",
     title: "Design & Build",
     description: "Custom design, integrations, and automations.",
   },
   {
     icon: PartyPopper,
-    day: "Days 8–10",
+    day: "Days 8 to 10",
     title: "Launch",
     description: "Final tweaks, go-live, and training.",
   },
@@ -24,7 +24,7 @@ const steps = [
 
 export const HowItWorks = () => {
   return (
-    <section id="process" className="py-32 bg-background relative overflow-hidden">
+    <section id="process" className="py-16 md:py-20 bg-background relative overflow-hidden">
       <div className="container-tight px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

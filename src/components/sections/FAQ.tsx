@@ -9,7 +9,7 @@ import {
 const faqs = [
   {
     question: "How long does it take?",
-    answer: "Most projects are completed within 5–10 days. Complex projects may take up to 2 weeks.",
+    answer: "Most projects are completed within 5 to 10 days. Complex projects may take up to 2 weeks.",
   },
   {
     question: "What's included in maintenance?",
@@ -31,7 +31,7 @@ const faqs = [
 
 export const FAQ = () => {
   return (
-    <section id="faq" className="py-32 bg-background relative">
+    <section id="faq" className="py-16 md:py-20 bg-background relative">
       <div className="container-tight max-w-2xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

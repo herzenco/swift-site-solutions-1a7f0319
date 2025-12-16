@@ -134,7 +134,7 @@ export const LawFirmHomeScreen = ({ onViewPractices, onRequestConsultation }: La
           <p className="text-[9px] text-slate-600 leading-[1.7] italic mb-2">
             "They fought for me when I had no one else. The settlement changed my life."
           </p>
-          <p className="text-[8px] text-slate-400">— Maria S., Personal Injury Client</p>
+          <p className="text-[8px] text-slate-400">Maria S., Personal Injury Client</p>
         </motion.div>
       </div>
 

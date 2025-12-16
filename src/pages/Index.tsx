@@ -1,29 +1,30 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/sections/Hero";
-import { ValueStack } from "@/components/sections/ValueStack";
+import { HowWeThink } from "@/components/sections/HowWeThink";
 import { Tools } from "@/components/sections/Tools";
 import { Portfolio } from "@/components/sections/Portfolio";
 import { SocialProof } from "@/components/sections/SocialProof";
-import { HowItWorks } from "@/components/sections/HowItWorks";
+
 import { Pricing } from "@/components/sections/Pricing";
 import { FAQ } from "@/components/sections/FAQ";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
-
+import { SEO } from "@/components/SEO";
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="h-screen overflow-y-auto snap-y snap-mandatory bg-background">
+      <SEO canonical="/" />
       <Navbar />
-      <Hero />
-      <ValueStack />
-      <Tools />
-      <Portfolio />
-      <SocialProof />
-      <HowItWorks />
-      <Pricing />
-      <FAQ />
-      <Contact />
-      <Footer />
+      <section className="snap-start"><Hero /></section>
+      <section className="snap-start"><HowWeThink /></section>
+      <section className="snap-start"><Portfolio /></section>
+      <section className="snap-start"><Tools /></section>
+      <section className="snap-start"><Pricing /></section>
+      <section className="snap-start"><SocialProof /></section>
+      
+      <section className="snap-start"><FAQ /></section>
+      <section className="snap-start"><Contact /></section>
+      <section className="snap-start"><Footer /></section>
     </div>
   );
 };

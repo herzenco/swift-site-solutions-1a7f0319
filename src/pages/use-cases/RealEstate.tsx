@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/BackButton";
 import { RealEstateDemo } from "@/components/demos/RealEstateDemo";
+import { SEO } from "@/components/SEO";
+import { HeroWorkflowModal } from "@/components/HeroWorkflowModal";
 import { Home, Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } from "lucide-react";
 
 const features = [
@@ -25,7 +28,7 @@ const features = [
 ];
 
 const benefits = [
-  "Capture leads from listings instantly — no delays",
+  "Capture leads from listings instantly, no delays",
   "Reduce no-shows with automated reminders",
   "See every inquiry and interaction in real-time",
   "Scale your client base without adding admin staff",
@@ -33,8 +36,15 @@ const benefits = [
 ];
 
 const RealEstate = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Real Estate Websites"
+        description="Custom websites for real estate professionals. Capture leads, manage showings, and keep every conversation organized automatically. Delivered in 5-10 days."
+        canonical="/use-cases/real-estate"
+      />
       <Navbar />
       <BackButton />
       
@@ -55,14 +65,14 @@ const RealEstate = () => {
                 Websites for <span className="text-gradient">Real Estate Professionals</span>
               </h1>
               <p className="text-lg text-muted-foreground mb-4">
-                Capture leads, manage showings, and keep every conversation organized — automatically.
+                Capture leads, manage showings, and keep every conversation organized. Automatically.
               </p>
               <p className="text-sm text-muted-foreground/80 mb-8">
                 Built and launched in days, not months.
               </p>
               <Button 
                 className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => setIsModalOpen(true)}
               >
                 Start Your Build
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -89,7 +99,7 @@ const RealEstate = () => {
             className="mb-20"
           >
             <p className="text-center text-muted-foreground mb-8">
-              Everything works together — from discovery to showing to closing.
+              Everything works together, from discovery to showing to closing.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {features.map((feature, index) => (
@@ -149,7 +159,7 @@ const RealEstate = () => {
             <p className="text-muted-foreground mb-8">Get a website that works as hard as you do.</p>
             <Button 
               className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
-              onClick={() => window.location.href = '/#contact'}
+              onClick={() => setIsModalOpen(true)}
             >
               Get Your Free Project Plan
               <ArrowRight className="ml-2 w-5 h-5" />
@@ -160,6 +170,12 @@ const RealEstate = () => {
       </main>
 
       <Footer />
+
+      <HeroWorkflowModal 
+        open={isModalOpen} 
+        onOpenChange={setIsModalOpen} 
+        source="real_estate_page" 
+      />
     </div>
   );
 };

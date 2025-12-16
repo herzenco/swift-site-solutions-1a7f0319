@@ -74,7 +74,7 @@ export const ListingScreen = ({ onRequestShowing, onViewListings }: ListingScree
             A Different Kind of Experience
           </h2>
           <p className="text-[9px] text-neutral-600 leading-[1.7]">
-            Luxury real estate isn't about volume — it's about precision. Every decision, showing, and negotiation is handled with discretion and insight.
+            Luxury real estate isn't about volume. It's about precision. Every decision, showing, and negotiation is handled with discretion and insight.
           </p>
         </motion.div>
       </div>
@@ -143,7 +143,7 @@ export const ListingScreen = ({ onRequestShowing, onViewListings }: ListingScree
             Built on Trust
           </h2>
           <p className="text-[9px] text-neutral-600 leading-[1.7]">
-            Clients work with me not for access — but for judgment, discretion, and outcomes. Many relationships span multiple transactions.
+            Clients work with me not for access, but for judgment, discretion, and outcomes. Many relationships span multiple transactions.
           </p>
         </motion.div>
       </div>
@@ -161,7 +161,7 @@ export const ListingScreen = ({ onRequestShowing, onViewListings }: ListingScree
             Let's Discuss Your Goals
           </h2>
           <p className="text-[8px] text-neutral-500 mb-4">
-            Every conversation begins with clarity — no pressure, no obligation.
+            Every conversation begins with clarity. No pressure, no obligation.
           </p>
           
           <motion.button
