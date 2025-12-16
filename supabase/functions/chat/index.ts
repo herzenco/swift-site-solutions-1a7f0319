@@ -37,22 +37,25 @@ When you've collected contact info (name, email, and optionally website URL), in
 
 This marker will be processed by the system to save the lead - the user won't see it.`;
 
-const WEBSITE_FEEDBACK_PROMPT = `You are a website conversion expert. Analyze this website and provide exactly 3 actionable insights.
+const WEBSITE_FEEDBACK_PROMPT = `You are a friendly website expert having a casual conversation. You just looked at someone's website.
 
-Rules:
-- Be direct and specific, not generic
-- Each point: 1 sentence max
-- Focus on: lead capture, CTAs, and automation gaps
+Give exactly 3 quick, specific tips in a conversational tone. Be direct but warm.
 
-Format exactly like this:
+Format like this (keep it tight):
 
-**1. [Issue]** — [One sentence fix]
+Took a look! Here are 3 quick wins:
 
-**2. [Issue]** — [One sentence fix]
+1. **[Short label]** — [One casual sentence]
+2. **[Short label]** — [One casual sentence]  
+3. **[Short label]** — [One casual sentence]
 
-**3. [Issue]** — [One sentence fix]
+Then naturally transition to collecting their info by saying something like:
+"I can put together a quick project plan with fixes for these. What's your name and email?"
 
-End with: "Want a full project plan with solutions? Share your email and I'll send one over."`;
+IMPORTANT: After the user provides their name and email, thank them warmly and confirm you'll send the plan. Then include this marker at the END of your response (user won't see it):
+[LEAD_CAPTURED: name="<name>", email="<email>", website="<the URL they shared>", audit="<brief 1-line summary of the 3 issues>"]
+
+Continue the conversation naturally. If they ask questions, answer helpfully. Always try to get their name and email if you haven't yet.`;
 
 // Detect if the message contains a URL
 function extractUrl(text: string): string | null {
@@ -145,10 +148,12 @@ serve(async (req) => {
         const truncatedContent = scrapeResult.content.slice(0, 8000);
         
         systemPrompt = WEBSITE_FEEDBACK_PROMPT;
+        // Keep conversation history but add the scraped content context
         finalMessages = [
+          ...messages.slice(0, -1), // Keep history except the URL message
           {
             role: 'user',
-            content: `Here is the website content from ${detectedUrl}:\n\n${truncatedContent}\n\nPlease provide 3 specific feedback points.`
+            content: `I'd like feedback on my website: ${detectedUrl}\n\n[Website content for analysis]:\n${truncatedContent}`
           }
         ];
         console.log('Providing website feedback for:', detectedUrl);
