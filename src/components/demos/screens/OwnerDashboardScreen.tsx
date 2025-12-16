@@ -8,21 +8,21 @@ interface OwnerDashboardScreenProps {
 const todayJobs = [
   { 
     name: "John Smith", 
-    service: "Emergency Repair", 
-    time: "ASAP", 
+    service: "Kitchen Remodel", 
+    time: "Consultation", 
     status: "new",
     address: "123 Main St"
   },
   { 
     name: "Sarah Johnson", 
-    service: "Drain Cleaning", 
+    service: "Bathroom Reno", 
     time: "2:00 PM", 
     status: "confirmed",
     address: "456 Oak Ave"
   },
   { 
     name: "Mike Williams", 
-    service: "Water Heater", 
+    service: "Home Addition", 
     time: "4:30 PM", 
     status: "confirmed",
     address: "789 Pine Rd"
@@ -40,46 +40,46 @@ export const OwnerDashboardScreen = ({ onReset }: OwnerDashboardScreenProps) => 
       style={{ scrollbarWidth: 'none' }}
     >
       {/* Header */}
-      <div className="sticky top-0 bg-emerald-900 px-4 py-4 z-10">
+      <div className="sticky top-0 bg-amber-900 px-4 py-4 z-10">
         <div className="flex items-center justify-between mb-3">
           <div>
-            <p className="text-[8px] text-emerald-300 uppercase tracking-wider">Owner Dashboard</p>
-            <h1 className="text-[14px] font-semibold text-white">Thompson Plumbing</h1>
+            <p className="text-[8px] text-amber-300 uppercase tracking-wider">Owner Dashboard</p>
+            <h1 className="text-[14px] font-semibold text-white">Mitchell Contractors</h1>
           </div>
-          <div className="w-8 h-8 rounded-full bg-emerald-800 flex items-center justify-center">
-            <User className="w-4 h-4 text-emerald-300" />
+          <div className="w-8 h-8 rounded-full bg-amber-800 flex items-center justify-center">
+            <User className="w-4 h-4 text-amber-300" />
           </div>
         </div>
         
         {/* Quick Stats */}
         <div className="grid grid-cols-3 gap-2">
-          <div className="bg-emerald-800/50 rounded-lg p-2 text-center">
+          <div className="bg-amber-800/50 rounded-lg p-2 text-center">
             <p className="text-[14px] font-bold text-white">3</p>
-            <p className="text-[7px] text-emerald-300 uppercase">Today</p>
+            <p className="text-[7px] text-amber-300 uppercase">This Week</p>
           </div>
-          <div className="bg-emerald-800/50 rounded-lg p-2 text-center">
+          <div className="bg-amber-800/50 rounded-lg p-2 text-center">
             <p className="text-[14px] font-bold text-white">1</p>
-            <p className="text-[7px] text-emerald-300 uppercase">Urgent</p>
+            <p className="text-[7px] text-amber-300 uppercase">New Lead</p>
           </div>
-          <div className="bg-emerald-800/50 rounded-lg p-2 text-center">
-            <p className="text-[14px] font-bold text-white">$847</p>
-            <p className="text-[7px] text-emerald-300 uppercase">Est. Rev</p>
+          <div className="bg-amber-800/50 rounded-lg p-2 text-center">
+            <p className="text-[14px] font-bold text-white">$85K</p>
+            <p className="text-[7px] text-amber-300 uppercase">Pipeline</p>
           </div>
         </div>
       </div>
 
       {/* New Request Alert */}
-      <div className="mx-4 mt-4 p-3 bg-red-50 border border-red-200 rounded-xl">
+      <div className="mx-4 mt-4 p-3 bg-amber-50 border border-amber-200 rounded-xl">
         <div className="flex items-start gap-2">
-          <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+          <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
           <div className="flex-1">
-            <p className="text-[9px] font-semibold text-red-800">New Emergency Request</p>
-            <p className="text-[8px] text-red-600">John Smith - Burst pipe at 123 Main St</p>
+            <p className="text-[9px] font-semibold text-amber-800">New Estimate Request</p>
+            <p className="text-[8px] text-amber-600">John Smith - Kitchen remodel at 123 Main St</p>
             <div className="flex gap-2 mt-2">
-              <button className="px-3 py-1 bg-red-600 text-white rounded text-[8px] font-medium">
-                Accept
+              <button className="px-3 py-1 bg-amber-600 text-white rounded text-[8px] font-medium">
+                Review
               </button>
-              <button className="px-3 py-1 bg-white border border-red-200 text-red-600 rounded text-[8px] font-medium">
+              <button className="px-3 py-1 bg-white border border-amber-200 text-amber-600 rounded text-[8px] font-medium">
                 Call
               </button>
             </div>
@@ -87,11 +87,11 @@ export const OwnerDashboardScreen = ({ onReset }: OwnerDashboardScreenProps) => 
         </div>
       </div>
 
-      {/* Today's Schedule */}
+      {/* This Week's Schedule */}
       <div className="px-4 py-4">
         <div className="flex items-center justify-between mb-3">
-          <p className="text-[10px] font-semibold text-gray-900">Today's Jobs</p>
-          <span className="text-[8px] text-gray-500">Dec 15, 2024</span>
+          <p className="text-[10px] font-semibold text-gray-900">Upcoming Consultations</p>
+          <span className="text-[8px] text-gray-500">This Week</span>
         </div>
         
         <div className="space-y-2">
@@ -103,7 +103,7 @@ export const OwnerDashboardScreen = ({ onReset }: OwnerDashboardScreenProps) => 
               transition={{ delay: index * 0.1 }}
               className={`p-3 rounded-xl border ${
                 job.status === 'new' 
-                  ? 'bg-red-50 border-red-200' 
+                  ? 'bg-amber-50 border-amber-200' 
                   : 'bg-white border-gray-100'
               }`}
             >
@@ -114,7 +114,7 @@ export const OwnerDashboardScreen = ({ onReset }: OwnerDashboardScreenProps) => 
                 </div>
                 <div className="flex items-center gap-1">
                   {job.status === 'new' ? (
-                    <span className="px-2 py-0.5 bg-red-100 text-red-700 rounded text-[7px] font-medium uppercase">
+                    <span className="px-2 py-0.5 bg-amber-100 text-amber-700 rounded text-[7px] font-medium uppercase">
                       New
                     </span>
                   ) : (
@@ -142,14 +142,14 @@ export const OwnerDashboardScreen = ({ onReset }: OwnerDashboardScreenProps) => 
         <p className="text-[10px] font-semibold text-gray-900 mb-3">Quick Actions</p>
         <div className="grid grid-cols-2 gap-2">
           <button className="p-3 bg-white rounded-xl border border-gray-100 text-left">
-            <Calendar className="w-4 h-4 text-emerald-600 mb-2" />
+            <Calendar className="w-4 h-4 text-amber-600 mb-2" />
             <p className="text-[9px] font-medium text-gray-900">Schedule</p>
             <p className="text-[7px] text-gray-500">Manage availability</p>
           </button>
           <button className="p-3 bg-white rounded-xl border border-gray-100 text-left">
-            <DollarSign className="w-4 h-4 text-emerald-600 mb-2" />
-            <p className="text-[9px] font-medium text-gray-900">Invoices</p>
-            <p className="text-[7px] text-gray-500">Send & track</p>
+            <DollarSign className="w-4 h-4 text-amber-600 mb-2" />
+            <p className="text-[9px] font-medium text-gray-900">Estimates</p>
+            <p className="text-[7px] text-gray-500">Create & send</p>
           </button>
         </div>
       </div>

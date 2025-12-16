@@ -45,15 +45,15 @@ export const BookingFormScreen = ({ onSubmit, onBack }: BookingFormScreenProps) 
                 <input
                   type="text"
                   placeholder="John Smith"
-                  className="w-full px-3 py-2.5 text-[10px] border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-400 bg-gray-50"
+                  className="w-full px-3 py-2.5 text-[10px] border border-gray-200 rounded-lg focus:outline-none focus:border-amber-400 bg-gray-50"
                 />
               </div>
               <div>
                 <label className="text-[9px] text-gray-600 mb-1 block">Phone Number</label>
                 <input
                   type="tel"
-                  placeholder="(512) 555-0123"
-                  className="w-full px-3 py-2.5 text-[10px] border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-400 bg-gray-50"
+                  placeholder="(214) 555-0123"
+                  className="w-full px-3 py-2.5 text-[10px] border border-gray-200 rounded-lg focus:outline-none focus:border-amber-400 bg-gray-50"
                 />
               </div>
               <div>
@@ -61,7 +61,7 @@ export const BookingFormScreen = ({ onSubmit, onBack }: BookingFormScreenProps) 
                 <input
                   type="email"
                   placeholder="john@example.com"
-                  className="w-full px-3 py-2.5 text-[10px] border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-400 bg-gray-50"
+                  className="w-full px-3 py-2.5 text-[10px] border border-gray-200 rounded-lg focus:outline-none focus:border-amber-400 bg-gray-50"
                 />
               </div>
             </div>
@@ -74,8 +74,8 @@ export const BookingFormScreen = ({ onSubmit, onBack }: BookingFormScreenProps) 
               <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
               <input
                 type="text"
-                placeholder="123 Main St, Austin, TX 78701"
-                className="w-full pl-9 pr-3 py-2.5 text-[10px] border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-400 bg-gray-50"
+                placeholder="123 Main St, Dallas, TX 75201"
+                className="w-full pl-9 pr-3 py-2.5 text-[10px] border border-gray-200 rounded-lg focus:outline-none focus:border-amber-400 bg-gray-50"
               />
             </div>
           </div>
@@ -88,43 +88,43 @@ export const BookingFormScreen = ({ onSubmit, onBack }: BookingFormScreenProps) 
                 <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Today"
-                  className="w-full pl-9 pr-3 py-2.5 text-[10px] border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-400 bg-gray-50"
+                  placeholder="Next Week"
+                  className="w-full pl-9 pr-3 py-2.5 text-[10px] border border-gray-200 rounded-lg focus:outline-none focus:border-amber-400 bg-gray-50"
                 />
               </div>
               <div className="relative">
                 <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="ASAP"
-                  className="w-full pl-9 pr-3 py-2.5 text-[10px] border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-400 bg-gray-50"
+                  placeholder="Morning"
+                  className="w-full pl-9 pr-3 py-2.5 text-[10px] border border-gray-200 rounded-lg focus:outline-none focus:border-amber-400 bg-gray-50"
                 />
               </div>
             </div>
           </div>
 
-          {/* Issue Description */}
+          {/* Project Description */}
           <div>
-            <p className="text-[8px] tracking-[0.2em] text-gray-400 uppercase mb-3 font-semibold">Describe the Issue</p>
+            <p className="text-[8px] tracking-[0.2em] text-gray-400 uppercase mb-3 font-semibold">Describe Your Project</p>
             <textarea
-              placeholder="Tell us what's happening..."
+              placeholder="Tell us about your project..."
               rows={3}
-              className="w-full px-3 py-2.5 text-[10px] border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-400 bg-gray-50 resize-none"
+              className="w-full px-3 py-2.5 text-[10px] border border-gray-200 rounded-lg focus:outline-none focus:border-amber-400 bg-gray-50 resize-none"
             />
           </div>
 
-          {/* Urgency */}
+          {/* Timeline */}
           <div>
-            <p className="text-[8px] tracking-[0.2em] text-gray-400 uppercase mb-3 font-semibold">Urgency Level</p>
+            <p className="text-[8px] tracking-[0.2em] text-gray-400 uppercase mb-3 font-semibold">Project Timeline</p>
             <div className="grid grid-cols-3 gap-2">
-              {["Emergency", "Soon", "Flexible"].map((level, i) => (
+              {["ASAP", "1-3 Months", "Flexible"].map((level, i) => (
                 <button
                   key={level}
                   type="button"
                   className={`py-2 rounded-lg text-[9px] font-medium border transition-colors ${
                     i === 0
-                      ? "bg-red-50 border-red-200 text-red-700"
-                      : "bg-gray-50 border-gray-200 text-gray-600 hover:border-emerald-300"
+                      ? "bg-amber-50 border-amber-200 text-amber-700"
+                      : "bg-gray-50 border-gray-200 text-gray-600 hover:border-amber-300"
                   }`}
                 >
                   {level}
@@ -141,11 +141,11 @@ export const BookingFormScreen = ({ onSubmit, onBack }: BookingFormScreenProps) 
           whileTap={{ scale: 0.98 }}
           onClick={onSubmit}
           type="button"
-          className="w-full py-3 bg-emerald-600 text-white rounded-lg text-[10px] font-semibold uppercase tracking-wide"
+          className="w-full py-3 bg-amber-600 text-white rounded-lg text-[10px] font-semibold uppercase tracking-wide"
         >
-          Request Service
+          Request Estimate
         </motion.button>
-        <p className="text-[7px] text-gray-400 text-center mt-2">We'll call to confirm within 15 minutes</p>
+        <p className="text-[7px] text-gray-400 text-center mt-2">We'll reach out within 24 hours</p>
       </div>
     </motion.div>
   );
