@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Droplets, Check, Clock, Shield, Star } from "lucide-react";
+import { ArrowLeft, Home, Check, Clock, Shield, Star } from "lucide-react";
 
 interface ServiceDetailScreenProps {
   onBack: () => void;
@@ -26,23 +26,23 @@ export const ServiceDetailScreen = ({ onBack, onBookNow }: ServiceDetailScreenPr
           >
             <ArrowLeft className="w-4 h-4 text-gray-600" />
           </button>
-          <h1 className="text-[12px] font-semibold text-gray-900">Emergency Repairs</h1>
+          <h1 className="text-[12px] font-semibold text-gray-900">Kitchen Remodels</h1>
         </div>
       </div>
 
       {/* Service Hero */}
-      <div className="bg-emerald-900 px-5 py-6">
+      <div className="bg-amber-900 px-5 py-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-xl bg-emerald-800 flex items-center justify-center">
-            <Droplets className="w-6 h-6 text-emerald-300" />
+          <div className="w-12 h-12 rounded-xl bg-amber-800 flex items-center justify-center">
+            <Home className="w-6 h-6 text-amber-300" />
           </div>
           <div>
-            <h2 className="text-[14px] font-semibold text-white">Emergency Repairs</h2>
-            <p className="text-[9px] text-emerald-300">Available 24/7</p>
+            <h2 className="text-[14px] font-semibold text-white">Kitchen Remodels</h2>
+            <p className="text-[9px] text-amber-300">4-8 Week Timeline</p>
           </div>
         </div>
-        <p className="text-[9px] text-emerald-100/80 leading-relaxed">
-          When disaster strikes, we're there. Burst pipes, major leaks, sewage backups: our emergency team responds fast to minimize damage.
+        <p className="text-[9px] text-amber-100/80 leading-relaxed">
+          Transform your kitchen into the heart of your home. Custom cabinetry, premium countertops, modern layouts, and expert craftsmanship.
         </p>
       </div>
 
@@ -51,11 +51,11 @@ export const ServiceDetailScreen = ({ onBack, onBookNow }: ServiceDetailScreenPr
         <div className="flex items-baseline justify-between">
           <div>
             <p className="text-[8px] text-gray-500 uppercase tracking-wide mb-1">Starting at</p>
-            <p className="text-[20px] font-bold text-gray-900">$99</p>
+            <p className="text-[20px] font-bold text-gray-900">$25K</p>
           </div>
           <div className="text-right">
-            <p className="text-[8px] text-gray-500">Response time</p>
-            <p className="text-[10px] font-medium text-emerald-600">Under 1 hour</p>
+            <p className="text-[8px] text-gray-500">Free consultation</p>
+            <p className="text-[10px] font-medium text-amber-600">Within 48 hours</p>
           </div>
         </div>
       </div>
@@ -65,14 +65,14 @@ export const ServiceDetailScreen = ({ onBack, onBookNow }: ServiceDetailScreenPr
         <p className="text-[8px] tracking-[0.2em] text-gray-400 uppercase mb-3 font-semibold">What's Included</p>
         <div className="space-y-2.5">
           {[
-            "24/7 emergency dispatch",
-            "Free diagnostic assessment",
-            "Upfront, transparent pricing",
-            "Licensed & insured technicians",
-            "90-day warranty on all repairs",
+            "Custom design consultation",
+            "3D renderings before build",
+            "Premium materials & finishes",
+            "Licensed & insured crew",
+            "2-year workmanship warranty",
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-2">
-              <Check className="w-3 h-3 text-emerald-500" />
+              <Check className="w-3 h-3 text-amber-500" />
               <span className="text-[9px] text-gray-700">{item}</span>
             </div>
           ))}
@@ -83,17 +83,17 @@ export const ServiceDetailScreen = ({ onBack, onBookNow }: ServiceDetailScreenPr
       <div className="px-5 py-4 border-b border-gray-100 bg-gray-50">
         <div className="flex justify-between">
           <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-emerald-600" />
+            <Clock className="w-4 h-4 text-amber-600" />
             <div>
-              <p className="text-[9px] font-medium text-gray-900">Fast Response</p>
-              <p className="text-[7px] text-gray-500">Avg. 45 min arrival</p>
+              <p className="text-[9px] font-medium text-gray-900">On-Time Delivery</p>
+              <p className="text-[7px] text-gray-500">Guaranteed timeline</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Shield className="w-4 h-4 text-emerald-600" />
+            <Shield className="w-4 h-4 text-amber-600" />
             <div>
-              <p className="text-[9px] font-medium text-gray-900">Guaranteed</p>
-              <p className="text-[7px] text-gray-500">Satisfaction promise</p>
+              <p className="text-[9px] font-medium text-gray-900">Fully Insured</p>
+              <p className="text-[7px] text-gray-500">Complete protection</p>
             </div>
           </div>
         </div>
@@ -105,12 +105,12 @@ export const ServiceDetailScreen = ({ onBack, onBookNow }: ServiceDetailScreenPr
           {[...Array(5)].map((_, i) => (
             <Star key={i} className="w-2.5 h-2.5 text-yellow-400 fill-yellow-400" />
           ))}
-          <span className="text-[8px] text-gray-500 ml-1">128 reviews</span>
+          <span className="text-[8px] text-gray-500 ml-1">87 reviews</span>
         </div>
         <p className="text-[9px] text-gray-600 italic leading-relaxed">
-          "Called at 2am with a burst pipe. They were here in 30 minutes and had it fixed within the hour. Saved our home from serious damage."
+          "Our kitchen went from 1970s nightmare to magazine-worthy. The attention to detail was incredible, and they finished on schedule."
         </p>
-        <p className="text-[8px] text-gray-400 mt-1">Jennifer T.</p>
+        <p className="text-[8px] text-gray-400 mt-1">David & Lisa R.</p>
       </div>
 
       {/* Spacer */}
@@ -122,11 +122,11 @@ export const ServiceDetailScreen = ({ onBack, onBookNow }: ServiceDetailScreenPr
           whileTap={{ scale: 0.98 }}
           onClick={onBookNow}
           type="button"
-          className="w-full py-3 bg-emerald-600 text-white rounded-lg text-[10px] font-semibold uppercase tracking-wide"
+          className="w-full py-3 bg-amber-600 text-white rounded-lg text-[10px] font-semibold uppercase tracking-wide"
         >
-          Book This Service
+          Request Free Estimate
         </motion.button>
-        <p className="text-[7px] text-gray-400 text-center mt-2">No payment required to book</p>
+        <p className="text-[7px] text-gray-400 text-center mt-2">No obligation consultation</p>
       </div>
     </motion.div>
   );

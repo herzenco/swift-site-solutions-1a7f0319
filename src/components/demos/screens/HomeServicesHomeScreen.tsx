@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ChevronRight, Wrench, Phone, Star, Clock, Shield } from "lucide-react";
+import { ChevronRight, Hammer, Phone, Star, Clock, Shield } from "lucide-react";
 
 interface HomeServicesHomeScreenProps {
   onViewServices: () => void;
@@ -17,7 +17,7 @@ export const HomeServicesHomeScreen = ({ onViewServices, onBookService }: HomeSe
       style={{ scrollbarWidth: 'none' }}
     >
       {/* Hero Section */}
-      <div className="relative min-h-[60%] flex flex-col bg-gradient-to-b from-emerald-900 via-emerald-800 to-emerald-900">
+      <div className="relative min-h-[60%] flex flex-col bg-gradient-to-b from-amber-900 via-amber-800 to-amber-900">
         {/* Hero Content */}
         <div className="relative z-10 flex-1 flex flex-col justify-between px-5 pt-10 pb-5">
           <motion.div
@@ -27,18 +27,18 @@ export const HomeServicesHomeScreen = ({ onViewServices, onBookService }: HomeSe
             className="text-center"
           >
             <div className="flex items-center justify-center gap-2 mb-4">
-              <Wrench className="w-4 h-4 text-emerald-300" />
-              <p className="text-[8px] tracking-[0.3em] text-emerald-300 uppercase font-semibold">
-                Thompson Plumbing
+              <Hammer className="w-4 h-4 text-amber-300" />
+              <p className="text-[8px] tracking-[0.3em] text-amber-300 uppercase font-semibold">
+                Mitchell Contractors
               </p>
             </div>
             
             <h1 className="text-[17px] font-semibold text-white leading-[1.3] mb-3">
-              Fast, Reliable Plumbing You Can Trust
+              Quality Construction You Can Count On
             </h1>
             
-            <p className="text-[9px] text-emerald-200/80 leading-relaxed max-w-[90%] mx-auto">
-              Serving the greater Austin area for over 15 years. Available 24/7 for emergencies.
+            <p className="text-[9px] text-amber-200/80 leading-relaxed max-w-[90%] mx-auto">
+              Trusted general contractor serving the Dallas-Fort Worth area. From renovations to new builds.
             </p>
           </motion.div>
 
@@ -50,7 +50,7 @@ export const HomeServicesHomeScreen = ({ onViewServices, onBookService }: HomeSe
             whileTap={{ scale: 0.98 }}
             onClick={onViewServices}
             type="button"
-            className="w-full py-3 font-medium rounded-lg transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2 bg-white text-emerald-900"
+            className="w-full py-3 font-medium rounded-lg transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2 bg-white text-amber-900"
           >
             View Our Services
             <ChevronRight className="w-3 h-3" />
@@ -59,7 +59,7 @@ export const HomeServicesHomeScreen = ({ onViewServices, onBookService }: HomeSe
       </div>
 
       {/* Trust Badges */}
-      <div className="px-5 py-4 bg-emerald-50 border-b border-emerald-100">
+      <div className="px-5 py-4 bg-amber-50 border-b border-amber-100">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -69,15 +69,15 @@ export const HomeServicesHomeScreen = ({ onViewServices, onBookService }: HomeSe
         >
           <div className="flex items-center gap-1.5">
             <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
-            <span className="text-[8px] text-emerald-800 font-medium">4.9 Rating</span>
+            <span className="text-[8px] text-amber-800 font-medium">4.9 Rating</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Clock className="w-3 h-3 text-emerald-600" />
-            <span className="text-[8px] text-emerald-800 font-medium">Same-Day Service</span>
+            <Clock className="w-3 h-3 text-amber-600" />
+            <span className="text-[8px] text-amber-800 font-medium">On-Time Delivery</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Shield className="w-3 h-3 text-emerald-600" />
-            <span className="text-[8px] text-emerald-800 font-medium">Licensed</span>
+            <Shield className="w-3 h-3 text-amber-600" />
+            <span className="text-[8px] text-amber-800 font-medium">Licensed & Insured</span>
           </div>
         </motion.div>
       </div>
@@ -94,12 +94,12 @@ export const HomeServicesHomeScreen = ({ onViewServices, onBookService }: HomeSe
           
           <div className="space-y-3">
             {[
-              { title: "Emergency Repairs", desc: "Burst pipes, leaks, and backups — we're on call 24/7" },
-              { title: "Drain Cleaning", desc: "Professional clearing of clogs and blockages" },
-              { title: "Water Heaters", desc: "Installation, repair, and maintenance" },
+              { title: "Home Renovations", desc: "Complete remodels, additions, and structural updates" },
+              { title: "Kitchen & Bath", desc: "Custom designs, cabinets, countertops, and finishes" },
+              { title: "New Construction", desc: "Custom homes and commercial builds from the ground up" },
             ].map((service, i) => (
               <div key={i} className="flex items-start gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
                 <div>
                   <p className="text-[9px] text-gray-800 font-medium mb-0.5">{service.title}</p>
                   <p className="text-[8px] text-gray-500">{service.desc}</p>
@@ -111,7 +111,7 @@ export const HomeServicesHomeScreen = ({ onViewServices, onBookService }: HomeSe
       </div>
 
       {/* Stats Section */}
-      <div className="px-5 py-5 bg-emerald-900 text-white">
+      <div className="px-5 py-5 bg-amber-900 text-white">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -120,16 +120,16 @@ export const HomeServicesHomeScreen = ({ onViewServices, onBookService }: HomeSe
           className="flex justify-between items-start"
         >
           <div>
-            <p className="text-[16px] font-semibold text-emerald-300">5,000+</p>
-            <p className="text-[7px] tracking-[0.15em] text-emerald-400/70 uppercase">Jobs Done</p>
+            <p className="text-[16px] font-semibold text-amber-300">500+</p>
+            <p className="text-[7px] tracking-[0.15em] text-amber-400/70 uppercase">Projects</p>
           </div>
           <div className="text-center">
-            <p className="text-[16px] font-semibold text-emerald-300">15+</p>
-            <p className="text-[7px] tracking-[0.15em] text-emerald-400/70 uppercase">Years</p>
+            <p className="text-[16px] font-semibold text-amber-300">20+</p>
+            <p className="text-[7px] tracking-[0.15em] text-amber-400/70 uppercase">Years</p>
           </div>
           <div className="text-right">
-            <p className="text-[16px] font-semibold text-emerald-300">24/7</p>
-            <p className="text-[7px] tracking-[0.15em] text-emerald-400/70 uppercase">Available</p>
+            <p className="text-[16px] font-semibold text-amber-300">100%</p>
+            <p className="text-[7px] tracking-[0.15em] text-amber-400/70 uppercase">Satisfaction</p>
           </div>
         </motion.div>
       </div>
@@ -148,9 +148,9 @@ export const HomeServicesHomeScreen = ({ onViewServices, onBookService }: HomeSe
             ))}
           </div>
           <p className="text-[9px] text-gray-600 leading-[1.7] italic mb-2">
-            "They came within an hour when our pipe burst at midnight. Professional, fast, and fair pricing."
+            "They transformed our dated kitchen into a stunning modern space. On budget and finished a week early."
           </p>
-          <p className="text-[8px] text-gray-400">— Michael R., Austin</p>
+          <p className="text-[8px] text-gray-400">— Jennifer M., Dallas</p>
         </motion.div>
       </div>
 
@@ -164,20 +164,20 @@ export const HomeServicesHomeScreen = ({ onViewServices, onBookService }: HomeSe
           className="text-center"
         >
           <h2 className="text-[12px] text-gray-900 font-semibold mb-2">
-            Need a Plumber Now?
+            Ready to Start Your Project?
           </h2>
           <p className="text-[8px] text-gray-500 mb-4">
-            Book online or call for immediate assistance.
+            Get a free estimate for your next renovation or build.
           </p>
           
           <motion.button
             whileTap={{ scale: 0.98 }}
             onClick={onBookService}
             type="button"
-            className="w-full py-3 font-medium rounded-lg transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2 bg-emerald-600 text-white"
+            className="w-full py-3 font-medium rounded-lg transition-all duration-300 text-[9px] uppercase tracking-[0.15em] flex items-center justify-center gap-2 bg-amber-600 text-white"
           >
             <Phone className="w-3 h-3" />
-            Book Service
+            Get Free Estimate
           </motion.button>
         </motion.div>
       </div>
@@ -185,8 +185,8 @@ export const HomeServicesHomeScreen = ({ onViewServices, onBookService }: HomeSe
       {/* Footer */}
       <div className="px-5 py-3 border-t border-gray-100 flex items-center justify-between bg-white">
         <div className="flex items-center gap-1.5 text-gray-400">
-          <Wrench className="w-3 h-3" />
-          <span className="text-[7px] tracking-wider font-medium">Austin, TX</span>
+          <Hammer className="w-3 h-3" />
+          <span className="text-[7px] tracking-wider font-medium">Dallas-Fort Worth, TX</span>
         </div>
         <p className="text-[7px] text-gray-300 tracking-wider">
           © 2024

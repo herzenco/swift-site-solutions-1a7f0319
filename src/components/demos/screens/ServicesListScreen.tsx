@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Droplets, Flame, Wrench, ShowerHead, ChevronRight } from "lucide-react";
+import { ArrowLeft, Home, Hammer, PaintBucket, HardHat, ChevronRight } from "lucide-react";
 
 interface ServicesListScreenProps {
   onBack: () => void;
@@ -8,28 +8,28 @@ interface ServicesListScreenProps {
 
 const services = [
   {
-    icon: Droplets,
-    title: "Emergency Repairs",
-    desc: "Burst pipes, leaks, flooding",
-    price: "From $99",
+    icon: Home,
+    title: "Kitchen Remodels",
+    desc: "Custom cabinets, countertops, layouts",
+    price: "From $25K",
   },
   {
-    icon: ShowerHead,
-    title: "Drain Cleaning",
-    desc: "Clogs, blockages, slow drains",
-    price: "From $79",
+    icon: PaintBucket,
+    title: "Bathroom Renovations",
+    desc: "Full redesigns, tile, fixtures",
+    price: "From $15K",
   },
   {
-    icon: Flame,
-    title: "Water Heaters",
-    desc: "Install, repair, tankless",
-    price: "From $149",
+    icon: Hammer,
+    title: "Home Additions",
+    desc: "Rooms, sunrooms, second stories",
+    price: "From $50K",
   },
   {
-    icon: Wrench,
-    title: "Fixture Installation",
-    desc: "Faucets, toilets, sinks",
-    price: "From $89",
+    icon: HardHat,
+    title: "New Construction",
+    desc: "Custom homes, ground-up builds",
+    price: "Custom Quote",
   },
 ];
 
@@ -71,19 +71,19 @@ export const ServicesListScreen = ({ onBack, onSelectService }: ServicesListScre
               transition={{ delay: index * 0.1 }}
               onClick={onSelectService}
               type="button"
-              className="w-full p-4 rounded-xl border border-gray-100 hover:border-emerald-200 hover:bg-emerald-50/50 transition-all duration-200 text-left group"
+              className="w-full p-4 rounded-xl border border-gray-100 hover:border-amber-200 hover:bg-amber-50/50 transition-all duration-200 text-left group"
             >
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0">
-                  <service.icon className="w-5 h-5 text-emerald-600" />
+                <div className="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center shrink-0">
+                  <service.icon className="w-5 h-5 text-amber-600" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="text-[10px] font-semibold text-gray-900">{service.title}</h3>
-                    <ChevronRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-emerald-600 transition-colors" />
+                    <ChevronRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-amber-600 transition-colors" />
                   </div>
                   <p className="text-[8px] text-gray-500 mb-2">{service.desc}</p>
-                  <p className="text-[9px] font-medium text-emerald-600">{service.price}</p>
+                  <p className="text-[9px] font-medium text-amber-600">{service.price}</p>
                 </div>
               </div>
             </motion.button>
@@ -93,13 +93,13 @@ export const ServicesListScreen = ({ onBack, onSelectService }: ServicesListScre
 
       {/* Bottom CTA */}
       <div className="sticky bottom-0 bg-white border-t border-gray-100 px-4 py-3">
-        <p className="text-[8px] text-gray-500 text-center mb-2">Don't see what you need?</p>
+        <p className="text-[8px] text-gray-500 text-center mb-2">Have a unique project in mind?</p>
         <button
           onClick={onSelectService}
           type="button"
-          className="w-full py-2.5 bg-emerald-600 text-white rounded-lg text-[9px] font-medium uppercase tracking-wide"
+          className="w-full py-2.5 bg-amber-600 text-white rounded-lg text-[9px] font-medium uppercase tracking-wide"
         >
-          Request Custom Quote
+          Request Custom Estimate
         </button>
       </div>
     </motion.div>

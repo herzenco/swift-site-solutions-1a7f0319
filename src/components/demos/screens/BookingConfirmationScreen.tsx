@@ -16,18 +16,18 @@ export const BookingConfirmationScreen = ({ onViewDashboard }: BookingConfirmati
       style={{ scrollbarWidth: 'none' }}
     >
       {/* Success Header */}
-      <div className="bg-emerald-600 px-5 py-8 text-center">
+      <div className="bg-amber-600 px-5 py-8 text-center">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
           className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4"
         >
-          <CheckCircle2 className="w-10 h-10 text-emerald-600" />
+          <CheckCircle2 className="w-10 h-10 text-amber-600" />
         </motion.div>
-        <h1 className="text-[16px] font-semibold text-white mb-2">Service Request Received!</h1>
-        <p className="text-[10px] text-emerald-100">
-          We'll call you within 15 minutes to confirm
+        <h1 className="text-[16px] font-semibold text-white mb-2">Estimate Request Received!</h1>
+        <p className="text-[10px] text-amber-100">
+          We'll reach out within 24 hours to schedule
         </p>
       </div>
 
@@ -38,15 +38,15 @@ export const BookingConfirmationScreen = ({ onViewDashboard }: BookingConfirmati
         <div className="space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-[9px] text-gray-500">Confirmation #</span>
-            <span className="text-[9px] font-medium text-gray-900">TP-2024-1847</span>
+            <span className="text-[9px] font-medium text-gray-900">MC-2024-0847</span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-[9px] text-gray-500">Service</span>
-            <span className="text-[9px] font-medium text-gray-900">Emergency Repair</span>
+            <span className="text-[9px] font-medium text-gray-900">Kitchen Remodel</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-[9px] text-gray-500">Urgency</span>
-            <span className="text-[9px] font-medium text-red-600">Emergency</span>
+            <span className="text-[9px] text-gray-500">Timeline</span>
+            <span className="text-[9px] font-medium text-amber-600">ASAP</span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-[9px] text-gray-500">Address</span>
@@ -61,21 +61,21 @@ export const BookingConfirmationScreen = ({ onViewDashboard }: BookingConfirmati
         
         <div className="space-y-4">
           <div className="flex items-start gap-3">
-            <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
-              <Phone className="w-3 h-3 text-emerald-600" />
+            <div className="w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center shrink-0">
+              <Phone className="w-3 h-3 text-amber-600" />
             </div>
             <div>
-              <p className="text-[9px] font-medium text-gray-900 mb-0.5">Confirmation Call</p>
-              <p className="text-[8px] text-gray-500">We'll call within 15 minutes to confirm details</p>
+              <p className="text-[9px] font-medium text-gray-900 mb-0.5">Consultation Call</p>
+              <p className="text-[8px] text-gray-500">We'll call within 24 hours to discuss your project</p>
             </div>
           </div>
           <div className="flex items-start gap-3">
-            <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
-              <Clock className="w-3 h-3 text-emerald-600" />
+            <div className="w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center shrink-0">
+              <Clock className="w-3 h-3 text-amber-600" />
             </div>
             <div>
-              <p className="text-[9px] font-medium text-gray-900 mb-0.5">Technician Dispatch</p>
-              <p className="text-[8px] text-gray-500">A licensed plumber will be on the way</p>
+              <p className="text-[9px] font-medium text-gray-900 mb-0.5">Site Visit</p>
+              <p className="text-[8px] text-gray-500">We'll schedule a time to assess your space</p>
             </div>
           </div>
         </div>
@@ -85,12 +85,12 @@ export const BookingConfirmationScreen = ({ onViewDashboard }: BookingConfirmati
       <div className="px-5 py-5 bg-gray-50">
         <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-100">
           <div>
-            <p className="text-[9px] font-medium text-gray-900">Need immediate help?</p>
-            <p className="text-[8px] text-gray-500">Call our 24/7 hotline</p>
+            <p className="text-[9px] font-medium text-gray-900">Questions?</p>
+            <p className="text-[8px] text-gray-500">Call us anytime</p>
           </div>
-          <a href="tel:5125550123" className="flex items-center gap-1 text-[9px] font-medium text-emerald-600">
+          <a href="tel:2145550123" className="flex items-center gap-1 text-[9px] font-medium text-amber-600">
             <Phone className="w-3 h-3" />
-            (512) 555-0123
+            (214) 555-0123
           </a>
         </div>
       </div>
