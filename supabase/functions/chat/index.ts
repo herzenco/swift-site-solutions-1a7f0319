@@ -39,15 +39,56 @@ IMPORTANT: After the user provides their name and email, include this marker at 
 [LEAD_CAPTURED: name="<name>", email="<email>", website="<the URL they shared>", audit="<1-line summary of the issues>"]`;
 
 // Detect if the message contains a URL
-function extractUrl(text: string): string | null {
-  const urlRegex = /(https?:\/\/[^\s]+)|([a-zA-Z0-9][-a-zA-Z0-9]*\.(?:com|net|org|io|co|dev|app|me|ai|xyz|info|biz|us|uk|ca|au|de|fr|es|it|nl|se|no|dk|fi|ch|at|be|pl|ru|jp|cn|in|br|mx|ar|cl|za|nz|sg|hk|kr|tw|my|ph|th|vn|id|tr|ae|sa|eg|il|ie|pt|cz|ro|hu|gr|bg|hr|sk|si|ee|lv|lt|ua|by|kz|uz|pk|bd|lk|np|mm|vn|la|kh|mn)[^\s]*)/gi;
-  const matches = text.match(urlRegex);
-  if (matches && matches.length > 0) {
-    let url = matches[0];
-    // Clean up the URL
-    url = url.replace(/[.,!?;:'")\]}>]+$/, '');
-    return url;
+
+type ExtractUrlOptions = {
+  /** If false, only http(s) URLs will be treated as URLs (bare domains like example.com will be ignored). */
+  allowBareDomains?: boolean;
+};
+
+function cleanUrl(url: string) {
+  return url.replace(/[.,!?;:'")\]}>]+$/, "");
+}
+
+function extractUrl(text: string, options: ExtractUrlOptions = {}): string | null {
+  const input = (text ?? "").trim();
+  if (!input) return null;
+
+  // 1) Always ignore emails so we don't scrape something like "gmail.com" from "john@gmail.com"
+  const emailRegex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
+  const emails = [...input.matchAll(emailRegex)].map((m) => m[0].toLowerCase());
+  const emailDomains = new Set(
+    emails
+      .map((e) => e.split("@")[1])
+      .filter((d): d is string => Boolean(d))
+  );
+
+  // 2) Prefer explicit URLs
+  const httpMatch = input.match(/https?:\/\/[^\s]+/i);
+  if (httpMatch?.[0]) return cleanUrl(httpMatch[0]);
+
+  // 3) Optionally allow bare domains (e.g. "example.com")
+  const allowBareDomains = options.allowBareDomains ?? true;
+  if (!allowBareDomains) return null;
+
+  const tlds =
+    "com|net|org|io|co|dev|app|me|ai|xyz|info|biz|us|uk|ca|au|de|fr|es|it|nl|se|no|dk|fi|ch|at|be|pl|ru|jp|cn|in|br|mx|ar|cl|za|nz|sg|hk|kr|tw|my|ph|th|vn|id|tr|ae|sa|eg|il|ie|pt|cz|ro|hu|gr|bg|hr|sk|si|ee|lv|lt|ua|by|kz|uz|pk|bd|lk|np|mm|la|kh|mn";
+  const domainRegex = new RegExp(
+    `[a-zA-Z0-9][-a-zA-Z0-9]*\\.(?:${tlds})(?:\\/[^\\s]*)?`,
+    "gi"
+  );
+
+  for (const match of input.matchAll(domainRegex)) {
+    const candidate = match[0];
+    const idx = match.index ?? -1;
+
+    // Skip if it looks like we matched the domain portion of an email
+    const prevChar = idx > 0 ? input[idx - 1] : "";
+    if (prevChar === "@") continue;
+    if (emailDomains.has(candidate.toLowerCase())) continue;
+
+    return cleanUrl(candidate);
   }
+
   return null;
 }
 
@@ -112,9 +153,22 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
+    // Prevent accidental back-to-back scrapes (especially when user is replying with email/name).
+    // After we've already given website feedback once, we only allow *explicit* http(s) URLs to trigger scraping.
+    const hasWebsiteFeedback = Array.isArray(messages)
+      ? messages.some(
+          (m: any) =>
+            m?.role === "assistant" &&
+            typeof m.content === "string" &&
+            m.content.includes("Here are 3 quick wins I spotted")
+        )
+      : false;
+
     // Check if the latest user message contains a URL
     const lastUserMessage = messages.filter((m: any) => m.role === 'user').pop();
-    const detectedUrl = lastUserMessage ? extractUrl(lastUserMessage.content) : null;
+    const detectedUrl = lastUserMessage
+      ? extractUrl(lastUserMessage.content, { allowBareDomains: !hasWebsiteFeedback })
+      : null;
 
     let systemPrompt = SYSTEM_PROMPT;
     let finalMessages = [...messages];
