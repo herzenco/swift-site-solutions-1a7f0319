@@ -10,22 +10,10 @@ const industries = [
     href: "/use-cases/real-estate",
   },
   {
-    icon: Briefcase,
-    title: "Professional Services",
-    description: "Streamline client intake, scheduling, and communication for service-driven firms.",
-    href: "/use-cases/professional-services",
-  },
-  {
     icon: Wrench,
     title: "Home & Local Services",
     description: "Convert inbound traffic into booked jobs with automated scheduling and follow-ups.",
     href: "/use-cases/home-services",
-  },
-  {
-    icon: GraduationCap,
-    title: "Education, Coaching & Consulting",
-    description: "Turn interest into booked calls, clients, or students with automated workflows.",
-    href: "/use-cases/education-coaching",
   },
 ];
 
