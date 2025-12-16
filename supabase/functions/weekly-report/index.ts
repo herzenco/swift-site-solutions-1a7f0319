@@ -196,13 +196,20 @@ const handler = async (req: Request): Promise<Response> => {
     `;
 
     // Send email
-    console.log("Sending email to Herzen@herzenco.co");
+    const recipientEmail = "herzen@herzenco.co";
+    console.log(`Sending email to ${recipientEmail}`);
+
     const emailResponse = await resend.emails.send({
       from: "Xyren Reports <onboarding@resend.dev>",
-      to: ["Herzen@herzenco.co"],
+      to: [recipientEmail],
       subject: `Weekly Leads Report - ${thisWeekCount} new leads this week`,
       html: emailHtml,
     });
+
+    if (emailResponse?.error) {
+      console.error("Resend error:", emailResponse.error);
+      throw emailResponse.error;
+    }
 
     console.log("Email sent successfully:", emailResponse);
 
