@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -38,6 +37,87 @@ When you've collected contact info (name, email, and optionally website URL), in
 
 This marker will be processed by the system to save the lead - the user won't see it.`;
 
+const WEBSITE_FEEDBACK_PROMPT = `You are a website expert for Xyren by Herzen Co. You've just analyzed a website's content. 
+
+Provide EXACTLY 3 specific, actionable feedback points about their website. Focus on:
+- Conversion optimization (CTAs, forms, lead capture)
+- User experience and clarity
+- Missing automation opportunities
+
+Be direct, helpful, and specific to what you see in their content. Each point should be 1-2 sentences max.
+
+Format your response like this:
+Here are 3 quick insights about your website:
+
+1. **[Topic]**: [Specific feedback]
+
+2. **[Topic]**: [Specific feedback]
+
+3. **[Topic]**: [Specific feedback]
+
+Would you like me to explain any of these in more detail, or would you like to get a free project plan with recommendations?`;
+
+// Detect if the message contains a URL
+function extractUrl(text: string): string | null {
+  const urlRegex = /(https?:\/\/[^\s]+)|([a-zA-Z0-9][-a-zA-Z0-9]*\.(?:com|net|org|io|co|dev|app|me|ai|xyz|info|biz|us|uk|ca|au|de|fr|es|it|nl|se|no|dk|fi|ch|at|be|pl|ru|jp|cn|in|br|mx|ar|cl|za|nz|sg|hk|kr|tw|my|ph|th|vn|id|tr|ae|sa|eg|il|ie|pt|cz|ro|hu|gr|bg|hr|sk|si|ee|lv|lt|ua|by|kz|uz|pk|bd|lk|np|mm|vn|la|kh|mn)[^\s]*)/gi;
+  const matches = text.match(urlRegex);
+  if (matches && matches.length > 0) {
+    let url = matches[0];
+    // Clean up the URL
+    url = url.replace(/[.,!?;:'")\]}>]+$/, '');
+    return url;
+  }
+  return null;
+}
+
+async function scrapeWebsite(url: string): Promise<{ success: boolean; content?: string; error?: string }> {
+  try {
+    const apiKey = Deno.env.get('FIRECRAWL_API_KEY');
+    if (!apiKey) {
+      console.error('FIRECRAWL_API_KEY not configured');
+      return { success: false, error: 'Scraping not configured' };
+    }
+
+    let formattedUrl = url.trim();
+    if (!formattedUrl.startsWith('http://') && !formattedUrl.startsWith('https://')) {
+      formattedUrl = `https://${formattedUrl}`;
+    }
+
+    console.log('Scraping URL for feedback:', formattedUrl);
+
+    const response = await fetch('https://api.firecrawl.dev/v1/scrape', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        url: formattedUrl,
+        formats: ['markdown'],
+        onlyMainContent: true,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error('Firecrawl error:', response.status, data);
+      return { success: false, error: data.error || 'Failed to analyze website' };
+    }
+
+    const content = data.data?.markdown || data.markdown;
+    if (!content) {
+      return { success: false, error: 'Could not extract website content' };
+    }
+
+    console.log('Successfully scraped website, content length:', content.length);
+    return { success: true, content };
+  } catch (error) {
+    console.error('Scrape error:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Failed to analyze website' };
+  }
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -51,6 +131,43 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
+    // Check if the latest user message contains a URL
+    const lastUserMessage = messages.filter((m: any) => m.role === 'user').pop();
+    const detectedUrl = lastUserMessage ? extractUrl(lastUserMessage.content) : null;
+
+    let systemPrompt = SYSTEM_PROMPT;
+    let finalMessages = [...messages];
+
+    // If URL detected, scrape and provide feedback
+    if (detectedUrl) {
+      console.log('URL detected in message:', detectedUrl);
+      const scrapeResult = await scrapeWebsite(detectedUrl);
+
+      if (scrapeResult.success && scrapeResult.content) {
+        // Truncate content if too long
+        const truncatedContent = scrapeResult.content.slice(0, 8000);
+        
+        systemPrompt = WEBSITE_FEEDBACK_PROMPT;
+        finalMessages = [
+          {
+            role: 'user',
+            content: `Here is the website content from ${detectedUrl}:\n\n${truncatedContent}\n\nPlease provide 3 specific feedback points.`
+          }
+        ];
+        console.log('Providing website feedback for:', detectedUrl);
+      } else {
+        // If scraping failed, add context about the failure
+        console.log('Scraping failed:', scrapeResult.error);
+        finalMessages = [
+          ...messages,
+          {
+            role: 'system',
+            content: `Note: The user shared a URL (${detectedUrl}) but we couldn't analyze it (${scrapeResult.error}). Acknowledge this and offer to help in another way or ask them to make sure the URL is correct.`
+          }
+        ];
+      }
+    }
+
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -60,8 +177,8 @@ serve(async (req) => {
       body: JSON.stringify({
         model: "google/gemini-2.5-flash",
         messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          ...messages,
+          { role: "system", content: systemPrompt },
+          ...finalMessages,
         ],
         stream: true,
       }),
