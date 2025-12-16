@@ -9,23 +9,23 @@ import {
 const faqs = [
   {
     question: "How long does it take?",
-    answer: "Most projects are completed within 5 to 10 days. Complex projects may take up to 2 weeks.",
+    answer: "Most projects are completed within 5–10 business days. Timelines may vary slightly based on setup requirements and integrations, but the process is designed to be fast and repeatable.",
   },
   {
     question: "What's included in maintenance?",
-    answer: "Hosting, security updates, bug fixes, content updates, and ongoing support are all included in your monthly plan.",
+    answer: "Ongoing support, bug fixes, performance optimizations, and product updates to ensure everything continues running smoothly within the supported framework.",
   },
   {
     question: "Can I customize the tools?",
-    answer: "Yes. All AI tools, scheduling systems, and CRM integrations are configured to match your specific workflow and business needs.",
+    answer: "The tools are configurable within a predefined framework. You can adjust settings, workflows, and supported integrations, but we do not offer custom-built features or one-off development. This ensures consistency, speed, and reliability.",
   },
   {
     question: "Do I need technical knowledge?",
-    answer: "No. We handle everything technical for you, and provide training videos so you can manage your site confidently.",
+    answer: "No. Setup and configuration are handled for you. The product is designed to be intuitive and easy to use without technical expertise.",
   },
   {
     question: "Can I cancel anytime?",
-    answer: "Yes. There are no long-term contracts. You can cancel with 30 days notice.",
+    answer: "Yes. There are no long-term commitments. You can cancel at any time.",
   },
 ];
 
