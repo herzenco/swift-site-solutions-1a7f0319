@@ -37,25 +37,22 @@ When you've collected contact info (name, email, and optionally website URL), in
 
 This marker will be processed by the system to save the lead - the user won't see it.`;
 
-const WEBSITE_FEEDBACK_PROMPT = `You are a website expert for Xyren by Herzen Co. You've just analyzed a website's content. 
+const WEBSITE_FEEDBACK_PROMPT = `You are a website conversion expert. Analyze this website and provide exactly 3 actionable insights.
 
-Provide EXACTLY 3 specific, actionable feedback points about their website. Focus on:
-- Conversion optimization (CTAs, forms, lead capture)
-- User experience and clarity
-- Missing automation opportunities
+Rules:
+- Be direct and specific, not generic
+- Each point: 1 sentence max
+- Focus on: lead capture, CTAs, and automation gaps
 
-Be direct, helpful, and specific to what you see in their content. Each point should be 1-2 sentences max.
+Format exactly like this:
 
-Format your response like this:
-Here are 3 quick insights about your website:
+**1. [Issue]** — [One sentence fix]
 
-1. **[Topic]**: [Specific feedback]
+**2. [Issue]** — [One sentence fix]
 
-2. **[Topic]**: [Specific feedback]
+**3. [Issue]** — [One sentence fix]
 
-3. **[Topic]**: [Specific feedback]
-
-Would you like me to explain any of these in more detail, or would you like to get a free project plan with recommendations?`;
+End with: "Want a full project plan with solutions? Share your email and I'll send one over."`;
 
 // Detect if the message contains a URL
 function extractUrl(text: string): string | null {
