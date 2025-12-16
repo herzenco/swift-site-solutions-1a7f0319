@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProjectPlanLeadsTable } from "@/components/dashboard/ProjectPlanLeadsTable";
+import { ChatInteractionsTab } from "@/components/dashboard/ChatInteractionsTab";
 import { useToast } from "@/hooks/use-toast";
 import {
   LogOut,
@@ -18,6 +19,7 @@ import {
   Eye,
   MousePointerClick,
   Globe,
+  MessageCircle,
 } from "lucide-react";
 import { format, subDays } from "date-fns";
 import { User, Session } from "@supabase/supabase-js";
@@ -186,6 +188,10 @@ export default function Dashboard() {
             <TabsTrigger value="leads" className="gap-2">
               <Users className="w-4 h-4" />
               Leads
+            </TabsTrigger>
+            <TabsTrigger value="chat" className="gap-2">
+              <MessageCircle className="w-4 h-4" />
+              Chat
             </TabsTrigger>
             <TabsTrigger value="analytics" className="gap-2">
               <BarChart3 className="w-4 h-4" />
@@ -495,6 +501,11 @@ export default function Dashboard() {
                 <ProjectPlanLeadsTable leads={leads} isLoading={isLoading} />
               </TabsContent>
             </Tabs>
+          </TabsContent>
+
+          {/* Chat Tab */}
+          <TabsContent value="chat">
+            <ChatInteractionsTab />
           </TabsContent>
 
           {/* Analytics Tab */}

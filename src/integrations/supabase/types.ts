@@ -14,6 +14,50 @@ export type Database = {
   }
   public: {
     Tables: {
+      chat_interactions: {
+        Row: {
+          assistant_message: string | null
+          created_at: string
+          id: string
+          interaction_type: string
+          lead_id: string | null
+          metadata: Json | null
+          session_id: string
+          url_scraped: string | null
+          user_message: string | null
+        }
+        Insert: {
+          assistant_message?: string | null
+          created_at?: string
+          id?: string
+          interaction_type: string
+          lead_id?: string | null
+          metadata?: Json | null
+          session_id: string
+          url_scraped?: string | null
+          user_message?: string | null
+        }
+        Update: {
+          assistant_message?: string | null
+          created_at?: string
+          id?: string
+          interaction_type?: string
+          lead_id?: string | null
+          metadata?: Json | null
+          session_id?: string
+          url_scraped?: string | null
+          user_message?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_interactions_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       leads: {
         Row: {
           created_at: string
