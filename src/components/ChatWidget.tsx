@@ -41,10 +41,10 @@ export const ChatWidget = () => {
   }, [isOpen]);
 
   const extractAndSaveLead = async (content: string) => {
-    // Updated regex to capture audit info
-    const leadMatch = content.match(/\[LEAD_CAPTURED: name="([^"]*)", email="([^"]*)", website="([^"]*)"(?:, audit="([^"]*)")?\]/);
+    // Regex that handles multi-line audit content using [\s\S] instead of [^"]
+    const leadMatch = content.match(/\[LEAD_CAPTURED:\s*name="([^"]*)",\s*email="([^"]*)",\s*website="([^"]*)"(?:,\s*audit="([\s\S]*?)")?\]/);
     if (leadMatch) {
-      const [, name, email, website, audit] = leadMatch;
+      const [fullMatch, name, email, website, audit] = leadMatch;
       try {
         await supabase.from("leads").insert({
           full_name: name,
@@ -57,8 +57,8 @@ export const ChatWidget = () => {
       } catch (error) {
         console.error("Error saving lead:", error);
       }
-      // Remove the marker from displayed content
-      return content.replace(/\[LEAD_CAPTURED: name="[^"]*", email="[^"]*", website="[^"]*"(?:, audit="[^"]*")?\]/, "").trim();
+      // Remove the entire marker from displayed content
+      return content.replace(fullMatch, "").trim();
     }
     return content;
   };
