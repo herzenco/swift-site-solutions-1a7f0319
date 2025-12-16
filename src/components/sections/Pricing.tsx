@@ -4,43 +4,52 @@ import { Check, ArrowRight } from "lucide-react";
 
 const plans = [
   {
-    name: "Starter",
-    setupFee: "$1,500",
-    monthly: "$200",
-    description: "For businesses needing a fast, modern website with core automations.",
+    name: "Core",
+    monthly: "$150",
+    description: "A stable, reliable website system that runs without intervention.",
     features: [
-      "Custom website",
-      "AI chatbot",
-      "Scheduling automation",
-      "Maintenance",
-      "Delivered in 5 to 10 days",
+      "Secure hosting",
+      "Uptime and performance monitoring",
+      "Ongoing maintenance and updates",
+      "Conversion-focused layout",
+      "Contact forms and basic scheduling",
+      "Analytics (traffic and form submissions)",
+      "Email support",
+    ],
+    excludes: [
+      "AI features",
+      "Automated follow-ups",
+      "SEO optimization beyond technical basics",
     ],
     popular: false,
   },
   {
-    name: "Growth",
-    setupFee: "$2,000",
+    name: "Active",
     monthly: "$400",
-    description: "For businesses wanting SEO visibility and insights.",
+    description: "A system that captures, responds, and books automatically.",
     features: [
-      "Everything in Starter",
-      "Full SEO optimization",
-      "Monthly reports",
-      "Priority support",
+      "Everything in Core, plus:",
+      "AI chat for instant responses and lead qualification",
+      "Automated email follow-ups",
+      "Scheduling automation",
+      "Lead routing and CRM integration",
+      "Conversion tracking",
     ],
+    excludes: [],
     popular: true,
   },
   {
-    name: "Scale",
-    setupFee: "$2,000",
+    name: "Optimized",
     monthly: "$600",
-    description: "For businesses wanting ongoing content and strategy.",
+    description: "A continuously improving website system.",
     features: [
-      "Everything in Growth",
-      "1 to 2 SEO-optimized blog posts monthly",
-      "Strategy calls",
-      "Dedicated manager",
+      "Everything in Active, plus:",
+      "Ongoing technical SEO monitoring",
+      "Quarterly conversion optimization updates",
+      "Enhanced analytics and reporting",
+      "Priority support",
     ],
+    excludes: [],
     popular: false,
   },
 ];
@@ -59,9 +68,13 @@ export const Pricing = () => {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
             Simple <span className="text-gradient">pricing</span>
           </h2>
-          <p className="text-xl text-muted-foreground">
-            One-time setup. Predictable monthly cost.
+          <p className="text-xl text-muted-foreground mb-8">
+            One system. Three modes. Choose how much it works for you.
           </p>
+          <div className="inline-block bg-primary/10 border border-primary/20 rounded-xl px-6 py-4">
+            <p className="text-lg font-semibold text-foreground">$2,000 one-time setup</p>
+            <p className="text-sm text-muted-foreground">Strategy, design, build, configuration, and launch.</p>
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
@@ -81,7 +94,7 @@ export const Pricing = () => {
               {plan.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                   <span className="px-4 py-1 rounded-full bg-primary text-primary-foreground text-sm font-semibold">
-                    Popular
+                    Most Popular
                   </span>
                 </div>
               )}
@@ -92,17 +105,13 @@ export const Pricing = () => {
               </div>
 
               <div className="mb-8">
-                <div className="flex items-baseline gap-2 mb-1">
-                  <span className="text-5xl font-bold">{plan.setupFee}</span>
-                  <span className="text-muted-foreground">setup</span>
-                </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-semibold text-primary">{plan.monthly}</span>
+                  <span className="text-5xl font-bold">{plan.monthly}</span>
                   <span className="text-muted-foreground">/month</span>
                 </div>
               </div>
 
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-3 mb-6">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
@@ -110,6 +119,17 @@ export const Pricing = () => {
                   </li>
                 ))}
               </ul>
+
+              {plan.excludes.length > 0 && (
+                <div className="mb-8 pt-4 border-t border-border/50">
+                  <p className="text-xs text-muted-foreground/60 mb-2">Not included:</p>
+                  <ul className="space-y-1">
+                    {plan.excludes.map((item, i) => (
+                      <li key={i} className="text-xs text-muted-foreground/50">{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
               <Button
                 variant={plan.popular ? "hero" : "outline"}
