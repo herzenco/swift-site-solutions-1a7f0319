@@ -11,17 +11,17 @@ import { SEO } from "@/components/SEO";
 
 const Index = () => {
   return (
-    <div className="h-screen overflow-y-auto overflow-x-hidden snap-y snap-mandatory bg-background">
+    <div className="h-screen overflow-y-auto overflow-x-hidden bg-background lg:snap-y lg:snap-mandatory">
       <SEO canonical="/" />
       <Navbar />
-      <section className="snap-start"><Hero /></section>
-      <section className="snap-start"><HowWeThink /></section>
-      <section className="snap-start"><Portfolio /></section>
-      <section className="snap-start"><Tools /></section>
-      <section className="snap-start"><Pricing /></section>
-      <section className="snap-start"><FAQ /></section>
-      <section className="snap-start"><Contact /></section>
-      <section className="snap-start"><Footer /></section>
+      <section className="lg:snap-start"><Hero /></section>
+      <section className="lg:snap-start"><HowWeThink /></section>
+      <section className="lg:snap-start"><Portfolio /></section>
+      <section className="lg:snap-start"><Tools /></section>
+      <section className="lg:snap-start"><Pricing /></section>
+      <section className="lg:snap-start"><FAQ /></section>
+      <section className="lg:snap-start"><Contact /></section>
+      <section className="lg:snap-start"><Footer /></section>
     </div>
   );
 };
