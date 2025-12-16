@@ -14,10 +14,9 @@ const authSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-const ALLOWED_DOMAIN = "herzenco.co";
+
 
 export default function Auth() {
-  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -66,66 +65,22 @@ export default function Auth() {
     
     if (!validateForm()) return;
 
-    // Check domain for signups
-    if (!isLogin) {
-      const emailDomain = email.trim().split("@")[1]?.toLowerCase();
-      if (emailDomain !== ALLOWED_DOMAIN) {
-        toast({
-          title: "Access restricted",
-          description: `Only @${ALLOWED_DOMAIN} email addresses can create accounts.`,
-          variant: "destructive",
-        });
-        return;
-      }
-    }
-    
     setIsLoading(true);
 
     try {
-      if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({
-          email: email.trim(),
-          password,
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      });
+      
+      if (error) {
+        toast({
+          title: "Login failed",
+          description: error.message === "Invalid login credentials" 
+            ? "Invalid email or password. Please try again."
+            : error.message,
+          variant: "destructive",
         });
-        
-        if (error) {
-          toast({
-            title: "Login failed",
-            description: error.message === "Invalid login credentials" 
-              ? "Invalid email or password. Please try again."
-              : error.message,
-            variant: "destructive",
-          });
-        }
-      } else {
-        const { error } = await supabase.auth.signUp({
-          email: email.trim(),
-          password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/dashboard`,
-          },
-        });
-        
-        if (error) {
-          if (error.message.includes("already registered")) {
-            toast({
-              title: "Account exists",
-              description: "This email is already registered. Please log in instead.",
-              variant: "destructive",
-            });
-          } else {
-            toast({
-              title: "Sign up failed",
-              description: error.message,
-              variant: "destructive",
-            });
-          }
-        } else {
-          toast({
-            title: "Account created",
-            description: "You can now access the dashboard.",
-          });
-        }
       }
     } catch (err) {
       toast({
@@ -157,12 +112,10 @@ export default function Auth() {
 
         <div className="bg-card border border-border rounded-xl p-8">
           <h1 className="text-2xl font-bold text-foreground mb-2">
-            {isLogin ? "Welcome back" : "Create account"}
+            Welcome back
           </h1>
           <p className="text-muted-foreground mb-6">
-            {isLogin
-              ? "Sign in to access your dashboard"
-              : "Sign up to get started"}
+            Sign in to access your dashboard
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -205,24 +158,9 @@ export default function Auth() {
               disabled={isLoading}
             >
               {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-              {isLogin ? "Sign in" : "Create account"}
+              Sign in
             </Button>
           </form>
-
-          <div className="mt-6 text-center">
-            <button
-              type="button"
-              onClick={() => {
-                setIsLogin(!isLogin);
-                setErrors({});
-              }}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {isLogin
-                ? "Don't have an account? Sign up"
-                : "Already have an account? Sign in"}
-            </button>
-          </div>
         </div>
       </motion.div>
     </div>
