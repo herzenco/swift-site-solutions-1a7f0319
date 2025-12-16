@@ -41,14 +41,6 @@ export const Navbar = () => {
               <span className="text-xs text-muted-foreground leading-tight">By Herzen Co.</span>
             </a>
 
-            {/* Desktop CTA */}
-
-            {/* Desktop CTA */}
-            <div className="hidden md:block">
-              <Button variant="default" size="sm" asChild>
-                <a href="#contact">Get Started</a>
-              </Button>
-            </div>
 
             {/* Mobile Menu Toggle */}
             <button
@@ -82,11 +74,6 @@ export const Navbar = () => {
                   {link.label}
                 </a>
               ))}
-              <Button variant="hero" size="lg" className="mt-4" asChild>
-                <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
-                  Get Started
-                </a>
-              </Button>
             </div>
           </motion.div>
         )}
