@@ -7,21 +7,18 @@ import { BackButton } from "@/components/BackButton";
 import { LawFirmDemo } from "@/components/demos/LawFirmDemo";
 import { SEO } from "@/components/SEO";
 import { HeroWorkflowModal } from "@/components/HeroWorkflowModal";
-import { Scale, Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 const features = [
   {
-    icon: Calendar,
     title: "Streamlined Client Intake",
     description: "Capture case details before the first call. Clients submit their situation online, so your team arrives prepared.",
   },
   {
-    icon: MessageSquare,
     title: "Qualify Leads Automatically",
     description: "Filter serious inquiries from casual browsers. Focus your billable hours on cases that match your practice areas.",
   },
   {
-    icon: Users,
     title: "Never Miss a Follow-Up",
     description: "Track every consultation request, case inquiry, and client communication in one place.",
   },
@@ -58,9 +55,6 @@ const ProfessionalServices = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="icon-container w-14 h-14 mb-6">
-                <Scale className="w-6 h-6 text-primary" strokeWidth={1.5} />
-              </div>
               <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
                 Websites for <span className="text-gradient">Law Firms</span>
               </h1>
@@ -111,9 +105,6 @@ const ProfessionalServices = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="p-8 rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm"
                 >
-                  <div className="icon-container w-12 h-12 mb-4">
-                    <feature.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
-                  </div>
                   <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
                   <p className="text-muted-foreground">{feature.description}</p>
                 </motion.div>
