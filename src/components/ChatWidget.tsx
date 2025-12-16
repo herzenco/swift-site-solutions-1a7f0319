@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Loader2, Sparkles } from "lucide-react";
+import { MessageCircle, X, Send, Loader2, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { supabase } from "@/integrations/supabase/client";
@@ -166,13 +166,13 @@ export const ChatWidget = () => {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.92 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_hsl(var(--primary)/0.4)] transition-all duration-300 flex items-center justify-center group"
+            className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-2xl bg-foreground text-background shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)] transition-all duration-300 flex items-center justify-center"
             aria-label="Open chat"
           >
-            <MessageCircle className="w-6 h-6 group-hover:scale-110 transition-transform" />
+            <MessageCircle className="w-6 h-6" />
           </motion.button>
         )}
       </AnimatePresence>
@@ -181,66 +181,61 @@ export const ChatWidget = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            initial={{ opacity: 0, y: 16, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed bottom-6 right-6 z-50 w-[400px] max-w-[calc(100vw-48px)] h-[560px] max-h-[calc(100vh-100px)] bg-background/95 backdrop-blur-xl border border-border/50 rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] flex flex-col overflow-hidden"
+            exit={{ opacity: 0, y: 16, scale: 0.96 }}
+            transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+            className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-48px)] h-[540px] max-h-[calc(100vh-100px)] bg-card border border-border rounded-2xl shadow-[0_20px_60px_-10px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="relative px-5 py-4 border-b border-border/50">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-transparent" />
-              <div className="relative flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-lg">
-                      <Sparkles className="w-5 h-5 text-primary-foreground" />
-                    </div>
-                    <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-background" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground">Xyren</h3>
-                    <p className="text-xs text-muted-foreground">Online now</p>
+            <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-foreground flex items-center justify-center">
+                  <Bot className="w-5 h-5 text-background" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-sm text-foreground">Xyren</h3>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                    <span className="text-xs text-muted-foreground">Online</span>
                   </div>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setIsOpen(false)}
-                  className="h-8 w-8 rounded-full hover:bg-muted/80"
-                >
-                  <X className="w-4 h-4" />
-                </Button>
               </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsOpen(false)}
+                className="h-8 w-8 rounded-lg hover:bg-muted"
+              >
+                <X className="w-4 h-4" />
+              </Button>
             </div>
 
             {/* Messages */}
-            <ScrollArea className="flex-1 px-4 py-4" ref={scrollRef}>
-              <div className="space-y-4">
+            <ScrollArea className="flex-1 px-5 py-5" ref={scrollRef}>
+              <div className="space-y-5">
                 {messages.map((message, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 8 }}
+                    initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.15 }}
                     className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
                   >
-                    {message.role === "assistant" && (
-                      <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center mr-2 mt-1 shrink-0">
-                        <Sparkles className="w-3.5 h-3.5 text-primary" />
-                      </div>
-                    )}
                     <div
-                      className={`max-w-[80%] px-4 py-3 text-sm leading-relaxed ${
+                      className={`max-w-[85%] text-sm leading-relaxed ${
                         message.role === "user"
-                          ? "bg-primary text-primary-foreground rounded-2xl rounded-br-lg"
-                          : "bg-muted/60 text-foreground rounded-2xl rounded-bl-lg"
+                          ? "bg-foreground text-background px-4 py-3 rounded-2xl rounded-br-sm"
+                          : "bg-muted px-4 py-3 rounded-2xl rounded-bl-sm text-foreground"
                       }`}
                     >
                       {message.content || (
-                        <span className="flex items-center gap-2 text-muted-foreground">
-                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                          <span className="text-xs">Thinking...</span>
+                        <span className="flex items-center gap-2">
+                          <span className="flex gap-1">
+                            <span className="w-1.5 h-1.5 bg-current rounded-full animate-bounce [animation-delay:-0.3s]" />
+                            <span className="w-1.5 h-1.5 bg-current rounded-full animate-bounce [animation-delay:-0.15s]" />
+                            <span className="w-1.5 h-1.5 bg-current rounded-full animate-bounce" />
+                          </span>
                         </span>
                       )}
                     </div>
@@ -250,24 +245,25 @@ export const ChatWidget = () => {
             </ScrollArea>
 
             {/* Input Area */}
-            <div className="p-4 border-t border-border/50 bg-muted/30">
-              <div className="flex items-end gap-2 bg-background rounded-2xl border border-border/50 p-1.5 pl-4 focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/10 transition-all">
-                <textarea
-                  ref={inputRef}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Ask anything..."
-                  disabled={isLoading}
-                  rows={1}
-                  className="flex-1 bg-transparent border-0 resize-none text-sm placeholder:text-muted-foreground focus:outline-none py-2 max-h-24"
-                  style={{ minHeight: "36px" }}
-                />
+            <div className="p-4 border-t border-border">
+              <div className="flex items-end gap-2">
+                <div className="flex-1 bg-muted rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-foreground/20 transition-all">
+                  <textarea
+                    ref={inputRef}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Message..."
+                    disabled={isLoading}
+                    rows={1}
+                    className="w-full bg-transparent border-0 resize-none text-sm placeholder:text-muted-foreground focus:outline-none py-1 max-h-20"
+                  />
+                </div>
                 <Button
                   onClick={sendMessage}
                   disabled={!input.trim() || isLoading}
                   size="icon"
-                  className="h-9 w-9 rounded-xl shrink-0 bg-primary hover:bg-primary/90 disabled:opacity-40"
+                  className="h-10 w-10 rounded-xl shrink-0 bg-foreground hover:bg-foreground/90 text-background disabled:opacity-30"
                 >
                   {isLoading ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -276,9 +272,6 @@ export const ChatWidget = () => {
                   )}
                 </Button>
               </div>
-              <p className="text-[10px] text-muted-foreground/60 text-center mt-2">
-                Powered by AI
-              </p>
             </div>
           </motion.div>
         )}
