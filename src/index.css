@@ -113,6 +113,13 @@
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* Hide card icons on mobile + tablet */
+  @media (max-width: 1023px) {
+    .icon-container {
+      display: none;
+    }
+  }
+
   .icon-container::before {
     content: "";
     position: absolute;
