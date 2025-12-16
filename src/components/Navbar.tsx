@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const navLinks = [
   { label: "Benefits", href: "#benefits" },
@@ -36,9 +36,8 @@ export const Navbar = () => {
         <div className="container-tight px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <a href="#" className="flex flex-col">
-              <span className="text-xl font-bold leading-tight">Xyren</span>
-              <span className="text-xs text-muted-foreground leading-tight">By Herzen Co.</span>
+            <a href="#">
+              <img src={logo} alt="Xyren by Herzen Co." className="h-8 w-auto" />
             </a>
 
 
