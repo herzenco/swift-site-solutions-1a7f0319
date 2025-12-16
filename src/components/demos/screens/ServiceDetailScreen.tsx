@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Droplets, Check, Clock, Shield, Star } from "lucide-react";
+import { ArrowLeft, Check, Clock, Shield, Star, ChevronRight } from "lucide-react";
+import kitchenImage from "@/assets/demo-kitchen-remodel.jpg";
 
 interface ServiceDetailScreenProps {
   onBack: () => void;
@@ -13,120 +14,130 @@ export const ServiceDetailScreen = ({ onBack, onBookNow }: ServiceDetailScreenPr
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}
       transition={{ duration: 0.3 }}
-      className="h-full flex flex-col bg-white overflow-y-auto overflow-x-hidden"
+      className="h-full flex flex-col bg-stone-50 overflow-y-auto overflow-x-hidden"
       style={{ scrollbarWidth: 'none' }}
     >
-      {/* Header */}
-      <div className="sticky top-0 bg-white border-b border-gray-100 px-4 py-3 z-10">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={onBack}
-            type="button"
-            className="p-1.5 rounded-full hover:bg-gray-100 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4 text-gray-600" />
-          </button>
-          <h1 className="text-[12px] font-semibold text-gray-900">Emergency Repairs</h1>
+      {/* Header with Back Button */}
+      <div className="absolute top-0 left-0 right-0 z-20 px-4 py-3">
+        <button
+          onClick={onBack}
+          type="button"
+          className="p-2 rounded-full bg-white/90 backdrop-blur-sm shadow-sm hover:bg-white transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4 text-stone-600" />
+        </button>
+      </div>
+
+      {/* Hero Image */}
+      <div className="relative h-[35%] min-h-[140px]">
+        <img 
+          src={kitchenImage} 
+          alt="Kitchen Remodel"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-transparent to-transparent" />
+        <div className="absolute bottom-4 left-4 right-4">
+          <p className="text-[8px] text-amber-400 uppercase tracking-wider font-medium mb-1">Featured Service</p>
+          <h1 className="text-[16px] font-semibold text-white">Kitchen Remodels</h1>
         </div>
       </div>
 
-      {/* Service Hero */}
-      <div className="bg-emerald-900 px-5 py-6">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-xl bg-emerald-800 flex items-center justify-center">
-            <Droplets className="w-6 h-6 text-emerald-300" />
-          </div>
-          <div>
-            <h2 className="text-[14px] font-semibold text-white">Emergency Repairs</h2>
-            <p className="text-[9px] text-emerald-300">Available 24/7</p>
-          </div>
+      {/* Pricing Bar */}
+      <div className="px-5 py-3 bg-white border-b border-stone-100 flex items-center justify-between">
+        <div>
+          <p className="text-[7px] text-stone-500 uppercase tracking-wide">Starting at</p>
+          <p className="text-[18px] font-bold text-stone-900">$25,000</p>
         </div>
-        <p className="text-[9px] text-emerald-100/80 leading-relaxed">
-          When disaster strikes, we're there. Burst pipes, major leaks, sewage backups: our emergency team responds fast to minimize damage.
+        <div className="text-right">
+          <p className="text-[7px] text-stone-500">Timeline</p>
+          <p className="text-[10px] font-medium text-amber-600">4-8 Weeks</p>
+        </div>
+      </div>
+
+      {/* Description */}
+      <div className="px-5 py-4 border-b border-stone-100">
+        <p className="text-[9px] text-stone-600 leading-relaxed">
+          Transform your kitchen into the heart of your home. We handle everything from custom cabinetry and premium countertops to modern layouts and expert craftsmanship.
         </p>
       </div>
 
-      {/* Pricing */}
-      <div className="px-5 py-4 border-b border-gray-100">
-        <div className="flex items-baseline justify-between">
-          <div>
-            <p className="text-[8px] text-gray-500 uppercase tracking-wide mb-1">Starting at</p>
-            <p className="text-[20px] font-bold text-gray-900">$99</p>
-          </div>
-          <div className="text-right">
-            <p className="text-[8px] text-gray-500">Response time</p>
-            <p className="text-[10px] font-medium text-emerald-600">Under 1 hour</p>
-          </div>
-        </div>
-      </div>
-
       {/* What's Included */}
-      <div className="px-5 py-4 border-b border-gray-100">
-        <p className="text-[8px] tracking-[0.2em] text-gray-400 uppercase mb-3 font-semibold">What's Included</p>
-        <div className="space-y-2.5">
+      <div className="px-5 py-4 border-b border-stone-100">
+        <p className="text-[8px] tracking-[0.15em] text-stone-500 uppercase mb-3 font-medium">What's Included</p>
+        <div className="grid grid-cols-2 gap-2">
           {[
-            "24/7 emergency dispatch",
-            "Free diagnostic assessment",
-            "Upfront, transparent pricing",
-            "Licensed & insured technicians",
-            "90-day warranty on all repairs",
+            "Design consultation",
+            "3D renderings",
+            "Premium materials",
+            "Licensed crew",
+            "Permit handling",
+            "2-year warranty",
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-2">
-              <Check className="w-3 h-3 text-emerald-500" />
-              <span className="text-[9px] text-gray-700">{item}</span>
+              <div className="w-4 h-4 rounded-full bg-amber-100 flex items-center justify-center">
+                <Check className="w-2.5 h-2.5 text-amber-600" />
+              </div>
+              <span className="text-[8px] text-stone-700">{item}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Trust Indicators */}
-      <div className="px-5 py-4 border-b border-gray-100 bg-gray-50">
-        <div className="flex justify-between">
-          <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-emerald-600" />
-            <div>
-              <p className="text-[9px] font-medium text-gray-900">Fast Response</p>
-              <p className="text-[7px] text-gray-500">Avg. 45 min arrival</p>
-            </div>
+      <div className="px-5 py-3 bg-stone-100/50 flex justify-between">
+        <div className="flex items-center gap-2">
+          <Clock className="w-4 h-4 text-stone-500" />
+          <div>
+            <p className="text-[8px] font-medium text-stone-800">On-Time</p>
+            <p className="text-[6px] text-stone-500">Guaranteed</p>
           </div>
-          <div className="flex items-center gap-2">
-            <Shield className="w-4 h-4 text-emerald-600" />
-            <div>
-              <p className="text-[9px] font-medium text-gray-900">Guaranteed</p>
-              <p className="text-[7px] text-gray-500">Satisfaction promise</p>
-            </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <Shield className="w-4 h-4 text-stone-500" />
+          <div>
+            <p className="text-[8px] font-medium text-stone-800">Insured</p>
+            <p className="text-[6px] text-stone-500">Full coverage</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+          <div>
+            <p className="text-[8px] font-medium text-stone-800">5.0 Stars</p>
+            <p className="text-[6px] text-stone-500">87 reviews</p>
           </div>
         </div>
       </div>
 
       {/* Review Preview */}
-      <div className="px-5 py-4 border-b border-gray-100">
-        <div className="flex items-center gap-1 mb-2">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} className="w-2.5 h-2.5 text-yellow-400 fill-yellow-400" />
-          ))}
-          <span className="text-[8px] text-gray-500 ml-1">128 reviews</span>
+      <div className="px-5 py-4 border-b border-stone-100">
+        <div className="p-3 bg-white rounded-lg border border-stone-200">
+          <div className="flex gap-0.5 mb-2">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-2 h-2 text-amber-400 fill-amber-400" />
+            ))}
+          </div>
+          <p className="text-[8px] text-stone-600 italic leading-relaxed mb-2">
+            "Our kitchen went from dated to magazine-worthy. The attention to detail was incredible."
+          </p>
+          <p className="text-[7px] text-stone-400 font-medium">David & Lisa R.</p>
         </div>
-        <p className="text-[9px] text-gray-600 italic leading-relaxed">
-          "Called at 2am with a burst pipe. They were here in 30 minutes and had it fixed within the hour. Saved our home from serious damage."
-        </p>
-        <p className="text-[8px] text-gray-400 mt-1">Jennifer T.</p>
       </div>
 
       {/* Spacer */}
       <div className="flex-1" />
 
       {/* Book Now CTA */}
-      <div className="sticky bottom-0 bg-white border-t border-gray-100 px-4 py-4">
+      <div className="sticky bottom-0 bg-white border-t border-stone-200 px-4 py-4">
         <motion.button
           whileTap={{ scale: 0.98 }}
           onClick={onBookNow}
           type="button"
-          className="w-full py-3 bg-emerald-600 text-white rounded-lg text-[10px] font-semibold uppercase tracking-wide"
+          className="w-full py-3 bg-stone-900 text-white rounded-lg text-[9px] font-semibold uppercase tracking-wide flex items-center justify-center gap-2 hover:bg-stone-800 transition-colors"
         >
-          Book This Service
+          Request Free Estimate
+          <ChevronRight className="w-3.5 h-3.5" />
         </motion.button>
-        <p className="text-[7px] text-gray-400 text-center mt-2">No payment required to book</p>
+        <p className="text-[7px] text-stone-400 text-center mt-2">No obligation consultation</p>
       </div>
     </motion.div>
   );

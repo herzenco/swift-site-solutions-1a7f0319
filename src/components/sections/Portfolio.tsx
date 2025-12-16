@@ -1,16 +1,14 @@
 import { motion } from "framer-motion";
-import { Building2, Briefcase, Wrench, GraduationCap, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const industries = [
   {
-    icon: Building2,
     title: "Real Estate & Property Services",
     description: "Automate inquiries, manage showings, and capture leads without manual follow-ups.",
     href: "/use-cases/real-estate",
   },
   {
-    icon: Wrench,
     title: "Home & Local Services",
     description: "Convert inbound traffic into booked jobs with automated scheduling and follow-ups.",
     href: "/use-cases/home-services",
@@ -59,10 +57,7 @@ export const Portfolio = () => {
                 to={industry.href}
                 className="group block p-8 rounded-2xl border border-border/50 hover:border-primary/30 bg-card/50 backdrop-blur-sm transition-all duration-500 h-full"
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="icon-container w-12 h-12 shrink-0">
-                    <industry.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
-                  </div>
+                <div className="mb-4">
                   <h3 className="text-xl sm:text-2xl font-bold group-hover:text-gradient transition-all duration-300">{industry.title}</h3>
                 </div>
                 <p className="text-muted-foreground">{industry.description}</p>
