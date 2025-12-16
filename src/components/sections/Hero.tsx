@@ -13,7 +13,7 @@ export const Hero = () => {
       <div className="absolute inset-0 bg-gradient-glow" />
       
       {/* Single subtle orb */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[90vw] max-w-[800px] h-[60vw] max-h-[600px] bg-primary/5 rounded-full blur-3xl" />
 
       <div className="container-tight section-padding relative z-10 flex flex-col items-center justify-between min-h-[80vh]">
         <div /> {/* Spacer */}
