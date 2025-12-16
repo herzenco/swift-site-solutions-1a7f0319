@@ -7,21 +7,18 @@ import { BackButton } from "@/components/BackButton";
 import { EducationCoachingDemo } from "@/components/demos/EducationCoachingDemo";
 import { SEO } from "@/components/SEO";
 import { HeroWorkflowModal } from "@/components/HeroWorkflowModal";
-import { GraduationCap, Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 const features = [
   {
-    icon: Calendar,
     title: "Session Booking System",
     description: "Let clients and students book coaching calls, consultations, or sessions directly online.",
   },
   {
-    icon: MessageSquare,
     title: "Automated Nurture Sequences",
     description: "Turn interested prospects into paying clients with intelligent follow-up messaging.",
   },
   {
-    icon: Users,
     title: "Client Management Hub",
     description: "Track student progress, manage communications, and organize your practice in one place.",
   },
@@ -58,9 +55,6 @@ const EducationCoaching = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="icon-container w-14 h-14 mb-6">
-                <GraduationCap className="w-6 h-6 text-primary" strokeWidth={1.5} />
-              </div>
               <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
                 Websites for <span className="text-gradient">Education & Coaching</span>
               </h1>
@@ -111,9 +105,6 @@ const EducationCoaching = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="p-8 rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm"
                 >
-                  <div className="icon-container w-12 h-12 mb-4">
-                    <feature.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
-                  </div>
                   <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
                   <p className="text-muted-foreground">{feature.description}</p>
                 </motion.div>

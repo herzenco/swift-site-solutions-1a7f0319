@@ -7,21 +7,18 @@ import { BackButton } from "@/components/BackButton";
 import { HomeServicesDemo } from "@/components/demos/HomeServicesDemo";
 import { SEO } from "@/components/SEO";
 import { HeroWorkflowModal } from "@/components/HeroWorkflowModal";
-import { Wrench, Calendar, MessageSquare, ClipboardList, ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 const features = [
   {
-    icon: Calendar,
     title: "Instant Job Booking",
     description: "Let customers book service appointments directly from your website, any time of day.",
   },
   {
-    icon: MessageSquare,
     title: "Automated Follow-Ups",
     description: "Send appointment reminders and follow-up messages without lifting a finger.",
   },
   {
-    icon: ClipboardList,
     title: "Service Request Forms",
     description: "Capture detailed job information upfront so you arrive prepared and ready to work.",
   },
@@ -58,9 +55,6 @@ const HomeServices = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="icon-container w-14 h-14 mb-6">
-                <Wrench className="w-6 h-6 text-primary" strokeWidth={1.5} />
-              </div>
               <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
                 Websites for <span className="text-gradient">Home & Local Services</span>
               </h1>
@@ -111,9 +105,6 @@ const HomeServices = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="p-8 rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm"
                 >
-                  <div className="icon-container w-12 h-12 mb-4">
-                    <feature.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
-                  </div>
                   <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
                   <p className="text-muted-foreground">{feature.description}</p>
                 </motion.div>
