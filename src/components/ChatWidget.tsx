@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Loader2 } from "lucide-react";
+import { X, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
+import { XyrenIcon } from "./XyrenIcon";
 
 interface Message {
   role: "user" | "assistant";
@@ -243,7 +244,7 @@ export const ChatWidget = () => {
             style={{ background: "linear-gradient(135deg, hsl(190 100% 50%) 0%, hsl(260 80% 65%) 100%)" }}
             aria-label="Open chat"
           >
-            <MessageCircle className="w-6 h-6" />
+            <XyrenIcon size={26} />
           </motion.button>
         )}
       </AnimatePresence>
