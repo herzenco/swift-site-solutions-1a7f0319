@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProjectPlanLeadsTable } from "@/components/dashboard/ProjectPlanLeadsTable";
+import { ChatInteractionsTab } from "@/components/dashboard/ChatInteractionsTab";
 import { useToast } from "@/hooks/use-toast";
 import {
   LogOut,
@@ -18,6 +19,7 @@ import {
   Eye,
   MousePointerClick,
   Globe,
+  MessageCircle,
 } from "lucide-react";
 import { format, subDays } from "date-fns";
 import { User, Session } from "@supabase/supabase-js";
@@ -123,6 +125,7 @@ export default function Dashboard() {
   }).length;
   const heroModalLeads = leads.filter((l) => l.source === "hero_modal").length;
   const projectPlanLeads = leads.filter((l) => l.source === "project_plan_modal").length;
+  const chatbotLeads = leads.filter((l) => l.source === "chatbot").length;
   const realEstateLeads = leads.filter((l) => l.source === "real_estate_page").length;
   const professionalServicesLeads = leads.filter((l) => l.source === "professional_services_page").length;
   const homeServicesLeads = leads.filter((l) => l.source === "home_services_page").length;
@@ -185,6 +188,10 @@ export default function Dashboard() {
             <TabsTrigger value="leads" className="gap-2">
               <Users className="w-4 h-4" />
               Leads
+            </TabsTrigger>
+            <TabsTrigger value="chat" className="gap-2">
+              <MessageCircle className="w-4 h-4" />
+              Chat
             </TabsTrigger>
             <TabsTrigger value="analytics" className="gap-2">
               <BarChart3 className="w-4 h-4" />
@@ -319,6 +326,10 @@ export default function Dashboard() {
                   Project Plan
                   <span className="bg-orange-500/20 text-orange-400 px-1.5 py-0.5 rounded-full text-xs">{projectPlanLeads}</span>
                 </TabsTrigger>
+                <TabsTrigger value="chatbot" className="gap-2 text-xs sm:text-sm">
+                  Chatbot
+                  <span className="bg-cyan-500/20 text-cyan-400 px-1.5 py-0.5 rounded-full text-xs">{chatbotLeads}</span>
+                </TabsTrigger>
                 <TabsTrigger value="real_estate_page" className="gap-2 text-xs sm:text-sm">
                   Real Estate
                   <span className="bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded-full text-xs">{realEstateLeads}</span>
@@ -337,7 +348,7 @@ export default function Dashboard() {
                 </TabsTrigger>
               </TabsList>
 
-              {["all", "hero_modal", "real_estate_page", "professional_services_page", "home_services_page", "education_coaching_page"].map((tabValue) => (
+              {["all", "hero_modal", "project_plan_modal", "chatbot", "real_estate_page", "professional_services_page", "home_services_page", "education_coaching_page"].map((tabValue) => (
                 <TabsContent key={tabValue} value={tabValue}>
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
@@ -346,14 +357,25 @@ export default function Dashboard() {
                   >
                     <div className="p-6 border-b border-border">
                       <h2 className="text-lg font-semibold text-foreground">
-                        {tabValue === "all" ? "All Leads" : tabValue === "hero_modal" ? "Hero Modal Leads" : "Project Plan Leads"}
+                        {tabValue === "all" ? "All Leads" 
+                          : tabValue === "hero_modal" ? "Hero Modal Leads" 
+                          : tabValue === "project_plan_modal" ? "Project Plan Leads"
+                          : tabValue === "chatbot" ? "Chatbot Leads"
+                          : tabValue === "real_estate_page" ? "Real Estate Leads"
+                          : tabValue === "professional_services_page" ? "Professional Services Leads"
+                          : tabValue === "home_services_page" ? "Home Services Leads"
+                          : "Education & Coaching Leads"}
                       </h2>
                       <p className="text-sm text-muted-foreground mt-1">
                         {tabValue === "all" 
                           ? "All form submissions from your website" 
                           : tabValue === "hero_modal"
                           ? "Leads from the hero CTA modal"
-                          : "Leads from the project plan questionnaire"}
+                          : tabValue === "project_plan_modal"
+                          ? "Leads from the project plan questionnaire"
+                          : tabValue === "chatbot"
+                          ? "Leads captured through AI chatbot conversations"
+                          : `Leads from the ${tabValue.replace(/_/g, " ").replace(" page", "")} use-case page`}
                       </p>
                     </div>
 
@@ -479,6 +501,11 @@ export default function Dashboard() {
                 <ProjectPlanLeadsTable leads={leads} isLoading={isLoading} />
               </TabsContent>
             </Tabs>
+          </TabsContent>
+
+          {/* Chat Tab */}
+          <TabsContent value="chat">
+            <ChatInteractionsTab />
           </TabsContent>
 
           {/* Analytics Tab */}
