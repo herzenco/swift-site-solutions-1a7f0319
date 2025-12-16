@@ -11,7 +11,7 @@ import { SEO } from "@/components/SEO";
 
 const Index = () => {
   return (
-    <div className="h-screen overflow-y-auto snap-y snap-mandatory bg-background">
+    <div className="h-screen overflow-y-auto overflow-x-hidden snap-y snap-mandatory bg-background">
       <SEO canonical="/" />
       <Navbar />
       <section className="snap-start"><Hero /></section>
