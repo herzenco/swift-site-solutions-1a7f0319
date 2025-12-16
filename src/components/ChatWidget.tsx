@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import ReactMarkdown from "react-markdown";
 
 interface Message {
   role: "user" | "assistant";
@@ -227,7 +228,20 @@ export const ChatWidget = () => {
                           : "bg-muted px-4 py-3 rounded-2xl rounded-bl-sm text-foreground"
                       }`}
                     >
-                      {message.content || (
+                      {message.content ? (
+                        message.role === "assistant" ? (
+                          <ReactMarkdown
+                            components={{
+                              p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                              strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+                            }}
+                          >
+                            {message.content}
+                          </ReactMarkdown>
+                        ) : (
+                          message.content
+                        )
+                      ) : (
                         <span className="flex items-center gap-2">
                           <span className="flex gap-1">
                             <span className="w-1.5 h-1.5 bg-current rounded-full animate-bounce [animation-delay:-0.3s]" />
