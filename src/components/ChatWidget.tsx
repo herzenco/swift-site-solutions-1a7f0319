@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,19 @@ interface Message {
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
+// Generate a unique session ID for this chat session
+const generateSessionId = () => {
+  return `chat_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+};
+
 export const ChatWidget = () => {
+  const location = useLocation();
+  const sessionId = useMemo(() => generateSessionId(), []);
+  
+  // Hide chat widget on dashboard and auth pages
+  const hiddenPaths = ["/dashboard", "/auth"];
+  const shouldHide = hiddenPaths.some((path) => location.pathname.startsWith(path));
+
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -40,20 +53,52 @@ export const ChatWidget = () => {
     }
   }, [isOpen]);
 
+  const logInteraction = async (
+    type: "message" | "url_scraped" | "lead_captured",
+    data: {
+      userMessage?: string;
+      assistantMessage?: string;
+      urlScraped?: string;
+      leadId?: string;
+      metadata?: any;
+    }
+  ) => {
+    try {
+      await supabase.from("chat_interactions").insert({
+        session_id: sessionId,
+        interaction_type: type,
+        user_message: data.userMessage || null,
+        assistant_message: data.assistantMessage || null,
+        url_scraped: data.urlScraped || null,
+        lead_id: data.leadId || null,
+        metadata: data.metadata || null,
+      } as any);
+    } catch (error) {
+      console.error("Error logging interaction:", error);
+    }
+  };
+
   const extractAndSaveLead = async (content: string) => {
     // Regex that handles multi-line audit content using [\s\S] instead of [^"]
     const leadMatch = content.match(/\[LEAD_CAPTURED:\s*name="([^"]*)",\s*email="([^"]*)",\s*website="([^"]*)"(?:,\s*audit="([\s\S]*?)")?\]/);
     if (leadMatch) {
       const [fullMatch, name, email, website, audit] = leadMatch;
       try {
-        await supabase.from("leads").insert({
+        const { data: leadData } = await supabase.from("leads").insert({
           full_name: name,
           email: email,
           website: website || null,
           source: "chatbot",
           notes: audit ? `Website audit: ${audit}` : "Lead captured via AI chatbot conversation",
-        });
+        }).select().single();
+        
         console.log("Lead saved:", { name, email, website, audit });
+        
+        // Log the lead capture interaction
+        await logInteraction("lead_captured", {
+          leadId: leadData?.id,
+          metadata: { name, email, website, audit },
+        });
       } catch (error) {
         console.error("Error saving lead:", error);
       }
@@ -80,7 +125,10 @@ export const ChatWidget = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
-        body: JSON.stringify({ messages: [...messages, userMessage] }),
+        body: JSON.stringify({ 
+          messages: [...messages, userMessage],
+          session_id: sessionId,
+        }),
       });
 
       if (!response.ok) {
@@ -132,6 +180,22 @@ export const ChatWidget = () => {
         }
       }
 
+      // Log the message interaction
+      await logInteraction("message", {
+        userMessage: userMessage.content,
+        assistantMessage: assistantContent,
+      });
+
+      // Check if a URL was likely scraped (simple heuristic)
+      const urlRegex = /(https?:\/\/[^\s]+)|([a-zA-Z0-9][-a-zA-Z0-9]*\.(com|net|org|io|co|me|ai)[^\s]*)/gi;
+      const urlMatch = userMessage.content.match(urlRegex);
+      if (urlMatch && assistantContent.includes("quick wins")) {
+        await logInteraction("url_scraped", {
+          urlScraped: urlMatch[0],
+          userMessage: userMessage.content,
+        });
+      }
+
       const cleanedContent = await extractAndSaveLead(assistantContent);
       if (cleanedContent !== assistantContent) {
         setMessages((prev) => {
@@ -159,6 +223,9 @@ export const ChatWidget = () => {
       sendMessage();
     }
   };
+
+  // Don't render on hidden paths
+  if (shouldHide) return null;
 
   return (
     <>
