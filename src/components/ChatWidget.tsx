@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Loader2, Bot } from "lucide-react";
+import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { supabase } from "@/integrations/supabase/client";
@@ -190,9 +190,6 @@ export const ChatWidget = () => {
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-border">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-foreground flex items-center justify-center">
-                  <Bot className="w-5 h-5 text-background" />
-                </div>
                 <div>
                   <h3 className="font-semibold text-sm text-foreground">Xyren</h3>
                   <div className="flex items-center gap-1.5">
