@@ -2,3 +2,6 @@ project_id = "xtessaulbiqosjyykfse"
 
 [functions.weekly-report]
 verify_jwt = false
+
+[functions.chat]
+verify_jwt = false
