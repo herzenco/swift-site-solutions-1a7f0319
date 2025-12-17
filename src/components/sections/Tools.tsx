@@ -53,7 +53,7 @@ export const Tools = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group p-8 rounded-2xl border border-border/50 hover:border-primary/30 bg-card/50 backdrop-blur-sm transition-all duration-500"
             >
-              <div className="icon-container w-14 h-14 mb-6">
+              <div className="hidden lg:flex icon-container w-14 h-14 mb-6">
                 <tool.icon className="w-6 h-6 text-primary" strokeWidth={1.5} />
               </div>
               <h3 className="text-xl font-semibold mb-3">{tool.title}</h3>
