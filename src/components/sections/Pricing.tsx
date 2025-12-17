@@ -148,7 +148,7 @@ export const Pricing = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 id="pricing-heading" className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
             Three levels of <span className="text-gradient">system maturity</span>
           </h2>
           <p className="text-xl text-muted-foreground mb-8">
