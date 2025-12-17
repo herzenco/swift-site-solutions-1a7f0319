@@ -8,7 +8,7 @@ interface SEOProps {
   image?: string;
 }
 
-const BASE_URL = "https://xyren.me";
+const BASE_URL = "https://www.xyren.me";
 const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`;
 const SITE_NAME = "Xyren by Herzen Co.";
 
