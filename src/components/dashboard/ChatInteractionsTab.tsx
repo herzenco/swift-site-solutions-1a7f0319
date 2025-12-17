@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { format, subDays } from "date-fns";
-import { MessageCircle, Globe, Users, Loader2, ExternalLink } from "lucide-react";
+import { MessageCircle, Globe, Users, Loader2, ExternalLink, X, User, Mail } from "lucide-react";
 import {
   AreaChart,
   Area,
@@ -12,6 +12,12 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 interface ChatInteraction {
   id: string;
@@ -25,10 +31,114 @@ interface ChatInteraction {
   metadata: any;
 }
 
+interface ConversationModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  sessionId: string;
+  leadName: string;
+  leadEmail: string;
+  interactions: ChatInteraction[];
+}
+
+function ConversationModal({ isOpen, onClose, sessionId, leadName, leadEmail, interactions }: ConversationModalProps) {
+  // Filter interactions for this session
+  const sessionInteractions = interactions
+    .filter((i) => i.session_id === sessionId)
+    .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+
+  // Find any URLs scraped in this session
+  const urlsScraped = sessionInteractions.filter((i) => i.interaction_type === "url_scraped");
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <MessageCircle className="w-5 h-5 text-primary" />
+            Conversation Details
+          </DialogTitle>
+        </DialogHeader>
+        
+        {/* Lead Info */}
+        <div className="bg-muted/50 rounded-lg p-4 flex flex-wrap gap-4">
+          <div className="flex items-center gap-2">
+            <User className="w-4 h-4 text-muted-foreground" />
+            <span className="font-medium text-foreground">{leadName || "Unknown"}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Mail className="w-4 h-4 text-muted-foreground" />
+            <a href={`mailto:${leadEmail}`} className="text-primary hover:underline">
+              {leadEmail || "No email"}
+            </a>
+          </div>
+        </div>
+
+        {/* URLs Scraped */}
+        {urlsScraped.length > 0 && (
+          <div className="bg-purple-500/10 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Globe className="w-4 h-4 text-purple-400" />
+              <span className="text-sm font-medium text-purple-400">URLs Analyzed</span>
+            </div>
+            <div className="space-y-1">
+              {urlsScraped.map((url) => (
+                <a
+                  key={url.id}
+                  href={url.url_scraped?.startsWith("http") ? url.url_scraped : `https://${url.url_scraped}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-primary hover:underline flex items-center gap-1"
+                >
+                  {url.url_scraped}
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Conversation */}
+        <div className="flex-1 overflow-y-auto space-y-3 min-h-0">
+          <h4 className="text-sm font-medium text-muted-foreground">Conversation History</h4>
+          {sessionInteractions
+            .filter((i) => i.interaction_type === "message")
+            .map((interaction) => (
+              <div key={interaction.id} className="space-y-2">
+                {interaction.user_message && (
+                  <div className="flex justify-end">
+                    <div className="bg-primary/20 text-foreground rounded-lg px-4 py-2 max-w-[80%]">
+                      <p className="text-sm">{interaction.user_message}</p>
+                      <span className="text-xs text-muted-foreground mt-1 block">
+                        {format(new Date(interaction.created_at), "h:mm a")}
+                      </span>
+                    </div>
+                  </div>
+                )}
+                {interaction.assistant_message && (
+                  <div className="flex justify-start">
+                    <div className="bg-muted text-foreground rounded-lg px-4 py-2 max-w-[80%]">
+                      <p className="text-sm whitespace-pre-wrap">{interaction.assistant_message}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          {sessionInteractions.filter((i) => i.interaction_type === "message").length === 0 && (
+            <p className="text-sm text-muted-foreground text-center py-4">
+              No messages in this conversation
+            </p>
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export function ChatInteractionsTab() {
   const [interactions, setInteractions] = useState<ChatInteraction[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeSubTab, setActiveSubTab] = useState<"all" | "urls" | "leads">("all");
+  const [selectedLead, setSelectedLead] = useState<{ sessionId: string; name: string; email: string } | null>(null);
 
   useEffect(() => {
     fetchInteractions();
@@ -80,8 +190,28 @@ export function ChatInteractionsTab() {
       ? urlsScraped
       : leadsCaptures;
 
+  const handleLeadClick = (interaction: ChatInteraction) => {
+    setSelectedLead({
+      sessionId: interaction.session_id,
+      name: interaction.metadata?.name || "Unknown",
+      email: interaction.metadata?.email || "No email",
+    });
+  };
+
   return (
     <div>
+      {/* Conversation Modal */}
+      {selectedLead && (
+        <ConversationModal
+          isOpen={!!selectedLead}
+          onClose={() => setSelectedLead(null)}
+          sessionId={selectedLead.sessionId}
+          leadName={selectedLead.name}
+          leadEmail={selectedLead.email}
+          interactions={interactions}
+        />
+      )}
+
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <motion.div
@@ -244,7 +374,7 @@ export function ChatInteractionsTab() {
               ? "Complete log of all chat interactions"
               : activeSubTab === "urls"
               ? "Websites that visitors requested feedback on"
-              : "Contact information captured through chat"}
+              : "Contact information captured through chat. Click a row to view conversation."}
           </p>
         </div>
 
@@ -268,9 +398,20 @@ export function ChatInteractionsTab() {
                   <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
                     Type
                   </th>
-                  <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
-                    {activeSubTab === "urls" ? "URL" : activeSubTab === "leads" ? "Details" : "Content"}
-                  </th>
+                  {activeSubTab === "leads" ? (
+                    <>
+                      <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
+                        Name
+                      </th>
+                      <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
+                        Email
+                      </th>
+                    </>
+                  ) : (
+                    <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
+                      {activeSubTab === "urls" ? "URL" : "Content"}
+                    </th>
+                  )}
                   <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden md:table-cell">
                     Session
                   </th>
@@ -281,7 +422,17 @@ export function ChatInteractionsTab() {
               </thead>
               <tbody className="divide-y divide-border">
                 {filteredInteractions.slice(0, 50).map((interaction) => (
-                  <tr key={interaction.id} className="hover:bg-muted/30 transition-colors">
+                  <tr 
+                    key={interaction.id} 
+                    className={`hover:bg-muted/30 transition-colors ${
+                      interaction.interaction_type === "lead_captured" ? "cursor-pointer" : ""
+                    }`}
+                    onClick={() => {
+                      if (interaction.interaction_type === "lead_captured") {
+                        handleLeadClick(interaction);
+                      }
+                    }}
+                  >
                     <td className="px-6 py-4">
                       <span
                         className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
@@ -299,27 +450,42 @@ export function ChatInteractionsTab() {
                           : "Message"}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
-                      {interaction.interaction_type === "url_scraped" ? (
-                        <a
-                          href={interaction.url_scraped?.startsWith("http") ? interaction.url_scraped : `https://${interaction.url_scraped}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-primary hover:underline flex items-center gap-1"
-                        >
-                          {interaction.url_scraped}
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      ) : interaction.interaction_type === "lead_captured" ? (
-                        <span className="text-foreground">
-                          {interaction.metadata?.name || "Unknown"} - {interaction.metadata?.email || "No email"}
-                        </span>
-                      ) : (
-                        <span className="text-foreground text-sm line-clamp-2">
-                          {interaction.user_message || interaction.assistant_message || "-"}
-                        </span>
-                      )}
-                    </td>
+                    {activeSubTab === "leads" ? (
+                      <>
+                        <td className="px-6 py-4">
+                          <span className="font-medium text-foreground">
+                            {interaction.metadata?.name || "Unknown"}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="text-primary">
+                            {interaction.metadata?.email || "No email"}
+                          </span>
+                        </td>
+                      </>
+                    ) : (
+                      <td className="px-6 py-4">
+                        {interaction.interaction_type === "url_scraped" ? (
+                          <a
+                            href={interaction.url_scraped?.startsWith("http") ? interaction.url_scraped : `https://${interaction.url_scraped}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary hover:underline flex items-center gap-1"
+                          >
+                            {interaction.url_scraped}
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        ) : interaction.interaction_type === "lead_captured" ? (
+                          <span className="text-foreground">
+                            {interaction.metadata?.name || "Unknown"} - {interaction.metadata?.email || "No email"}
+                          </span>
+                        ) : (
+                          <span className="text-foreground text-sm line-clamp-2">
+                            {interaction.user_message || interaction.assistant_message || "-"}
+                          </span>
+                        )}
+                      </td>
+                    )}
                     <td className="px-6 py-4 hidden md:table-cell">
                       <span className="text-xs text-muted-foreground font-mono">
                         {interaction.session_id.slice(0, 8)}...
