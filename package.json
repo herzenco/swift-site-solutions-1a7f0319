@@ -9,6 +9,7 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"
+    "postbuild": "react-snap",
   },
   "dependencies": {
     "@fontsource/plus-jakarta-sans": "^5.2.8",
@@ -68,6 +69,19 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "reactSnap": {
+  "source": "dist",
+  "destination": "dist",
+  "include": [
+    "/",
+    "/use-cases/real-estate",
+    "/use-cases/professional-services",
+    "/use-cases/home-services",
+    "/use-cases/education-coaching"
+  ],
+  "skipThirdPartyRequests": true,
+  "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"]
+}
     "@eslint/js": "^9.32.0",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^22.16.5",
