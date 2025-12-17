@@ -355,7 +355,13 @@ export const ChatWidget = () => {
             </div>
 
             {/* Messages */}
-            <ScrollArea className="flex-1 px-5 py-5" ref={scrollRef}>
+            <ScrollArea 
+              className="flex-1 px-5 py-5" 
+              ref={scrollRef}
+              role="log"
+              aria-label="Chat messages"
+              aria-live="polite"
+            >
               <div className="space-y-5">
                 {messages.map((message, index) => (
                   <motion.div
@@ -371,6 +377,8 @@ export const ChatWidget = () => {
                           ? "bg-foreground text-background px-4 py-3 rounded-2xl rounded-br-sm"
                           : "bg-muted px-4 py-3 rounded-2xl rounded-bl-sm text-foreground"
                       }`}
+                      role="article"
+                      aria-label={`${message.role === "user" ? "You" : "Xyren"} said`}
                     >
                       {message.content ? (
                         message.role === "assistant" ? (
@@ -404,7 +412,9 @@ export const ChatWidget = () => {
             <div className="p-4 border-t border-border">
               <div className="flex items-end gap-2">
                 <div className="flex-1 bg-muted rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-foreground/20 transition-all">
+                  <label htmlFor="chat-input" className="sr-only">Type your message</label>
                   <textarea
+                    id="chat-input"
                     ref={inputRef}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
@@ -412,14 +422,17 @@ export const ChatWidget = () => {
                     placeholder="Message..."
                     disabled={isLoading}
                     rows={1}
+                    aria-describedby="chat-input-hint"
                     className="w-full bg-transparent border-0 resize-none text-sm placeholder:text-muted-foreground focus:outline-none py-1 max-h-20"
                   />
+                  <span id="chat-input-hint" className="sr-only">Press Enter to send, Shift+Enter for new line</span>
                 </div>
                 <Button
                   onClick={sendMessage}
                   disabled={!input.trim() || isLoading}
                   size="icon"
                   className="h-10 w-10 rounded-xl shrink-0 bg-foreground hover:bg-foreground/90 text-background disabled:opacity-30"
+                  aria-label={isLoading ? "Sending message" : "Send message"}
                 >
                   {isLoading ? (
                     <Loader2 className="w-4 h-4 animate-spin" />

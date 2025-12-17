@@ -8,20 +8,24 @@ import { FAQ } from "@/components/sections/FAQ";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 import { SEO } from "@/components/SEO";
+import { SkipToContent } from "@/components/SkipToContent";
 
 const Index = () => {
   return (
     <div className="h-screen overflow-y-auto overflow-x-hidden bg-background lg:snap-y lg:snap-mandatory">
       <SEO canonical="/" />
+      <SkipToContent />
       <Navbar />
-      <section className="lg:snap-start"><Hero /></section>
-      <section className="lg:snap-start"><HowWeThink /></section>
-      <section className="lg:snap-start"><Portfolio /></section>
-      <section className="lg:snap-start"><Tools /></section>
-      <section className="lg:snap-start"><Pricing /></section>
-      <section className="lg:snap-start"><FAQ /></section>
-      <section className="lg:snap-start"><Contact /></section>
-      <section className="lg:snap-start"><Footer /></section>
+      <main id="main-content" role="main" aria-label="Main content">
+        <section className="lg:snap-start" aria-labelledby="hero-heading"><Hero /></section>
+        <section className="lg:snap-start" aria-labelledby="how-we-think-heading"><HowWeThink /></section>
+        <section className="lg:snap-start" aria-labelledby="portfolio-heading"><Portfolio /></section>
+        <section className="lg:snap-start" aria-labelledby="tools-heading"><Tools /></section>
+        <section className="lg:snap-start" aria-labelledby="pricing-heading"><Pricing /></section>
+        <section className="lg:snap-start" aria-labelledby="faq-heading"><FAQ /></section>
+        <section className="lg:snap-start" aria-labelledby="contact-heading"><Contact /></section>
+      </main>
+      <Footer />
     </div>
   );
 };

@@ -40,7 +40,7 @@ export const FAQ = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 id="faq-heading" className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
             <span className="text-gradient">FAQ</span>
           </h2>
         </motion.div>
