@@ -53,6 +53,13 @@ export const ChatWidget = () => {
   const [urlScraped, setUrlScraped] = useState(false);
   const [receivedFeedback, setReceivedFeedback] = useState(false);
 
+  // Haptic feedback for mobile
+  const triggerHaptic = (pattern: number | number[] = 10) => {
+    if (navigator.vibrate) {
+      navigator.vibrate(pattern);
+    }
+  };
+
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -300,7 +307,10 @@ export const ChatWidget = () => {
             exit={{ scale: 0, opacity: 0 }}
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.92 }}
-            onClick={() => setIsOpen(true)}
+            onClick={() => {
+              triggerHaptic(15);
+              setIsOpen(true);
+            }}
             className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl text-primary-foreground shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_30px_hsl(190_100%_50%/0.4)] transition-all duration-300 flex items-center justify-center"
             style={{ background: "linear-gradient(135deg, hsl(190 100% 50%) 0%, hsl(260 80% 65%) 100%)" }}
             aria-label="Open chat"
@@ -334,7 +344,10 @@ export const ChatWidget = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  triggerHaptic(10);
+                  setIsOpen(false);
+                }}
                 className="h-8 w-8 rounded-lg hover:bg-muted"
               >
                 <X className="w-4 h-4" />
