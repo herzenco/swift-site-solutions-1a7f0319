@@ -20,7 +20,7 @@ export const Contact = () => {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 id="contact-heading" className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
             Get your <span className="text-gradient">free project plan</span>
           </h2>
           <p className="text-xl text-muted-foreground mb-10">

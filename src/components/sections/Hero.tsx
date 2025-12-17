@@ -25,7 +25,7 @@ export const Hero = () => {
           className="text-center max-w-4xl mx-auto"
         >
           {/* Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[0.95]">
+          <h1 id="hero-heading" className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[0.95]">
             <span className="block text-foreground/90">Your website isn't a system.</span>
             <span className="block text-gradient font-black">That's the problem.</span>
           </h1>

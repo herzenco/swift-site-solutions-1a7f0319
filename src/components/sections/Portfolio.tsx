@@ -26,7 +26,7 @@ export const Portfolio = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-6"
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 id="portfolio-heading" className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
             Who We <span className="text-gradient">Build For</span>
           </h2>
           <p className="text-xl text-primary font-medium max-w-3xl mx-auto mb-4">

@@ -53,6 +53,13 @@ export const ChatWidget = () => {
   const [urlScraped, setUrlScraped] = useState(false);
   const [receivedFeedback, setReceivedFeedback] = useState(false);
 
+  // Haptic feedback for mobile
+  const triggerHaptic = (pattern: number | number[] = 10) => {
+    if (navigator.vibrate) {
+      navigator.vibrate(pattern);
+    }
+  };
+
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -300,8 +307,11 @@ export const ChatWidget = () => {
             exit={{ scale: 0, opacity: 0 }}
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.92 }}
-            onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-2xl text-primary-foreground shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_30px_hsl(190_100%_50%/0.4)] transition-all duration-300 flex items-center justify-center"
+            onClick={() => {
+              triggerHaptic(15);
+              setIsOpen(true);
+            }}
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl text-primary-foreground shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_30px_hsl(190_100%_50%/0.4)] transition-all duration-300 flex items-center justify-center"
             style={{ background: "linear-gradient(135deg, hsl(190 100% 50%) 0%, hsl(260 80% 65%) 100%)" }}
             aria-label="Open chat"
           >
@@ -318,7 +328,7 @@ export const ChatWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
-            className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-48px)] h-[540px] max-h-[calc(100vh-100px)] bg-card border border-border rounded-2xl shadow-[0_20px_60px_-10px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden"
+            className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:right-6 z-50 sm:w-[380px] sm:max-w-[calc(100vw-48px)] h-[100dvh] sm:h-[540px] sm:max-h-[calc(100vh-100px)] bg-card border-0 sm:border sm:border-border sm:rounded-2xl shadow-[0_20px_60px_-10px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-border">
@@ -334,7 +344,10 @@ export const ChatWidget = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  triggerHaptic(10);
+                  setIsOpen(false);
+                }}
                 className="h-8 w-8 rounded-lg hover:bg-muted"
               >
                 <X className="w-4 h-4" />
@@ -342,7 +355,13 @@ export const ChatWidget = () => {
             </div>
 
             {/* Messages */}
-            <ScrollArea className="flex-1 px-5 py-5" ref={scrollRef}>
+            <ScrollArea 
+              className="flex-1 px-5 py-5" 
+              ref={scrollRef}
+              role="log"
+              aria-label="Chat messages"
+              aria-live="polite"
+            >
               <div className="space-y-5">
                 {messages.map((message, index) => (
                   <motion.div
@@ -358,6 +377,8 @@ export const ChatWidget = () => {
                           ? "bg-foreground text-background px-4 py-3 rounded-2xl rounded-br-sm"
                           : "bg-muted px-4 py-3 rounded-2xl rounded-bl-sm text-foreground"
                       }`}
+                      role="article"
+                      aria-label={`${message.role === "user" ? "You" : "Xyren"} said`}
                     >
                       {message.content ? (
                         message.role === "assistant" ? (
@@ -391,7 +412,9 @@ export const ChatWidget = () => {
             <div className="p-4 border-t border-border">
               <div className="flex items-end gap-2">
                 <div className="flex-1 bg-muted rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-foreground/20 transition-all">
+                  <label htmlFor="chat-input" className="sr-only">Type your message</label>
                   <textarea
+                    id="chat-input"
                     ref={inputRef}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
@@ -399,14 +422,17 @@ export const ChatWidget = () => {
                     placeholder="Message..."
                     disabled={isLoading}
                     rows={1}
+                    aria-describedby="chat-input-hint"
                     className="w-full bg-transparent border-0 resize-none text-sm placeholder:text-muted-foreground focus:outline-none py-1 max-h-20"
                   />
+                  <span id="chat-input-hint" className="sr-only">Press Enter to send, Shift+Enter for new line</span>
                 </div>
                 <Button
                   onClick={sendMessage}
                   disabled={!input.trim() || isLoading}
                   size="icon"
                   className="h-10 w-10 rounded-xl shrink-0 bg-foreground hover:bg-foreground/90 text-background disabled:opacity-30"
+                  aria-label={isLoading ? "Sending message" : "Send message"}
                 >
                   {isLoading ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
