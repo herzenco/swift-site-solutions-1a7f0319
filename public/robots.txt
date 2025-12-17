@@ -18,4 +18,4 @@ Disallow: /auth
 Disallow: /dashboard
 
 # Sitemap
-Sitemap: https://xyren.herzenco.co/sitemap.xml
+Sitemap: https://xyren.me/sitemap.xml
