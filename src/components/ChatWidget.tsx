@@ -328,10 +328,13 @@ export const ChatWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
-            className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:right-6 z-50 sm:w-[380px] sm:max-w-[calc(100vw-48px)] h-[100dvh] sm:h-[540px] sm:max-h-[calc(100vh-100px)] bg-card border-0 sm:border sm:border-border sm:rounded-2xl shadow-[0_20px_60px_-10px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden"
+            className="fixed z-50 bg-card shadow-[0_20px_60px_-10px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden
+              inset-0 w-full h-[100dvh]
+              sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[380px] sm:max-w-[calc(100vw-48px)] sm:h-[540px] sm:max-h-[calc(100vh-100px)] sm:border sm:border-border sm:rounded-2xl"
+            style={{ display: 'flex', flexDirection: 'column' }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+            <div className="flex-shrink-0 flex items-center justify-between px-5 py-4 border-b border-border bg-card pt-[env(safe-area-inset-top,0px)]">
               <div className="flex items-center gap-3">
                 <div>
                   <h3 className="font-semibold text-sm text-foreground">Xyren</h3>
@@ -356,13 +359,13 @@ export const ChatWidget = () => {
 
             {/* Messages */}
             <ScrollArea 
-              className="flex-1 px-5 py-5" 
+              className="flex-1 min-h-0 px-5 py-5" 
               ref={scrollRef}
               role="log"
               aria-label="Chat messages"
               aria-live="polite"
             >
-              <div className="space-y-5">
+              <div className="space-y-5 pb-2">
                 {messages.map((message, index) => (
                   <motion.div
                     key={index}
@@ -409,7 +412,7 @@ export const ChatWidget = () => {
             </ScrollArea>
 
             {/* Input Area */}
-            <div className="p-4 border-t border-border">
+            <div className="flex-shrink-0 p-4 border-t border-border bg-card pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
               <div className="flex items-end gap-2">
                 <div className="flex-1 bg-muted rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-foreground/20 transition-all">
                   <label htmlFor="chat-input" className="sr-only">Type your message</label>
