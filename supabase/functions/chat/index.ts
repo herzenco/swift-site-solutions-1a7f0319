@@ -5,6 +5,33 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Intent signal keywords for lead scoring
+const INTENT_SIGNALS = {
+  pricing: ["price", "pricing", "cost", "how much", "rate", "rates", "fee", "fees", "budget", "afford", "expensive", "cheap", "payment", "pay"],
+  timeline: ["when", "timeline", "deadline", "how long", "how soon", "asap", "urgent", "rush", "quickly", "fast", "time frame", "start date", "launch"],
+  urgency: ["need", "must", "asap", "urgent", "immediately", "right away", "as soon as possible", "quickly", "fast", "hurry"],
+  specificService: ["website", "chatbot", "ai chat", "scheduling", "crm", "lead capture", "seo", "analytics", "automation"],
+};
+
+function detectIntentSignals(messages: Array<{ role: string; content: string }>): {
+  pricing: boolean;
+  timeline: boolean;
+  urgency: boolean;
+  specificService: boolean;
+} {
+  const userMessages = messages
+    .filter((m) => m.role === "user")
+    .map((m) => m.content.toLowerCase())
+    .join(" ");
+
+  return {
+    pricing: INTENT_SIGNALS.pricing.some((kw) => userMessages.includes(kw)),
+    timeline: INTENT_SIGNALS.timeline.some((kw) => userMessages.includes(kw)),
+    urgency: INTENT_SIGNALS.urgency.some((kw) => userMessages.includes(kw)),
+    specificService: INTENT_SIGNALS.specificService.some((kw) => userMessages.includes(kw)),
+  };
+}
+
 const SYSTEM_PROMPT = `You are a helpful assistant for Xyren by Herzen Co., a company that builds custom AI-powered websites delivered in 5-10 days.
 
 ## About Xyren
@@ -154,12 +181,16 @@ serve(async (req) => {
   }
 
   try {
-    const { messages } = await req.json();
+    const { messages, message_count } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
+
+    // Detect intent signals from conversation
+    const intentSignals = detectIntentSignals(messages);
+    console.log("Detected intent signals:", intentSignals, "Message count:", message_count);
 
     // Prevent accidental back-to-back scrapes (especially when user is replying with email/name).
     // After we've already given website feedback once, we only allow *explicit* http(s) URLs to trigger scraping.
@@ -180,6 +211,7 @@ serve(async (req) => {
 
     let systemPrompt = SYSTEM_PROMPT;
     let finalMessages = [...messages];
+    let urlScraped = false;
 
     // If URL detected, scrape and provide feedback
     if (detectedUrl) {
@@ -191,6 +223,7 @@ serve(async (req) => {
         const truncatedContent = scrapeResult.content.slice(0, 8000);
         
         systemPrompt = WEBSITE_FEEDBACK_PROMPT;
+        urlScraped = true;
         // Keep conversation history but add the scraped content context
         finalMessages = [
           ...messages.slice(0, -1), // Keep history except the URL message
@@ -250,9 +283,17 @@ serve(async (req) => {
       });
     }
 
-    return new Response(response.body, {
-      headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
-    });
+    // Add custom headers with scoring metadata
+    const responseHeaders = {
+      ...corsHeaders,
+      "Content-Type": "text/event-stream",
+      "X-Intent-Signals": JSON.stringify(intentSignals),
+      "X-Message-Count": String(message_count || 0),
+      "X-Url-Scraped": String(urlScraped),
+      "X-Detected-Url": detectedUrl || "",
+    };
+
+    return new Response(response.body, { headers: responseHeaders });
   } catch (error) {
     console.error("Chat error:", error);
     return new Response(JSON.stringify({ error: error instanceof Error ? error.message : "Unknown error" }), {
