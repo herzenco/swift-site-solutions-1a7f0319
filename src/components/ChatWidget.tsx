@@ -301,7 +301,7 @@ export const ChatWidget = () => {
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.92 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-2xl text-primary-foreground shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_30px_hsl(190_100%_50%/0.4)] transition-all duration-300 flex items-center justify-center"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl text-primary-foreground shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_30px_hsl(190_100%_50%/0.4)] transition-all duration-300 flex items-center justify-center"
             style={{ background: "linear-gradient(135deg, hsl(190 100% 50%) 0%, hsl(260 80% 65%) 100%)" }}
             aria-label="Open chat"
           >
@@ -318,7 +318,7 @@ export const ChatWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
-            className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-48px)] h-[540px] max-h-[calc(100vh-100px)] bg-card border border-border rounded-2xl shadow-[0_20px_60px_-10px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden"
+            className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:right-6 z-50 sm:w-[380px] sm:max-w-[calc(100vw-48px)] h-[100dvh] sm:h-[540px] sm:max-h-[calc(100vh-100px)] bg-card border-0 sm:border sm:border-border sm:rounded-2xl shadow-[0_20px_60px_-10px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-border">
