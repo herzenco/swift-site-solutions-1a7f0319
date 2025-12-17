@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
 import { XyrenIcon } from "./XyrenIcon";
+import { calculateLeadScore, getQualificationStatus, IntentSignals } from "@/lib/leadScoring";
 
 interface Message {
   role: "user" | "assistant";
@@ -41,6 +42,16 @@ export const ChatWidget = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { toast } = useToast();
+  
+  // Track scoring metadata across the conversation
+  const [intentSignals, setIntentSignals] = useState<IntentSignals>({
+    pricing: false,
+    timeline: false,
+    urgency: false,
+    specificService: false,
+  });
+  const [urlScraped, setUrlScraped] = useState(false);
+  const [receivedFeedback, setReceivedFeedback] = useState(false);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -84,21 +95,43 @@ export const ChatWidget = () => {
     const leadMatch = content.match(/\[LEAD_CAPTURED:\s*name="([^"]*)",\s*email="([^"]*)",\s*website="([^"]*)"(?:,\s*audit="([\s\S]*?)")?\]/);
     if (leadMatch) {
       const [fullMatch, name, email, website, audit] = leadMatch;
+      
+      // Calculate message count (user messages only)
+      const userMessageCount = messages.filter(m => m.role === "user").length;
+      
+      // Calculate lead score
+      const scoreInput = {
+        source: "chatbot",
+        messageCount: userMessageCount,
+        hasUrl: urlScraped || !!website,
+        receivedFeedback: receivedFeedback,
+        intentSignals: intentSignals,
+      };
+      
+      const leadScore = calculateLeadScore(scoreInput);
+      const qualificationStatus = getQualificationStatus(leadScore);
+      
+      console.log("Lead scoring:", { scoreInput, leadScore, qualificationStatus });
+      
       try {
-        const { data: leadData } = await supabase.from("leads").insert({
+        const { data: leadData } = await supabase.from("leads").insert([{
           full_name: name,
           email: email,
           website: website || null,
           source: "chatbot",
           notes: audit ? `Website audit: ${audit}` : "Lead captured via AI chatbot conversation",
-        }).select().single();
+          lead_score: leadScore,
+          qualification_status: qualificationStatus,
+          intent_signals: intentSignals as any,
+          engagement_depth: userMessageCount,
+        }]).select().single();
         
-        console.log("Lead saved:", { name, email, website, audit });
+        console.log("Lead saved with score:", { name, email, website, audit, leadScore, qualificationStatus });
         
         // Log the lead capture interaction
         await logInteraction("lead_captured", {
           leadId: leadData?.id,
-          metadata: { name, email, website, audit },
+          metadata: { name, email, website, audit, leadScore, qualificationStatus, intentSignals },
         });
       } catch (error) {
         console.error("Error saving lead:", error);
@@ -118,6 +151,9 @@ export const ChatWidget = () => {
     setIsLoading(true);
 
     let assistantContent = "";
+    
+    // Count user messages for this request (including the new one)
+    const messageCount = messages.filter(m => m.role === "user").length + 1;
 
     try {
       const response = await fetch(CHAT_URL, {
@@ -129,6 +165,7 @@ export const ChatWidget = () => {
         body: JSON.stringify({ 
           messages: [...messages, userMessage],
           session_id: sessionId,
+          message_count: messageCount,
         }),
       });
 
@@ -138,6 +175,29 @@ export const ChatWidget = () => {
       }
 
       if (!response.body) throw new Error("No response body");
+      
+      // Parse scoring metadata from response headers
+      const newIntentSignals = response.headers.get("X-Intent-Signals");
+      const wasUrlScraped = response.headers.get("X-Url-Scraped") === "true";
+      
+      if (newIntentSignals) {
+        try {
+          const parsed = JSON.parse(newIntentSignals) as IntentSignals;
+          // Merge with existing signals (signals accumulate, don't reset)
+          setIntentSignals(prev => ({
+            pricing: prev.pricing || parsed.pricing,
+            timeline: prev.timeline || parsed.timeline,
+            urgency: prev.urgency || parsed.urgency,
+            specificService: prev.specificService || parsed.specificService,
+          }));
+        } catch (e) {
+          console.error("Failed to parse intent signals:", e);
+        }
+      }
+      
+      if (wasUrlScraped) {
+        setUrlScraped(true);
+      }
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
@@ -187,10 +247,11 @@ export const ChatWidget = () => {
         assistantMessage: assistantContent,
       });
 
-      // Check if a URL was likely scraped (simple heuristic)
+      // Check if a URL was likely scraped and feedback was given
       const urlRegex = /(https?:\/\/[^\s]+)|([a-zA-Z0-9][-a-zA-Z0-9]*\.(com|net|org|io|co|me|ai)[^\s]*)/gi;
       const urlMatch = userMessage.content.match(urlRegex);
       if (urlMatch && assistantContent.includes("quick wins")) {
+        setReceivedFeedback(true);
         await logInteraction("url_scraped", {
           urlScraped: urlMatch[0],
           userMessage: userMessage.content,

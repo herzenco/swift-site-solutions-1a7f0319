@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProjectPlanLeadsTable } from "@/components/dashboard/ProjectPlanLeadsTable";
 import { ChatInteractionsTab } from "@/components/dashboard/ChatInteractionsTab";
 import { useToast } from "@/hooks/use-toast";
+import { getScoreBadgeColor, getScoreEmoji, QualificationStatus } from "@/lib/leadScoring";
 import {
   LogOut,
   Users,
@@ -44,6 +45,17 @@ interface Lead {
   notes: string | null;
   source: string | null;
   created_at: string;
+  lead_score: number | null;
+  qualification_status: string | null;
+  intent_signals: any;
+  engagement_depth: number | null;
+}
+
+interface VercelAnalytics {
+  pageViews: number;
+  uniqueVisitors: number;
+  bounceRate: number;
+  ctaClicks: number;
 }
 
 export default function Dashboard() {
@@ -53,6 +65,8 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("leads");
   const [leadsSubTab, setLeadsSubTab] = useState<string>("all");
+  const [analytics, setAnalytics] = useState<VercelAnalytics | null>(null);
+  const [analyticsLoading, setAnalyticsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -83,6 +97,7 @@ export default function Dashboard() {
   useEffect(() => {
     if (session?.user) {
       fetchLeads();
+      fetchAnalytics();
     }
   }, [session]);
 
@@ -107,6 +122,28 @@ export default function Dashboard() {
       console.error("Unexpected error:", err);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const fetchAnalytics = async () => {
+    setAnalyticsLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("vercel-analytics");
+      
+      if (error) {
+        console.error("Error fetching analytics:", error);
+      } else if (data) {
+        setAnalytics({
+          pageViews: data.pageViews || 0,
+          uniqueVisitors: data.uniqueVisitors || 0,
+          bounceRate: data.bounceRate || 0,
+          ctaClicks: data.ctaClicks || 0,
+        });
+      }
+    } catch (err) {
+      console.error("Analytics fetch error:", err);
+    } finally {
+      setAnalyticsLoading(false);
     }
   };
 
@@ -397,6 +434,9 @@ export default function Dashboard() {
                           <thead className="bg-muted/50">
                             <tr>
                               <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
+                                Score
+                              </th>
+                              <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
                                 Name
                               </th>
                               <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
@@ -426,6 +466,15 @@ export default function Dashboard() {
                                 key={lead.id}
                                 className="hover:bg-muted/30 transition-colors"
                               >
+                                <td className="px-6 py-4">
+                                  {lead.lead_score !== null && lead.lead_score !== undefined ? (
+                                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getScoreBadgeColor((lead.qualification_status || 'cool') as QualificationStatus)}`}>
+                                      {getScoreEmoji((lead.qualification_status || 'cool') as QualificationStatus)} {lead.lead_score}
+                                    </span>
+                                  ) : (
+                                    <span className="text-muted-foreground text-xs">—</span>
+                                  )}
+                                </td>
                                 <td className="px-6 py-4">
                                   <span className="font-medium text-foreground">
                                     {lead.full_name}
@@ -523,8 +572,16 @@ export default function Dashboard() {
                   </div>
                   <span className="text-sm text-muted-foreground">Page Views</span>
                 </div>
-                <p className="text-3xl font-bold text-foreground">—</p>
-                <p className="text-xs text-muted-foreground mt-1">Coming soon</p>
+                {analyticsLoading ? (
+                  <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+                ) : (
+                  <>
+                    <p className="text-3xl font-bold text-foreground">
+                      {analytics?.pageViews?.toLocaleString() || "0"}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">Last 30 days</p>
+                  </>
+                )}
               </motion.div>
 
               <motion.div
@@ -539,8 +596,16 @@ export default function Dashboard() {
                   </div>
                   <span className="text-sm text-muted-foreground">Unique Visitors</span>
                 </div>
-                <p className="text-3xl font-bold text-foreground">—</p>
-                <p className="text-xs text-muted-foreground mt-1">Coming soon</p>
+                {analyticsLoading ? (
+                  <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+                ) : (
+                  <>
+                    <p className="text-3xl font-bold text-foreground">
+                      {analytics?.uniqueVisitors?.toLocaleString() || "0"}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">Last 30 days</p>
+                  </>
+                )}
               </motion.div>
 
               <motion.div
@@ -555,8 +620,16 @@ export default function Dashboard() {
                   </div>
                   <span className="text-sm text-muted-foreground">CTA Clicks</span>
                 </div>
-                <p className="text-3xl font-bold text-foreground">—</p>
-                <p className="text-xs text-muted-foreground mt-1">Coming soon</p>
+                {analyticsLoading ? (
+                  <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+                ) : (
+                  <>
+                    <p className="text-3xl font-bold text-foreground">
+                      {analytics?.ctaClicks?.toLocaleString() || "0"}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">Tracked via leads</p>
+                  </>
+                )}
               </motion.div>
 
               <motion.div
@@ -571,8 +644,16 @@ export default function Dashboard() {
                   </div>
                   <span className="text-sm text-muted-foreground">Bounce Rate</span>
                 </div>
-                <p className="text-3xl font-bold text-foreground">—</p>
-                <p className="text-xs text-muted-foreground mt-1">Coming soon</p>
+                {analyticsLoading ? (
+                  <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+                ) : (
+                  <>
+                    <p className="text-3xl font-bold text-foreground">
+                      {analytics?.bounceRate || 0}%
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">Estimated</p>
+                  </>
+                )}
               </motion.div>
             </div>
 

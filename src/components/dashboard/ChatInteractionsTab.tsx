@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { format, subDays } from "date-fns";
-import { MessageCircle, Globe, Users, Loader2, ExternalLink } from "lucide-react";
+import { MessageCircle, Globe, Users, Loader2, ExternalLink, User, Mail, Filter } from "lucide-react";
 import {
   AreaChart,
   Area,
@@ -12,6 +12,20 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { getScoreBadgeColor, getScoreEmoji, QualificationStatus } from "@/lib/leadScoring";
 
 interface ChatInteraction {
   id: string;
@@ -25,26 +39,208 @@ interface ChatInteraction {
   metadata: any;
 }
 
+interface Lead {
+  id: string;
+  full_name: string;
+  email: string;
+  website: string | null;
+  source: string | null;
+  created_at: string;
+  lead_score: number | null;
+  qualification_status: string | null;
+  intent_signals: any;
+  engagement_depth: number | null;
+}
+
+interface ConversationModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  sessionId: string;
+  leadName: string;
+  leadEmail: string;
+  interactions: ChatInteraction[];
+  leadScore?: number | null;
+  qualificationStatus?: string | null;
+  intentSignals?: any;
+}
+
+function ConversationModal({ 
+  isOpen, 
+  onClose, 
+  sessionId, 
+  leadName, 
+  leadEmail, 
+  interactions, 
+  leadScore, 
+  qualificationStatus,
+  intentSignals 
+}: ConversationModalProps) {
+  // Filter interactions for this session
+  const sessionInteractions = interactions
+    .filter((i) => i.session_id === sessionId)
+    .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+
+  // Find any URLs scraped in this session
+  const urlsScraped = sessionInteractions.filter((i) => i.interaction_type === "url_scraped");
+
+  const status = (qualificationStatus || 'cool') as QualificationStatus;
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <MessageCircle className="w-5 h-5 text-primary" />
+            Conversation Details
+          </DialogTitle>
+        </DialogHeader>
+        
+        {/* Lead Info */}
+        <div className="bg-muted/50 rounded-lg p-4 flex flex-wrap gap-4">
+          <div className="flex items-center gap-2">
+            <User className="w-4 h-4 text-muted-foreground" />
+            <span className="font-medium text-foreground">{leadName || "Unknown"}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Mail className="w-4 h-4 text-muted-foreground" />
+            <a href={`mailto:${leadEmail}`} className="text-primary hover:underline">
+              {leadEmail || "No email"}
+            </a>
+          </div>
+          {leadScore !== undefined && leadScore !== null && (
+            <div className="flex items-center gap-2">
+              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getScoreBadgeColor(status)}`}>
+                {getScoreEmoji(status)} Score: {leadScore} ({status})
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Intent Signals */}
+        {intentSignals && Object.values(intentSignals).some(Boolean) && (
+          <div className="bg-cyan-500/10 rounded-lg p-4">
+            <div className="text-sm font-medium text-cyan-400 mb-2">Intent Signals Detected</div>
+            <div className="flex flex-wrap gap-2">
+              {intentSignals.pricing && (
+                <span className="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded text-xs">💰 Pricing</span>
+              )}
+              {intentSignals.timeline && (
+                <span className="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded text-xs">📅 Timeline</span>
+              )}
+              {intentSignals.urgency && (
+                <span className="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded text-xs">⚡ Urgency</span>
+              )}
+              {intentSignals.specificService && (
+                <span className="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded text-xs">🎯 Specific Service</span>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* URLs Scraped */}
+        {urlsScraped.length > 0 && (
+          <div className="bg-purple-500/10 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Globe className="w-4 h-4 text-purple-400" />
+              <span className="text-sm font-medium text-purple-400">URLs Analyzed</span>
+            </div>
+            <div className="space-y-1">
+              {urlsScraped.map((url) => (
+                <a
+                  key={url.id}
+                  href={url.url_scraped?.startsWith("http") ? url.url_scraped : `https://${url.url_scraped}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-primary hover:underline flex items-center gap-1"
+                >
+                  {url.url_scraped}
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Conversation */}
+        <div className="flex-1 overflow-y-auto space-y-3 min-h-0">
+          <h4 className="text-sm font-medium text-muted-foreground">Conversation History</h4>
+          {sessionInteractions
+            .filter((i) => i.interaction_type === "message")
+            .map((interaction) => (
+              <div key={interaction.id} className="space-y-2">
+                {interaction.user_message && (
+                  <div className="flex justify-end">
+                    <div className="bg-primary/20 text-foreground rounded-lg px-4 py-2 max-w-[80%]">
+                      <p className="text-sm">{interaction.user_message}</p>
+                      <span className="text-xs text-muted-foreground mt-1 block">
+                        {format(new Date(interaction.created_at), "h:mm a")}
+                      </span>
+                    </div>
+                  </div>
+                )}
+                {interaction.assistant_message && (
+                  <div className="flex justify-start">
+                    <div className="bg-muted text-foreground rounded-lg px-4 py-2 max-w-[80%]">
+                      <p className="text-sm whitespace-pre-wrap">{interaction.assistant_message}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          {sessionInteractions.filter((i) => i.interaction_type === "message").length === 0 && (
+            <p className="text-sm text-muted-foreground text-center py-4">
+              No messages in this conversation
+            </p>
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export function ChatInteractionsTab() {
   const [interactions, setInteractions] = useState<ChatInteraction[]>([]);
+  const [leads, setLeads] = useState<Lead[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeSubTab, setActiveSubTab] = useState<"all" | "urls" | "leads">("all");
+  const [scoreFilter, setScoreFilter] = useState<"all" | "hot" | "warm" | "cool" | "cold">("all");
+  const [selectedLead, setSelectedLead] = useState<{ 
+    sessionId: string; 
+    name: string; 
+    email: string;
+    leadScore?: number | null;
+    qualificationStatus?: string | null;
+    intentSignals?: any;
+  } | null>(null);
 
   useEffect(() => {
-    fetchInteractions();
+    fetchData();
   }, []);
 
-  const fetchInteractions = async () => {
+  const fetchData = async () => {
     try {
-      const { data, error } = await supabase
-        .from("chat_interactions")
-        .select("*")
-        .order("created_at", { ascending: false });
+      const [interactionsResult, leadsResult] = await Promise.all([
+        supabase
+          .from("chat_interactions")
+          .select("*")
+          .order("created_at", { ascending: false }),
+        supabase
+          .from("leads")
+          .select("*")
+          .eq("source", "chatbot")
+          .order("lead_score", { ascending: false })
+      ]);
 
-      if (error) {
-        console.error("Error fetching interactions:", error);
+      if (interactionsResult.error) {
+        console.error("Error fetching interactions:", interactionsResult.error);
       } else {
-        setInteractions((data as ChatInteraction[]) || []);
+        setInteractions((interactionsResult.data as ChatInteraction[]) || []);
+      }
+
+      if (leadsResult.error) {
+        console.error("Error fetching leads:", leadsResult.error);
+      } else {
+        setLeads((leadsResult.data as Lead[]) || []);
       }
     } catch (err) {
       console.error("Unexpected error:", err);
@@ -59,6 +255,10 @@ export function ChatInteractionsTab() {
   const urlsScraped = interactions.filter((i) => i.interaction_type === "url_scraped");
   const leadsCaptures = interactions.filter((i) => i.interaction_type === "lead_captured");
 
+  // Lead score stats
+  const hotLeads = leads.filter(l => l.qualification_status === 'hot').length;
+  const warmLeads = leads.filter(l => l.qualification_status === 'warm').length;
+
   // Chart data - interactions per day
   const interactionsPerDay = Array.from({ length: 14 }, (_, i) => {
     const date = subDays(new Date(), 13 - i);
@@ -72,6 +272,11 @@ export function ChatInteractionsTab() {
     };
   });
 
+  // Filter leads by score
+  const filteredLeads = scoreFilter === "all" 
+    ? leads 
+    : leads.filter(l => l.qualification_status === scoreFilter);
+
   // Filter based on sub-tab
   const filteredInteractions =
     activeSubTab === "all"
@@ -80,8 +285,48 @@ export function ChatInteractionsTab() {
       ? urlsScraped
       : leadsCaptures;
 
+  const handleLeadClick = (interaction: ChatInteraction) => {
+    const lead = leads.find(l => l.id === interaction.lead_id);
+    setSelectedLead({
+      sessionId: interaction.session_id,
+      name: interaction.metadata?.name || lead?.full_name || "Unknown",
+      email: interaction.metadata?.email || lead?.email || "No email",
+      leadScore: lead?.lead_score || interaction.metadata?.leadScore,
+      qualificationStatus: lead?.qualification_status || interaction.metadata?.qualificationStatus,
+      intentSignals: lead?.intent_signals || interaction.metadata?.intentSignals,
+    });
+  };
+
+  const handleLeadRowClick = (lead: Lead) => {
+    // Find the session for this lead
+    const leadInteraction = interactions.find(i => i.lead_id === lead.id);
+    setSelectedLead({
+      sessionId: leadInteraction?.session_id || "",
+      name: lead.full_name,
+      email: lead.email,
+      leadScore: lead.lead_score,
+      qualificationStatus: lead.qualification_status,
+      intentSignals: lead.intent_signals,
+    });
+  };
+
   return (
     <div>
+      {/* Conversation Modal */}
+      {selectedLead && (
+        <ConversationModal
+          isOpen={!!selectedLead}
+          onClose={() => setSelectedLead(null)}
+          sessionId={selectedLead.sessionId}
+          leadName={selectedLead.name}
+          leadEmail={selectedLead.email}
+          interactions={interactions}
+          leadScore={selectedLead.leadScore}
+          qualificationStatus={selectedLead.qualificationStatus}
+          intentSignals={selectedLead.intentSignals}
+        />
+      )}
+
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <motion.div
@@ -105,12 +350,12 @@ export function ChatInteractionsTab() {
           className="bg-card border border-border rounded-xl p-6"
         >
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
-              <MessageCircle className="w-5 h-5 text-blue-500" />
+            <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center">
+              <span className="text-lg">🔥</span>
             </div>
-            <span className="text-sm text-muted-foreground">Messages</span>
+            <span className="text-sm text-muted-foreground">Hot Leads</span>
           </div>
-          <p className="text-3xl font-bold text-foreground">{totalMessages}</p>
+          <p className="text-3xl font-bold text-foreground">{hotLeads}</p>
         </motion.div>
 
         <motion.div
@@ -120,12 +365,12 @@ export function ChatInteractionsTab() {
           className="bg-card border border-border rounded-xl p-6"
         >
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
-              <Globe className="w-5 h-5 text-purple-500" />
+            <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center">
+              <span className="text-lg">🟡</span>
             </div>
-            <span className="text-sm text-muted-foreground">URLs Scraped</span>
+            <span className="text-sm text-muted-foreground">Warm Leads</span>
           </div>
-          <p className="text-3xl font-bold text-foreground">{urlsScraped.length}</p>
+          <p className="text-3xl font-bold text-foreground">{warmLeads}</p>
         </motion.div>
 
         <motion.div
@@ -135,12 +380,12 @@ export function ChatInteractionsTab() {
           className="bg-card border border-border rounded-xl p-6"
         >
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
-              <Users className="w-5 h-5 text-green-500" />
+            <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <Globe className="w-5 h-5 text-purple-500" />
             </div>
-            <span className="text-sm text-muted-foreground">Leads Captured</span>
+            <span className="text-sm text-muted-foreground">URLs Scraped</span>
           </div>
-          <p className="text-3xl font-bold text-foreground">{leadsCaptures.length}</p>
+          <p className="text-3xl font-bold text-foreground">{urlsScraped.length}</p>
         </motion.div>
       </div>
 
@@ -193,37 +438,57 @@ export function ChatInteractionsTab() {
       </motion.div>
 
       {/* Sub-tabs and Table */}
-      <div className="flex gap-2 mb-4">
-        <button
-          onClick={() => setActiveSubTab("all")}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            activeSubTab === "all"
-              ? "bg-primary text-primary-foreground"
-              : "bg-muted text-muted-foreground hover:bg-muted/80"
-          }`}
-        >
-          All Activity ({interactions.length})
-        </button>
-        <button
-          onClick={() => setActiveSubTab("urls")}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            activeSubTab === "urls"
-              ? "bg-purple-500 text-white"
-              : "bg-muted text-muted-foreground hover:bg-muted/80"
-          }`}
-        >
-          URLs Scraped ({urlsScraped.length})
-        </button>
-        <button
-          onClick={() => setActiveSubTab("leads")}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            activeSubTab === "leads"
-              ? "bg-green-500 text-white"
-              : "bg-muted text-muted-foreground hover:bg-muted/80"
-          }`}
-        >
-          Leads ({leadsCaptures.length})
-        </button>
+      <div className="flex flex-wrap gap-2 mb-4 items-center justify-between">
+        <div className="flex gap-2">
+          <button
+            onClick={() => setActiveSubTab("all")}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              activeSubTab === "all"
+                ? "bg-primary text-primary-foreground"
+                : "bg-muted text-muted-foreground hover:bg-muted/80"
+            }`}
+          >
+            All Activity ({interactions.length})
+          </button>
+          <button
+            onClick={() => setActiveSubTab("urls")}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              activeSubTab === "urls"
+                ? "bg-purple-500 text-white"
+                : "bg-muted text-muted-foreground hover:bg-muted/80"
+            }`}
+          >
+            URLs Scraped ({urlsScraped.length})
+          </button>
+          <button
+            onClick={() => setActiveSubTab("leads")}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              activeSubTab === "leads"
+                ? "bg-green-500 text-white"
+                : "bg-muted text-muted-foreground hover:bg-muted/80"
+            }`}
+          >
+            Leads ({leads.length})
+          </button>
+        </div>
+        
+        {activeSubTab === "leads" && (
+          <div className="flex items-center gap-2">
+            <Filter className="w-4 h-4 text-muted-foreground" />
+            <Select value={scoreFilter} onValueChange={(v) => setScoreFilter(v as any)}>
+              <SelectTrigger className="w-[140px]">
+                <SelectValue placeholder="Filter by score" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Leads</SelectItem>
+                <SelectItem value="hot">🔥 Hot</SelectItem>
+                <SelectItem value="warm">🟡 Warm</SelectItem>
+                <SelectItem value="cool">🔵 Cool</SelectItem>
+                <SelectItem value="cold">⚪ Cold</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
       </div>
 
       <motion.div
@@ -244,7 +509,7 @@ export function ChatInteractionsTab() {
               ? "Complete log of all chat interactions"
               : activeSubTab === "urls"
               ? "Websites that visitors requested feedback on"
-              : "Contact information captured through chat"}
+              : "Contact information captured through chat. Click a row to view conversation."}
           </p>
         </div>
 
@@ -252,6 +517,66 @@ export function ChatInteractionsTab() {
           <div className="p-12 text-center">
             <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto" />
           </div>
+        ) : activeSubTab === "leads" ? (
+          // Leads table with scoring
+          filteredLeads.length === 0 ? (
+            <div className="p-12 text-center">
+              <Users className="w-12 h-12 text-muted-foreground/50 mx-auto mb-4" />
+              <p className="text-muted-foreground">No leads captured yet</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-muted/50">
+                  <tr>
+                    <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">Score</th>
+                    <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">Name</th>
+                    <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">Email</th>
+                    <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden md:table-cell">Signals</th>
+                    <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">Date</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {filteredLeads.map((lead) => {
+                    const status = (lead.qualification_status || 'cool') as QualificationStatus;
+                    return (
+                      <tr
+                        key={lead.id}
+                        className="hover:bg-muted/30 transition-colors cursor-pointer"
+                        onClick={() => handleLeadRowClick(lead)}
+                      >
+                        <td className="px-6 py-4">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getScoreBadgeColor(status)}`}>
+                            {getScoreEmoji(status)} {lead.lead_score || 0}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="font-medium text-foreground">{lead.full_name}</span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <a href={`mailto:${lead.email}`} className="text-primary hover:underline" onClick={(e) => e.stopPropagation()}>
+                            {lead.email}
+                          </a>
+                        </td>
+                        <td className="px-6 py-4 hidden md:table-cell">
+                          <div className="flex gap-1">
+                            {lead.intent_signals?.pricing && <span className="text-xs" title="Pricing">💰</span>}
+                            {lead.intent_signals?.timeline && <span className="text-xs" title="Timeline">📅</span>}
+                            {lead.intent_signals?.urgency && <span className="text-xs" title="Urgency">⚡</span>}
+                            {lead.intent_signals?.specificService && <span className="text-xs" title="Specific Service">🎯</span>}
+                            {lead.engagement_depth && lead.engagement_depth >= 5 && <span className="text-xs" title={`${lead.engagement_depth} messages`}>💬</span>}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-sm text-muted-foreground">
+                          {format(new Date(lead.created_at), "MMM d, h:mm a")}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )
         ) : filteredInteractions.length === 0 ? (
           <div className="p-12 text-center">
             <MessageCircle className="w-12 h-12 text-muted-foreground/50 mx-auto mb-4" />
@@ -269,7 +594,7 @@ export function ChatInteractionsTab() {
                     Type
                   </th>
                   <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
-                    {activeSubTab === "urls" ? "URL" : activeSubTab === "leads" ? "Details" : "Content"}
+                    {activeSubTab === "urls" ? "URL" : "Content"}
                   </th>
                   <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden md:table-cell">
                     Session
@@ -281,7 +606,17 @@ export function ChatInteractionsTab() {
               </thead>
               <tbody className="divide-y divide-border">
                 {filteredInteractions.slice(0, 50).map((interaction) => (
-                  <tr key={interaction.id} className="hover:bg-muted/30 transition-colors">
+                  <tr 
+                    key={interaction.id} 
+                    className={`hover:bg-muted/30 transition-colors ${
+                      interaction.interaction_type === "lead_captured" ? "cursor-pointer" : ""
+                    }`}
+                    onClick={() => {
+                      if (interaction.interaction_type === "lead_captured") {
+                        handleLeadClick(interaction);
+                      }
+                    }}
+                  >
                     <td className="px-6 py-4">
                       <span
                         className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
