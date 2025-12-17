@@ -62,30 +62,42 @@ export type Database = {
         Row: {
           created_at: string
           email: string
+          engagement_depth: number | null
           full_name: string
           id: string
+          intent_signals: Json | null
+          lead_score: number | null
           notes: string | null
           phone: string | null
+          qualification_status: string | null
           source: string | null
           website: string | null
         }
         Insert: {
           created_at?: string
           email: string
+          engagement_depth?: number | null
           full_name: string
           id?: string
+          intent_signals?: Json | null
+          lead_score?: number | null
           notes?: string | null
           phone?: string | null
+          qualification_status?: string | null
           source?: string | null
           website?: string | null
         }
         Update: {
           created_at?: string
           email?: string
+          engagement_depth?: number | null
           full_name?: string
           id?: string
+          intent_signals?: Json | null
+          lead_score?: number | null
           notes?: string | null
           phone?: string | null
+          qualification_status?: string | null
           source?: string | null
           website?: string | null
         }
