@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProjectPlanLeadsTable } from "@/components/dashboard/ProjectPlanLeadsTable";
 import { ChatInteractionsTab } from "@/components/dashboard/ChatInteractionsTab";
 import { useToast } from "@/hooks/use-toast";
+import { getScoreBadgeColor, getScoreEmoji, QualificationStatus } from "@/lib/leadScoring";
 import {
   LogOut,
   Users,
@@ -44,6 +45,10 @@ interface Lead {
   notes: string | null;
   source: string | null;
   created_at: string;
+  lead_score: number | null;
+  qualification_status: string | null;
+  intent_signals: any;
+  engagement_depth: number | null;
 }
 
 export default function Dashboard() {
@@ -397,6 +402,9 @@ export default function Dashboard() {
                           <thead className="bg-muted/50">
                             <tr>
                               <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
+                                Score
+                              </th>
+                              <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
                                 Name
                               </th>
                               <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">
@@ -426,6 +434,15 @@ export default function Dashboard() {
                                 key={lead.id}
                                 className="hover:bg-muted/30 transition-colors"
                               >
+                                <td className="px-6 py-4">
+                                  {lead.lead_score !== null && lead.lead_score !== undefined ? (
+                                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getScoreBadgeColor((lead.qualification_status || 'cool') as QualificationStatus)}`}>
+                                      {getScoreEmoji((lead.qualification_status || 'cool') as QualificationStatus)} {lead.lead_score}
+                                    </span>
+                                  ) : (
+                                    <span className="text-muted-foreground text-xs">—</span>
+                                  )}
+                                </td>
                                 <td className="px-6 py-4">
                                   <span className="font-medium text-foreground">
                                     {lead.full_name}
