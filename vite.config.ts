@@ -9,9 +9,10 @@ export default defineConfig(({ mode, command }) => ({
     host: "::",
     port: 8080,
   },
-  // Never include Lovable's component tagger in production builds.
-  // (Some hosts may build with a non-production mode.)
-  plugins: [react(), command === "serve" && mode === "development" && componentTagger()].filter(Boolean),
+  plugins: [
+    react(),
+    command === "serve" && mode === "development" && componentTagger(),
+  ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

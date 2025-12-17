@@ -12,71 +12,125 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://xyren.herzenco.co/" />
+    <meta property="og:url" content="https://www.xyren.me/" />
     <meta property="og:title" content="Xyren by Herzen Co. | Custom AI-Powered Websites" />
     <meta property="og:description" content="We build modern websites that capture leads, book meetings, and follow up automatically. Delivered in 5-10 days." />
-    <meta property="og:image" content="https://xyren.herzenco.co/og-image.png" />
+    <meta property="og:image" content="https://www.xyren.me/og-image.png" />
     <meta property="og:site_name" content="Xyren by Herzen Co." />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://xyren.herzenco.co/" />
+    <meta name="twitter:url" content="https://www.xyren.me/" />
     <meta name="twitter:title" content="Xyren by Herzen Co. | Custom AI-Powered Websites" />
     <meta name="twitter:description" content="We build modern websites that capture leads, book meetings, and follow up automatically. Delivered in 5-10 days." />
-    <meta name="twitter:image" content="https://xyren.herzenco.co/og-image.png" />
+    <meta name="twitter:image" content="https://www.xyren.me/og-image.png" />
 
     <!-- Canonical -->
-    <link rel="canonical" href="https://xyren.herzenco.co/" />
+    <link rel="canonical" href="https://www.xyren.me/" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Structured Data -->
+    <!-- Organization Schema -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebDesignAgency",
+      "@type": "Organization",
+      "@id": "https://www.xyren.me/#organization",
       "name": "Xyren by Herzen Co.",
+      "url": "https://www.xyren.me",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.xyren.me/logo.png"
+      },
       "description": "We build modern websites that capture leads, book meetings, and follow up automatically. Delivered in 5-10 days.",
-      "url": "https://xyren.herzenco.co",
-      "logo": "https://xyren.herzenco.co/logo.png",
-      "sameAs": [],
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "US"
       },
-      "priceRange": "$1500-$2000",
-      "openingHours": "Mo-Fr 09:00-17:00",
-      "serviceType": ["Web Design", "Web Development", "AI Integration", "SEO Optimization"],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "email": "herzen@herzenco.co"
+      }
+    }
+    </script>
+
+    <!-- WebSite Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://www.xyren.me/#website",
+      "url": "https://www.xyren.me",
+      "name": "Xyren by Herzen Co.",
+      "description": "Custom AI-Powered Websites Delivered in 5-10 Days",
+      "publisher": {
+        "@id": "https://www.xyren.me/#organization"
+      }
+    }
+    </script>
+
+    <!-- Service/Pricing Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebDesignAgency",
+      "@id": "https://www.xyren.me/#agency",
+      "name": "Xyren by Herzen Co.",
+      "description": "We build modern websites that capture leads, book meetings, and follow up automatically.",
+      "url": "https://www.xyren.me",
+      "priceRange": "$150-$600/month",
       "areaServed": {
         "@type": "Country",
         "name": "United States"
       },
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "Website Packages",
+        "name": "Website System Packages",
         "itemListElement": [
           {
             "@type": "Offer",
-            "name": "Starter",
-            "description": "Custom website with AI chatbot, scheduling automation, and maintenance",
-            "price": "1500",
-            "priceCurrency": "USD"
+            "@id": "https://www.xyren.me/#core-plan",
+            "name": "Core - Foundation System",
+            "description": "A reliable website system that runs without intervention. Includes secure hosting, maintenance, conversion-focused layout, and contact forms.",
+            "price": "150",
+            "priceCurrency": "USD",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "150",
+              "priceCurrency": "USD",
+              "unitText": "month"
+            }
           },
           {
             "@type": "Offer",
-            "name": "Growth",
-            "description": "Everything in Starter plus full SEO optimization and monthly reports",
-            "price": "2000",
-            "priceCurrency": "USD"
+            "@id": "https://www.xyren.me/#active-plan",
+            "name": "Active - Automated System",
+            "description": "A system that captures, responds, and books automatically. Includes AI chat, automated follow-ups, scheduling automation, and CRM integration.",
+            "price": "400",
+            "priceCurrency": "USD",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "400",
+              "priceCurrency": "USD",
+              "unitText": "month"
+            }
           },
           {
             "@type": "Offer",
-            "name": "Scale",
-            "description": "Everything in Growth plus SEO blog posts and dedicated manager",
-            "price": "2000",
-            "priceCurrency": "USD"
+            "@id": "https://www.xyren.me/#optimized-plan",
+            "name": "Optimized - Performance System",
+            "description": "A continuously improving website system. Includes ongoing SEO monitoring, quarterly optimization updates, and priority support.",
+            "price": "600",
+            "priceCurrency": "USD",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "600",
+              "priceCurrency": "USD",
+              "unitText": "month"
+            }
           }
         ]
       }
