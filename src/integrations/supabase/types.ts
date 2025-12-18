@@ -103,6 +103,42 @@ export type Database = {
         }
         Relationships: []
       }
+      page_sessions: {
+        Row: {
+          created_at: string
+          device_type: string | null
+          duration_seconds: number | null
+          ended_at: string | null
+          id: string
+          page_path: string
+          referrer: string | null
+          session_id: string
+          started_at: string
+        }
+        Insert: {
+          created_at?: string
+          device_type?: string | null
+          duration_seconds?: number | null
+          ended_at?: string | null
+          id?: string
+          page_path: string
+          referrer?: string | null
+          session_id: string
+          started_at?: string
+        }
+        Update: {
+          created_at?: string
+          device_type?: string | null
+          duration_seconds?: number | null
+          ended_at?: string | null
+          id?: string
+          page_path?: string
+          referrer?: string | null
+          session_id?: string
+          started_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
