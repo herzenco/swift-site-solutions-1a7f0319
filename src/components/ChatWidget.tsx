@@ -73,7 +73,7 @@ export const ChatWidget = () => {
     industry: "",
   });
   
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollViewportRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { toast } = useToast();
 
@@ -84,8 +84,8 @@ export const ChatWidget = () => {
   };
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    if (scrollViewportRef.current) {
+      scrollViewportRef.current.scrollTop = scrollViewportRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -471,10 +471,10 @@ Format your response as:
             {/* Messages */}
             <ScrollArea 
               className="flex-1 min-h-0 px-5 py-5" 
-              ref={scrollRef}
               role="log"
               aria-label="Chat messages"
               aria-live="polite"
+              viewportRef={scrollViewportRef}
             >
               <div className="space-y-5 pb-2">
                 {messages.map((message, index) => (
