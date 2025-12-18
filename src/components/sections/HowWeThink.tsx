@@ -19,15 +19,6 @@ const principles = [
   },
 ];
 
-const idealFor = [
-  "Realtors",
-  "General contractors",
-  "Law firms",
-  "Consultants",
-  "Coaches",
-  "Home service providers",
-];
-
 export const HowWeThink = () => {
   return (
     <section className="pt-12 md:pt-16 pb-16 md:pb-20 bg-background">
@@ -71,20 +62,15 @@ export const HowWeThink = () => {
           ))}
         </div>
 
-        <motion.div
+        <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="text-center max-w-2xl mx-auto"
+          className="text-center text-muted-foreground text-lg max-w-2xl mx-auto"
         >
-          <p className="text-muted-foreground text-lg mb-4">
-            This approach works best for service businesses that depend on leads and bookings.
-          </p>
-          <p className="text-foreground/70 text-base">
-            Ideal for: {idealFor.join(" · ")}
-          </p>
-        </motion.div>
+          This approach works best for service businesses that depend on leads and bookings.
+        </motion.p>
       </div>
     </section>
   );
