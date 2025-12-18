@@ -903,6 +903,99 @@ export default function Dashboard() {
                 )}
               </motion.div>
             </div>
+
+            {/* Recent Page Visits Table */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.55 }}
+              className="mt-8 bg-card border border-border rounded-xl overflow-hidden"
+            >
+              <div className="p-6 border-b border-border">
+                <h3 className="text-lg font-semibold text-foreground">Recent Page Visits</h3>
+                <p className="text-sm text-muted-foreground mt-1">Individual visitor sessions and pages viewed</p>
+              </div>
+              
+              {sessionsLoading ? (
+                <div className="p-12 text-center">
+                  <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto" />
+                </div>
+              ) : pageSessions.length === 0 ? (
+                <div className="p-12 text-center">
+                  <Eye className="w-12 h-12 text-muted-foreground/50 mx-auto mb-4" />
+                  <p className="text-muted-foreground">No page visits yet</p>
+                  <p className="text-sm text-muted-foreground/70 mt-1">
+                    Visits will appear here as users browse your site
+                  </p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-border bg-muted/30">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                          Session
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                          Page
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                          Device
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                          Duration
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                          Time
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-border">
+                      {pageSessions.slice(0, 50).map((pageSession) => (
+                        <tr key={pageSession.id} className="hover:bg-muted/20 transition-colors">
+                          <td className="px-6 py-4">
+                            <span className="text-xs font-mono text-muted-foreground bg-muted px-2 py-1 rounded">
+                              {pageSession.session_id.slice(0, 12)}...
+                            </span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-sm text-foreground">{pageSession.page_path}</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-2">
+                              {pageSession.device_type === "mobile" ? (
+                                <Smartphone className="w-4 h-4 text-muted-foreground" />
+                              ) : pageSession.device_type === "tablet" ? (
+                                <Tablet className="w-4 h-4 text-muted-foreground" />
+                              ) : (
+                                <Monitor className="w-4 h-4 text-muted-foreground" />
+                              )}
+                              <span className="text-sm text-muted-foreground capitalize">
+                                {pageSession.device_type || "desktop"}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            {pageSession.duration_seconds ? (
+                              <span className="text-sm text-foreground">
+                                {pageSession.duration_seconds > 60
+                                  ? `${Math.floor(pageSession.duration_seconds / 60)}m ${pageSession.duration_seconds % 60}s`
+                                  : `${pageSession.duration_seconds}s`}
+                              </span>
+                            ) : (
+                              <span className="text-sm text-muted-foreground">Active</span>
+                            )}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-muted-foreground">
+                            {format(new Date(pageSession.started_at), "MMM d, h:mm a")}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </motion.div>
           </TabsContent>
         </Tabs>
       </main>
