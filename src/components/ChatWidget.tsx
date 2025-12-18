@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
@@ -34,9 +35,9 @@ interface CollectedData {
 }
 
 const INDUSTRIES = [
-  "Real Estate",
-  "Professional Services (Law, Accounting, Consulting)",
-  "Home Services (Contractors, Plumbing, HVAC)",
+  "Real Estate & Property Services",
+  "Home & Local Services",
+  "Professional Services",
   "Education & Coaching",
   "Healthcare & Wellness",
   "Other"
@@ -329,28 +330,13 @@ Format your response as:
           return;
         }
         
-        addAssistantMessage(`Got it! Last question: what industry are you in?\n\n• Real Estate\n• Professional Services\n• Home Services\n• Education & Coaching\n• Healthcare & Wellness\n• Other`);
+        addAssistantMessage(`Got it! Last question: what industry are you in? Please select from the dropdown below.`);
         setStep("industry");
         break;
 
       case "industry":
-        // User provided industry
-        let industry = userInput;
-        
-        // Try to match to one of our industries
-        const lowerInput = userInput.toLowerCase();
-        if (lowerInput.includes("real estate") || lowerInput.includes("realtor")) {
-          industry = "Real Estate";
-        } else if (lowerInput.includes("law") || lowerInput.includes("account") || lowerInput.includes("consult") || lowerInput.includes("professional")) {
-          industry = "Professional Services";
-        } else if (lowerInput.includes("home") || lowerInput.includes("contract") || lowerInput.includes("plumb") || lowerInput.includes("hvac") || lowerInput.includes("electric")) {
-          industry = "Home Services";
-        } else if (lowerInput.includes("coach") || lowerInput.includes("education") || lowerInput.includes("train") || lowerInput.includes("tutor")) {
-          industry = "Education & Coaching";
-        } else if (lowerInput.includes("health") || lowerInput.includes("wellness") || lowerInput.includes("fitness") || lowerInput.includes("medical") || lowerInput.includes("dental")) {
-          industry = "Healthcare & Wellness";
-        }
-        
+        // User selected industry from dropdown
+        const industry = userInput;
         setCollectedData((prev) => ({ ...prev, industry }));
         
         // Save the lead
@@ -541,37 +527,68 @@ Format your response as:
 
             {/* Input Area */}
             <div className="flex-shrink-0 p-4 border-t border-border bg-card pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
-              <div className="flex items-end gap-2">
-                <div className="flex-1 bg-muted rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-foreground/20 transition-all">
-                  <label htmlFor="chat-input" className="sr-only">Type your message</label>
-                  <textarea
-                    id="chat-input"
-                    ref={inputRef}
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    placeholder={step === "complete" ? "Chat complete" : "Type your response..."}
-                    disabled={isLoading || step === "analyzing"}
-                    rows={1}
-                    aria-describedby="chat-input-hint"
-                    className="w-full bg-transparent border-0 resize-none text-sm placeholder:text-muted-foreground focus:outline-none py-1 max-h-20"
-                  />
-                  <span id="chat-input-hint" className="sr-only">Press Enter to send</span>
+              {step === "industry" ? (
+                <div className="space-y-3">
+                  <Select
+                    onValueChange={(value) => {
+                      setInput(value);
+                    }}
+                  >
+                    <SelectTrigger className="w-full bg-muted border-0 rounded-xl">
+                      <SelectValue placeholder="Select your industry" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border border-border z-[100]">
+                      {INDUSTRIES.map((industry) => (
+                        <SelectItem key={industry} value={industry}>
+                          {industry}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Button
+                    onClick={handleUserInput}
+                    disabled={!input.trim() || isLoading}
+                    className="w-full rounded-xl bg-foreground hover:bg-foreground/90 text-background"
+                  >
+                    {isLoading ? (
+                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    ) : null}
+                    Submit
+                  </Button>
                 </div>
-                <Button
-                  onClick={handleUserInput}
-                  disabled={!input.trim() || isLoading || step === "analyzing"}
-                  size="icon"
-                  className="h-10 w-10 rounded-xl shrink-0 bg-foreground hover:bg-foreground/90 text-background disabled:opacity-30"
-                  aria-label={isLoading ? "Sending message" : "Send message"}
-                >
-                  {isLoading ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <Send className="w-4 h-4" />
-                  )}
-                </Button>
-              </div>
+              ) : (
+                <div className="flex items-end gap-2">
+                  <div className="flex-1 bg-muted rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-foreground/20 transition-all">
+                    <label htmlFor="chat-input" className="sr-only">Type your message</label>
+                    <textarea
+                      id="chat-input"
+                      ref={inputRef}
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      placeholder={step === "complete" ? "Chat complete" : "Type your response..."}
+                      disabled={isLoading || step === "analyzing"}
+                      rows={1}
+                      aria-describedby="chat-input-hint"
+                      className="w-full bg-transparent border-0 resize-none text-sm placeholder:text-muted-foreground focus:outline-none py-1 max-h-20"
+                    />
+                    <span id="chat-input-hint" className="sr-only">Press Enter to send</span>
+                  </div>
+                  <Button
+                    onClick={handleUserInput}
+                    disabled={!input.trim() || isLoading || step === "analyzing"}
+                    size="icon"
+                    className="h-10 w-10 rounded-xl shrink-0 bg-foreground hover:bg-foreground/90 text-background disabled:opacity-30"
+                    aria-label={isLoading ? "Sending message" : "Send message"}
+                  >
+                    {isLoading ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Send className="w-4 h-4" />
+                    )}
+                  </Button>
+                </div>
+              )}
             </div>
           </motion.div>
         )}
