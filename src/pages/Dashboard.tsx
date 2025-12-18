@@ -751,22 +751,6 @@ export default function Dashboard() {
               </motion.div>
             </div>
 
-            {/* Web Analytics Notice */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.45 }}
-              className="mt-8 bg-muted/50 border border-border rounded-xl p-6 text-center"
-            >
-              <BarChart3 className="w-12 h-12 text-muted-foreground/50 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">
-                Full Web Analytics Coming Soon
-              </h3>
-              <p className="text-muted-foreground max-w-md mx-auto">
-                Track page views, visitor sessions, referral sources, and more. 
-                Connect Google Analytics or use our built-in tracking.
-              </p>
-            </motion.div>
           </TabsContent>
         </Tabs>
       </main>
