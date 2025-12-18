@@ -25,9 +25,8 @@ export const Hero = () => {
           className="text-center max-w-4xl mx-auto"
         >
           {/* Headline */}
-          <h1 id="hero-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[0.95] flex flex-col items-center">
-            <span className="text-foreground/90 whitespace-nowrap">Websites that turn interest into</span>
-            <span className="text-gradient font-black whitespace-nowrap">booked calls automatically</span>
+          <h1 id="hero-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[0.95] text-center">
+            <span className="text-gradient">Websites built for qualified leads</span>
           </h1>
 
           {/* Subheadline */}
