@@ -26,13 +26,13 @@ export const Hero = () => {
         >
           {/* Headline */}
           <h1 id="hero-heading" className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[0.95]">
-            <span className="block text-foreground/90">Your website isn't a system.</span>
-            <span className="block text-gradient font-black">That's the problem.</span>
+            <span className="block text-foreground/90">Websites that turn interest into</span>
+            <span className="block text-gradient font-black">booked calls automatically.</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-lg sm:text-xl lg:text-2xl text-foreground/80 max-w-2xl mx-auto">
-            We build modern websites that capture leads, book meetings, and follow up automatically. Launched in 5 to 10 days.
+            We build conversion-focused websites for service businesses that capture leads, book meetings, and follow up without manual work. Launched in 5–10 days.
           </p>
         </motion.div>
 
