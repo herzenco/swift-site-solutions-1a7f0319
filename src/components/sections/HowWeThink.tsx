@@ -31,12 +31,11 @@ export const HowWeThink = () => {
           className="text-center mb-16"
         >
           <h2 id="how-we-think-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Websites aren't pages. <span className="text-gradient">They're systems.</span>
+            Most websites look fine. <span className="text-gradient">They just don't do anything.</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Most websites are static. They look fine, but they rely on manual follow-ups, 
-            missed calls, and hope. We design every site as a system — one that captures intent, 
-            books meetings, and follows up automatically.
+            They collect form submissions, send you an email, and hope you follow up in time. 
+            Meanwhile, leads go cold. We build sites that work differently.
           </p>
         </motion.div>
 
@@ -70,7 +69,7 @@ export const HowWeThink = () => {
           viewport={{ once: true }}
           className="text-center text-muted-foreground text-lg max-w-2xl mx-auto"
         >
-          This approach isn't for everyone. It's for businesses that rely on turning interest into action.
+          This approach works best for service businesses that depend on leads and bookings.
         </motion.p>
       </div>
     </section>
