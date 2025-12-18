@@ -43,6 +43,7 @@ interface Lead {
   id: string;
   full_name: string;
   email: string;
+  phone: string | null;
   website: string | null;
   source: string | null;
   created_at: string;
@@ -50,6 +51,7 @@ interface Lead {
   qualification_status: string | null;
   intent_signals: any;
   engagement_depth: number | null;
+  industry: string | null;
 }
 
 interface ConversationModalProps {
@@ -58,6 +60,9 @@ interface ConversationModalProps {
   sessionId: string;
   leadName: string;
   leadEmail: string;
+  leadPhone?: string | null;
+  leadWebsite?: string | null;
+  leadIndustry?: string | null;
   interactions: ChatInteraction[];
   leadScore?: number | null;
   qualificationStatus?: string | null;
@@ -69,7 +74,10 @@ function ConversationModal({
   onClose, 
   sessionId, 
   leadName, 
-  leadEmail, 
+  leadEmail,
+  leadPhone,
+  leadWebsite,
+  leadIndustry,
   interactions, 
   leadScore, 
   qualificationStatus,
@@ -96,24 +104,58 @@ function ConversationModal({
         </DialogHeader>
         
         {/* Lead Info */}
-        <div className="bg-muted/50 rounded-lg p-4 flex flex-wrap gap-4">
-          <div className="flex items-center gap-2">
-            <User className="w-4 h-4 text-muted-foreground" />
-            <span className="font-medium text-foreground">{leadName || "Unknown"}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Mail className="w-4 h-4 text-muted-foreground" />
-            <a href={`mailto:${leadEmail}`} className="text-primary hover:underline">
-              {leadEmail || "No email"}
-            </a>
-          </div>
-          {leadScore !== undefined && leadScore !== null && (
+        <div className="bg-muted/50 rounded-lg p-4 space-y-3">
+          <div className="flex flex-wrap gap-4">
             <div className="flex items-center gap-2">
-              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getScoreBadgeColor(status)}`}>
-                {getScoreEmoji(status)} Score: {leadScore} ({status})
-              </span>
+              <User className="w-4 h-4 text-muted-foreground" />
+              <span className="font-medium text-foreground">{leadName || "Unknown"}</span>
             </div>
-          )}
+            {leadEmail && (
+              <div className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-muted-foreground" />
+                <a href={`mailto:${leadEmail}`} className="text-primary hover:underline">
+                  {leadEmail}
+                </a>
+              </div>
+            )}
+            {leadPhone && (
+              <div className="flex items-center gap-2">
+                <span className="text-muted-foreground">📞</span>
+                <a href={`tel:${leadPhone}`} className="text-primary hover:underline">
+                  {leadPhone}
+                </a>
+              </div>
+            )}
+          </div>
+          <div className="flex flex-wrap gap-4">
+            {leadWebsite && (
+              <div className="flex items-center gap-2">
+                <Globe className="w-4 h-4 text-muted-foreground" />
+                <a 
+                  href={leadWebsite.startsWith("http") ? leadWebsite : `https://${leadWebsite}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-primary hover:underline flex items-center gap-1"
+                >
+                  {leadWebsite.replace(/^https?:\/\//, '')}
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+            )}
+            {leadIndustry && (
+              <div className="flex items-center gap-2">
+                <span className="text-muted-foreground">🏢</span>
+                <span className="text-foreground">{leadIndustry}</span>
+              </div>
+            )}
+            {leadScore !== undefined && leadScore !== null && (
+              <div className="flex items-center gap-2">
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getScoreBadgeColor(status)}`}>
+                  {getScoreEmoji(status)} Score: {leadScore} ({status})
+                </span>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Intent Signals */}
@@ -208,6 +250,9 @@ export function ChatInteractionsTab() {
     sessionId: string; 
     name: string; 
     email: string;
+    phone?: string | null;
+    website?: string | null;
+    industry?: string | null;
     leadScore?: number | null;
     qualificationStatus?: string | null;
     intentSignals?: any;
@@ -304,6 +349,9 @@ export function ChatInteractionsTab() {
       sessionId: leadInteraction?.session_id || "",
       name: lead.full_name,
       email: lead.email,
+      phone: lead.phone,
+      website: lead.website,
+      industry: lead.industry,
       leadScore: lead.lead_score,
       qualificationStatus: lead.qualification_status,
       intentSignals: lead.intent_signals,
@@ -320,6 +368,9 @@ export function ChatInteractionsTab() {
           sessionId={selectedLead.sessionId}
           leadName={selectedLead.name}
           leadEmail={selectedLead.email}
+          leadPhone={selectedLead.phone}
+          leadWebsite={selectedLead.website}
+          leadIndustry={selectedLead.industry}
           interactions={interactions}
           leadScore={selectedLead.leadScore}
           qualificationStatus={selectedLead.qualificationStatus}
@@ -532,7 +583,9 @@ export function ChatInteractionsTab() {
                     <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">Score</th>
                     <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">Name</th>
                     <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">Email</th>
-                    <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden md:table-cell">Signals</th>
+                    <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden md:table-cell">Phone</th>
+                    <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden lg:table-cell">Website</th>
+                    <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden lg:table-cell">Industry</th>
                     <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3">Date</th>
                   </tr>
                 </thead>
@@ -555,17 +608,43 @@ export function ChatInteractionsTab() {
                         </td>
                         <td className="px-6 py-4">
                           <a href={`mailto:${lead.email}`} className="text-primary hover:underline" onClick={(e) => e.stopPropagation()}>
-                            {lead.email}
+                            {lead.email || "-"}
                           </a>
                         </td>
                         <td className="px-6 py-4 hidden md:table-cell">
-                          <div className="flex gap-1">
-                            {lead.intent_signals?.pricing && <span className="text-xs" title="Pricing">💰</span>}
-                            {lead.intent_signals?.timeline && <span className="text-xs" title="Timeline">📅</span>}
-                            {lead.intent_signals?.urgency && <span className="text-xs" title="Urgency">⚡</span>}
-                            {lead.intent_signals?.specificService && <span className="text-xs" title="Specific Service">🎯</span>}
-                            {lead.engagement_depth && lead.engagement_depth >= 5 && <span className="text-xs" title={`${lead.engagement_depth} messages`}>💬</span>}
-                          </div>
+                          {lead.phone ? (
+                            <a href={`tel:${lead.phone}`} className="text-primary hover:underline" onClick={(e) => e.stopPropagation()}>
+                              {lead.phone}
+                            </a>
+                          ) : (
+                            <span className="text-muted-foreground">-</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 hidden lg:table-cell">
+                          {lead.website ? (
+                            <a 
+                              href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="text-primary hover:underline flex items-center gap-1"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              {lead.website.replace(/^https?:\/\//, '').slice(0, 25)}
+                              {lead.website.length > 25 && "..."}
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          ) : (
+                            <span className="text-muted-foreground">-</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 hidden lg:table-cell">
+                          {lead.industry ? (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded bg-muted text-xs text-foreground">
+                              {lead.industry}
+                            </span>
+                          ) : (
+                            <span className="text-muted-foreground">-</span>
+                          )}
                         </td>
                         <td className="px-6 py-4 text-sm text-muted-foreground">
                           {format(new Date(lead.created_at), "MMM d, h:mm a")}

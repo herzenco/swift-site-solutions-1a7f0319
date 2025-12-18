@@ -8,16 +8,40 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
 import { XyrenIcon } from "./XyrenIcon";
-import { calculateLeadScore, getQualificationStatus, IntentSignals } from "@/lib/leadScoring";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
+type ChatStep = 
+  | "greeting" 
+  | "ask_url" 
+  | "get_url" 
+  | "analyzing" 
+  | "contact" 
+  | "industry" 
+  | "complete";
 
-// Generate a unique session ID for this chat session
+interface CollectedData {
+  name: string;
+  hasUrl: boolean;
+  url: string;
+  websiteFeedback: string;
+  email: string;
+  phone: string;
+  industry: string;
+}
+
+const INDUSTRIES = [
+  "Real Estate",
+  "Professional Services (Law, Accounting, Consulting)",
+  "Home Services (Contractors, Plumbing, HVAC)",
+  "Education & Coaching",
+  "Healthcare & Wellness",
+  "Other"
+];
+
 const generateSessionId = () => {
   return `chat_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 };
@@ -26,34 +50,33 @@ export const ChatWidget = () => {
   const location = useLocation();
   const sessionId = useMemo(() => generateSessionId(), []);
   
-  // Hide chat widget on dashboard and auth pages
   const hiddenPaths = ["/dashboard", "/auth"];
   const shouldHide = hiddenPaths.some((path) => location.pathname.startsWith(path));
 
   const [isOpen, setIsOpen] = useState(false);
+  const [step, setStep] = useState<ChatStep>("greeting");
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hey! Drop your website URL and I'll give you 3 quick tips to improve it. Or ask me anything about our services.",
+      content: "Hey there! 👋 I'm Xyren. What's your name?",
     },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [collectedData, setCollectedData] = useState<CollectedData>({
+    name: "",
+    hasUrl: false,
+    url: "",
+    websiteFeedback: "",
+    email: "",
+    phone: "",
+    industry: "",
+  });
+  
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { toast } = useToast();
-  
-  // Track scoring metadata across the conversation
-  const [intentSignals, setIntentSignals] = useState<IntentSignals>({
-    pricing: false,
-    timeline: false,
-    urgency: false,
-    specificService: false,
-  });
-  const [urlScraped, setUrlScraped] = useState(false);
-  const [receivedFeedback, setReceivedFeedback] = useState(false);
 
-  // Haptic feedback for mobile
   const triggerHaptic = (pattern: number | number[] = 10) => {
     if (navigator.vibrate) {
       navigator.vibrate(pattern);
@@ -97,119 +120,65 @@ export const ChatWidget = () => {
     }
   };
 
-  const extractAndSaveLead = async (content: string) => {
-    // Regex that handles multi-line audit content using [\s\S] instead of [^"]
-    const leadMatch = content.match(/\[LEAD_CAPTURED:\s*name="([^"]*)",\s*email="([^"]*)",\s*website="([^"]*)"(?:,\s*audit="([\s\S]*?)")?\]/);
-    if (leadMatch) {
-      const [fullMatch, name, email, website, audit] = leadMatch;
-      
-      // Calculate message count (user messages only)
-      const userMessageCount = messages.filter(m => m.role === "user").length;
-      
-      // Calculate lead score
-      const scoreInput = {
-        source: "chatbot",
-        messageCount: userMessageCount,
-        hasUrl: urlScraped || !!website,
-        receivedFeedback: receivedFeedback,
-        intentSignals: intentSignals,
-      };
-      
-      const leadScore = calculateLeadScore(scoreInput);
-      const qualificationStatus = getQualificationStatus(leadScore);
-      
-      console.log("Lead scoring:", { scoreInput, leadScore, qualificationStatus });
-      
-      try {
-        const { data: leadData } = await supabase.from("leads").insert([{
-          full_name: name,
-          email: email,
-          website: website || null,
-          source: "chatbot",
-          notes: audit ? `Website audit: ${audit}` : "Lead captured via AI chatbot conversation",
-          lead_score: leadScore,
-          qualification_status: qualificationStatus,
-          intent_signals: intentSignals as any,
-          engagement_depth: userMessageCount,
-        }]).select().single();
-        
-        console.log("Lead saved with score:", { name, email, website, audit, leadScore, qualificationStatus });
-        
-        // Log the lead capture interaction
-        await logInteraction("lead_captured", {
-          leadId: leadData?.id,
-          metadata: { name, email, website, audit, leadScore, qualificationStatus, intentSignals },
-        });
-      } catch (error) {
-        console.error("Error saving lead:", error);
-      }
-      // Remove the entire marker from displayed content
-      return content.replace(fullMatch, "").trim();
-    }
-    return content;
+  const addAssistantMessage = (content: string) => {
+    setMessages((prev) => [...prev, { role: "assistant", content }]);
   };
 
-  const sendMessage = async () => {
-    if (!input.trim() || isLoading) return;
-
-    const userMessage: Message = { role: "user", content: input.trim() };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
+  const scrapeAndAnalyze = async (url: string) => {
     setIsLoading(true);
-
-    let assistantContent = "";
+    addAssistantMessage("Analyzing your website... give me just a moment! 🔍");
     
-    // Count user messages for this request (including the new one)
-    const messageCount = messages.filter(m => m.role === "user").length + 1;
-
     try {
+      // Call firecrawl to scrape
+      const { data: scrapeData, error: scrapeError } = await supabase.functions.invoke("firecrawl-scrape", {
+        body: { url },
+      });
+
+      if (scrapeError || !scrapeData?.success) {
+        throw new Error("Failed to analyze website");
+      }
+
+      const websiteContent = scrapeData.data?.markdown || scrapeData.markdown || "";
+      
+      // Log the URL scrape
+      await logInteraction("url_scraped", { urlScraped: url });
+      
+      // Now get AI analysis
+      const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
+      const analysisPrompt = `Based on this website content, provide exactly 3 quick, actionable fixes to improve conversions. Be specific and helpful. Keep each point to 1-2 sentences max.
+
+Website content:
+${websiteContent.slice(0, 3000)}
+
+Format your response as:
+1. [First fix]
+2. [Second fix]  
+3. [Third fix]`;
+
       const response = await fetch(CHAT_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
-        body: JSON.stringify({ 
-          messages: [...messages, userMessage],
-          session_id: sessionId,
-          message_count: messageCount,
+        body: JSON.stringify({
+          messages: [{ role: "user", content: analysisPrompt }],
+          skipLeadCapture: true,
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to get response");
+      if (!response.ok || !response.body) {
+        throw new Error("Analysis failed");
       }
 
-      if (!response.body) throw new Error("No response body");
-      
-      // Parse scoring metadata from response headers
-      const newIntentSignals = response.headers.get("X-Intent-Signals");
-      const wasUrlScraped = response.headers.get("X-Url-Scraped") === "true";
-      
-      if (newIntentSignals) {
-        try {
-          const parsed = JSON.parse(newIntentSignals) as IntentSignals;
-          // Merge with existing signals (signals accumulate, don't reset)
-          setIntentSignals(prev => ({
-            pricing: prev.pricing || parsed.pricing,
-            timeline: prev.timeline || parsed.timeline,
-            urgency: prev.urgency || parsed.urgency,
-            specificService: prev.specificService || parsed.specificService,
-          }));
-        } catch (e) {
-          console.error("Failed to parse intent signals:", e);
-        }
-      }
-      
-      if (wasUrlScraped) {
-        setUrlScraped(true);
-      }
-
+      // Stream the response
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let textBuffer = "";
+      let feedback = "";
 
+      // Remove the "Analyzing" message and add streaming response
+      setMessages((prev) => prev.slice(0, -1));
       setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
 
       while (true) {
@@ -234,10 +203,10 @@ export const ChatWidget = () => {
             const parsed = JSON.parse(jsonStr);
             const content = parsed.choices?.[0]?.delta?.content as string | undefined;
             if (content) {
-              assistantContent += content;
+              feedback += content;
               setMessages((prev) => {
                 const updated = [...prev];
-                updated[updated.length - 1] = { role: "assistant", content: assistantContent };
+                updated[updated.length - 1] = { role: "assistant", content: feedback };
                 return updated;
               });
             }
@@ -248,52 +217,194 @@ export const ChatWidget = () => {
         }
       }
 
-      // Log the message interaction
-      await logInteraction("message", {
-        userMessage: userMessage.content,
-        assistantMessage: assistantContent,
-      });
+      setCollectedData((prev) => ({ ...prev, websiteFeedback: feedback }));
+      
+      // After showing feedback, move to contact step
+      setTimeout(() => {
+        addAssistantMessage(`Great news, ${collectedData.name}! I can put together a more detailed analysis and recommendations for you. What's the best email or phone number to reach you?`);
+        setStep("contact");
+      }, 1500);
 
-      // Check if a URL was likely scraped and feedback was given
-      const urlRegex = /(https?:\/\/[^\s]+)|([a-zA-Z0-9][-a-zA-Z0-9]*\.(com|net|org|io|co|me|ai)[^\s]*)/gi;
-      const urlMatch = userMessage.content.match(urlRegex);
-      if (urlMatch && assistantContent.includes("quick wins")) {
-        setReceivedFeedback(true);
-        await logInteraction("url_scraped", {
-          urlScraped: urlMatch[0],
-          userMessage: userMessage.content,
-        });
-      }
-
-      const cleanedContent = await extractAndSaveLead(assistantContent);
-      if (cleanedContent !== assistantContent) {
-        setMessages((prev) => {
-          const updated = [...prev];
-          updated[updated.length - 1] = { role: "assistant", content: cleanedContent };
-          return updated;
-        });
-      }
     } catch (error) {
-      console.error("Chat error:", error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to send message",
-      });
-      setMessages((prev) => prev.filter((m) => m.content !== ""));
+      console.error("Analysis error:", error);
+      setMessages((prev) => prev.slice(0, -1));
+      addAssistantMessage("I had trouble analyzing that URL. No worries though! Let me get your contact info so we can help you directly. What's your email or phone number?");
+      setStep("contact");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const saveLead = async () => {
+    try {
+      const { data: leadData } = await supabase.from("leads").insert([{
+        full_name: collectedData.name,
+        email: collectedData.email || null,
+        phone: collectedData.phone || null,
+        website: collectedData.url || null,
+        source: "chatbot",
+        notes: collectedData.websiteFeedback || "Lead from scripted chat flow",
+        industry: collectedData.industry || null,
+        lead_score: collectedData.url ? 35 : 20,
+        qualification_status: collectedData.url ? "warm" : "cool",
+      }]).select().single();
+
+      await logInteraction("lead_captured", {
+        leadId: leadData?.id,
+        metadata: { 
+          name: collectedData.name, 
+          email: collectedData.email,
+          phone: collectedData.phone,
+          url: collectedData.url,
+          industry: collectedData.industry,
+          hasWebsiteFeedback: !!collectedData.websiteFeedback,
+        },
+      });
+
+      console.log("Lead saved:", leadData);
+    } catch (error) {
+      console.error("Error saving lead:", error);
+    }
+  };
+
+  const handleUserInput = async () => {
+    if (!input.trim() || isLoading) return;
+
+    const userInput = input.trim();
+    setMessages((prev) => [...prev, { role: "user", content: userInput }]);
+    setInput("");
+
+    await logInteraction("message", { userMessage: userInput });
+
+    switch (step) {
+      case "greeting":
+        // User just provided their name
+        setCollectedData((prev) => ({ ...prev, name: userInput }));
+        addAssistantMessage(`Nice to meet you, ${userInput}! Do you have a website you'd like me to analyze? I can give you 3 quick fixes to improve it. (yes/no)`);
+        setStep("ask_url");
+        break;
+
+      case "ask_url":
+        // User answered yes/no to having a URL
+        const hasUrl = userInput.toLowerCase().includes("yes") || 
+                       userInput.toLowerCase().includes("yeah") || 
+                       userInput.toLowerCase().includes("yep") ||
+                       userInput.toLowerCase().includes("sure");
+        
+        setCollectedData((prev) => ({ ...prev, hasUrl }));
+        
+        if (hasUrl) {
+          addAssistantMessage("Perfect! Drop the URL and I'll take a look.");
+          setStep("get_url");
+        } else {
+          addAssistantMessage(`No problem, ${collectedData.name || userInput}! Let me get your contact info so we can discuss how we can help. What's your email or phone number?`);
+          setStep("contact");
+        }
+        break;
+
+      case "get_url":
+        // User provided a URL
+        let url = userInput.trim();
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+          url = `https://${url}`;
+        }
+        setCollectedData((prev) => ({ ...prev, url }));
+        await scrapeAndAnalyze(url);
+        break;
+
+      case "contact":
+        // User provided contact info
+        const emailMatch = userInput.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+        const phoneMatch = userInput.match(/[\d\s\-\(\)\.+]{7,}/);
+        
+        if (emailMatch) {
+          setCollectedData((prev) => ({ ...prev, email: emailMatch[0] }));
+        }
+        if (phoneMatch) {
+          setCollectedData((prev) => ({ ...prev, phone: phoneMatch[0].trim() }));
+        }
+        
+        if (!emailMatch && !phoneMatch) {
+          addAssistantMessage("I didn't catch that. Could you share your email address or phone number?");
+          return;
+        }
+        
+        addAssistantMessage(`Got it! Last question: what industry are you in?\n\n• Real Estate\n• Professional Services\n• Home Services\n• Education & Coaching\n• Healthcare & Wellness\n• Other`);
+        setStep("industry");
+        break;
+
+      case "industry":
+        // User provided industry
+        let industry = userInput;
+        
+        // Try to match to one of our industries
+        const lowerInput = userInput.toLowerCase();
+        if (lowerInput.includes("real estate") || lowerInput.includes("realtor")) {
+          industry = "Real Estate";
+        } else if (lowerInput.includes("law") || lowerInput.includes("account") || lowerInput.includes("consult") || lowerInput.includes("professional")) {
+          industry = "Professional Services";
+        } else if (lowerInput.includes("home") || lowerInput.includes("contract") || lowerInput.includes("plumb") || lowerInput.includes("hvac") || lowerInput.includes("electric")) {
+          industry = "Home Services";
+        } else if (lowerInput.includes("coach") || lowerInput.includes("education") || lowerInput.includes("train") || lowerInput.includes("tutor")) {
+          industry = "Education & Coaching";
+        } else if (lowerInput.includes("health") || lowerInput.includes("wellness") || lowerInput.includes("fitness") || lowerInput.includes("medical") || lowerInput.includes("dental")) {
+          industry = "Healthcare & Wellness";
+        }
+        
+        setCollectedData((prev) => ({ ...prev, industry }));
+        
+        // Save the lead
+        const finalData = { ...collectedData, industry };
+        
+        try {
+          const { data: leadData } = await supabase.from("leads").insert([{
+            full_name: finalData.name,
+            email: finalData.email || null,
+            phone: finalData.phone || null,
+            website: finalData.url || null,
+            source: "chatbot",
+            notes: finalData.websiteFeedback || "Lead from scripted chat flow",
+            industry: finalData.industry || null,
+            lead_score: finalData.url ? 35 : 20,
+            qualification_status: finalData.url ? "warm" : "cool",
+          }]).select().single();
+
+          await logInteraction("lead_captured", {
+            leadId: leadData?.id,
+            metadata: { 
+              name: finalData.name, 
+              email: finalData.email,
+              phone: finalData.phone,
+              url: finalData.url,
+              industry: finalData.industry,
+              hasWebsiteFeedback: !!finalData.websiteFeedback,
+            },
+          });
+        } catch (error) {
+          console.error("Error saving lead:", error);
+        }
+        
+        const closingMessage = finalData.url 
+          ? `Thanks ${finalData.name}! You'll receive a more in-depth analysis of your site along with specific recommendations on how we can help within 24-48 hours. Talk soon! 🚀`
+          : `Thanks ${finalData.name}! We'll reach out within 24-48 hours with more information on how we can help your ${industry} business. Talk soon! 🚀`;
+        
+        addAssistantMessage(closingMessage);
+        setStep("complete");
+        break;
+
+      case "complete":
+        addAssistantMessage("Thanks for chatting! We'll be in touch soon. Feel free to explore our website in the meantime.");
+        break;
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      sendMessage();
+      handleUserInput();
     }
   };
 
-  // Don't render on hidden paths
   if (shouldHide) return null;
 
   return (
@@ -389,6 +500,8 @@ export const ChatWidget = () => {
                             components={{
                               p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
                               strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+                              ul: ({ children }) => <ul className="list-disc pl-4 mb-2">{children}</ul>,
+                              li: ({ children }) => <li className="mb-1">{children}</li>,
                             }}
                           >
                             {message.content}
@@ -408,6 +521,21 @@ export const ChatWidget = () => {
                     </div>
                   </motion.div>
                 ))}
+                {isLoading && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex justify-start"
+                  >
+                    <div className="bg-muted px-4 py-3 rounded-2xl rounded-bl-sm">
+                      <span className="flex gap-1">
+                        <span className="w-1.5 h-1.5 bg-foreground/50 rounded-full animate-bounce [animation-delay:-0.3s]" />
+                        <span className="w-1.5 h-1.5 bg-foreground/50 rounded-full animate-bounce [animation-delay:-0.15s]" />
+                        <span className="w-1.5 h-1.5 bg-foreground/50 rounded-full animate-bounce" />
+                      </span>
+                    </div>
+                  </motion.div>
+                )}
               </div>
             </ScrollArea>
 
@@ -422,17 +550,17 @@ export const ChatWidget = () => {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Message..."
-                    disabled={isLoading}
+                    placeholder={step === "complete" ? "Chat complete" : "Type your response..."}
+                    disabled={isLoading || step === "analyzing"}
                     rows={1}
                     aria-describedby="chat-input-hint"
                     className="w-full bg-transparent border-0 resize-none text-sm placeholder:text-muted-foreground focus:outline-none py-1 max-h-20"
                   />
-                  <span id="chat-input-hint" className="sr-only">Press Enter to send, Shift+Enter for new line</span>
+                  <span id="chat-input-hint" className="sr-only">Press Enter to send</span>
                 </div>
                 <Button
-                  onClick={sendMessage}
-                  disabled={!input.trim() || isLoading}
+                  onClick={handleUserInput}
+                  disabled={!input.trim() || isLoading || step === "analyzing"}
                   size="icon"
                   className="h-10 w-10 rounded-xl shrink-0 bg-foreground hover:bg-foreground/90 text-background disabled:opacity-30"
                   aria-label={isLoading ? "Sending message" : "Send message"}
