@@ -21,9 +21,24 @@ import {
   MousePointerClick,
   Globe,
   MessageCircle,
+  Clock,
+  Monitor,
+  Smartphone,
+  Tablet,
 } from "lucide-react";
 import { format, subDays } from "date-fns";
 import { User, Session } from "@supabase/supabase-js";
+
+interface PageSession {
+  id: string;
+  session_id: string;
+  page_path: string;
+  referrer: string | null;
+  started_at: string;
+  ended_at: string | null;
+  duration_seconds: number | null;
+  device_type: string | null;
+}
 import {
   AreaChart,
   Area,
@@ -62,11 +77,13 @@ export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [pageSessions, setPageSessions] = useState<PageSession[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("leads");
   const [leadsSubTab, setLeadsSubTab] = useState<string>("all");
   const [analytics, setAnalytics] = useState<VercelAnalytics | null>(null);
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
+  const [sessionsLoading, setSessionsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -98,6 +115,7 @@ export default function Dashboard() {
     if (session?.user) {
       fetchLeads();
       fetchAnalytics();
+      fetchPageSessions();
     }
   }, [session]);
 
@@ -147,10 +165,68 @@ export default function Dashboard() {
     }
   };
 
+  const fetchPageSessions = async () => {
+    setSessionsLoading(true);
+    try {
+      const thirtyDaysAgo = subDays(new Date(), 30).toISOString();
+      const { data, error } = await supabase
+        .from("page_sessions")
+        .select("*")
+        .gte("started_at", thirtyDaysAgo)
+        .order("started_at", { ascending: false });
+
+      if (error) {
+        console.error("Error fetching page sessions:", error);
+      } else {
+        setPageSessions(data || []);
+      }
+    } catch (err) {
+      console.error("Page sessions fetch error:", err);
+    } finally {
+      setSessionsLoading(false);
+    }
+  };
+
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     navigate("/auth");
   };
+
+  // Session Analytics
+  const totalSessions = pageSessions.length;
+  const uniqueSessions = new Set(pageSessions.map(s => s.session_id)).size;
+  const avgSessionDuration = pageSessions.filter(s => s.duration_seconds).length > 0
+    ? Math.round(pageSessions.filter(s => s.duration_seconds).reduce((sum, s) => sum + (s.duration_seconds || 0), 0) / pageSessions.filter(s => s.duration_seconds).length)
+    : 0;
+  
+  // Device breakdown
+  const deviceCounts = pageSessions.reduce((acc, s) => {
+    const device = s.device_type || "unknown";
+    acc[device] = (acc[device] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Top pages
+  const pageCounts = pageSessions.reduce((acc, s) => {
+    acc[s.page_path] = (acc[s.page_path] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  const topPages = Object.entries(pageCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+
+  // Sessions per day for chart
+  const sessionsPerDay = Array.from({ length: 14 }, (_, i) => {
+    const date = subDays(new Date(), 13 - i);
+    const daySessions = pageSessions.filter((s) => {
+      const sessionDate = new Date(s.started_at);
+      return format(sessionDate, "yyyy-MM-dd") === format(date, "yyyy-MM-dd");
+    }).length;
+    return {
+      date: format(date, "MMM d"),
+      sessions: daySessions,
+    };
+  });
 
   // Lead Analytics
   const totalLeads = leads.length;
@@ -559,7 +635,7 @@ export default function Dashboard() {
 
           {/* Analytics Tab */}
           <TabsContent value="analytics">
-            {/* Web Analytics Stats */}
+            {/* Top Row: Core Metrics */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -570,15 +646,13 @@ export default function Dashboard() {
                   <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
                     <Eye className="w-5 h-5 text-purple-500" />
                   </div>
-                  <span className="text-sm text-muted-foreground">Page Views</span>
+                  <span className="text-sm text-muted-foreground">Total Sessions</span>
                 </div>
-                {analyticsLoading ? (
+                {sessionsLoading ? (
                   <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
                 ) : (
                   <>
-                    <p className="text-3xl font-bold text-foreground">
-                      {analytics?.pageViews?.toLocaleString() || "0"}
-                    </p>
+                    <p className="text-3xl font-bold text-foreground">{totalSessions.toLocaleString()}</p>
                     <p className="text-xs text-muted-foreground mt-1">Last 30 days</p>
                   </>
                 )}
@@ -596,13 +670,11 @@ export default function Dashboard() {
                   </div>
                   <span className="text-sm text-muted-foreground">Unique Visitors</span>
                 </div>
-                {analyticsLoading ? (
+                {sessionsLoading ? (
                   <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
                 ) : (
                   <>
-                    <p className="text-3xl font-bold text-foreground">
-                      {analytics?.uniqueVisitors?.toLocaleString() || "0"}
-                    </p>
+                    <p className="text-3xl font-bold text-foreground">{uniqueSessions.toLocaleString()}</p>
                     <p className="text-xs text-muted-foreground mt-1">Last 30 days</p>
                   </>
                 )}
@@ -615,19 +687,21 @@ export default function Dashboard() {
                 className="bg-card border border-border rounded-xl p-6"
               >
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-lg bg-pink-500/10 flex items-center justify-center">
-                    <MousePointerClick className="w-5 h-5 text-pink-500" />
+                  <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
+                    <Clock className="w-5 h-5 text-green-500" />
                   </div>
-                  <span className="text-sm text-muted-foreground">CTA Clicks</span>
+                  <span className="text-sm text-muted-foreground">Avg. Session</span>
                 </div>
-                {analyticsLoading ? (
+                {sessionsLoading ? (
                   <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
                 ) : (
                   <>
                     <p className="text-3xl font-bold text-foreground">
-                      {analytics?.ctaClicks?.toLocaleString() || "0"}
+                      {avgSessionDuration > 60 
+                        ? `${Math.floor(avgSessionDuration / 60)}m ${avgSessionDuration % 60}s`
+                        : `${avgSessionDuration}s`}
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">Tracked via leads</p>
+                    <p className="text-xs text-muted-foreground mt-1">Time on site</p>
                   </>
                 )}
               </motion.div>
@@ -639,35 +713,161 @@ export default function Dashboard() {
                 className="bg-card border border-border rounded-xl p-6"
               >
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
-                    <TrendingUp className="w-5 h-5 text-amber-500" />
+                  <div className="w-10 h-10 rounded-lg bg-pink-500/10 flex items-center justify-center">
+                    <MousePointerClick className="w-5 h-5 text-pink-500" />
                   </div>
-                  <span className="text-sm text-muted-foreground">Bounce Rate</span>
+                  <span className="text-sm text-muted-foreground">Lead Conversions</span>
                 </div>
-                {analyticsLoading ? (
-                  <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
-                ) : (
-                  <>
-                    <p className="text-3xl font-bold text-foreground">
-                      {analytics?.bounceRate || 0}%
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-1">Estimated</p>
-                  </>
-                )}
+                <>
+                  <p className="text-3xl font-bold text-foreground">{totalLeads}</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {totalSessions > 0 ? `${((totalLeads / totalSessions) * 100).toFixed(1)}% rate` : "All time"}
+                  </p>
+                </>
               </motion.div>
             </div>
 
-            {/* Leads by Source Chart */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Second Row: Charts */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35 }}
                 className="bg-card border border-border rounded-xl p-6"
               >
+                <h3 className="text-lg font-semibold text-foreground mb-4">Traffic (14 days)</h3>
+                <div className="h-[250px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={sessionsPerDay}>
+                      <defs>
+                        <linearGradient id="sessionGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
+                          <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                      <XAxis
+                        dataKey="date"
+                        tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
+                        axisLine={{ stroke: "hsl(var(--border))" }}
+                      />
+                      <YAxis
+                        tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
+                        axisLine={{ stroke: "hsl(var(--border))" }}
+                        allowDecimals={false}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "hsl(var(--card))",
+                          border: "1px solid hsl(var(--border))",
+                          borderRadius: "8px",
+                        }}
+                        labelStyle={{ color: "hsl(var(--foreground))" }}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="sessions"
+                        stroke="hsl(var(--primary))"
+                        strokeWidth={2}
+                        fill="url(#sessionGradient)"
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="bg-card border border-border rounded-xl p-6"
+              >
+                <h3 className="text-lg font-semibold text-foreground mb-4">Device Breakdown</h3>
+                <div className="space-y-4">
+                  {Object.entries(deviceCounts).length > 0 ? (
+                    Object.entries(deviceCounts)
+                      .sort((a, b) => b[1] - a[1])
+                      .map(([device, count]) => {
+                        const percentage = totalSessions > 0 ? ((count / totalSessions) * 100).toFixed(1) : 0;
+                        const Icon = device === "mobile" ? Smartphone : device === "tablet" ? Tablet : Monitor;
+                        return (
+                          <div key={device} className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+                              <Icon className="w-5 h-5 text-muted-foreground" />
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex justify-between mb-1">
+                                <span className="text-sm font-medium text-foreground capitalize">{device}</span>
+                                <span className="text-sm text-muted-foreground">{percentage}%</span>
+                              </div>
+                              <div className="h-2 bg-muted rounded-full overflow-hidden">
+                                <div 
+                                  className="h-full bg-primary rounded-full transition-all"
+                                  style={{ width: `${percentage}%` }}
+                                />
+                              </div>
+                            </div>
+                            <span className="text-sm font-medium text-foreground w-12 text-right">{count}</span>
+                          </div>
+                        );
+                      })
+                  ) : (
+                    <div className="h-[200px] flex items-center justify-center">
+                      <p className="text-muted-foreground">No data yet</p>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Third Row: Top Pages & Lead Sources */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.45 }}
+                className="bg-card border border-border rounded-xl p-6"
+              >
+                <h3 className="text-lg font-semibold text-foreground mb-4">Top Pages</h3>
+                {topPages.length > 0 ? (
+                  <div className="space-y-3">
+                    {topPages.map(([path, count], index) => {
+                      const percentage = totalSessions > 0 ? ((count / totalSessions) * 100).toFixed(1) : 0;
+                      return (
+                        <div key={path} className="flex items-center gap-3">
+                          <span className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-xs font-medium text-primary">
+                            {index + 1}
+                          </span>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-foreground truncate">{path}</p>
+                            <div className="h-1.5 bg-muted rounded-full mt-1 overflow-hidden">
+                              <div 
+                                className="h-full bg-primary/60 rounded-full"
+                                style={{ width: `${percentage}%` }}
+                              />
+                            </div>
+                          </div>
+                          <span className="text-sm text-muted-foreground">{count} views</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="h-[200px] flex items-center justify-center">
+                    <p className="text-muted-foreground">No data yet</p>
+                  </div>
+                )}
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="bg-card border border-border rounded-xl p-6"
+              >
                 <h3 className="text-lg font-semibold text-foreground mb-4">Leads by Source</h3>
                 {sourceChartData.length > 0 ? (
-                  <div className="h-[300px]">
+                  <div className="h-[250px]">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={sourceChartData} layout="vertical">
                         <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -697,60 +897,12 @@ export default function Dashboard() {
                     </ResponsiveContainer>
                   </div>
                 ) : (
-                  <div className="h-[300px] flex items-center justify-center">
+                  <div className="h-[250px] flex items-center justify-center">
                     <p className="text-muted-foreground">No data yet</p>
                   </div>
                 )}
               </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="bg-card border border-border rounded-xl p-6"
-              >
-                <h3 className="text-lg font-semibold text-foreground mb-4">Lead Trends (14 days)</h3>
-                <div className="h-[300px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={leadsPerDay}>
-                      <defs>
-                        <linearGradient id="leadGradient2" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
-                          <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                      <XAxis
-                        dataKey="date"
-                        tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-                        axisLine={{ stroke: "hsl(var(--border))" }}
-                      />
-                      <YAxis
-                        tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-                        axisLine={{ stroke: "hsl(var(--border))" }}
-                        allowDecimals={false}
-                      />
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: "hsl(var(--card))",
-                          border: "1px solid hsl(var(--border))",
-                          borderRadius: "8px",
-                        }}
-                        labelStyle={{ color: "hsl(var(--foreground))" }}
-                      />
-                      <Area
-                        type="monotone"
-                        dataKey="leads"
-                        stroke="hsl(var(--primary))"
-                        strokeWidth={2}
-                        fill="url(#leadGradient2)"
-                      />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </div>
-              </motion.div>
             </div>
-
           </TabsContent>
         </Tabs>
       </main>
