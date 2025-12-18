@@ -165,6 +165,7 @@ Format your response as:
         body: JSON.stringify({
           messages: [{ role: "user", content: analysisPrompt }],
           skipLeadCapture: true,
+          skipUrlExtraction: true,
         }),
       });
 

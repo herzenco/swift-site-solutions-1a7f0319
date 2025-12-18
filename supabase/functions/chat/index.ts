@@ -181,7 +181,7 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, message_count } = await req.json();
+    const { messages, message_count, skipLeadCapture, skipUrlExtraction } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
@@ -203,9 +203,9 @@ serve(async (req) => {
         )
       : false;
 
-    // Check if the latest user message contains a URL
+    // Check if the latest user message contains a URL (skip if explicitly told to)
     const lastUserMessage = messages.filter((m: any) => m.role === 'user').pop();
-    const detectedUrl = lastUserMessage
+    const detectedUrl = (!skipUrlExtraction && lastUserMessage)
       ? extractUrl(lastUserMessage.content, { allowBareDomains: !hasWebsiteFeedback })
       : null;
 
