@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
@@ -21,7 +21,6 @@ type ChatStep =
   | "get_url" 
   | "analyzing" 
   | "contact" 
-  | "industry" 
   | "complete";
 
 interface CollectedData {
@@ -34,14 +33,6 @@ interface CollectedData {
   industry: string;
 }
 
-const INDUSTRIES = [
-  "Real Estate & Property Services",
-  "Home & Local Services",
-  "Professional Services",
-  "Education & Coaching",
-  "Healthcare & Wellness",
-  "Other"
-];
 
 const generateSessionId = () => {
   return `chat_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -331,17 +322,12 @@ Format your response as:
           return;
         }
         
-        addAssistantMessage(`Got it! Last question: what industry are you in? Please select from the dropdown below.`);
-        setStep("industry");
-        break;
-
-      case "industry":
-        // User selected industry from dropdown
-        const industry = userInput;
-        setCollectedData((prev) => ({ ...prev, industry }));
-        
-        // Save the lead
-        const finalData = { ...collectedData, industry };
+        // Save the lead directly (industry will be determined on dashboard)
+        const finalData = { 
+          ...collectedData, 
+          email: emailMatch ? emailMatch[0] : collectedData.email,
+          phone: phoneMatch ? phoneMatch[0].trim() : collectedData.phone,
+        };
         
         try {
           const { data: leadData } = await supabase.from("leads").insert([{
@@ -351,7 +337,7 @@ Format your response as:
             website: finalData.url || null,
             source: "chatbot",
             notes: finalData.websiteFeedback || "Lead from scripted chat flow",
-            industry: finalData.industry || null,
+            industry: null,
             lead_score: finalData.url ? 35 : 20,
             qualification_status: finalData.url ? "warm" : "cool",
           }]).select().single();
@@ -363,7 +349,6 @@ Format your response as:
               email: finalData.email,
               phone: finalData.phone,
               url: finalData.url,
-              industry: finalData.industry,
               hasWebsiteFeedback: !!finalData.websiteFeedback,
             },
           });
@@ -373,11 +358,12 @@ Format your response as:
         
         const closingMessage = finalData.url 
           ? `Thanks ${finalData.name}! You'll receive a more in-depth analysis of your site along with specific recommendations on how we can help within 24-48 hours. Talk soon! 🚀`
-          : `Thanks ${finalData.name}! We'll reach out within 24-48 hours with more information on how we can help your ${industry} business. Talk soon! 🚀`;
+          : `Thanks ${finalData.name}! We'll reach out within 24-48 hours with more information on how we can help. Talk soon! 🚀`;
         
         addAssistantMessage(closingMessage);
         setStep("complete");
         break;
+
 
       case "complete":
         addAssistantMessage("Thanks for chatting! We'll be in touch soon. Feel free to explore our website in the meantime.");
@@ -528,68 +514,37 @@ Format your response as:
 
             {/* Input Area */}
             <div className="flex-shrink-0 p-4 border-t border-border bg-card pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
-              {step === "industry" ? (
-                <div className="space-y-3">
-                  <Select
-                    onValueChange={(value) => {
-                      setInput(value);
-                    }}
-                  >
-                    <SelectTrigger className="w-full bg-muted border-0 rounded-xl">
-                      <SelectValue placeholder="Select your industry" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border border-border z-[100]">
-                      {INDUSTRIES.map((industry) => (
-                        <SelectItem key={industry} value={industry}>
-                          {industry}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Button
-                    onClick={handleUserInput}
-                    disabled={!input.trim() || isLoading}
-                    className="w-full rounded-xl bg-foreground hover:bg-foreground/90 text-background"
-                  >
-                    {isLoading ? (
-                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                    ) : null}
-                    Submit
-                  </Button>
+              <div className="flex items-end gap-2">
+                <div className="flex-1 bg-muted rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-foreground/20 transition-all">
+                  <label htmlFor="chat-input" className="sr-only">Type your message</label>
+                  <textarea
+                    id="chat-input"
+                    ref={inputRef}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder={step === "complete" ? "Chat complete" : "Type your response..."}
+                    disabled={isLoading || step === "analyzing"}
+                    rows={1}
+                    aria-describedby="chat-input-hint"
+                    className="w-full bg-transparent border-0 resize-none text-sm placeholder:text-muted-foreground focus:outline-none py-1 max-h-20"
+                  />
+                  <span id="chat-input-hint" className="sr-only">Press Enter to send</span>
                 </div>
-              ) : (
-                <div className="flex items-end gap-2">
-                  <div className="flex-1 bg-muted rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-foreground/20 transition-all">
-                    <label htmlFor="chat-input" className="sr-only">Type your message</label>
-                    <textarea
-                      id="chat-input"
-                      ref={inputRef}
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      onKeyDown={handleKeyDown}
-                      placeholder={step === "complete" ? "Chat complete" : "Type your response..."}
-                      disabled={isLoading || step === "analyzing"}
-                      rows={1}
-                      aria-describedby="chat-input-hint"
-                      className="w-full bg-transparent border-0 resize-none text-sm placeholder:text-muted-foreground focus:outline-none py-1 max-h-20"
-                    />
-                    <span id="chat-input-hint" className="sr-only">Press Enter to send</span>
-                  </div>
-                  <Button
-                    onClick={handleUserInput}
-                    disabled={!input.trim() || isLoading || step === "analyzing"}
-                    size="icon"
-                    className="h-10 w-10 rounded-xl shrink-0 bg-foreground hover:bg-foreground/90 text-background disabled:opacity-30"
-                    aria-label={isLoading ? "Sending message" : "Send message"}
-                  >
-                    {isLoading ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                      <Send className="w-4 h-4" />
-                    )}
-                  </Button>
-                </div>
-              )}
+                <Button
+                  onClick={handleUserInput}
+                  disabled={!input.trim() || isLoading || step === "analyzing"}
+                  size="icon"
+                  className="h-10 w-10 rounded-xl shrink-0 bg-foreground hover:bg-foreground/90 text-background disabled:opacity-30"
+                  aria-label={isLoading ? "Sending message" : "Send message"}
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Send className="w-4 h-4" />
+                  )}
+                </Button>
+              </div>
             </div>
           </motion.div>
         )}
