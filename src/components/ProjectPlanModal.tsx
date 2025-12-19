@@ -158,14 +158,27 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
     try {
       const notes = `Business: ${formData.businessType}\nGoal: ${formData.primaryGoal}\nHas website: ${formData.hasWebsite}${formData.websiteUrl ? ` (${formData.websiteUrl})` : ""}\nChallenge: ${formData.biggestChallenge}\nTimeline: ${formData.timeline}\nPreference: ${formData.preference}`;
 
-      const { error } = await supabase.from("leads").insert({
+      const { data: leadData, error } = await supabase.from("leads").insert({
         full_name: formData.name,
         email: formData.email,
+        website: formData.websiteUrl || null,
         notes: notes,
         source: "project_plan_modal",
-      });
+      }).select().single();
 
       if (error) throw error;
+
+      // Trigger lead enrichment if we have a URL
+      if (leadData?.id && formData.websiteUrl) {
+        console.log("Triggering lead enrichment for:", leadData.id);
+        supabase.functions.invoke("enrich-lead", {
+          body: { leadId: leadData.id, url: formData.websiteUrl }
+        }).then(result => {
+          console.log("Lead enrichment result:", result);
+        }).catch(err => {
+          console.error("Lead enrichment error:", err);
+        });
+      }
 
       setStep("success");
     } catch (error) {

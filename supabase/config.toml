@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.vercel-analytics]
 verify_jwt = true
+
+[functions.enrich-lead]
+verify_jwt = false

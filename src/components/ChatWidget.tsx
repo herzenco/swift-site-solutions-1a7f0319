@@ -352,6 +352,19 @@ Format your response as:
               hasWebsiteFeedback: !!finalData.websiteFeedback,
             },
           });
+
+          // Trigger lead enrichment if we have a URL
+          if (leadData?.id && finalData.url) {
+            console.log("Triggering lead enrichment for:", leadData.id);
+            // Fire and forget - don't await, let it run in background
+            supabase.functions.invoke("enrich-lead", {
+              body: { leadId: leadData.id, url: finalData.url }
+            }).then(result => {
+              console.log("Lead enrichment result:", result);
+            }).catch(err => {
+              console.error("Lead enrichment error:", err);
+            });
+          }
         } catch (error) {
           console.error("Error saving lead:", error);
         }
