@@ -222,7 +222,7 @@ Format your response as:
     } catch (error) {
       console.error("Analysis error:", error);
       setMessages((prev) => prev.slice(0, -1));
-      addAssistantMessage("I had trouble analyzing that URL. No worries though! Let me get your contact info so we can help you directly. What's your email or phone number?");
+      addAssistantMessage("I had trouble analyzing that URL — some sites block automated access. Would you like to try a different website, or share your contact info so we can help you directly?");
       setStep("contact");
     } finally {
       setIsLoading(false);
@@ -326,6 +326,22 @@ Format your response as:
         break;
 
       case "contact":
+        // Check if user is providing a URL to analyze instead of contact info
+        const urlPattern = /(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})+)(?:\/[^\s]*)?/i;
+        const potentialUrl = userInput.match(urlPattern);
+        
+        if (potentialUrl && (userInput.toLowerCase().includes('analyze') || userInput.toLowerCase().includes('try') || !userInput.includes('@'))) {
+          // User wants to analyze a different URL
+          let newUrl = potentialUrl[0].trim();
+          if (!newUrl.startsWith("http://") && !newUrl.startsWith("https://")) {
+            newUrl = `https://${newUrl}`;
+          }
+          setCollectedData((prev) => ({ ...prev, url: newUrl }));
+          addAssistantMessage(`Sure thing! Let me analyze ${newUrl} for you.`);
+          await scrapeAndAnalyze(newUrl);
+          return;
+        }
+        
         // User provided contact info
         const emailMatch = userInput.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
         const phoneMatch = userInput.match(/[\d\s\-\(\)\.+]{7,}/);
@@ -338,7 +354,7 @@ Format your response as:
         }
         
         if (!emailMatch && !phoneMatch) {
-          addAssistantMessage("I didn't catch that. Could you share your email address or phone number?");
+          addAssistantMessage("I didn't catch that. Could you share your email address or phone number? Or if you'd like me to analyze a different website, just share the URL!");
           return;
         }
         
