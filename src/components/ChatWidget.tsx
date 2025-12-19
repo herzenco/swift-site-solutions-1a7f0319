@@ -230,7 +230,7 @@ Format your response as:
 
   const saveLead = async () => {
     try {
-      const { data: leadData } = await supabase.from("leads").insert([{
+      const { data: leadData, error: insertError } = await supabase.from("leads").insert({
         full_name: collectedData.name,
         email: collectedData.email || null,
         phone: collectedData.phone || null,
@@ -240,7 +240,14 @@ Format your response as:
         industry: collectedData.industry || null,
         lead_score: collectedData.url ? 35 : 20,
         qualification_status: collectedData.url ? "warm" : "cool",
-      }]).select().single();
+      }).select().maybeSingle();
+
+      if (insertError) {
+        console.error("Error inserting lead:", insertError);
+        return;
+      }
+
+      console.log("Lead saved:", leadData);
 
       await logInteraction("lead_captured", {
         leadId: leadData?.id,
@@ -253,8 +260,6 @@ Format your response as:
           hasWebsiteFeedback: !!collectedData.websiteFeedback,
         },
       });
-
-      console.log("Lead saved:", leadData);
     } catch (error) {
       console.error("Error saving lead:", error);
     }
@@ -330,7 +335,7 @@ Format your response as:
         };
         
         try {
-          const { data: leadData } = await supabase.from("leads").insert([{
+          const { data: leadData, error: insertError } = await supabase.from("leads").insert({
             full_name: finalData.name,
             email: finalData.email || null,
             phone: finalData.phone || null,
@@ -340,30 +345,35 @@ Format your response as:
             industry: null,
             lead_score: finalData.url ? 35 : 20,
             qualification_status: finalData.url ? "warm" : "cool",
-          }]).select().single();
+          }).select().maybeSingle();
 
-          await logInteraction("lead_captured", {
-            leadId: leadData?.id,
-            metadata: { 
-              name: finalData.name, 
-              email: finalData.email,
-              phone: finalData.phone,
-              url: finalData.url,
-              hasWebsiteFeedback: !!finalData.websiteFeedback,
-            },
-          });
+          if (insertError) {
+            console.error("Error inserting lead:", insertError);
+          } else {
+            console.log("Lead saved successfully:", leadData);
 
-          // Trigger lead enrichment if we have a URL
-          if (leadData?.id && finalData.url) {
-            console.log("Triggering lead enrichment for:", leadData.id);
-            // Fire and forget - don't await, let it run in background
-            supabase.functions.invoke("enrich-lead", {
-              body: { leadId: leadData.id, url: finalData.url }
-            }).then(result => {
-              console.log("Lead enrichment result:", result);
-            }).catch(err => {
-              console.error("Lead enrichment error:", err);
+            await logInteraction("lead_captured", {
+              leadId: leadData?.id,
+              metadata: { 
+                name: finalData.name, 
+                email: finalData.email,
+                phone: finalData.phone,
+                url: finalData.url,
+                hasWebsiteFeedback: !!finalData.websiteFeedback,
+              },
             });
+
+            // Trigger lead enrichment if we have a URL
+            if (leadData?.id && finalData.url) {
+              console.log("Triggering lead enrichment for:", leadData.id);
+              supabase.functions.invoke("enrich-lead", {
+                body: { leadId: leadData.id, url: finalData.url }
+              }).then(result => {
+                console.log("Lead enrichment result:", result);
+              }).catch(err => {
+                console.error("Lead enrichment error:", err);
+              });
+            }
           }
         } catch (error) {
           console.error("Error saving lead:", error);
