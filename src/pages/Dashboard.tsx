@@ -64,6 +64,7 @@ interface Lead {
   qualification_status: string | null;
   intent_signals: any;
   engagement_depth: number | null;
+  industry: string | null;
 }
 
 interface VercelAnalytics {
@@ -524,6 +525,9 @@ export default function Dashboard() {
                               <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden lg:table-cell">
                                 Website
                               </th>
+                              <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden xl:table-cell">
+                                Industry
+                              </th>
                               {tabValue === "all" && (
                                 <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden sm:table-cell">
                                   Source
@@ -574,6 +578,15 @@ export default function Dashboard() {
                                 </td>
                                 <td className="px-6 py-4 hidden lg:table-cell text-sm text-muted-foreground max-w-[200px] truncate">
                                   {lead.website || "—"}
+                                </td>
+                                <td className="px-6 py-4 hidden xl:table-cell">
+                                  {lead.industry ? (
+                                    <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">
+                                      {lead.industry}
+                                    </span>
+                                  ) : (
+                                    <span className="text-muted-foreground text-xs">—</span>
+                                  )}
                                 </td>
                                 {tabValue === "all" && (
                                   <td className="px-6 py-4 hidden sm:table-cell">
