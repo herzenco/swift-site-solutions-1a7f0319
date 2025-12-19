@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Dialog,
@@ -13,6 +13,17 @@ import { Label } from "@/components/ui/label";
 import { ArrowRight, Phone, FileText, Rocket, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { sendLeadToZapier } from "@/lib/zapier";
+import { z } from "zod";
+
+// Validation schema
+const leadSchema = z.object({
+  fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name too long"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email too long"),
+  phone: z.string().max(30, "Phone number too long").optional(),
+  website: z.string().max(255, "URL too long").optional(),
+  notes: z.string().max(2000, "Notes too long").optional(),
+});
 
 interface HeroWorkflowModalProps {
   open: boolean;
@@ -53,6 +64,8 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
     notes: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [honeypot, setHoneypot] = useState(""); // Bot trap
+  const lastSubmitRef = useRef<number>(0); // Rate limiting
   const { toast } = useToast();
 
   const handleInputChange = (
@@ -64,16 +77,50 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Bot detection - honeypot filled means bot
+    if (honeypot) {
+      console.log("Bot detected via honeypot");
+      setStep("success"); // Fake success to not alert bots
+      return;
+    }
+    
+    // Rate limiting - 10 second cooldown
+    const now = Date.now();
+    if (now - lastSubmitRef.current < 10000) {
+      toast({
+        title: "Please wait",
+        description: "You're submitting too quickly. Please try again in a few seconds.",
+        variant: "destructive",
+      });
+      return;
+    }
+    lastSubmitRef.current = now;
+    
+    // Validate input
+    const validation = leadSchema.safeParse(formData);
+    if (!validation.success) {
+      const firstError = validation.error.errors[0];
+      toast({
+        title: "Validation Error",
+        description: firstError.message,
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setIsSubmitting(true);
     
     try {
+      const validated = validation.data;
+      
       // Save lead to database
       const { data: leadData, error } = await supabase.from("leads").insert({
-        full_name: formData.fullName.trim(),
-        email: formData.email.trim(),
-        phone: formData.phone.trim() || null,
-        website: formData.website.trim() || null,
-        notes: formData.notes.trim() || null,
+        full_name: validated.fullName,
+        email: validated.email,
+        phone: validated.phone || null,
+        website: validated.website || null,
+        notes: validated.notes || null,
         source: source,
       }).select().single();
 
@@ -86,6 +133,19 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
         });
         setIsSubmitting(false);
         return;
+      }
+
+      // Send to Zapier
+      if (leadData) {
+        sendLeadToZapier({
+          id: leadData.id,
+          full_name: leadData.full_name,
+          email: leadData.email,
+          phone: leadData.phone,
+          website: leadData.website,
+          source: leadData.source,
+          notes: leadData.notes,
+        });
       }
 
       // Trigger lead enrichment if we have a URL
@@ -208,6 +268,18 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
               </DialogHeader>
 
               <form onSubmit={handleFormSubmit} className="space-y-4">
+                {/* Honeypot field - hidden from users, bots fill it */}
+                <input
+                  type="text"
+                  name="website_url"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  style={{ position: 'absolute', left: '-9999px', opacity: 0 }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                />
+                
                 <div className="space-y-2">
                   <Label htmlFor="fullName">Full Name *</Label>
                   <Input
@@ -216,6 +288,7 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
                     value={formData.fullName}
                     onChange={handleInputChange}
                     required
+                    maxLength={100}
                     placeholder="John Smith"
                   />
                 </div>
@@ -229,6 +302,7 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
                     value={formData.email}
                     onChange={handleInputChange}
                     required
+                    maxLength={255}
                     placeholder="john@example.com"
                   />
                 </div>
@@ -241,6 +315,7 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
                     type="tel"
                     value={formData.phone}
                     onChange={handleInputChange}
+                    maxLength={30}
                     placeholder="+1 (555) 000-0000"
                   />
                 </div>
@@ -267,6 +342,7 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
                     name="notes"
                     value={formData.notes}
                     onChange={handleInputChange}
+                    maxLength={2000}
                     placeholder="Tell us about your business, goals, or any specific requirements..."
                     rows={3}
                   />

@@ -44,31 +44,52 @@ serve(async (req) => {
     console.log('Enriching lead:', leadId, 'with URL:', formattedUrl);
 
     // Step 1: Scrape the website using Firecrawl
-    const scrapeResponse = await fetch('https://api.firecrawl.dev/v1/scrape', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${firecrawlKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        url: formattedUrl,
-        formats: ['markdown'],
-        onlyMainContent: false, // Get full page to find contact info
-      }),
-    });
+    let markdown = '';
+    let metadata: any = {};
+    let scrapeSucceeded = false;
+    
+    try {
+      const scrapeResponse = await fetch('https://api.firecrawl.dev/v1/scrape', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${firecrawlKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          url: formattedUrl,
+          formats: ['markdown'],
+          onlyMainContent: false, // Get full page to find contact info
+        }),
+      });
 
-    const scrapeData = await scrapeResponse.json();
+      const scrapeData = await scrapeResponse.json();
 
-    if (!scrapeResponse.ok || !scrapeData.success) {
-      console.error('Firecrawl error:', scrapeData);
-      return new Response(
-        JSON.stringify({ success: false, error: 'Failed to scrape website' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      if (scrapeResponse.ok && scrapeData.success) {
+        markdown = scrapeData.data?.markdown || scrapeData.markdown || '';
+        metadata = scrapeData.data?.metadata || scrapeData.metadata || {};
+        scrapeSucceeded = true;
+        console.log('Scraped content length:', markdown.length);
+      } else {
+        console.warn('Firecrawl could not scrape URL:', scrapeData.error || 'Unknown error');
+        // Continue anyway - we'll just update what we can
+      }
+    } catch (scrapeError) {
+      console.warn('Scrape failed, continuing without enrichment:', scrapeError);
     }
 
-    const markdown = scrapeData.data?.markdown || scrapeData.markdown || '';
-    const metadata = scrapeData.data?.metadata || scrapeData.metadata || {};
+    // If scraping failed, just return success with no enrichment
+    if (!scrapeSucceeded) {
+      console.log('Scraping failed for lead:', leadId, '- skipping enrichment');
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          message: 'Website could not be scraped, lead saved without enrichment',
+          extracted: null,
+          updated: {}
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
     console.log('Scraped content length:', markdown.length);
 

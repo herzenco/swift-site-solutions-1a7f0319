@@ -26,6 +26,7 @@ import {
   Smartphone,
   Tablet,
   Sparkles,
+  Download,
 } from "lucide-react";
 import { format, subDays } from "date-fns";
 import { User, Session } from "@supabase/supabase-js";
@@ -67,6 +68,62 @@ interface Lead {
   engagement_depth: number | null;
   industry: string | null;
 }
+
+// Export leads to CSV
+const exportLeadsToCSV = (leads: Lead[], filename: string = 'leads.csv') => {
+  const headers = ['Name', 'Email', 'Phone', 'Website', 'Industry', 'Source', 'Score', 'Status', 'Notes', 'Date'];
+  
+  const csvContent = [
+    headers.join(','),
+    ...leads.map(lead => [
+      `"${(lead.full_name || '').replace(/"/g, '""')}"`,
+      `"${(lead.email || '').replace(/"/g, '""')}"`,
+      `"${(lead.phone || '').replace(/"/g, '""')}"`,
+      `"${(lead.website || '').replace(/"/g, '""')}"`,
+      `"${(lead.industry || '').replace(/"/g, '""')}"`,
+      `"${(lead.source || '').replace(/"/g, '""')}"`,
+      lead.lead_score ?? '',
+      `"${(lead.qualification_status || '').replace(/"/g, '""')}"`,
+      `"${(lead.notes || '').replace(/"/g, '""')}"`,
+      `"${lead.created_at ? format(new Date(lead.created_at), 'yyyy-MM-dd HH:mm:ss') : ''}"`,
+    ].join(','))
+  ].join('\n');
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(link.href);
+};
+
+// Check if a URL/domain is potentially invalid (common invalid patterns)
+const isInvalidUrl = (url: string | null): boolean => {
+  if (!url) return false;
+  
+  const urlLower = url.toLowerCase().trim();
+  
+  // Check for obviously invalid domains
+  const invalidPatterns = [
+    /^https?:\/\/test\.com\/?$/i,
+    /^https?:\/\/example\.(com|org|net)\/?$/i,
+    /^https?:\/\/localhost/i,
+    /^https?:\/\/127\./,
+    /^https?:\/\/(www\.)?fake/i,
+    /^https?:\/\/(www\.)?placeholder/i,
+    /^test\.com$/i,
+    /^example\.(com|org|net)$/i,
+    /^localhost/i,
+    /^fake/i,
+    /^placeholder/i,
+    /^n\/a$/i,
+    /^none$/i,
+    /^null$/i,
+    /^undefined$/i,
+  ];
+  
+  return invalidPatterns.some(pattern => pattern.test(urlLower));
+};
 
 interface VercelAnalytics {
   pageViews: number;
@@ -535,28 +592,47 @@ export default function Dashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     className="bg-card border border-border rounded-xl overflow-hidden"
                   >
-                    <div className="p-6 border-b border-border">
-                      <h2 className="text-lg font-semibold text-foreground">
-                        {tabValue === "all" ? "All Leads" 
-                          : tabValue === "hero_modal" ? "Hero Modal Leads" 
-                          : tabValue === "project_plan_modal" ? "Project Plan Leads"
-                          : tabValue === "chatbot" ? "Chatbot Leads"
-                          : tabValue === "real_estate_page" ? "Real Estate Leads"
-                          : tabValue === "professional_services_page" ? "Professional Services Leads"
-                          : tabValue === "home_services_page" ? "Home Services Leads"
-                          : "Education & Coaching Leads"}
-                      </h2>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        {tabValue === "all" 
-                          ? "All form submissions from your website" 
-                          : tabValue === "hero_modal"
-                          ? "Leads from the hero CTA modal"
-                          : tabValue === "project_plan_modal"
-                          ? "Leads from the project plan questionnaire"
-                          : tabValue === "chatbot"
-                          ? "Leads captured through AI chatbot conversations"
-                          : `Leads from the ${tabValue.replace(/_/g, " ").replace(" page", "")} use-case page`}
-                      </p>
+                    <div className="p-6 border-b border-border flex items-start justify-between">
+                      <div>
+                        <h2 className="text-lg font-semibold text-foreground">
+                          {tabValue === "all" ? "All Leads" 
+                            : tabValue === "hero_modal" ? "Hero Modal Leads" 
+                            : tabValue === "project_plan_modal" ? "Project Plan Leads"
+                            : tabValue === "chatbot" ? "Chatbot Leads"
+                            : tabValue === "real_estate_page" ? "Real Estate Leads"
+                            : tabValue === "professional_services_page" ? "Professional Services Leads"
+                            : tabValue === "home_services_page" ? "Home Services Leads"
+                            : "Education & Coaching Leads"}
+                        </h2>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          {tabValue === "all" 
+                            ? "All form submissions from your website" 
+                            : tabValue === "hero_modal"
+                            ? "Leads from the hero CTA modal"
+                            : tabValue === "project_plan_modal"
+                            ? "Leads from the project plan questionnaire"
+                            : tabValue === "chatbot"
+                            ? "Leads captured through AI chatbot conversations"
+                            : `Leads from the ${tabValue.replace(/_/g, " ").replace(" page", "")} use-case page`}
+                        </p>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          const filteredLeads = leads.filter((l) => tabValue === "all" || l.source === tabValue);
+                          const tabName = tabValue === "all" ? "all-leads" : tabValue.replace(/_/g, "-");
+                          exportLeadsToCSV(filteredLeads, `${tabName}-${format(new Date(), 'yyyy-MM-dd')}.csv`);
+                          toast({
+                            title: "Export complete",
+                            description: `Exported ${filteredLeads.length} leads to CSV`,
+                          });
+                        }}
+                        disabled={leads.filter((l) => tabValue === "all" || l.source === tabValue).length === 0}
+                      >
+                        <Download className="w-4 h-4 mr-2" />
+                        Export CSV
+                      </Button>
                     </div>
 
                     {isLoading ? (
@@ -639,11 +715,18 @@ export default function Dashboard() {
                                     {lead.email}
                                   </a>
                                 </td>
-                                <td className="px-6 py-4 text-muted-foreground hidden md:table-cell">
+                                <td className="px-6 py-4 text-muted-foreground hidden md:table-cell whitespace-nowrap">
                                   {lead.phone || "—"}
                                 </td>
-                                <td className="px-6 py-4 hidden lg:table-cell text-sm text-muted-foreground max-w-[200px] truncate">
-                                  {lead.website || "—"}
+                                <td className="px-6 py-4 hidden lg:table-cell text-sm max-w-[200px] truncate">
+                                  {lead.website ? (
+                                    <span className={isInvalidUrl(lead.website) ? "text-red-400" : "text-muted-foreground"}>
+                                      {lead.website}
+                                      {isInvalidUrl(lead.website) && (
+                                        <span className="ml-1 text-xs text-red-500" title="This URL may be invalid or a placeholder">⚠</span>
+                                      )}
+                                    </span>
+                                  ) : "—"}
                                 </td>
                                 <td className="px-6 py-4 hidden xl:table-cell">
                                   {lead.industry ? (
