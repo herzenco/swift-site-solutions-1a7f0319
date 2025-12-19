@@ -68,6 +68,34 @@ interface Lead {
   industry: string | null;
 }
 
+// Check if a URL/domain is potentially invalid (common invalid patterns)
+const isInvalidUrl = (url: string | null): boolean => {
+  if (!url) return false;
+  
+  const urlLower = url.toLowerCase().trim();
+  
+  // Check for obviously invalid domains
+  const invalidPatterns = [
+    /^https?:\/\/test\.com\/?$/i,
+    /^https?:\/\/example\.(com|org|net)\/?$/i,
+    /^https?:\/\/localhost/i,
+    /^https?:\/\/127\./,
+    /^https?:\/\/(www\.)?fake/i,
+    /^https?:\/\/(www\.)?placeholder/i,
+    /^test\.com$/i,
+    /^example\.(com|org|net)$/i,
+    /^localhost/i,
+    /^fake/i,
+    /^placeholder/i,
+    /^n\/a$/i,
+    /^none$/i,
+    /^null$/i,
+    /^undefined$/i,
+  ];
+  
+  return invalidPatterns.some(pattern => pattern.test(urlLower));
+};
+
 interface VercelAnalytics {
   pageViews: number;
   uniqueVisitors: number;
@@ -642,8 +670,15 @@ export default function Dashboard() {
                                 <td className="px-6 py-4 text-muted-foreground hidden md:table-cell">
                                   {lead.phone || "—"}
                                 </td>
-                                <td className="px-6 py-4 hidden lg:table-cell text-sm text-muted-foreground max-w-[200px] truncate">
-                                  {lead.website || "—"}
+                                <td className="px-6 py-4 hidden lg:table-cell text-sm max-w-[200px] truncate">
+                                  {lead.website ? (
+                                    <span className={isInvalidUrl(lead.website) ? "text-red-400" : "text-muted-foreground"}>
+                                      {lead.website}
+                                      {isInvalidUrl(lead.website) && (
+                                        <span className="ml-1 text-xs text-red-500" title="This URL may be invalid or a placeholder">⚠</span>
+                                      )}
+                                    </span>
+                                  ) : "—"}
                                 </td>
                                 <td className="px-6 py-4 hidden xl:table-cell">
                                   {lead.industry ? (
