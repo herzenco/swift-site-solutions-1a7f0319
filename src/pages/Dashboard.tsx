@@ -715,7 +715,7 @@ export default function Dashboard() {
                                     {lead.email}
                                   </a>
                                 </td>
-                                <td className="px-6 py-4 text-muted-foreground hidden md:table-cell">
+                                <td className="px-6 py-4 text-muted-foreground hidden md:table-cell whitespace-nowrap">
                                   {lead.phone || "—"}
                                 </td>
                                 <td className="px-6 py-4 hidden lg:table-cell text-sm max-w-[200px] truncate">
