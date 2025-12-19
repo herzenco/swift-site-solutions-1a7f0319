@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { ArrowRight, Phone, FileText, Rocket, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { sendLeadToZapier } from "@/lib/zapier";
 import { z } from "zod";
 
 // Validation schema
@@ -132,6 +133,19 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
         });
         setIsSubmitting(false);
         return;
+      }
+
+      // Send to Zapier
+      if (leadData) {
+        sendLeadToZapier({
+          id: leadData.id,
+          full_name: leadData.full_name,
+          email: leadData.email,
+          phone: leadData.phone,
+          website: leadData.website,
+          source: leadData.source,
+          notes: leadData.notes,
+        });
       }
 
       // Trigger lead enrichment if we have a URL

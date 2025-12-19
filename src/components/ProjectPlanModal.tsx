@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowRight, ArrowLeft, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { sendLeadToZapier } from "@/lib/zapier";
 
 interface ProjectPlanModalProps {
   open: boolean;
@@ -167,6 +168,18 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
       }).select().single();
 
       if (error) throw error;
+
+      // Send to Zapier
+      if (leadData) {
+        sendLeadToZapier({
+          id: leadData.id,
+          full_name: leadData.full_name,
+          email: leadData.email,
+          website: leadData.website,
+          source: leadData.source,
+          notes: leadData.notes,
+        });
+      }
 
       // Trigger lead enrichment if we have a URL
       if (leadData?.id && formData.websiteUrl) {

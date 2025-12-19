@@ -7,6 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { sendLeadToZapier } from "@/lib/zapier";
 import ReactMarkdown from "react-markdown";
 import { XyrenIcon } from "./XyrenIcon";
 
@@ -249,6 +250,20 @@ Format your response as:
 
       console.log("Lead saved:", leadData);
 
+      // Send to Zapier
+      if (leadData) {
+        sendLeadToZapier({
+          id: leadData.id,
+          full_name: leadData.full_name,
+          email: leadData.email,
+          phone: leadData.phone,
+          website: leadData.website,
+          source: leadData.source,
+          notes: leadData.notes,
+          industry: leadData.industry,
+        });
+      }
+
       await logInteraction("lead_captured", {
         leadId: leadData?.id,
         metadata: { 
@@ -351,6 +366,19 @@ Format your response as:
             console.error("Error inserting lead:", insertError);
           } else {
             console.log("Lead saved successfully:", leadData);
+
+            // Send to Zapier
+            if (leadData) {
+              sendLeadToZapier({
+                id: leadData.id,
+                full_name: leadData.full_name,
+                email: leadData.email,
+                phone: leadData.phone,
+                website: leadData.website,
+                source: leadData.source,
+                notes: leadData.notes,
+              });
+            }
 
             await logInteraction("lead_captured", {
               leadId: leadData?.id,
