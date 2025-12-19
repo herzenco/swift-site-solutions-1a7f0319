@@ -25,6 +25,7 @@ import {
   Monitor,
   Smartphone,
   Tablet,
+  Sparkles,
 } from "lucide-react";
 import { format, subDays } from "date-fns";
 import { User, Session } from "@supabase/supabase-js";
@@ -64,6 +65,7 @@ interface Lead {
   qualification_status: string | null;
   intent_signals: any;
   engagement_depth: number | null;
+  industry: string | null;
 }
 
 interface VercelAnalytics {
@@ -84,6 +86,7 @@ export default function Dashboard() {
   const [analytics, setAnalytics] = useState<VercelAnalytics | null>(null);
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
   const [sessionsLoading, setSessionsLoading] = useState(false);
+  const [enrichingLeads, setEnrichingLeads] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -192,6 +195,57 @@ export default function Dashboard() {
     navigate("/auth");
   };
 
+  const handleEnrichLeads = async () => {
+    const leadsToEnrich = leads.filter(
+      (lead) => lead.website && (!lead.industry || !lead.phone)
+    );
+
+    if (leadsToEnrich.length === 0) {
+      toast({
+        title: "No leads to enrich",
+        description: "All leads with websites already have enriched data.",
+      });
+      return;
+    }
+
+    setEnrichingLeads(true);
+    toast({
+      title: "Enriching leads...",
+      description: `Processing ${leadsToEnrich.length} lead(s) with websites.`,
+    });
+
+    let successCount = 0;
+    let errorCount = 0;
+
+    for (const lead of leadsToEnrich) {
+      try {
+        const { error } = await supabase.functions.invoke("enrich-lead", {
+          body: { leadId: lead.id, url: lead.website },
+        });
+
+        if (error) {
+          console.error("Error enriching lead:", lead.id, error);
+          errorCount++;
+        } else {
+          successCount++;
+        }
+      } catch (err) {
+        console.error("Error enriching lead:", lead.id, err);
+        errorCount++;
+      }
+    }
+
+    setEnrichingLeads(false);
+    
+    // Refresh leads data
+    await fetchLeads();
+
+    toast({
+      title: "Enrichment complete",
+      description: `Successfully enriched ${successCount} lead(s).${errorCount > 0 ? ` ${errorCount} failed.` : ""}`,
+    });
+  };
+
   // Session Analytics
   const totalSessions = pageSessions.length;
   const uniqueSessions = new Set(pageSessions.map(s => s.session_id)).size;
@@ -287,6 +341,19 @@ export default function Dashboard() {
             <span className="text-sm text-muted-foreground hidden sm:block">
               {user.email}
             </span>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleEnrichLeads}
+              disabled={enrichingLeads}
+            >
+              {enrichingLeads ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : (
+                <Sparkles className="w-4 h-4 mr-2" />
+              )}
+              {enrichingLeads ? "Enriching..." : "Enrich Leads"}
+            </Button>
             <Button variant="outline" size="sm" onClick={handleSignOut}>
               <LogOut className="w-4 h-4 mr-2" />
               Sign out
@@ -524,6 +591,9 @@ export default function Dashboard() {
                               <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden lg:table-cell">
                                 Website
                               </th>
+                              <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden xl:table-cell">
+                                Industry
+                              </th>
                               {tabValue === "all" && (
                                 <th className="text-left text-sm font-medium text-muted-foreground px-6 py-3 hidden sm:table-cell">
                                   Source
@@ -574,6 +644,15 @@ export default function Dashboard() {
                                 </td>
                                 <td className="px-6 py-4 hidden lg:table-cell text-sm text-muted-foreground max-w-[200px] truncate">
                                   {lead.website || "—"}
+                                </td>
+                                <td className="px-6 py-4 hidden xl:table-cell">
+                                  {lead.industry ? (
+                                    <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">
+                                      {lead.industry}
+                                    </span>
+                                  ) : (
+                                    <span className="text-muted-foreground text-xs">—</span>
+                                  )}
                                 </td>
                                 {tabValue === "all" && (
                                   <td className="px-6 py-4 hidden sm:table-cell">

@@ -68,14 +68,14 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
     
     try {
       // Save lead to database
-      const { error } = await supabase.from("leads").insert({
+      const { data: leadData, error } = await supabase.from("leads").insert({
         full_name: formData.fullName.trim(),
         email: formData.email.trim(),
         phone: formData.phone.trim() || null,
         website: formData.website.trim() || null,
         notes: formData.notes.trim() || null,
         source: source,
-      });
+      }).select().single();
 
       if (error) {
         console.error("Error saving lead:", error);
@@ -86,6 +86,18 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
         });
         setIsSubmitting(false);
         return;
+      }
+
+      // Trigger lead enrichment if we have a URL
+      if (leadData?.id && formData.website.trim()) {
+        console.log("Triggering lead enrichment for:", leadData.id);
+        supabase.functions.invoke("enrich-lead", {
+          body: { leadId: leadData.id, url: formData.website.trim() }
+        }).then(result => {
+          console.log("Lead enrichment result:", result);
+        }).catch(err => {
+          console.error("Lead enrichment error:", err);
+        });
       }
 
       setIsSubmitting(false);
