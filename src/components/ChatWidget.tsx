@@ -287,7 +287,8 @@ Format your response as:
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
     setInput("");
 
-    await logInteraction("message", { userMessage: userInput });
+    // Log interaction without blocking the flow
+    logInteraction("message", { userMessage: userInput }).catch(console.error);
 
     switch (step) {
       case "greeting":
