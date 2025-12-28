@@ -61,9 +61,9 @@ export const Portfolio = () => {
                   <h3 className="text-xl sm:text-2xl font-bold group-hover:text-gradient transition-all duration-300">{industry.title}</h3>
                 </div>
                 <p className="text-muted-foreground">{industry.description}</p>
-                <div className="flex items-center gap-2 mt-6 text-primary">
-                  <span className="text-sm font-medium">Learn More</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <div className="inline-flex items-center gap-2 mt-6 px-4 py-2 bg-primary/10 hover:bg-primary/20 rounded-lg text-primary transition-colors">
+                  <span className="font-semibold">Learn More</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
             </motion.div>
