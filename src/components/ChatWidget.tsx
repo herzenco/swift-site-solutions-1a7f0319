@@ -287,7 +287,8 @@ Format your response as:
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
     setInput("");
 
-    await logInteraction("message", { userMessage: userInput });
+    // Log interaction without blocking the flow
+    logInteraction("message", { userMessage: userInput }).catch(console.error);
 
     switch (step) {
       case "greeting":
@@ -598,8 +599,14 @@ Format your response as:
             {/* Input Area */}
             <div className="flex-shrink-0 p-4 border-t border-border bg-card pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
               <div className="flex items-end gap-2">
-                <div className="flex-1 bg-muted rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-foreground/20 transition-all">
+                <div className={`flex-1 bg-muted rounded-xl px-4 py-2 transition-all ${isLoading ? 'ring-2 ring-primary/50 animate-pulse' : 'focus-within:ring-1 focus-within:ring-foreground/20'}`}>
                   <label htmlFor="chat-input" className="sr-only">Type your message</label>
+                  {isLoading && (
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                      <span>Processing...</span>
+                    </div>
+                  )}
                   <textarea
                     id="chat-input"
                     ref={inputRef}
@@ -610,7 +617,7 @@ Format your response as:
                     disabled={isLoading || step === "analyzing"}
                     rows={1}
                     aria-describedby="chat-input-hint"
-                    className="w-full bg-transparent border-0 resize-none text-sm placeholder:text-muted-foreground focus:outline-none py-1 max-h-20"
+                    className="w-full bg-transparent border-0 resize-none text-sm placeholder:text-muted-foreground focus:outline-none py-1 max-h-20 disabled:opacity-50"
                   />
                   <span id="chat-input-hint" className="sr-only">Press Enter to send</span>
                 </div>
