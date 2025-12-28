@@ -222,7 +222,7 @@ Format your response as:
     } catch (error) {
       console.error("Analysis error:", error);
       setMessages((prev) => prev.slice(0, -1));
-      addAssistantMessage("I had trouble analyzing that URL. No worries though! Let me get your contact info so we can help you directly. What's your email or phone number?");
+      addAssistantMessage("I had trouble analyzing that URL — some sites block automated access. Would you like to try a different website, or share your contact info so we can help you directly?");
       setStep("contact");
     } finally {
       setIsLoading(false);
@@ -298,19 +298,35 @@ Format your response as:
         break;
 
       case "ask_url":
+        // Check if user provided a URL directly
+        const askUrlPattern = /(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})+)(?:\/[^\s]*)?/i;
+        const urlMatch = userInput.match(askUrlPattern);
+        const lowerInput = userInput.toLowerCase();
+        
+        // If they provided a URL, scrape it immediately
+        if (urlMatch && !lowerInput.includes("no") && !lowerInput.includes("don't")) {
+          let extractedUrl = urlMatch[0].trim();
+          if (!extractedUrl.startsWith("http://") && !extractedUrl.startsWith("https://")) {
+            extractedUrl = `https://${extractedUrl}`;
+          }
+          setCollectedData((prev) => ({ ...prev, hasUrl: true, url: extractedUrl }));
+          await scrapeAndAnalyze(extractedUrl);
+          return;
+        }
+        
         // User answered yes/no to having a URL
-        const hasUrl = userInput.toLowerCase().includes("yes") || 
-                       userInput.toLowerCase().includes("yeah") || 
-                       userInput.toLowerCase().includes("yep") ||
-                       userInput.toLowerCase().includes("sure");
+        const hasUrl = lowerInput.includes("yes") || 
+                       lowerInput.includes("yeah") || 
+                       lowerInput.includes("yep") ||
+                       lowerInput.includes("sure");
         
         setCollectedData((prev) => ({ ...prev, hasUrl }));
         
         if (hasUrl) {
-          addAssistantMessage("Perfect! Drop the URL and I'll take a look.");
+          addAssistantMessage("Drop the URL and I'll check it out!");
           setStep("get_url");
         } else {
-          addAssistantMessage(`No problem, ${collectedData.name || userInput}! Let me get your contact info so we can discuss how we can help. What's your email or phone number?`);
+          addAssistantMessage(`No worries! Drop your email or phone and I'll send you some tips to get started.`);
           setStep("contact");
         }
         break;
@@ -326,6 +342,22 @@ Format your response as:
         break;
 
       case "contact":
+        // Check if user is providing a URL to analyze instead of contact info
+        const contactUrlPattern = /(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})+)(?:\/[^\s]*)?/i;
+        const potentialUrl = userInput.match(contactUrlPattern);
+        
+        if (potentialUrl && (userInput.toLowerCase().includes('analyze') || userInput.toLowerCase().includes('try') || !userInput.includes('@'))) {
+          // User wants to analyze a different URL
+          let newUrl = potentialUrl[0].trim();
+          if (!newUrl.startsWith("http://") && !newUrl.startsWith("https://")) {
+            newUrl = `https://${newUrl}`;
+          }
+          setCollectedData((prev) => ({ ...prev, url: newUrl }));
+          addAssistantMessage(`Sure thing! Let me analyze ${newUrl} for you.`);
+          await scrapeAndAnalyze(newUrl);
+          return;
+        }
+        
         // User provided contact info
         const emailMatch = userInput.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
         const phoneMatch = userInput.match(/[\d\s\-\(\)\.+]{7,}/);
@@ -338,7 +370,7 @@ Format your response as:
         }
         
         if (!emailMatch && !phoneMatch) {
-          addAssistantMessage("I didn't catch that. Could you share your email address or phone number?");
+          addAssistantMessage("I didn't catch that. Could you share your email address or phone number? Or if you'd like me to analyze a different website, just share the URL!");
           return;
         }
         
