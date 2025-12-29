@@ -19,6 +19,7 @@ interface PlanDetails {
   automation?: string[];
   optimization?: string[];
   popular: boolean;
+  calendlyUrl: string;
 }
 
 const plans: PlanDetails[] = [
@@ -43,6 +44,7 @@ const plans: PlanDetails[] = [
       "Email support",
     ],
     popular: false,
+    calendlyUrl: "https://calendly.com/herzenco/xyren-core-system-discovery",
   },
   {
     name: "Active System",
@@ -72,6 +74,7 @@ const plans: PlanDetails[] = [
       "Lead routing and notifications",
     ],
     popular: true,
+    calendlyUrl: "https://calendly.com/herzenco/xyren-active-system-discovery",
   },
   {
     name: "Optimized System",
@@ -107,6 +110,7 @@ const plans: PlanDetails[] = [
       "Priority support",
     ],
     popular: false,
+    calendlyUrl: "https://calendly.com/herzenco/xyren-optimized-system-discovery",
   },
 ];
 
@@ -213,7 +217,7 @@ export const Pricing = () => {
                   size="lg"
                   asChild
                 >
-                  <a href="#contact">
+                  <a href={plan.calendlyUrl} target="_blank" rel="noopener noreferrer">
                     Get started
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </a>
@@ -275,7 +279,7 @@ export const Pricing = () => {
 
           <div className="mt-6 pt-4 border-t border-border">
             <Button variant="hero" className="w-full" size="lg" asChild>
-              <a href="#contact">
+              <a href={selectedPlan?.calendlyUrl} target="_blank" rel="noopener noreferrer">
                 Get started with {selectedPlan?.name}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </a>
