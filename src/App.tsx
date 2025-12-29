@@ -15,7 +15,6 @@ import Dashboard from "./pages/Dashboard";
 import RealEstate from "./pages/use-cases/RealEstate";
 import ProfessionalServices from "./pages/use-cases/ProfessionalServices";
 import HomeServices from "./pages/use-cases/HomeServices";
-import EducationCoaching from "./pages/use-cases/EducationCoaching";
 
 const queryClient = new QueryClient();
 
@@ -35,7 +34,6 @@ const App = () => (
             <Route path="/use-cases/real-estate" element={<RealEstate />} />
             <Route path="/use-cases/professional-services" element={<ProfessionalServices />} />
             <Route path="/use-cases/home-services" element={<HomeServices />} />
-            <Route path="/use-cases/education-coaching" element={<EducationCoaching />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
