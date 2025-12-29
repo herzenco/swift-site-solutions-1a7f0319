@@ -3,6 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/BackButton";
+import { SEO } from "@/components/SEO";
 import { Target, Zap, TrendingUp, Clock, ArrowRight, CheckCircle2 } from "lucide-react";
 
 const features = [
@@ -34,6 +35,11 @@ const benefits = [
 const SalesProfessionals = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Websites for Sales Professionals"
+        description="Capture, qualify, and nurture leads automatically. Your website works 24/7 so you can focus on closing deals."
+        canonical="/use-cases/sales-professionals"
+      />
       <Navbar />
       <BackButton />
       
