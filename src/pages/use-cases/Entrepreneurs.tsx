@@ -3,6 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/BackButton";
+import { SEO } from "@/components/SEO";
 import { Lightbulb, Rocket, Bot, Globe, ArrowRight, CheckCircle2 } from "lucide-react";
 
 const features = [
@@ -34,6 +35,11 @@ const benefits = [
 const Entrepreneurs = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Websites for Entrepreneurs & SMB Owners"
+        description="Get a website that acts like an employee. AI-powered automation, launch-ready in 5-10 days, professional presence from day one."
+        canonical="/use-cases/entrepreneurs"
+      />
       <Navbar />
       <BackButton />
       

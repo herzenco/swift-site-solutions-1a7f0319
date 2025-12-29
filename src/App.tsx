@@ -16,6 +16,10 @@ import RealEstate from "./pages/use-cases/RealEstate";
 import ProfessionalServices from "./pages/use-cases/ProfessionalServices";
 import HomeServices from "./pages/use-cases/HomeServices";
 import EducationCoaching from "./pages/use-cases/EducationCoaching";
+import Entrepreneurs from "./pages/use-cases/Entrepreneurs";
+import SalesProfessionals from "./pages/use-cases/SalesProfessionals";
+import GrowingTeams from "./pages/use-cases/GrowingTeams";
+import ServiceBusinesses from "./pages/use-cases/ServiceBusinesses";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +40,10 @@ const App = () => (
             <Route path="/use-cases/professional-services" element={<ProfessionalServices />} />
             <Route path="/use-cases/home-services" element={<HomeServices />} />
             <Route path="/use-cases/education-coaching" element={<EducationCoaching />} />
+            <Route path="/use-cases/entrepreneurs" element={<Entrepreneurs />} />
+            <Route path="/use-cases/sales-professionals" element={<SalesProfessionals />} />
+            <Route path="/use-cases/growing-teams" element={<GrowingTeams />} />
+            <Route path="/use-cases/service-businesses" element={<ServiceBusinesses />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

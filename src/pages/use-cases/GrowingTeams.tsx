@@ -3,6 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/BackButton";
+import { SEO } from "@/components/SEO";
 import { UsersRound, Workflow, BarChart3, Cog, ArrowRight, CheckCircle2 } from "lucide-react";
 
 const features = [
@@ -34,6 +35,11 @@ const benefits = [
 const GrowingTeams = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Websites for Growing Teams"
+        description="Centralize workflows, reduce manual tasks, and keep your operations running smoothly with automation. Delivered in 5-10 days."
+        canonical="/use-cases/growing-teams"
+      />
       <Navbar />
       <BackButton />
       

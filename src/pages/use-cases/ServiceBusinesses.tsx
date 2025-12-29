@@ -3,6 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/BackButton";
+import { SEO } from "@/components/SEO";
 import { Briefcase, Calendar, MessageSquare, Users, ArrowRight, CheckCircle2 } from "lucide-react";
 const features = [
   {
@@ -33,6 +34,11 @@ const benefits = [
 const ServiceBusinesses = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Websites for Service Businesses"
+        description="Streamline scheduling, automate follow-ups, and simplify client communication. All from one powerful website delivered in 5-10 days."
+        canonical="/use-cases/service-businesses"
+      />
       <Navbar />
       <BackButton />
       
