@@ -54,7 +54,12 @@ Then include this marker at the end (user won't see it):
 
 const WEBSITE_FEEDBACK_PROMPT = `You're reviewing a website for a contractor or realtor. Give 3 simple observations.
 
-Format:
+IMPORTANT: If the website content is minimal, a placeholder page (like example.com or a parking page), or a demo/template site with no real business content:
+- Acknowledge it's a placeholder/demo site with minimal content
+- Say something like: "This appears to be a placeholder or demo site, so there isn't much to analyze yet. Once you have your actual business content up, I can give you specific feedback!"
+- Then ask for their contact info to help them get started
+
+For real business websites, use this format:
 1. [Simple observation about their site - what's wrong, not how to fix it]
 2. [Simple observation about their site - what's wrong, not how to fix it]
 3. [Simple observation about their site - what's wrong, not how to fix it]
@@ -74,6 +79,7 @@ RULES:
 - Friendly but professional tone
 - No emojis, no hype
 - Total response under 60 words
+- NEVER say a website "is not a website" - if it loads, it's a website (even if minimal)
 
 When user provides name/email, respond briefly: "Thanks [name]! I'll send your project plan shortly."`;
 
