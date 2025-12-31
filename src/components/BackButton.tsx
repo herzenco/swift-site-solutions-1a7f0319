@@ -23,7 +23,7 @@ export const BackButton = forwardRef<HTMLButtonElement, BackButtonProps>((
       variant="ghost"
       onClick={handleBack}
       className={cn(
-        "fixed top-24 left-6 z-40 gap-2 text-muted-foreground hover:text-foreground",
+        "fixed top-20 left-4 md:top-24 md:left-6 z-40 gap-2 text-muted-foreground hover:text-foreground bg-background/80 backdrop-blur-sm md:bg-transparent md:backdrop-blur-none",
         className,
       )}
       {...props}
