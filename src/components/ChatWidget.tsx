@@ -280,10 +280,38 @@ Format your response as:
     }
   };
 
+  // Helper to validate if input looks like a domain/URL
+  const isLikelyDomain = (text: string): boolean => {
+    const cleaned = text.trim().toLowerCase();
+    // Must contain a dot, no spaces, and end with a valid TLD pattern
+    if (cleaned.includes(" ") || !cleaned.includes(".")) return false;
+    // Check for common TLDs
+    const tldPattern = /\.(com|net|org|io|co|dev|app|me|ai|xyz|info|biz|us|uk|ca|au|de|fr|es|it|nl|se|no|dk|fi|ch|at|be|pl|ru|jp|cn|in|br|mx|ar|cl|za|nz|sg|hk|kr|tw|my|ph|th|vn|id|tr|ae|sa|eg|il|ie|pt|cz|ro|hu|gr|bg|hr|sk|si|ee|lv|lt|ua|by|kz|uz|pk|bd|lk|np|mm|la|kh|mn)(?:\/|$)/i;
+    return tldPattern.test(cleaned);
+  };
+
+  // Helper to normalize URL (prepend https:// if needed)
+  const normalizeUrl = (text: string): string => {
+    let url = text.trim();
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      url = `https://${url}`;
+    }
+    return url;
+  };
+
   const handleUserInput = async () => {
     if (!input.trim() || isLoading) return;
 
     const userInput = input.trim();
+    
+    // Bug 2 fix: Enforce max input length
+    const MAX_INPUT_LENGTH = 500;
+    if (userInput.length > MAX_INPUT_LENGTH) {
+      addAssistantMessage("That message is a bit too long. Could you keep it shorter?");
+      setInput("");
+      return;
+    }
+    
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
     setInput("");
 
@@ -299,17 +327,11 @@ Format your response as:
         break;
 
       case "ask_url":
-        // Check if user provided a URL directly
-        const askUrlPattern = /(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})+)(?:\/[^\s]*)?/i;
-        const urlMatch = userInput.match(askUrlPattern);
         const lowerInput = userInput.toLowerCase();
         
-        // If they provided a URL, scrape it immediately
-        if (urlMatch && !lowerInput.includes("no") && !lowerInput.includes("don't")) {
-          let extractedUrl = urlMatch[0].trim();
-          if (!extractedUrl.startsWith("http://") && !extractedUrl.startsWith("https://")) {
-            extractedUrl = `https://${extractedUrl}`;
-          }
+        // Check if user provided something that looks like a domain/URL
+        if (isLikelyDomain(userInput) && !lowerInput.includes("no") && !lowerInput.includes("don't")) {
+          const extractedUrl = normalizeUrl(userInput);
           setCollectedData((prev) => ({ ...prev, hasUrl: true, url: extractedUrl }));
           await scrapeAndAnalyze(extractedUrl);
           return;
@@ -333,26 +355,20 @@ Format your response as:
         break;
 
       case "get_url":
-        // User provided a URL
-        let url = userInput.trim();
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
-          url = `https://${url}`;
+        // Bug 1 fix: Accept domains without scheme and normalize
+        if (!isLikelyDomain(userInput) && !userInput.startsWith("http")) {
+          addAssistantMessage("That doesn't look like a valid website. Try something like example.com or https://example.com");
+          return;
         }
+        const url = normalizeUrl(userInput);
         setCollectedData((prev) => ({ ...prev, url }));
         await scrapeAndAnalyze(url);
         break;
 
       case "contact":
         // Check if user is providing a URL to analyze instead of contact info
-        const contactUrlPattern = /(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})+)(?:\/[^\s]*)?/i;
-        const potentialUrl = userInput.match(contactUrlPattern);
-        
-        if (potentialUrl && (userInput.toLowerCase().includes('analyze') || userInput.toLowerCase().includes('try') || !userInput.includes('@'))) {
-          // User wants to analyze a different URL
-          let newUrl = potentialUrl[0].trim();
-          if (!newUrl.startsWith("http://") && !newUrl.startsWith("https://")) {
-            newUrl = `https://${newUrl}`;
-          }
+        if (isLikelyDomain(userInput) && !userInput.includes('@')) {
+          const newUrl = normalizeUrl(userInput);
           setCollectedData((prev) => ({ ...prev, url: newUrl }));
           addAssistantMessage(`Sure thing! Let me analyze ${newUrl} for you.`);
           await scrapeAndAnalyze(newUrl);
@@ -370,8 +386,9 @@ Format your response as:
           setCollectedData((prev) => ({ ...prev, phone: phoneMatch[0].trim() }));
         }
         
+        // Bug 2 fix: Better error message with examples
         if (!emailMatch && !phoneMatch) {
-          addAssistantMessage("I didn't catch that. Could you share your email address or phone number? Or if you'd like me to analyze a different website, just share the URL!");
+          addAssistantMessage("That doesn't look like an email or phone number. Please enter an email like name@domain.com or a phone like 305-555-1234.");
           return;
         }
         
