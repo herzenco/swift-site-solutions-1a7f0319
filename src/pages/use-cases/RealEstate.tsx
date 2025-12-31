@@ -189,11 +189,14 @@ const RealEstate = () => {
 
       {/* Fullscreen Demo Modal for Mobile */}
       <Dialog open={isDemoFullscreen} onOpenChange={setIsDemoFullscreen}>
-        <DialogContent className="max-w-[100vw] w-full h-[100dvh] max-h-[100dvh] p-0 border-0 bg-background flex flex-col items-center justify-center">
-          <DialogClose className="absolute top-4 right-4 z-50 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors">
+        <DialogContent className="max-w-[100vw] w-screen h-[100dvh] max-h-[100dvh] p-0 border-0 rounded-none bg-background flex flex-col items-center justify-center [&>button]:hidden">
+          <button 
+            onClick={() => setIsDemoFullscreen(false)}
+            className="absolute top-4 right-4 z-50 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
+          >
             <X className="w-5 h-5" />
-          </DialogClose>
-          <div className="scale-110 origin-center">
+          </button>
+          <div className="scale-[1.35] origin-center">
             <RealEstateDemo />
           </div>
         </DialogContent>
