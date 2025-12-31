@@ -7,8 +7,9 @@ import { BackButton } from "@/components/BackButton";
 import { HomeServicesDemo } from "@/components/demos/HomeServicesDemo";
 import { SEO } from "@/components/SEO";
 import { HeroWorkflowModal } from "@/components/HeroWorkflowModal";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
-
+import { ArrowRight, CheckCircle2, Maximize2, X } from "lucide-react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useIsMobile } from "@/hooks/use-mobile";
 const features = [
   {
     title: "Instant Job Booking",
@@ -34,6 +35,8 @@ const benefits = [
 
 const HomeServices = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDemoFullscreen, setIsDemoFullscreen] = useState(false);
+  const isMobile = useIsMobile();
 
   return (
     <div className="min-h-screen bg-background">
@@ -80,7 +83,22 @@ const HomeServices = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="flex justify-center"
             >
-              <HomeServicesDemo />
+              {isMobile ? (
+                <div 
+                  className="relative cursor-pointer group"
+                  onClick={() => setIsDemoFullscreen(true)}
+                >
+                  <HomeServicesDemo />
+                  <div className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-[2.5rem] pointer-events-none">
+                    <div className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium">
+                      <Maximize2 className="w-4 h-4" />
+                      Tap to expand
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <HomeServicesDemo />
+              )}
             </motion.div>
           </div>
 
@@ -167,6 +185,21 @@ const HomeServices = () => {
         onOpenChange={setIsModalOpen} 
         source="home_services_page" 
       />
+
+      {/* Fullscreen Demo Modal for Mobile */}
+      <Dialog open={isDemoFullscreen} onOpenChange={setIsDemoFullscreen}>
+        <DialogContent className="max-w-[100vw] w-screen h-[100dvh] max-h-[100dvh] p-0 border-0 rounded-none bg-background flex flex-col items-center justify-center [&>button]:hidden">
+          <button 
+            onClick={() => setIsDemoFullscreen(false)}
+            className="absolute top-4 right-4 z-50 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <div className="scale-[1.35] origin-center">
+            <HomeServicesDemo />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
