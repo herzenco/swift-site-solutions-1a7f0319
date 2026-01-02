@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
-import { BackButton } from "@/components/BackButton";
 import { SEO } from "@/components/SEO";
 import { HeroWorkflowModal } from "@/components/HeroWorkflowModal";
 import { ProfessionalServicesDemo } from "@/components/demos/ProfessionalServicesDemo";
@@ -55,8 +54,7 @@ const ProfessionalServices = () => {
         description="We design websites for businesses where decisions take time, context matters, and the first conversation sets the tone. Built and launched in 5–10 days."
         canonical="/use-cases/professional-services"
       />
-      <Navbar />
-      <BackButton />
+      <Navbar showBackButton />
       
       <main className="pt-32 pb-20">
         <div className="container-tight px-6">
