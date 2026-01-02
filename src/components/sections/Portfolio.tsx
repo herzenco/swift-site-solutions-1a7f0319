@@ -1,46 +1,43 @@
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Calendar, Target, TrendingUp, Zap, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-const professionalServices = [
+const fitCriteria = [
   {
-    title: "Lawyers & Legal",
-    description: "Capture client inquiries and schedule consultations without back-and-forth emails.",
+    icon: Calendar,
+    title: "Appointment-Based Businesses",
+    description: "Businesses that sell consultations, estimates, or sessions that can be booked on a calendar.",
   },
   {
-    title: "Medical & Dental",
-    description: "Book patient appointments automatically and reduce no-shows with reminders.",
+    icon: Target,
+    title: "One Primary Offer",
+    description: "The website exists to drive one clear action: capture a lead or book an appointment.",
   },
   {
-    title: "Therapists & Counselors",
-    description: "Offer easy online booking while maintaining a professional, calming presence.",
+    icon: TrendingUp,
+    title: "Inbound Demand",
+    description: "People are already searching for what you offer. The site's job is to convert that interest into action.",
   },
   {
-    title: "Accountants & CPAs",
-    description: "Convert tax season traffic into booked consultations year-round.",
+    icon: Zap,
+    title: "Simple Sales Flow",
+    description: "No portals, user accounts, or complex workflows. Just intent → action.",
   },
   {
-    title: "Consultants & Advisors",
-    description: "Qualify leads and schedule discovery calls without lifting a finger.",
-  },
-];
-
-const homeServices = [
-  {
-    title: "General Contractors",
-    description: "Turn website visitors into booked estimates with automated scheduling.",
-  },
-  {
-    title: "Plumbers & Electricians",
-    description: "Capture emergency requests and service calls 24/7.",
-  },
-  {
-    title: "HVAC & Roofing",
-    description: "Generate leads and schedule inspections automatically.",
+    icon: X,
+    title: "No Custom Logic Required",
+    description: "If your business needs advanced integrations, dynamic data feeds, or custom software behavior, this system is not a fit.",
   },
 ];
 
 export const Portfolio = () => {
+  const scrollToPricing = () => {
+    const pricingSection = document.getElementById("pricing");
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section id="portfolio" className="pt-16 pb-12 bg-background relative">
       <div className="container-tight px-6">
@@ -52,10 +49,10 @@ export const Portfolio = () => {
           className="text-center mb-6"
         >
           <h2 id="portfolio-heading" className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-            Who We <span className="text-gradient">Build For</span>
+            Who This Is <span className="text-gradient">Built For</span>
           </h2>
           <p className="text-xl text-primary font-medium max-w-3xl mx-auto mb-4">
-            Service professionals who rely on leads and booked appointments.
+            This is a focused website system, not a custom build.
           </p>
         </motion.div>
 
@@ -66,84 +63,44 @@ export const Portfolio = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-muted-foreground text-center max-w-3xl mx-auto mb-12"
         >
-          If your business depends on turning interest into booked appointments and qualified clients, we build systems that handle it automatically. The same proven system, adapted to your industry.
+          It's designed for businesses with simple offers and clear conversion goals.
         </motion.p>
 
-        {/* Professional Services - Primary Focus */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-8"
-        >
-          <Link
-            to="/use-cases/professional-services"
-            className="group block p-8 rounded-2xl border border-primary/30 bg-card/50 backdrop-blur-sm transition-all duration-500 hover:border-primary/50 hover:bg-card/70"
-          >
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-              <h3 className="text-2xl sm:text-3xl font-bold text-gradient">Professional Services</h3>
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 rounded-lg text-primary transition-colors w-fit">
-                <span className="font-semibold">Learn More</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {fitCriteria.map((criteria, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="p-6 rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm"
+            >
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                <criteria.icon className="w-6 h-6 text-primary" />
               </div>
-            </div>
-            <p className="text-muted-foreground mb-6">
-              Conversion-focused websites for professionals who need to capture leads and book appointments automatically.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {professionalServices.map((service, index) => (
-                <div key={index} className="p-4 rounded-xl bg-background/50 border border-border/30">
-                  <h4 className="font-semibold mb-1">{service.title}</h4>
-                  <p className="text-sm text-muted-foreground">{service.description}</p>
-                </div>
-              ))}
-            </div>
-          </Link>
-        </motion.div>
-
-        {/* Home Services - Secondary */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="mb-12"
-        >
-          <Link
-            to="/use-cases/home-services"
-            className="group block p-8 rounded-2xl border border-border/50 hover:border-primary/30 bg-card/50 backdrop-blur-sm transition-all duration-500"
-          >
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-              <h3 className="text-xl sm:text-2xl font-bold group-hover:text-gradient transition-all duration-300">Home & Local Services</h3>
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 rounded-lg text-primary transition-colors w-fit">
-                <span className="font-semibold">Learn More</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-            <p className="text-muted-foreground mb-6">
-              Convert inbound traffic into booked jobs with automated scheduling and follow-ups.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {homeServices.map((service, index) => (
-                <div key={index} className="p-4 rounded-xl bg-background/50 border border-border/30">
-                  <h4 className="font-semibold mb-1">{service.title}</h4>
-                  <p className="text-sm text-muted-foreground">{service.description}</p>
-                </div>
-              ))}
-            </div>
-          </Link>
-        </motion.div>
+              <h3 className="text-lg font-semibold mb-2">{criteria.title}</h3>
+              <p className="text-sm text-muted-foreground">{criteria.description}</p>
+            </motion.div>
+          ))}
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
           className="text-center"
         >
-          <p className="text-muted-foreground">
-            Same proven system. Messaging tailored to your industry.
+          <Button
+            size="lg"
+            onClick={scrollToPricing}
+            className="mb-8"
+          >
+            View Packages
+          </Button>
+          <p className="text-muted-foreground text-sm">
+            Same proven system. Clear constraints. Predictable results.
           </p>
         </motion.div>
       </div>
