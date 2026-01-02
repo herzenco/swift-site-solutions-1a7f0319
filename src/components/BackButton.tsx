@@ -18,19 +18,24 @@ export const BackButton = forwardRef<HTMLButtonElement, BackButtonProps>((
   };
 
   return (
-    <Button
-      ref={ref}
-      variant="ghost"
-      onClick={handleBack}
-      className={cn(
-        "fixed top-20 left-4 md:top-24 md:left-6 z-40 gap-2 text-foreground hover:text-foreground bg-card/90 backdrop-blur-sm border border-border/50 shadow-sm hover:bg-card",
-        className,
-      )}
-      {...props}
-    >
-      <ArrowLeft className="w-4 h-4" />
-      Back
-    </Button>
+    <div className="sticky top-[72px] z-40 bg-background/80 backdrop-blur-sm border-b border-border/30">
+      <div className="container-tight px-4 sm:px-6 lg:px-8 py-2">
+        <Button
+          ref={ref}
+          variant="ghost"
+          size="sm"
+          onClick={handleBack}
+          className={cn(
+            "gap-1.5 text-muted-foreground hover:text-foreground -ml-2",
+            className,
+          )}
+          {...props}
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </Button>
+      </div>
+    </div>
   );
 });
 
