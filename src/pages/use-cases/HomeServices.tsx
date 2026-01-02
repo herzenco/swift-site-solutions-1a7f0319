@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
+import { BackButton } from "@/components/BackButton";
 import { HomeServicesDemo } from "@/components/demos/HomeServicesDemo";
 import { SEO } from "@/components/SEO";
 import { HeroWorkflowModal } from "@/components/HeroWorkflowModal";
@@ -44,7 +45,8 @@ const HomeServices = () => {
         description="Custom websites for plumbers, electricians, HVAC, and home service providers. Convert visitors into booked jobs with automated scheduling. Delivered in 5-10 days."
         canonical="/use-cases/home-services"
       />
-      <Navbar showBackButton />
+      <Navbar />
+      <BackButton />
       
       <main className="pt-32 pb-20">
         <div className="container-tight px-6">
