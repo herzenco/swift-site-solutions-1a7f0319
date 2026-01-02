@@ -33,10 +33,8 @@ const getSourceLabel = (source: string | null): string => {
   const labels: Record<string, string> = {
     hero_modal: "Hero Modal",
     project_plan_modal: "Project Plan",
-    real_estate_page: "Real Estate",
-    professional_services_page: "Law Firms",
+    professional_services_page: "Professional Services",
     home_services_page: "Home Services",
-    education_coaching_page: "Education & Coaching",
   };
   return source ? labels[source] || source : "Unknown";
 };
