@@ -14,32 +14,32 @@ import { ArrowRight, CheckCircle2, Calendar, Users, Clock, Shield, Maximize2 } f
 const features = [
   {
     icon: Calendar,
-    title: "Booking That Works For You",
-    description: "Prospects schedule around your availability. You set the rules. They arrive informed and ready.",
+    title: "Seamless Consultation Booking",
+    description: "Qualified prospects book directly on your calendar. The right conversations, scheduled automatically.",
   },
   {
     icon: Users,
-    title: "Qualify Before You Speak",
-    description: "Capture context, goals, and timeline upfront. Invest your time in conversations that matter.",
+    title: "Thoughtful Lead Qualification",
+    description: "Capture context before the call — goals, challenges, and timeline — so every conversation starts informed.",
   },
   {
     icon: Clock,
-    title: "Always-On Intake",
-    description: "Your system captures serious inquiries around the clock—whether you're in a meeting or offline.",
+    title: "Always-On Lead Capture",
+    description: "Your website captures serious inquiries around the clock, even when you're unavailable.",
   },
   {
     icon: Shield,
     title: "A Presence That Signals Value",
-    description: "Your first impression should match your expertise. We design for credibility and clarity.",
+    description: "A refined, trust-building website that positions you as the expert prospects are looking for.",
   },
 ];
 
 const benefits = [
   "Fewer wasted calls. More qualified conversations.",
-  "Pre-call context that prepares both sides",
-  "A calendar you control—not one that controls you",
-  "Inquiries captured 24/7 without added overhead",
+  "A calendar you control — not one that controls you",
   "Trust built before the first hello",
+  "Pre-call context that prepares both sides",
+  "Inquiries captured 24/7 without added overhead",
   "Live in 5–10 days. Tailored to your business.",
 ];
 
@@ -51,8 +51,8 @@ const ProfessionalServices = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Professional Services | Xyren"
-        description="A tailored intake and booking system for expertise-driven businesses. Qualify prospects, schedule discovery calls, and present your practice with clarity. Delivered in 5–10 days."
+        title="Websites for Professional Services | Xyren"
+        description="We design websites for businesses where decisions take time, context matters, and the first conversation sets the tone. Built and launched in 5–10 days."
         canonical="/use-cases/professional-services"
       />
       <Navbar />
@@ -70,21 +70,27 @@ const ProfessionalServices = () => {
               className="text-center lg:text-left"
             >
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Designed for <span className="text-gradient">Expertise-Driven</span> Businesses
+                Built for Businesses Where <span className="text-gradient">Trust Comes First</span>
               </h1>
               <p className="text-lg text-muted-foreground mb-4">
-                A tailored website system built around how your clients decide. Qualify inquiries, schedule conversations, and present your practice with the clarity it deserves.
+                We design websites for businesses where decisions take time, context matters, and the first conversation sets the tone.
+              </p>
+              <p className="text-muted-foreground mb-4">
+                Your website filters serious inquiries, schedules the right conversations, and positions your practice with the credibility it deserves.
               </p>
               <p className="text-sm text-muted-foreground/80 mb-8">
-                Delivered in 5–10 days. Structured around your business model.
+                Built and launched in 5–10 days. Structured around how you actually sell.
               </p>
-              <Button 
-                className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
-                onClick={() => setIsModalOpen(true)}
-              >
-                Get Your Website Built
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
+              <div>
+                <Button 
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Get Your Website Built
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+                <p className="text-xs text-muted-foreground/70 mt-3">No templates. Clear scope. Predictable delivery.</p>
+              </div>
             </motion.div>
 
             {/* Right Column - Demo */}
@@ -106,7 +112,7 @@ const ProfessionalServices = () => {
                   </button>
                 </div>
                 <p className="text-xs text-center text-muted-foreground mt-4">
-                  Example advisory firm — messaging and flow are tailored to each client
+                  Example advisory firm — messaging and flow are tailored to how clients decide
                 </p>
               </motion.div>
             )}
@@ -120,10 +126,7 @@ const ProfessionalServices = () => {
             transition={{ duration: 0.6 }}
             className="mb-20"
           >
-            <h2 className="text-3xl font-bold text-center mb-4">Built Around How You Sell</h2>
-            <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-              This isn't a template. It's an intentional system designed to move the right people from interest to conversation.
-            </p>
+            <h2 className="text-3xl font-bold text-center mb-12">Built Around How You Sell</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {features.map((feature, index) => (
                 <motion.div
@@ -178,16 +181,16 @@ const ProfessionalServices = () => {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <h2 className="text-3xl font-bold mb-4">Ready to see what we'd build for you?</h2>
-            <p className="text-muted-foreground mb-8">Get a tailored project plan. No templates. No guesswork.</p>
+            <h2 className="text-3xl font-bold mb-4">Ready to Get a Website That Works for You?</h2>
+            <p className="text-muted-foreground mb-8">Get a website designed to book the right conversations while you focus on your clients.</p>
             <Button 
               className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
               onClick={() => setIsModalOpen(true)}
             >
-              Request Your Project Plan
+              Get Your Website Built
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
-            <p className="text-sm text-muted-foreground/70 mt-4">Free. Takes 2 minutes.</p>
+            <p className="text-sm text-muted-foreground/70 mt-4">No pressure. No long timelines.</p>
           </motion.div>
         </div>
       </main>
