@@ -82,7 +82,7 @@ const ProfessionalServices = () => {
                 className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold rounded-xl"
                 onClick={() => setIsModalOpen(true)}
               >
-                Request a Project Plan
+                Get Your Website Built
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </motion.div>
