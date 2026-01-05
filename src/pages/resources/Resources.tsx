@@ -80,10 +80,7 @@ const Resources = () => {
         {/* How-To Section - Primary Focus */}
         <section className="pb-24 px-4">
           <div className="max-w-6xl mx-auto">
-            <p className="text-muted-foreground mb-8 max-w-2xl">
-              Step-by-step guides covering the most common questions we're asked—from setup basics to understanding how the system works.
-            </p>
-            <div className="flex items-center justify-between mb-10">
+            <div className="flex items-center justify-between mb-4">
               <h2 className="text-2xl md:text-3xl font-semibold">How-To</h2>
               <Link 
                 to="/resources/how-to" 
@@ -93,6 +90,9 @@ const Resources = () => {
                 <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
+            <p className="text-muted-foreground mb-10 max-w-2xl">
+              Step-by-step guides covering the most common questions we're asked—from setup basics to understanding how the system works.
+            </p>
             
             {/* Horizontal scroll container for larger cards */}
             <div className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
@@ -123,10 +123,7 @@ const Resources = () => {
         {/* Blog Section - Secondary */}
         <section className="pb-24 px-4">
           <div className="max-w-6xl mx-auto">
-            <p className="text-muted-foreground mb-6 max-w-2xl text-sm">
-              Short explanations and breakdowns that help you understand the thinking behind how Xyren is built and why certain decisions matter.
-            </p>
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl md:text-2xl font-medium text-foreground/90">Blog</h2>
               <Link 
                 to="/resources/blog" 
@@ -136,6 +133,9 @@ const Resources = () => {
                 <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
+            <p className="text-muted-foreground mb-8 max-w-2xl text-sm">
+              Short explanations and breakdowns that help you understand the thinking behind how Xyren is built and why certain decisions matter.
+            </p>
             
             {/* Tighter grid with smaller cards */}
             <div className="grid md:grid-cols-3 gap-4">
