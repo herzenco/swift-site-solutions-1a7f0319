@@ -69,7 +69,7 @@ const Resources = () => {
         <section className="pt-32 pb-20 px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-              Clear Answers. Practical Guidance.
+              Clear Answers. <span className="text-gradient">Practical Guidance.</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               A reference for understanding the system, setting expectations, and getting the most out of your website.
