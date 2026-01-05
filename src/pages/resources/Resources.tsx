@@ -24,10 +24,31 @@ const latestBlog = [
 ];
 
 const faqItems = [
-  { id: 1, question: "", answer: "" },
-  { id: 2, question: "", answer: "" },
-  { id: 3, question: "", answer: "" },
-  { id: 4, question: "", answer: "" },
+  {
+    id: 1,
+    question: "How long does it take?",
+    answer: "Most projects are completed within 5–10 business days. Timelines may vary slightly based on setup requirements and integrations, but the process is designed to be fast and repeatable.",
+  },
+  {
+    id: 2,
+    question: "What's included in maintenance?",
+    answer: "Ongoing support, bug fixes, performance optimizations, and product updates to ensure everything continues running smoothly within the supported framework.",
+  },
+  {
+    id: 3,
+    question: "Can I customize the tools?",
+    answer: "The tools are configurable within a predefined framework. You can adjust settings, workflows, and supported integrations, but we do not offer custom-built features or one-off development. This ensures consistency, speed, and reliability.",
+  },
+  {
+    id: 4,
+    question: "Do I need technical knowledge?",
+    answer: "No. Setup and configuration are handled for you. The product is designed to be intuitive and easy to use without technical expertise.",
+  },
+  {
+    id: 5,
+    question: "Can I cancel anytime?",
+    answer: "Yes. There are no long-term commitments. You can cancel at any time.",
+  },
 ];
 
 const Resources = () => {
