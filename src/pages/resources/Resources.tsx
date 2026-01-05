@@ -2,30 +2,32 @@ import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { SEO } from "@/components/SEO";
-import { BookOpen, Lightbulb, HelpCircle, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
-const resourceSections = [
-  {
-    title: "How-To Guides",
-    description: "Step-by-step, practical guidance for domains, websites, booking systems, and setup.",
-    icon: BookOpen,
-    link: "/resources/how-to",
-    linkText: "Explore Guides",
-  },
-  {
-    title: "Blog",
-    description: "Insights, strategy, and explanations on building effective digital presence.",
-    icon: Lightbulb,
-    link: "/resources/blog",
-    linkText: "Read Articles",
-  },
-  {
-    title: "FAQ",
-    description: "Direct answers to common questions about websites, timelines, pricing, and fit.",
-    icon: HelpCircle,
-    link: "/resources/faq",
-    linkText: "View FAQ",
-  },
+// Placeholder data - will be replaced with actual content
+const latestHowTo = [
+  { id: 1, title: "", description: "" },
+  { id: 2, title: "", description: "" },
+  { id: 3, title: "", description: "" },
+];
+
+const latestBlog = [
+  { id: 1, title: "", description: "" },
+  { id: 2, title: "", description: "" },
+  { id: 3, title: "", description: "" },
+];
+
+const faqItems = [
+  { id: 1, question: "", answer: "" },
+  { id: 2, question: "", answer: "" },
+  { id: 3, question: "", answer: "" },
+  { id: 4, question: "", answer: "" },
 ];
 
 const Resources = () => {
@@ -49,34 +51,89 @@ const Resources = () => {
           </div>
         </section>
 
-        {/* Resource Sections */}
-        <section className="pb-24 px-4">
+        {/* How-To Section */}
+        <section className="pb-16 px-4">
           <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-              {resourceSections.map((section) => (
-                <Link
-                  key={section.title}
-                  to={section.link}
-                  className="group relative flex flex-col p-8 rounded-2xl border border-border/50 bg-card/30 hover:bg-card/50 hover:border-border transition-all duration-300"
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl md:text-3xl font-semibold">How-To</h2>
+              <Link 
+                to="/resources/how-to" 
+                className="inline-flex items-center text-sm font-medium text-primary hover:gap-2 transition-all group"
+              >
+                View all
+                <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {latestHowTo.map((item) => (
+                <div
+                  key={item.id}
+                  className="group p-6 rounded-xl border border-border/50 bg-card/30 hover:bg-card/50 hover:border-border transition-all duration-300 min-h-[140px]"
                 >
-                  <div className="mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                      <section.icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <h2 className="text-2xl font-semibold mb-3">{section.title}</h2>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {section.description}
-                    </p>
-                  </div>
-                  <div className="mt-auto pt-4">
-                    <span className="inline-flex items-center text-sm font-medium text-primary group-hover:gap-2 transition-all">
-                      {section.linkText}
-                      <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                    </span>
-                  </div>
-                </Link>
+                  <h3 className="text-lg font-medium mb-2 text-foreground">{item.title || "—"}</h3>
+                  <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
+                </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Blog Section */}
+        <section className="pb-16 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl md:text-3xl font-semibold">Blog</h2>
+              <Link 
+                to="/resources/blog" 
+                className="inline-flex items-center text-sm font-medium text-primary hover:gap-2 transition-all group"
+              >
+                View all
+                <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {latestBlog.map((item) => (
+                <div
+                  key={item.id}
+                  className="group p-6 rounded-xl border border-border/50 bg-card/30 hover:bg-card/50 hover:border-border transition-all duration-300 min-h-[140px]"
+                >
+                  <h3 className="text-lg font-medium mb-2 text-foreground">{item.title || "—"}</h3>
+                  <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="pb-24 px-4">
+          <div className="max-w-3xl mx-auto">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl md:text-3xl font-semibold">FAQ</h2>
+              <Link 
+                to="/resources/faq" 
+                className="inline-flex items-center text-sm font-medium text-primary hover:gap-2 transition-all group"
+              >
+                View all
+                <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+            <Accordion type="single" collapsible className="space-y-3">
+              {faqItems.map((item) => (
+                <AccordionItem 
+                  key={item.id} 
+                  value={`faq-${item.id}`}
+                  className="border border-border/50 rounded-xl px-6 bg-card/30 data-[state=open]:bg-card/50 transition-colors"
+                >
+                  <AccordionTrigger className="text-left py-5 hover:no-underline">
+                    <span className="text-foreground font-medium">{item.question || "—"}</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-5">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </section>
       </main>
