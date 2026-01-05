@@ -69,10 +69,10 @@ const Resources = () => {
         <section className="pt-32 pb-20 px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-              Clarity Before Complexity
+              Clear Answers. Practical Guidance.
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              A knowledge hub designed to help you understand, evaluate, and make informed decisions—whether you're exploring Xyren or already working with us.
+              Explanations, guides, and answers for people evaluating or already using Xyren—written to clarify decisions and reduce uncertainty.
             </p>
           </div>
         </section>
@@ -80,6 +80,9 @@ const Resources = () => {
         {/* How-To Section - Primary Focus */}
         <section className="pb-24 px-4">
           <div className="max-w-6xl mx-auto">
+            <p className="text-muted-foreground mb-8 max-w-2xl">
+              Step-by-step guides covering the most common questions we're asked—from setup basics to understanding how the system works.
+            </p>
             <div className="flex items-center justify-between mb-10">
               <h2 className="text-2xl md:text-3xl font-semibold">How-To</h2>
               <Link 
@@ -120,6 +123,9 @@ const Resources = () => {
         {/* Blog Section - Secondary */}
         <section className="pb-24 px-4">
           <div className="max-w-6xl mx-auto">
+            <p className="text-muted-foreground mb-6 max-w-2xl text-sm">
+              Short explanations and breakdowns that help you understand the thinking behind how Xyren is built and why certain decisions matter.
+            </p>
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-xl md:text-2xl font-medium text-foreground/90">Blog</h2>
               <Link 
