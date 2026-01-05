@@ -72,7 +72,7 @@ const Resources = () => {
               Clear Answers. Practical Guidance.
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Explanations, guides, and answers for people evaluating or already using Xyren—written to clarify decisions and reduce uncertainty.
+              A reference for understanding the system, setting expectations, and getting the most out of your website.
             </p>
           </div>
         </section>
