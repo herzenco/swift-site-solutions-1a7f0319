@@ -38,6 +38,12 @@ export const Navbar = () => {
             >
               Packages
             </Link>
+            <Link 
+              to="/resources" 
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Resources
+            </Link>
           </div>
         </div>
       </nav>
