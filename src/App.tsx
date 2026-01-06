@@ -16,6 +16,7 @@ import ProfessionalServices from "./pages/use-cases/ProfessionalServices";
 import HomeServices from "./pages/use-cases/HomeServices";
 import Resources from "./pages/resources/Resources";
 import HowTo from "./pages/resources/HowTo";
+import HowToGuide from "./pages/resources/HowToGuide";
 import Blog from "./pages/resources/Blog";
 import FAQ from "./pages/resources/FAQ";
 
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/use-cases/home-services" element={<HomeServices />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/resources/how-to" element={<HowTo />} />
+            <Route path="/resources/how-to/:slug" element={<HowToGuide />} />
             <Route path="/resources/blog" element={<Blog />} />
             <Route path="/resources/faq" element={<FAQ />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
