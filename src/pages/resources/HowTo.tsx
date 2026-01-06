@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { SEO } from "@/components/SEO";
@@ -5,14 +6,14 @@ import { BackButton } from "@/components/BackButton";
 import { ArrowRight, Clock, CheckCircle2, Zap, Target } from "lucide-react";
 
 const guides = [
-  { number: "01", title: "How to Prepare Your Domain", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt." },
-  { number: "02", title: "How to Set Up Your Email", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip." },
-  { number: "03", title: "How to Configure Scheduling", description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat." },
-  { number: "04", title: "How to Plan Your Content", description: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt." },
-  { number: "05", title: "How to Organize Your Forms", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor." },
-  { number: "06", title: "How to Gather Your Assets", description: "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit." },
-  { number: "07", title: "How to Define Your Services", description: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit." },
-  { number: "08", title: "How to Prepare for Launch", description: "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet consectetur." },
+  { slug: "prepare-your-domain", number: "01", title: "How to Prepare Your Domain", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt." },
+  { slug: "set-up-your-email", number: "02", title: "How to Set Up Your Email", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip." },
+  { slug: "configure-scheduling", number: "03", title: "How to Configure Scheduling", description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat." },
+  { slug: "plan-your-content", number: "04", title: "How to Plan Your Content", description: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt." },
+  { slug: "organize-your-forms", number: "05", title: "How to Organize Your Forms", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor." },
+  { slug: "gather-your-assets", number: "06", title: "How to Gather Your Assets", description: "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit." },
+  { slug: "define-your-services", number: "07", title: "How to Define Your Services", description: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit." },
+  { slug: "prepare-for-launch", number: "08", title: "How to Prepare for Launch", description: "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet consectetur." },
 ];
 
 const benefits = [
@@ -73,9 +74,10 @@ const HowTo = () => {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {guides.map((guide) => (
-                <article
+                <Link
                   key={guide.number}
-                  className="group relative p-6 rounded-2xl border border-border/40 bg-card/30 hover:bg-card/60 hover:border-border/60 transition-all duration-300 cursor-pointer"
+                  to={`/resources/how-to/${guide.slug}`}
+                  className="group relative p-6 rounded-2xl border border-border/40 bg-card/30 hover:bg-card/60 hover:border-border/60 transition-all duration-300"
                 >
                   <span className="text-xs font-mono text-primary/60 mb-4 block">
                     {guide.number}
@@ -90,7 +92,7 @@ const HowTo = () => {
                     Read guide
                     <ArrowRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
                   </span>
-                </article>
+                </Link>
               ))}
             </div>
           </div>
