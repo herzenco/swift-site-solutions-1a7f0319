@@ -51,9 +51,10 @@ const ProfessionalServices = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Websites for Professional Services | Xyren"
-        description="We design websites for businesses where decisions take time, context matters, and the first conversation sets the tone. Built and launched in 5–10 days."
+        title="Websites for Consultants, Advisors, Experts"
+        description="Websites that build trust and book qualified consultations. Designed for professional services where credibility matters. Launched in 5-10 days."
         canonical="/use-cases/professional-services"
+        keywords="consultant website, advisor website, professional services website, expert website, consultation booking"
       />
       <Navbar />
       <BackButton />

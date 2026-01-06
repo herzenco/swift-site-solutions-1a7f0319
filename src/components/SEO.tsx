@@ -6,6 +6,13 @@ interface SEOProps {
   canonical?: string;
   type?: string;
   image?: string;
+  noindex?: boolean;
+  keywords?: string;
+  article?: {
+    publishedTime?: string;
+    modifiedTime?: string;
+    author?: string;
+  };
 }
 
 const BASE_URL = "https://www.xyren.me";
@@ -14,14 +21,17 @@ const SITE_NAME = "Xyren by Herzen Co.";
 
 export const SEO = ({
   title,
-  description = "We build modern websites that capture leads, book meetings, and follow up automatically. Delivered in 5-10 days.",
+  description = "Custom websites that capture leads and book appointments automatically. Built for service professionals. Delivered in 5-10 days.",
   canonical,
   type = "website",
   image = DEFAULT_IMAGE,
+  noindex = false,
+  keywords,
+  article,
 }: SEOProps) => {
   const fullTitle = title 
     ? `${title} | ${SITE_NAME}` 
-    : `${SITE_NAME} | Custom AI-Powered Websites Delivered in 5-10 Days`;
+    : `${SITE_NAME} | Websites That Convert`;
   
   const canonicalUrl = canonical ? `${BASE_URL}${canonical}` : BASE_URL;
 
@@ -30,6 +40,8 @@ export const SEO = ({
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={canonicalUrl} />
+      {noindex && <meta name="robots" content="noindex, nofollow" />}
+      {keywords && <meta name="keywords" content={keywords} />}
 
       {/* Open Graph */}
       <meta property="og:type" content={type} />
@@ -38,6 +50,7 @@ export const SEO = ({
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
       <meta property="og:site_name" content={SITE_NAME} />
+      <meta property="og:locale" content="en_US" />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -45,6 +58,17 @@ export const SEO = ({
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
+
+      {/* Article-specific meta */}
+      {article?.publishedTime && (
+        <meta property="article:published_time" content={article.publishedTime} />
+      )}
+      {article?.modifiedTime && (
+        <meta property="article:modified_time" content={article.modifiedTime} />
+      )}
+      {article?.author && (
+        <meta property="article:author" content={article.author} />
+      )}
     </Helmet>
   );
 };

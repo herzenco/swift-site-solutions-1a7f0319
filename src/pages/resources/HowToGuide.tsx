@@ -42,11 +42,27 @@ const HowToGuide = () => {
     );
   }
 
+  // Generate unique descriptions based on guide
+  const guideDescriptions: Record<string, string> = {
+    "prepare-your-domain": "Learn how to prepare your domain for a new website. Step-by-step guidance on DNS settings and domain configuration.",
+    "set-up-your-email": "Configure professional email for your business website. Complete guide to email setup and best practices.",
+    "configure-scheduling": "Set up automated scheduling for your website. Learn to integrate calendars and booking systems.",
+    "plan-your-content": "Plan and organize content for your new website. Guidelines for effective copywriting and structure.",
+    "organize-your-forms": "Design and set up forms that convert visitors into leads. Best practices for form optimization.",
+    "gather-your-assets": "Collect and prepare images, logos, and brand assets for your website build.",
+    "define-your-services": "Structure your service offerings for maximum clarity and conversion on your website.",
+    "prepare-for-launch": "Final checklist and preparation steps before launching your new website.",
+  };
+
+  const guideDescription = guideDescriptions[guide.slug] || "Practical, step-by-step guidance for your website setup.";
+
   return (
     <>
       <SEO
-        title={`${guide.title} | Xyren Resources`}
-        description="Practical, step-by-step guidance for your website setup."
+        title={guide.title}
+        description={guideDescription}
+        canonical={`/resources/how-to/${guide.slug}`}
+        keywords={`${guide.title.replace("How to ", "")}, website setup, guide`}
       />
       <Navbar />
       <BackButton />
