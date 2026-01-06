@@ -7,8 +7,10 @@ const Blog = () => {
   return (
     <>
       <SEO
-        title="Blog | Xyren Resources"
-        description="Insights, strategy, and explanations on building effective digital presence."
+        title="Blog"
+        description="Insights on website strategy, lead conversion, and building an effective online presence for service businesses. Learn how to get more from your website."
+        canonical="/resources/blog"
+        keywords="website strategy, lead conversion, service business tips, online presence, web design insights"
       />
       <Navbar />
       <BackButton />

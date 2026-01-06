@@ -43,8 +43,10 @@ const HowTo = () => {
   return (
     <>
       <SEO
-        title="How-To Guides | Xyren Resources"
-        description="Practical, step-by-step guidance for domains, websites, booking systems, and digital setup."
+        title="How-To Guides"
+        description="Step-by-step guides for domain setup, email configuration, scheduling, and website preparation. Get everything ready for a fast, smooth website build."
+        canonical="/resources/how-to"
+        keywords="domain setup guide, email configuration, scheduling setup, website preparation, how to guides"
       />
       <Navbar />
       <BackButton />

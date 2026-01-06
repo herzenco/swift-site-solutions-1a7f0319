@@ -41,9 +41,10 @@ const HomeServices = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Home Services Websites"
-        description="Custom websites for plumbers, electricians, HVAC, and home service providers. Convert visitors into booked jobs with automated scheduling. Delivered in 5-10 days."
+        title="Websites for Plumbers, Electricians, HVAC"
+        description="Convert website visitors into booked jobs. Custom websites for home service providers with automated scheduling, follow-ups, and lead capture. Built in 5-10 days."
         canonical="/use-cases/home-services"
+        keywords="plumber website, electrician website, HVAC website, home services website, contractor website, service booking"
       />
       <Navbar />
       <BackButton />

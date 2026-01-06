@@ -60,8 +60,10 @@ const Resources = () => {
   return (
     <>
       <SEO
-        title="Resources | Xyren"
-        description="Clarity, education, and guidance. A knowledge hub for people evaluating or using Xyren."
+        title="Resources"
+        description="Guides, FAQs, and insights to help you prepare for your website build. Understand the process, set expectations, and get the most out of your Xyren website."
+        canonical="/resources"
+        keywords="website guides, FAQ, how-to guides, website setup, Xyren resources"
       />
       <Navbar />
       <main id="main-content" className="min-h-screen bg-background">

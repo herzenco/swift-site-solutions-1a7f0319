@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { SEO } from "@/components/SEO";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { z } from "zod";
 
@@ -94,7 +95,9 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <>
+      <SEO title="Sign In" description="Sign in to access your Xyren dashboard." noindex />
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -163,6 +166,7 @@ export default function Auth() {
           </form>
         </div>
       </motion.div>
-    </div>
+      </div>
+    </>
   );
 }

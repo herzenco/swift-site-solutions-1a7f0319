@@ -13,8 +13,10 @@ const FAQ = () => {
   return (
     <>
       <SEO
-        title="FAQ | Xyren Resources"
-        description="Direct answers to common questions about websites, timelines, pricing, and fit."
+        title="Frequently Asked Questions"
+        description="Answers to common questions about Xyren websites, pricing, timelines, and what's included. Everything you need to know before getting started."
+        canonical="/resources/faq"
+        keywords="Xyren FAQ, website pricing, website timeline, web design questions"
       />
       <Navbar />
       <BackButton />
