@@ -9,11 +9,18 @@ import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 import { SEO } from "@/components/SEO";
 import { SkipToContent } from "@/components/SkipToContent";
+import { usePageTracking } from "@/hooks/usePageTracking";
 
 const Index = () => {
+  usePageTracking();
   return (
     <div className="h-screen overflow-y-auto overflow-x-hidden bg-background lg:snap-y lg:snap-mandatory">
-      <SEO canonical="/" />
+      <SEO 
+        canonical="/"
+        title="Custom Websites for Service Professionals"
+        description="Websites that capture leads and book appointments automatically. Built for service professionals who want more clients without more admin. Delivered in 5-10 days."
+        keywords="custom website, lead capture, appointment booking, service business website, AI website, web design agency"
+      />
       <SkipToContent />
       <Navbar />
       <main id="main-content" role="main" aria-label="Main content">

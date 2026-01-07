@@ -1,5 +1,5 @@
 import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
@@ -11,10 +11,18 @@ export const BackButton = forwardRef<HTMLButtonElement, BackButtonProps>((
   ref,
 ) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleBack = () => {
-    // Always send users back to the homepage for use-case pages
-    navigate("/");
+    // Navigate to parent route in URL hierarchy
+    const pathSegments = location.pathname.split('/').filter(Boolean);
+    if (pathSegments.length > 0) {
+      pathSegments.pop();
+      const parentPath = pathSegments.length > 0 ? `/${pathSegments.join('/')}` : '/';
+      navigate(parentPath);
+    } else {
+      navigate('/');
+    }
   };
 
   return (

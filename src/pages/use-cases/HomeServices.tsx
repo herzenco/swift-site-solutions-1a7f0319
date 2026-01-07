@@ -10,6 +10,7 @@ import { HeroWorkflowModal } from "@/components/HeroWorkflowModal";
 import { ArrowRight, CheckCircle2, Maximize2, X } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { usePageTracking } from "@/hooks/usePageTracking";
 const features = [
   {
     title: "Instant Job Booking",
@@ -34,6 +35,7 @@ const benefits = [
 ];
 
 const HomeServices = () => {
+  usePageTracking();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDemoFullscreen, setIsDemoFullscreen] = useState(false);
   const isMobile = useIsMobile();
@@ -41,9 +43,10 @@ const HomeServices = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Home Services Websites"
-        description="Custom websites for plumbers, electricians, HVAC, and home service providers. Convert visitors into booked jobs with automated scheduling. Delivered in 5-10 days."
+        title="Websites for Plumbers, Electricians, HVAC"
+        description="Convert website visitors into booked jobs. Custom websites for home service providers with automated scheduling, follow-ups, and lead capture. Built in 5-10 days."
         canonical="/use-cases/home-services"
+        keywords="plumber website, electrician website, HVAC website, home services website, contractor website, service booking"
       />
       <Navbar />
       <BackButton />

@@ -14,6 +14,13 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import ProfessionalServices from "./pages/use-cases/ProfessionalServices";
 import HomeServices from "./pages/use-cases/HomeServices";
+import Resources from "./pages/resources/Resources";
+import HowTo from "./pages/resources/HowTo";
+import HowToGuide from "./pages/resources/HowToGuide";
+import Blog from "./pages/resources/Blog";
+import BlogCategory from "./pages/resources/BlogCategory";
+import BlogPost from "./pages/resources/BlogPost";
+import FAQ from "./pages/resources/FAQ";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +39,13 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/use-cases/professional-services" element={<ProfessionalServices />} />
             <Route path="/use-cases/home-services" element={<HomeServices />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/resources/how-to" element={<HowTo />} />
+            <Route path="/resources/how-to/:slug" element={<HowToGuide />} />
+            <Route path="/resources/blog" element={<Blog />} />
+            <Route path="/resources/blog/:category" element={<BlogCategory />} />
+            <Route path="/resources/blog/:category/:slug" element={<BlogPost />} />
+            <Route path="/resources/faq" element={<FAQ />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

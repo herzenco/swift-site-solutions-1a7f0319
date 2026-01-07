@@ -27,6 +27,9 @@ import {
   Tablet,
   Sparkles,
   Download,
+  FileText,
+  BookOpen,
+  Layers,
 } from "lucide-react";
 import { format, subDays } from "date-fns";
 import { User, Session } from "@supabase/supabase-js";
@@ -316,6 +319,38 @@ export default function Dashboard() {
     acc[device] = (acc[device] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
+
+  // Page category breakdown
+  const getPageCategory = (path: string): string => {
+    if (path === "/") return "Homepage";
+    if (path.startsWith("/resources/blog")) return "Blog";
+    if (path.startsWith("/resources/how-to")) return "How-To Guides";
+    if (path.startsWith("/resources")) return "Resources";
+    if (path.startsWith("/use-cases")) return "Use Cases";
+    return "Other";
+  };
+
+  const categoryCounts = pageSessions.reduce((acc, s) => {
+    const category = getPageCategory(s.page_path);
+    acc[category] = (acc[category] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Blog-specific metrics
+  const blogSessions = pageSessions.filter(s => s.page_path.startsWith("/resources/blog"));
+  const blogPageViews = blogSessions.length;
+  const avgBlogReadTime = blogSessions.filter(s => s.duration_seconds).length > 0
+    ? Math.round(blogSessions.filter(s => s.duration_seconds).reduce((sum, s) => sum + (s.duration_seconds || 0), 0) / blogSessions.filter(s => s.duration_seconds).length)
+    : 0;
+
+  // Top blog posts
+  const blogPageCounts = blogSessions.reduce((acc, s) => {
+    acc[s.page_path] = (acc[s.page_path] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  const topBlogPosts = Object.entries(blogPageCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
 
   // Top pages
   const pageCounts = pageSessions.reduce((acc, s) => {
@@ -1066,11 +1101,108 @@ export default function Dashboard() {
               </motion.div>
             </div>
 
+            {/* Fourth Row: Content Analytics */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+              {/* Page Categories */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.55 }}
+                className="bg-card border border-border rounded-xl p-6"
+              >
+                <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <Layers className="w-5 h-5 text-primary" />
+                  Traffic by Section
+                </h3>
+                {Object.keys(categoryCounts).length > 0 ? (
+                  <div className="space-y-3">
+                    {Object.entries(categoryCounts)
+                      .sort((a, b) => b[1] - a[1])
+                      .map(([category, count]) => {
+                        const percentage = totalSessions > 0 ? ((count / totalSessions) * 100).toFixed(1) : 0;
+                        return (
+                          <div key={category} className="flex items-center gap-3">
+                            <div className="flex-1 min-w-0">
+                              <div className="flex justify-between mb-1">
+                                <span className="text-sm font-medium text-foreground">{category}</span>
+                                <span className="text-sm text-muted-foreground">{percentage}%</span>
+                              </div>
+                              <div className="h-2 bg-muted rounded-full overflow-hidden">
+                                <div 
+                                  className="h-full bg-primary rounded-full transition-all"
+                                  style={{ width: `${percentage}%` }}
+                                />
+                              </div>
+                            </div>
+                            <span className="text-sm font-medium text-foreground w-12 text-right">{count}</span>
+                          </div>
+                        );
+                      })}
+                  </div>
+                ) : (
+                  <div className="h-[200px] flex items-center justify-center">
+                    <p className="text-muted-foreground">No data yet</p>
+                  </div>
+                )}
+              </motion.div>
+
+              {/* Blog Performance */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="bg-card border border-border rounded-xl p-6"
+              >
+                <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-primary" />
+                  Blog Performance
+                </h3>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div className="bg-muted/30 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <FileText className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-xs text-muted-foreground">Page Views</span>
+                    </div>
+                    <p className="text-2xl font-bold text-foreground">{blogPageViews}</p>
+                  </div>
+                  <div className="bg-muted/30 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Clock className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-xs text-muted-foreground">Avg. Read Time</span>
+                    </div>
+                    <p className="text-2xl font-bold text-foreground">
+                      {avgBlogReadTime > 60 
+                        ? `${Math.floor(avgBlogReadTime / 60)}m ${avgBlogReadTime % 60}s`
+                        : `${avgBlogReadTime}s`}
+                    </p>
+                  </div>
+                </div>
+                {topBlogPosts.length > 0 ? (
+                  <div className="space-y-2">
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Top Posts</p>
+                    {topBlogPosts.slice(0, 3).map(([path, count], index) => (
+                      <div key={path} className="flex items-center gap-2 text-sm">
+                        <span className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center text-xs font-medium text-primary">
+                          {index + 1}
+                        </span>
+                        <span className="flex-1 truncate text-foreground">
+                          {path.split('/').pop()?.replace(/-/g, ' ') || path}
+                        </span>
+                        <span className="text-muted-foreground">{count}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground text-center py-4">No blog visits yet</p>
+                )}
+              </motion.div>
+            </div>
+
             {/* Recent Page Visits Table */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.55 }}
+              transition={{ delay: 0.65 }}
               className="mt-8 bg-card border border-border rounded-xl overflow-hidden"
             >
               <div className="p-6 border-b border-border">
