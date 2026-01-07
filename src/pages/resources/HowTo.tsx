@@ -13,7 +13,7 @@ const guides = [
   { slug: "organize-your-forms", number: "05", title: "What Happens During the Build", description: "What goes on behind the scenes and what you can expect while we build your site." },
   { slug: "gather-your-assets", number: "06", title: "Review, Revisions, and Launch", description: "How feedback works, what to expect during revisions, and what happens on launch day." },
   { slug: "define-your-services", number: "07", title: "Life After Launch", description: "How to use your website as a system and get the most value from it over time." },
-  { slug: "prepare-for-launch", number: "08", title: "How to Prepare for Launch", description: "Final checklist and preparation steps before your new website goes live." },
+  { slug: "prepare-for-launch", number: "08", title: "Making Updates Without Breaking the System", description: "What kinds of updates make sense, how to think about changes, and when to leave things alone." },
 ];
 
 const benefits = [
