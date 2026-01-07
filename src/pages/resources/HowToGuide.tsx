@@ -184,6 +184,138 @@ const HowToGuide = () => {
         </section>
       </div>
     ),
+    "set-up-your-email": (
+      <div className="space-y-10">
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Overview</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            Before launching your website, you'll need a professional email address connected to your domain (for example: hello@yourbusiness.com).
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">This email will be used for:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Lead notifications</li>
+            <li>Booking confirmations</li>
+            <li>Internal alerts from your website</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            You don't need to configure servers or understand email infrastructure. You just need an active inbox and access.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 1: Decide Which Email You'll Use</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            We strongly recommend using a domain-based email address instead of Gmail, Yahoo, or Outlook.
+          </p>
+          
+          <h3 className="text-lg font-semibold mb-3">Good examples</h3>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-6">
+            <li>hello@yourbusiness.com</li>
+            <li>info@yourbusiness.com</li>
+            <li>contact@yourbusiness.com</li>
+          </ul>
+          
+          <h3 className="text-lg font-semibold mb-3">Avoid</h3>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Personal emails</li>
+            <li>Temporary inboxes</li>
+            <li>Shared logins without access control</li>
+          </ul>
+          
+          <p className="text-muted-foreground leading-relaxed">
+            If you already have a business email, great. If not, continue to the next step.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 2: Choose an Email Provider</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">We recommend one of the following:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Google Workspace (most common)</li>
+            <li>Microsoft 365</li>
+            <li>Zoho Mail</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            Google Workspace is preferred for reliability, deliverability, and ease of integration.
+          </p>
+          <p className="text-muted-foreground leading-relaxed bg-muted/50 p-4 rounded-lg">
+            <span className="font-semibold">Tip:</span> Email plans typically cost $6–$12 per month.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 3: Create the Inbox</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">Once you choose a provider:</p>
+          <ol className="list-decimal list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Create the email address you want to use</li>
+            <li>Make sure you can send and receive emails</li>
+            <li>Confirm you have login access</li>
+          </ol>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            At this stage, you do not need to connect anything to the website.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 4: Do Not Configure Website Email Settings Yet</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4 font-medium">This is important.</p>
+          <ul className="space-y-2 text-muted-foreground mb-4">
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Do not set up SMTP
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Do not connect forms
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Do not forward emails manually
+            </li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            We'll configure secure email delivery as part of the website launch to ensure messages are reliable and don't land in spam.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 5: Share Access When Requested</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            When your site is ready to go live, we'll ask for one of the following:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Temporary email login access, or</li>
+            <li>App-specific credentials provided by your email provider</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed mb-3">We will:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Connect website forms</li>
+            <li>Configure notifications</li>
+            <li>Verify delivery and reliability</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">You keep full control of the inbox at all times.</p>
+        </section>
+
+        <section className="bg-muted/30 p-6 rounded-xl border border-border/50">
+          <h2 className="text-2xl font-bold mb-4">Final Checklist</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">Before launch, make sure the following are complete:</p>
+          <ul className="space-y-3 text-foreground">
+            <li className="flex items-center gap-3">
+              <span className="text-primary">✓</span> Business email address created
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="text-primary">✓</span> Inbox can send and receive messages
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="text-primary">✓</span> Login access available
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="text-primary">✓</span> No manual configuration done
+            </li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed mt-6 font-medium">
+            Once this is complete, your website will be able to capture and deliver inquiries without issues.
+          </p>
+        </section>
+      </div>
+    ),
   };
 
   const defaultContent = (
@@ -254,11 +386,15 @@ const HowToGuide = () => {
             <p className="text-lg text-muted-foreground leading-relaxed">
               {guide.slug === "prepare-your-domain" 
                 ? "Your domain is the foundation of your website. Getting it set up correctly before we begin ensures a faster launch, fewer delays, and a smoother handoff once your site is live."
+                : guide.slug === "set-up-your-email"
+                ? "Your website relies on email to deliver inquiries, booking confirmations, and notifications. Setting this up correctly ensures nothing gets missed and your system works reliably from day one."
                 : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
             </p>
             <p className="text-muted-foreground leading-relaxed mt-4">
               {guide.slug === "prepare-your-domain" 
                 ? "This guide walks you through exactly what you need to do—and what you don't need to worry about—before we start building."
+                : guide.slug === "set-up-your-email"
+                ? "This guide explains what you need, what to avoid, and how we'll help once your site is ready."
                 : null}
             </p>
           </div>
