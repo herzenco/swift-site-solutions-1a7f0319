@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { usePageTracking } from "@/hooks/usePageTracking";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { SEO } from "@/components/SEO";
@@ -122,6 +123,7 @@ const blogPosts: BlogPost[] = [
 ];
 
 const BlogCategory = () => {
+  usePageTracking();
   const { category: categorySlug } = useParams<{ category: string }>();
 
   const categoryInfo = categoryMapping.find((c) => c.slug === categorySlug);
