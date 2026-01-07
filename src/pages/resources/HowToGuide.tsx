@@ -13,7 +13,7 @@ const guides = [
   { slug: "organize-your-forms", number: "05", title: "What Happens During the Build" },
   { slug: "gather-your-assets", number: "06", title: "Review, Revisions, and Launch" },
   { slug: "define-your-services", number: "07", title: "Life After Launch: Using Your Website as a System" },
-  { slug: "prepare-for-launch", number: "08", title: "How to Prepare for Launch" },
+  { slug: "prepare-for-launch", number: "08", title: "Making Updates Without Breaking the System" },
 ];
 
 const HowToGuide = () => {
@@ -51,7 +51,7 @@ const HowToGuide = () => {
     "organize-your-forms": "Once your inputs are confirmed, the build moves quickly and deliberately.",
     "gather-your-assets": "Your site is built. Now we refine, finalize, and go live.",
     "define-your-services": "Your site is live. Now it starts doing its real job.",
-    "prepare-for-launch": "Final checklist and preparation steps before launching your new website.",
+    "prepare-for-launch": "Your website is designed to work consistently over time.",
   };
 
   const guideDescription = guideDescriptions[guide.slug] || "Practical, step-by-step guidance for your website setup.";
@@ -943,6 +943,146 @@ const HowToGuide = () => {
         </section>
       </div>
     ),
+    "prepare-for-launch": (
+      <div className="space-y-10">
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Overview</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            After launch, it's normal to want to tweak things.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            The key is understanding the difference between:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Productive refinements, and</li>
+            <li>Changes that introduce friction or complexity</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            Xyren sites are built as systems. Small, intentional updates compound. Constant tinkering does not.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">What Makes Sense to Update</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            These are the types of updates that typically improve performance:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Clarifying messaging</li>
+            <li>Adjusting calls to action</li>
+            <li>Refining intake questions</li>
+            <li>Updating services or offerings</li>
+            <li>Swapping images or testimonials</li>
+            <li>Improving clarity based on real conversations</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            These changes are aligned with how the system is designed to evolve.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">What Usually Doesn't Help</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            Some changes feel productive but rarely improve outcomes:
+          </p>
+          <ul className="space-y-2 text-muted-foreground mb-4">
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Adding more pages "just in case"
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Rewriting copy repeatedly without new data
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Adding features because competitors have them
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Overloading forms with unnecessary questions
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Chasing trends instead of results
+            </li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            More complexity does not equal better conversion.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">How to Decide If a Change Is Worth Making</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            Before requesting or making a change, ask:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Does this make the next step clearer for visitors?</li>
+            <li>Does this improve lead quality or booking intent?</li>
+            <li>Is this based on real feedback or assumptions?</li>
+            <li>Will this simplify or complicate the experience?</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            If the change doesn't improve clarity or outcomes, it's probably not necessary.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Timing Matters</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            The best time to make changes is after:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>You've seen real traffic</li>
+            <li>You've had multiple conversations through the site</li>
+            <li>Patterns start to emerge in questions or objections</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            Early restraint leads to better decisions later.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Keeping the System Clean</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">Your website should feel:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Calm</li>
+            <li>Focused</li>
+            <li>Intentional</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            When too many changes stack up, performance suffers.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            The goal is a site that feels steady and reliable, not constantly in flux.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">When to Reach Out</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            If you're unsure whether a change makes sense:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Gather a few examples or patterns</li>
+            <li>Note what you're trying to improve</li>
+            <li>Focus on outcomes, not features</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            This makes any future refinements faster and more effective.
+          </p>
+        </section>
+
+        <section className="bg-muted/30 p-6 rounded-xl border border-border/50">
+          <h2 className="text-2xl font-bold mb-4">Final Thought</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            A strong website doesn't need constant attention.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            It needs clear intent, real feedback, and disciplined updates.
+          </p>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            That's how the system keeps working.
+          </p>
+        </section>
+      </div>
+    ),
   };
 
   const defaultContent = (
@@ -1025,7 +1165,9 @@ const HowToGuide = () => {
                 ? "Your site is built. Now we refine, finalize, and go live."
                 : guide.slug === "define-your-services"
                 ? "Your site is live. Now it starts doing its real job."
-                : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
+                : guide.slug === "prepare-for-launch"
+                ? "Your website is designed to work consistently over time."
+                : "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
             </p>
             <p className="text-muted-foreground leading-relaxed mt-4">
               {guide.slug === "prepare-your-domain" 
@@ -1042,6 +1184,8 @@ const HowToGuide = () => {
                 ? "This guide explains what happens once your preview is ready, how feedback works, and what to expect on launch day."
                 : guide.slug === "define-your-services"
                 ? "This guide explains how to use your Xyren site day-to-day, what to monitor, and how to get the most value from it over time."
+                : guide.slug === "prepare-for-launch"
+                ? "This guide explains what kinds of updates make sense, how to think about changes, and when it's best to leave things alone."
                 : null}
             </p>
           </div>
