@@ -10,17 +10,19 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-// Placeholder data - will be replaced with actual content
-const latestHowTo = [
-  { id: 1 },
-  { id: 2 },
-  { id: 3 },
+// How-To guides data (first 4 from Phase 1)
+const howToGuides = [
+  { slug: "prepare-your-domain", number: "01", title: "How to Prepare Your Domain", description: "Your domain is the foundation. Learn what to do before we start building.", featured: true },
+  { slug: "set-up-your-email", number: "02", title: "How to Set Up Your Email", description: "Configure professional email so inquiries and confirmations arrive reliably." },
+  { slug: "configure-scheduling", number: "03", title: "How to Configure Scheduling", description: "Define when and how visitors can book time with you." },
+  { slug: "plan-your-content", number: "04", title: "What We Need Before We Start", description: "The key inputs we collect upfront so your site can be built quickly and correctly." },
 ];
 
+// Latest blog posts
 const latestBlog = [
-  { id: 1 },
-  { id: 2 },
-  { id: 3 },
+  { id: "1", title: "Your Website Isn't a Marketing Asset. It's an Operating System.", category: "Website Systems", excerpt: "Why treating your website like a brochure misses the point—and what changes when you see it as infrastructure.", slug: "website-as-operating-system" },
+  { id: "4", title: "Why Most Service Business Websites Don't Convert (And It's Not the Design)", category: "Marketing & Conversion", excerpt: "The structural issues that kill conversions before a visitor ever reaches your contact page.", slug: "why-websites-dont-convert" },
+  { id: "8", title: "Where AI Actually Helps on a Website (And Where It Doesn't)", category: "Automation & AI", excerpt: "A practical breakdown of AI applications that add value versus the ones that just add noise.", slug: "where-ai-helps" },
 ];
 
 const faqItems = [
@@ -50,11 +52,6 @@ const faqItems = [
     answer: "Yes. There are no long-term commitments. You can cancel at any time.",
   },
 ];
-
-// Skeleton placeholder component
-const SkeletonBar = ({ width = "w-3/4", height = "h-4" }: { width?: string; height?: string }) => (
-  <div className={`${width} ${height} rounded bg-muted/40 animate-pulse`} />
-);
 
 const Resources = () => {
   return (
@@ -98,25 +95,37 @@ const Resources = () => {
             
             {/* Horizontal scroll container for larger cards */}
             <div className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
-              {latestHowTo.map((item, index) => (
-                <div
-                  key={item.id}
-                  className="group flex-shrink-0 w-[320px] md:w-[380px] p-8 rounded-2xl border border-border/50 bg-card/30 hover:bg-card/50 hover:border-border transition-all duration-300 snap-start"
+              {howToGuides.map((guide) => (
+                <Link
+                  key={guide.number}
+                  to={`/resources/how-to/${guide.slug}`}
+                  className={`group flex-shrink-0 w-[320px] md:w-[380px] p-8 rounded-2xl border transition-all duration-300 snap-start flex flex-col ${
+                    guide.featured
+                      ? 'border-primary/40 bg-primary/[0.03] hover:bg-primary/[0.06] hover:border-primary/60'
+                      : 'border-border/50 bg-card/30 hover:bg-card/50 hover:border-border'
+                  }`}
                 >
+                  {guide.featured && (
+                    <span className="absolute -top-2.5 left-4 px-2 py-0.5 text-[10px] font-medium tracking-wide uppercase bg-primary text-primary-foreground rounded">
+                      Recommended first
+                    </span>
+                  )}
                   {/* Step number */}
-                  <span className="text-xs font-mono text-muted-foreground/60 tracking-widest mb-6 block">
-                    {String(index + 1).padStart(2, '0')}
+                  <span className="text-xs font-mono text-primary/60 tracking-widest mb-4 block">
+                    {guide.number}
                   </span>
                   
-                  {/* Skeleton placeholders */}
-                  <div className="space-y-4">
-                    <SkeletonBar width="w-4/5" height="h-5" />
-                    <div className="space-y-2 pt-2">
-                      <SkeletonBar width="w-full" height="h-3" />
-                      <SkeletonBar width="w-2/3" height="h-3" />
-                    </div>
-                  </div>
-                </div>
+                  <h3 className="text-lg font-semibold mb-3 group-hover:text-primary transition-colors">
+                    {guide.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed flex-grow">
+                    {guide.description}
+                  </p>
+                  <span className="inline-flex items-center text-sm text-primary mt-4">
+                    Read guide
+                    <ArrowRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  </span>
+                </Link>
               ))}
             </div>
           </div>
@@ -141,18 +150,25 @@ const Resources = () => {
             
             {/* Tighter grid with smaller cards */}
             <div className="grid md:grid-cols-3 gap-4">
-              {latestBlog.map((item) => (
-                <div
-                  key={item.id}
+              {latestBlog.map((post) => (
+                <Link
+                  key={post.id}
+                  to={`/resources/blog/${post.slug}`}
                   className="group p-5 rounded-xl border border-border/30 bg-card/20 hover:bg-card/40 hover:border-border/50 transition-all duration-300"
                 >
-                  {/* Skeleton placeholders - editorial style */}
-                  <div className="space-y-3">
-                    <SkeletonBar width="w-3/4" height="h-4" />
-                    <SkeletonBar width="w-full" height="h-3" />
-                    <SkeletonBar width="w-1/2" height="h-3" />
+                  <div className="flex flex-col gap-3 h-full">
+                    <span className="text-xs font-medium text-primary/70">{post.category}</span>
+                    <h3 className="text-base font-semibold leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                      {post.excerpt}
+                    </p>
+                    <span className="inline-flex items-center text-sm text-primary mt-auto pt-2">
+                      Read article →
+                    </span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
