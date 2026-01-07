@@ -334,43 +334,189 @@ The cheapest website is often the most expensive one to live with.`,
     categorySlug: "website-systems",
     excerpt: "How service businesses are moving beyond one-off builds toward integrated systems that compound over time.",
     slug: "shift-to-website-systems",
-    readTime: "5 min read",
-    content: `The website industry is going through a quiet revolution.
+    readTime: "10 min read",
+    content: `For years, the goal was simple:
 
-For decades, the model was simple: hire a designer, get a custom website, launch it, and maybe update it every few years.
+*"Get a custom website."*
 
-That model is dying.
+Custom meant unique.
+Unique meant better.
+Better meant more leads.
 
-## The Old Way
+That assumption no longer holds.
 
-Custom websites were treated as projects:
-- Big upfront investment
-- Launch and forget
-- Redesign every 3-5 years
-- No connection to operations
+Today, the businesses growing the fastest aren't winning because their websites look different. They're winning because their websites work differently.
 
-## The New Way
+This is the shift from custom websites to website systems.
 
-Website systems are treated as infrastructure:
-- Continuous optimization
-- Integrated with booking, CRM, and follow-up
-- Evolving based on data
-- Core to how the business operates
+## Why "Custom" Used to Matter
 
-## Why This Matters
+Custom websites became popular for good reasons.
 
-When your website is a project, it depreciates. The moment it launches, it starts getting outdated.
+They promised:
 
-When your website is a system, it appreciates. Every optimization, every integration, every improvement compounds over time.
+- Visual differentiation
+- Flexibility
+- Control
+- A site tailored to your brand
 
-## The Compounding Effect
+In a time when most websites were generic templates, custom builds felt like a competitive advantage.
 
-Month 1: Basic booking integration saves 5 hours/week
-Month 3: Lead scoring identifies hot prospects automatically
-Month 6: Automated follow-up recovers 30% of abandoned bookings
-Month 12: The system generates leads while you sleep
+But the internet has matured—and so have user expectations.
 
-This is the shift. From one-time projects to compounding systems.`,
+## Where Custom Websites Start to Break Down
+
+As businesses grow, custom websites often become liabilities instead of assets.
+
+### They're Built Once, Then Frozen
+
+Most custom sites are delivered as finished products.
+After launch:
+
+- Updates feel risky
+- Changes require a developer
+- Small improvements become "projects"
+
+Instead of evolving, the site stagnates.
+
+### Every Feature Is Reinvented
+
+Each custom build starts from scratch:
+
+- Contact forms
+- Booking flows
+- Lead routing
+- Follow-ups
+
+That flexibility sounds great—until you realize it creates inconsistency, bugs, and maintenance overhead.
+
+### Optimization Becomes Hard
+
+When everything is custom, nothing is standardized.
+That makes it difficult to:
+
+- Improve conversion rates
+- Measure performance consistently
+- Apply learnings across pages
+
+Every change feels expensive, slow, and uncertain.
+
+### The Site Stops Supporting Operations
+
+Custom websites often focus on aesthetics first.
+Operations come second—if at all.
+
+The result:
+
+- Leads arrive without context
+- Scheduling is manual
+- Follow-ups are inconsistent
+- The site generates work instead of reducing it
+
+## What a Website System Does Differently
+
+A website system is not anti-customization.
+
+It's pro-structure.
+
+Instead of reinventing everything, it's built around proven patterns that align with how service businesses actually operate.
+
+### Systems Are Designed Around Outcomes
+
+A website system starts with questions like:
+
+- What is the primary action?
+- What information should be collected upfront?
+- How does this connect to scheduling and follow-up?
+- What happens after the form is submitted?
+
+Design serves function, not the other way around.
+
+### Components Are Reusable and Reliable
+
+Rather than one-off pages, systems use repeatable components:
+
+- Booking flows
+- Intake forms
+- Confirmation logic
+- Reminder sequences
+
+These aren't limitations—they're stability.
+
+### Improvements Compound Over Time
+
+Because the structure stays consistent:
+
+- Optimizations are easier
+- Performance is easier to measure
+- Changes are safer to make
+
+Each improvement benefits the entire system, not just a single page.
+
+### The Website Becomes Operational Infrastructure
+
+Instead of being a brochure, the site becomes part of how the business runs:
+
+- It qualifies leads
+- Schedules conversations
+- Sets expectations
+- Reduces admin work
+- Protects time
+
+The website stops being something you manage and starts being something that supports you.
+
+## This Isn't About Templates
+
+A website system isn't a cookie-cutter template.
+
+It's a framework.
+
+Visual design, messaging, and branding are still tailored—but they live inside a structure that's been proven to work.
+
+Think of it like this:
+
+- Custom websites optimize for uniqueness
+- Website systems optimize for performance and reliability
+
+One prioritizes expression.
+The other prioritizes outcomes.
+
+## Why Service Businesses Are Leading This Shift
+
+Service businesses feel this change first because:
+
+- Their time is finite
+- Their sales process is conversational
+- Their margins depend on efficiency
+- Their growth is limited by capacity
+
+A website that creates friction directly impacts revenue.
+
+Systems reduce friction.
+
+## The New Competitive Advantage
+
+Today, the advantage isn't having a website no one else has.
+
+It's having a website that:
+
+- Captures intent cleanly
+- Routes inquiries correctly
+- Prepares both sides for the conversation
+- Scales without adding overhead
+
+That's not a design problem.
+It's a systems problem.
+
+## Final Thought
+
+Custom websites aren't disappearing—but their role is changing.
+
+The businesses that scale sustainably are moving away from one-off builds and toward systems that evolve, improve, and compound value over time.
+
+In that shift, the website stops being an expense.
+
+It becomes infrastructure.`,
   },
   // Marketing & Conversion
   {
