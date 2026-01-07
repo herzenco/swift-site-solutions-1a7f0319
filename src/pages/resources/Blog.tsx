@@ -23,6 +23,7 @@ interface BlogPost {
   category: Category;
   excerpt: string;
   slug: string;
+  categorySlug: string;
 }
 
 interface CategorySection {
@@ -62,6 +63,7 @@ const blogPosts: BlogPost[] = [
     category: "Website Systems",
     excerpt: "Why treating your website like a brochure misses the point—and what changes when you see it as infrastructure.",
     slug: "website-as-operating-system",
+    categorySlug: "website-systems",
   },
   {
     id: "2",
@@ -69,6 +71,7 @@ const blogPosts: BlogPost[] = [
     category: "Website Systems",
     excerpt: "A breakdown of hidden costs, missed opportunities, and what you're actually paying for when you choose friction over flow.",
     slug: "cost-of-just-a-website",
+    categorySlug: "website-systems",
   },
   {
     id: "3",
@@ -76,6 +79,7 @@ const blogPosts: BlogPost[] = [
     category: "Website Systems",
     excerpt: "How service businesses are moving beyond one-off builds toward integrated systems that compound over time.",
     slug: "shift-to-website-systems",
+    categorySlug: "website-systems",
   },
   // Marketing & Conversion
   {
@@ -84,6 +88,7 @@ const blogPosts: BlogPost[] = [
     category: "Marketing & Conversion",
     excerpt: "The structural issues that kill conversions before a visitor ever reaches your contact page.",
     slug: "why-websites-dont-convert",
+    categorySlug: "marketing-conversion",
   },
   {
     id: "5",
@@ -91,6 +96,7 @@ const blogPosts: BlogPost[] = [
     category: "Marketing & Conversion",
     excerpt: "The invisible journey from first visit to booked appointment—and the friction points most businesses never see.",
     slug: "before-booking-a-call",
+    categorySlug: "marketing-conversion",
   },
   {
     id: "6",
@@ -98,6 +104,7 @@ const blogPosts: BlogPost[] = [
     category: "Marketing & Conversion",
     excerpt: "The math behind why doubling traffic to a 1% conversion site still leaves you with the same problem.",
     slug: "traffic-wont-fix-funnel",
+    categorySlug: "marketing-conversion",
   },
   {
     id: "7",
@@ -105,6 +112,7 @@ const blogPosts: BlogPost[] = [
     category: "Marketing & Conversion",
     excerpt: "How your website either pre-qualifies leads or forces you to start every call from scratch.",
     slug: "trust-before-conversation",
+    categorySlug: "marketing-conversion",
   },
   // Automation & AI
   {
@@ -113,6 +121,7 @@ const blogPosts: BlogPost[] = [
     category: "Automation & AI",
     excerpt: "A practical breakdown of AI applications that add value versus the ones that just add noise.",
     slug: "where-ai-helps",
+    categorySlug: "automation-ai",
   },
   {
     id: "9",
@@ -120,6 +129,7 @@ const blogPosts: BlogPost[] = [
     category: "Automation & AI",
     excerpt: "The unsexy backend systems that make lead capture, routing, and follow-up run without manual effort.",
     slug: "quiet-automation-stack",
+    categorySlug: "automation-ai",
   },
   // Trends & Strategy
   {
@@ -128,6 +138,7 @@ const blogPosts: BlogPost[] = [
     category: "Trends & Strategy",
     excerpt: "Cutting through the buzzwords to define what actually matters in website strategy this year.",
     slug: "modern-websites-2026",
+    categorySlug: "trends-strategy",
   },
 ];
 
@@ -202,8 +213,9 @@ const CategoryCarousel = ({
           style={{ scrollSnapType: 'x mandatory' }}
         >
           {posts.slice(0, 5).map((post) => (
-            <article
+            <Link
               key={post.id}
+              to={`/resources/blog/${post.categorySlug}/${post.slug}`}
               className="group/card flex-shrink-0 w-[320px] p-5 rounded-xl border border-border/30 bg-card/20 hover:border-border/60 hover:bg-card/40 transition-all duration-300"
               style={{ scrollSnapAlign: 'start' }}
             >
@@ -233,7 +245,7 @@ const CategoryCarousel = ({
                   Read article →
                 </span>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
 
@@ -379,8 +391,9 @@ const Blog = () => {
               ) : (
                 <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
                   {searchResults.map((post) => (
-                    <article
+                    <Link
                       key={post.id}
+                      to={`/resources/blog/${post.categorySlug}/${post.slug}`}
                       className="group p-5 rounded-xl border border-border/30 bg-card/20 hover:border-border/60 hover:bg-card/40 transition-all duration-300"
                     >
                       <div className="flex flex-col gap-3 h-full">
@@ -402,7 +415,7 @@ const Blog = () => {
                           Read article →
                         </span>
                       </div>
-                    </article>
+                    </Link>
                   ))}
                 </div>
               )}
