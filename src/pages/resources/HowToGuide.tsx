@@ -59,127 +59,168 @@ const HowToGuide = () => {
   // Guide content mapping
   const guideContent: Record<string, React.ReactNode> = {
     "prepare-your-domain": (
-      <>
-        <h2>Overview</h2>
-        <p>
-          Before we can launch your website, you'll need access to your domain (yourwebsite.com). This does not mean you need technical expertise or to configure anything yourself. It simply ensures you own the domain and can connect it when your site is ready.
-        </p>
-        <p>
-          If you already have a domain, great. If not, we'll help you choose and purchase one correctly.
-        </p>
+      <div className="space-y-10">
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Overview</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            Before we can launch your website, you'll need access to your domain (yourwebsite.com). This does not mean you need technical expertise or to configure anything yourself. It simply ensures you own the domain and can connect it when your site is ready.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            If you already have a domain, great. If not, we'll help you choose and purchase one correctly.
+          </p>
+        </section>
 
-        <h2>Step 1: Choose Your Domain</h2>
-        <p>If you don't already own a domain, start here.</p>
-        <h3>Best practices:</h3>
-        <ul>
-          <li>Keep it simple and readable</li>
-          <li>Avoid hyphens, numbers, or extra words</li>
-          <li>Use .com whenever possible</li>
-          <li>Match your business name or primary service</li>
-        </ul>
-        <h3>Examples</h3>
-        <ul>
-          <li>smithconstruction.com</li>
-          <li>atlasadvisory.com</li>
-          <li>greenvalleylandscaping.com</li>
-        </ul>
-        <p>
-          If your exact name isn't available, we recommend small, intentional variations rather than forcing complexity.
-        </p>
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 1: Choose Your Domain</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">If you don't already own a domain, start here.</p>
+          
+          <h3 className="text-lg font-semibold mb-3">Best practices:</h3>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-6">
+            <li>Keep it simple and readable</li>
+            <li>Avoid hyphens, numbers, or extra words</li>
+            <li>Use .com whenever possible</li>
+            <li>Match your business name or primary service</li>
+          </ul>
+          
+          <h3 className="text-lg font-semibold mb-3">Examples</h3>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>smithconstruction.com</li>
+            <li>atlasadvisory.com</li>
+            <li>greenvalleylandscaping.com</li>
+          </ul>
+          
+          <p className="text-muted-foreground leading-relaxed">
+            If your exact name isn't available, we recommend small, intentional variations rather than forcing complexity.
+          </p>
+        </section>
 
-        <h2>Step 2: Purchase the Domain</h2>
-        <p>We recommend using one of the following registrars:</p>
-        <ul>
-          <li>Google Domains</li>
-          <li>Namecheap</li>
-          <li>GoDaddy</li>
-        </ul>
-        <p>
-          Purchase the domain under your name or business, not a third party. This ensures you retain full ownership.
-        </p>
-        <p>
-          <strong>Tip:</strong> Domain purchases typically cost $10–$20 per year.
-        </p>
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 2: Purchase the Domain</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">We recommend using one of the following registrars:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Google Domains</li>
+            <li>Namecheap</li>
+            <li>GoDaddy</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            Purchase the domain under your name or business, not a third party. This ensures you retain full ownership.
+          </p>
+          <p className="text-muted-foreground leading-relaxed bg-muted/50 p-4 rounded-lg">
+            <span className="font-semibold">Tip:</span> Domain purchases typically cost $10–$20 per year.
+          </p>
+        </section>
 
-        <h2>Step 3: Ensure You Have Login Access</h2>
-        <p>Once purchased, make sure you can log in to your domain provider.</p>
-        <p>You will need:</p>
-        <ul>
-          <li>The email address tied to the account</li>
-          <li>The account password</li>
-        </ul>
-        <p>
-          If someone else (a previous developer, agency, or employee) purchased the domain for you, ask them to either:
-        </p>
-        <ul>
-          <li>Transfer ownership, or</li>
-          <li>Grant you admin access</li>
-        </ul>
-        <p>Without this, we can't connect your site.</p>
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 3: Ensure You Have Login Access</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">Once purchased, make sure you can log in to your domain provider.</p>
+          <p className="text-muted-foreground leading-relaxed mb-3">You will need:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>The email address tied to the account</li>
+            <li>The account password</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            If someone else (a previous developer, agency, or employee) purchased the domain for you, ask them to either:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Transfer ownership, or</li>
+            <li>Grant you admin access</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">Without this, we can't connect your site.</p>
+        </section>
 
-        <h2>Step 4: Do Not Change DNS Settings Yet</h2>
-        <p>This is important.</p>
-        <ul>
-          <li>❌ Do not edit DNS records</li>
-          <li>❌ Do not point the domain anywhere</li>
-          <li>❌ Do not try to "connect" it yourself</li>
-        </ul>
-        <p>
-          We'll handle all technical configuration when your site is ready to go live. Making changes early can cause downtime or delays.
-        </p>
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 4: Do Not Change DNS Settings Yet</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4 font-medium">This is important.</p>
+          <ul className="space-y-2 text-muted-foreground mb-4">
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Do not edit DNS records
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Do not point the domain anywhere
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Do not try to "connect" it yourself
+            </li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            We'll handle all technical configuration when your site is ready to go live. Making changes early can cause downtime or delays.
+          </p>
+        </section>
 
-        <h2>Step 5: Share Access When Requested</h2>
-        <p>
-          When your website is complete and ready for launch, we'll ask for temporary access or specific DNS permissions.
-        </p>
-        <p>At that point, we will:</p>
-        <ul>
-          <li>Connect the domain</li>
-          <li>Verify security (SSL)</li>
-          <li>Ensure everything works correctly before going live</li>
-        </ul>
-        <p>You remain the owner of the domain at all times.</p>
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 5: Share Access When Requested</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            When your website is complete and ready for launch, we'll ask for temporary access or specific DNS permissions.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">At that point, we will:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Connect the domain</li>
+            <li>Verify security (SSL)</li>
+            <li>Ensure everything works correctly before going live</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">You remain the owner of the domain at all times.</p>
+        </section>
 
-        <h2>Final Checklist</h2>
-        <p>Before we begin building, make sure you can check these off:</p>
-        <ul>
-          <li>✅ Domain name chosen</li>
-          <li>✅ Domain purchased under your ownership</li>
-          <li>✅ Login access confirmed</li>
-          <li>✅ No DNS changes made</li>
-        </ul>
-        <p>Once this is done, you're ready to move forward without delays.</p>
-      </>
+        <section className="bg-muted/30 p-6 rounded-xl border border-border/50">
+          <h2 className="text-2xl font-bold mb-4">Final Checklist</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">Before we begin building, make sure you can check these off:</p>
+          <ul className="space-y-3 text-foreground">
+            <li className="flex items-center gap-3">
+              <span className="text-primary">✓</span> Domain name chosen
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="text-primary">✓</span> Domain purchased under your ownership
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="text-primary">✓</span> Login access confirmed
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="text-primary">✓</span> No DNS changes made
+            </li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed mt-6 font-medium">
+            Once this is done, you're ready to move forward without delays.
+          </p>
+        </section>
+      </div>
     ),
   };
 
   const defaultContent = (
-    <>
-      <h2>Overview</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-      </p>
+    <div className="space-y-10">
+      <section>
+        <h2 className="text-2xl font-bold mb-4">Overview</h2>
+        <p className="text-muted-foreground leading-relaxed">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        </p>
+      </section>
       
-      <h2>Step 1: Getting Started</h2>
-      <p>
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
-      </p>
-      <ul>
-        <li>Lorem ipsum dolor sit amet consectetur</li>
-        <li>Adipiscing elit sed do eiusmod tempor</li>
-        <li>Incididunt ut labore et dolore magna</li>
-      </ul>
+      <section>
+        <h2 className="text-2xl font-bold mb-4">Step 1: Getting Started</h2>
+        <p className="text-muted-foreground leading-relaxed mb-4">
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+          <li>Lorem ipsum dolor sit amet consectetur</li>
+          <li>Adipiscing elit sed do eiusmod tempor</li>
+          <li>Incididunt ut labore et dolore magna</li>
+        </ul>
+      </section>
 
-      <h2>Step 2: Configuration</h2>
-      <p>
-        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.
-      </p>
+      <section>
+        <h2 className="text-2xl font-bold mb-4">Step 2: Configuration</h2>
+        <p className="text-muted-foreground leading-relaxed">
+          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+        </p>
+      </section>
 
-      <h2>Step 3: Final Steps</h2>
-      <p>
-        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
-      </p>
-    </>
+      <section>
+        <h2 className="text-2xl font-bold mb-4">Step 3: Final Steps</h2>
+        <p className="text-muted-foreground leading-relaxed">
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores.
+        </p>
+      </section>
+    </div>
   );
 
   return (
@@ -226,9 +267,7 @@ const HowToGuide = () => {
         {/* Content Section */}
         <section className="pb-16 px-4">
           <div className="max-w-3xl mx-auto">
-            <div className="prose prose-lg dark:prose-invert max-w-none">
-              {guideContent[guide.slug] || defaultContent}
-            </div>
+            {guideContent[guide.slug] || defaultContent}
           </div>
         </section>
 
