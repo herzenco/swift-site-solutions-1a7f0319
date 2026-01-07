@@ -905,6 +905,28 @@ const renderHighlightedTitle = (title: string) => {
   });
 };
 
+// Helper function to render inline text formatting
+// Handles *text* for italic and **text** for bold/italic
+const renderFormattedText = (text: string) => {
+  // First handle **text** (double asterisks) - render as italic
+  const parts = text.split(/\*\*(.+?)\*\*/g);
+  
+  return parts.map((part, index) => {
+    if (index % 2 === 1) {
+      // This is text that was between **
+      return <em key={index} className="italic text-foreground/90">{part}</em>;
+    }
+    // Handle single *text* for italic as well
+    const subParts = part.split(/\*(.+?)\*/g);
+    return subParts.map((subPart, subIndex) => {
+      if (subIndex % 2 === 1) {
+        return <em key={`${index}-${subIndex}`} className="italic text-foreground/90">{subPart}</em>;
+      }
+      return <span key={`${index}-${subIndex}`}>{subPart}</span>;
+    });
+  });
+};
+
 const BlogPost = () => {
   usePageTracking();
   const { category, slug } = useParams<{ category: string; slug: string }>();
@@ -1012,6 +1034,13 @@ const BlogPost = () => {
                     </h2>
                   );
                 }
+                if (paragraph.startsWith('### ')) {
+                  return (
+                    <h3 key={idx} className="text-lg font-semibold mt-8 mb-2">
+                      {paragraph.replace('### ', '')}
+                    </h3>
+                  );
+                }
                 if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
                   return (
                     <h3 key={idx} className="text-lg font-semibold mt-8 mb-2">
@@ -1019,21 +1048,23 @@ const BlogPost = () => {
                     </h3>
                   );
                 }
-                if (paragraph.startsWith('- ')) {
-                  const items = paragraph.split('\n').filter(line => line.startsWith('- '));
+                if (paragraph.startsWith('- ') || paragraph.startsWith('1. ')) {
+                  const items = paragraph.split('\n').filter(line => line.startsWith('- ') || /^\d+\.\s/.test(line));
+                  const isOrdered = paragraph.startsWith('1. ');
+                  const ListTag = isOrdered ? 'ol' : 'ul';
                   return (
-                    <ul key={idx} className="list-disc pl-6 my-4 space-y-2">
+                    <ListTag key={idx} className={`${isOrdered ? 'list-decimal' : 'list-disc'} pl-6 my-4 space-y-2`}>
                       {items.map((item, i) => (
                         <li key={i} className="text-muted-foreground">
-                          {item.replace('- ', '')}
+                          {renderFormattedText(item.replace(/^(-|\d+\.)\s/, ''))}
                         </li>
                       ))}
-                    </ul>
+                    </ListTag>
                   );
                 }
                 return (
                   <p key={idx} className="text-muted-foreground leading-relaxed my-4">
-                    {paragraph}
+                    {renderFormattedText(paragraph)}
                   </p>
                 );
               })}
