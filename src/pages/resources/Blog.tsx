@@ -309,7 +309,7 @@ const Blog = () => {
         <section className="pt-32 pb-16 px-4">
           <div className="max-w-5xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-              Insights on Websites, Marketing, and Automation
+              Insights on <span className="text-gradient">Websites, Marketing, and Automation</span>
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl">
               Strategic thinking on how modern websites drive growth, efficiency, and leverage for service businesses.
