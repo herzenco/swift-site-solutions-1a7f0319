@@ -24,7 +24,7 @@ const blogPosts: BlogPost[] = [
   // Website Systems
   {
     id: "1",
-    title: "Your Website Isn't a Marketing Asset. It's an Operating System.",
+    title: "Your Website Isn't a Marketing Asset. It's an ||Operating System||.",
     category: "Website Systems",
     categorySlug: "website-systems",
     excerpt: "Why treating your website like a brochure misses the point—and what changes when you see it as infrastructure.",
@@ -165,7 +165,7 @@ They quietly run it.`,
   },
   {
     id: "2",
-    title: "The Real Cost of 'Just a Website' vs. a Booking System",
+    title: "The Real Cost of 'Just a Website' vs. a ||Booking System||",
     category: "Website Systems",
     categorySlug: "website-systems",
     excerpt: "A breakdown of hidden costs, missed opportunities, and what you're actually paying for when you choose friction over flow.",
@@ -329,7 +329,7 @@ The cheapest website is often the most expensive one to live with.`,
   },
   {
     id: "3",
-    title: "The Shift From Custom Websites to Website Systems",
+    title: "The Shift From Custom Websites to ||Website Systems||",
     category: "Website Systems",
     categorySlug: "website-systems",
     excerpt: "How service businesses are moving beyond one-off builds toward integrated systems that compound over time.",
@@ -521,7 +521,7 @@ It becomes infrastructure.`,
   // Marketing & Conversion
   {
     id: "4",
-    title: "Why Most Service Business Websites Don't Convert (And It's Not the Design)",
+    title: "Why Most Service Business Websites ||Don't Convert|| (And It's Not the Design)",
     category: "Marketing & Conversion",
     categorySlug: "marketing-conversion",
     excerpt: "The structural issues that kill conversions before a visitor ever reaches your contact page.",
@@ -575,7 +575,7 @@ That's where conversions live.`,
   },
   {
     id: "5",
-    title: "What Happens Before Someone Books a Call",
+    title: "What Happens ||Before Someone Books|| a Call",
     category: "Marketing & Conversion",
     categorySlug: "marketing-conversion",
     excerpt: "The invisible journey from first visit to booked appointment—and the friction points most businesses never see.",
@@ -621,7 +621,7 @@ Each stage has specific friction points and specific solutions. The businesses t
   },
   {
     id: "6",
-    title: "Why More Traffic Won't Fix a Broken Website Funnel",
+    title: "Why More Traffic ||Won't Fix|| a Broken Website Funnel",
     category: "Marketing & Conversion",
     categorySlug: "marketing-conversion",
     excerpt: "The math behind why doubling traffic to a 1% conversion site still leaves you with the same problem.",
@@ -673,7 +673,7 @@ The businesses that understand this outperform their competitors by orders of ma
   },
   {
     id: "7",
-    title: "Trust Is Built Before the First Conversation",
+    title: "||Trust|| Is Built Before the First Conversation",
     category: "Marketing & Conversion",
     categorySlug: "marketing-conversion",
     excerpt: "How your website either pre-qualifies leads or forces you to start every call from scratch.",
@@ -735,7 +735,7 @@ Trust isn't soft—it's the hardest working asset on your website.`,
   // Automation & AI
   {
     id: "8",
-    title: "Where AI Actually Helps on a Website (And Where It Doesn't)",
+    title: "Where ||AI Actually Helps|| on a Website (And Where It Doesn't)",
     category: "Automation & AI",
     categorySlug: "automation-ai",
     excerpt: "A practical breakdown of AI applications that add value versus the ones that just add noise.",
@@ -784,7 +784,7 @@ Start with the problem. Then evaluate the solution.`,
   },
   {
     id: "9",
-    title: "The Quiet Automation Stack Behind High-Performing Service Websites",
+    title: "The Quiet ||Automation Stack|| Behind High-Performing Service Websites",
     category: "Automation & AI",
     categorySlug: "automation-ai",
     excerpt: "The unsexy backend systems that make lead capture, routing, and follow-up run without manual effort.",
@@ -832,7 +832,7 @@ That's the quiet advantage.`,
   // Trends & Strategy
   {
     id: "10",
-    title: "What 'Modern' Websites Actually Mean in 2026",
+    title: "What ||'Modern' Websites|| Actually Mean in 2026",
     category: "Trends & Strategy",
     categorySlug: "trends-strategy",
     excerpt: "Cutting through the buzzwords to define what actually matters in website strategy this year.",
@@ -891,6 +891,19 @@ Can you measure your website's impact on revenue?
 If yes, it might be modern. If no, it's probably just a brochure with better fonts.`,
   },
 ];
+
+// Helper function to render title with gradient highlights
+// Use ||text|| syntax in titles to highlight parts with gradient
+const renderHighlightedTitle = (title: string) => {
+  const parts = title.split(/\|\|(.+?)\|\|/);
+  return parts.map((part, index) => {
+    // Odd indices are the highlighted parts (inside ||)
+    if (index % 2 === 1) {
+      return <span key={index} className="text-gradient">{part}</span>;
+    }
+    return <span key={index}>{part}</span>;
+  });
+};
 
 const BlogPost = () => {
   usePageTracking();
@@ -981,7 +994,7 @@ const BlogPost = () => {
               </div>
               
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6 leading-tight">
-                <span className="text-gradient">{post.title}</span>
+                {renderHighlightedTitle(post.title)}
               </h1>
               
               <p className="text-xl text-muted-foreground leading-relaxed">
