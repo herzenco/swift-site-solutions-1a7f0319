@@ -730,58 +730,61 @@ The businesses that scale sustainably fix the system first—then turn up demand
     excerpt: "How your website either pre-qualifies leads or forces you to start every call from scratch.",
     slug: "trust-before-conversation",
     readTime: "5 min read",
-    content: `Every sales call starts in one of two places:
+    content: `Trust isn't created on the call.
 
-**Position A:** "So, tell me about your company..."
+The call only confirms what the website has already communicated.
 
-**Position B:** "I've seen your work, I understand your process, I think we're a good fit—let's talk specifics."
+## Trust Is Accumulated, Not Claimed
 
-The difference? What happened on your website before the call.
+Statements like:
 
-## The Trust Deficit
+- *"We're trusted"*
+- *"We're experts"*
+- *"We deliver results"*
 
-When your website doesn't build trust, every call starts at zero. You spend the first 15 minutes:
-- Explaining who you are
-- Proving your credibility
-- Overcoming basic objections
+Don't build trust on their own.
 
-That's exhausting. And it doesn't scale.
+Trust is built through:
 
-## The Trust Surplus
+- Clarity
+- Specificity
+- Process
+- Consistency
 
-When your website builds trust effectively, prospects arrive pre-sold:
-- They've seen your results
-- They understand your process
-- They've already decided you're credible
+## The Website Sets the Tone
 
-Now your calls are about fit and specifics, not convincing and proving.
+Before speaking to you, prospects notice:
 
-## How to Build Trust Before the Call
+- How clearly you explain what you do
+- Whether your process feels intentional
+- If the site feels structured or improvised
+- Whether expectations are set upfront
 
-**1. Show Real Results**
-Not "we help businesses grow." But "we helped [Company] increase bookings by 47% in 90 days."
+A polished website without clarity feels risky.
+A clear website feels professional—even without flash.
 
-**2. Reveal Your Process**
-Mystery creates doubt. Transparency creates confidence.
+## Pre-Qualification Builds Mutual Respect
 
-**3. Use Social Proof Strategically**
-Testimonials with names, photos, and specific outcomes. Not generic praise.
+When a site asks thoughtful questions and explains next steps:
 
-**4. Address Objections Proactively**
-FAQ sections, guarantee language, risk reversal.
+- Prospects arrive prepared
+- Conversations start at a higher level
+- Both sides feel respected
 
-**5. Demonstrate Expertise**
-Content that shows you understand their problems deeply.
+That's trust in action.
 
-## The ROI of Trust
+## The Goal Isn't to Convince — It's to Align
 
-Pre-sold prospects:
-- Convert at higher rates
-- Pay higher prices
-- Require less convincing
-- Refer more readily
+High-trust websites don't persuade everyone.
 
-Trust isn't soft—it's the hardest working asset on your website.`,
+They:
+
+- Attract the right people
+- Repel poor fits
+- Set clear boundaries
+- Prepare both sides for a productive conversation
+
+That alignment is what makes sales feel easy.`,
   },
   // Automation & AI
   {
