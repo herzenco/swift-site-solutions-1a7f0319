@@ -603,43 +603,66 @@ Design supports that system—but it's not the system itself.`,
     excerpt: "The invisible journey from first visit to booked appointment—and the friction points most businesses never see.",
     slug: "before-booking-a-call",
     readTime: "5 min read",
-    content: `Most service businesses obsess over what happens during the sales call.
+    content: `A booked call is never the first step.
 
-But the call is just the tip of the iceberg. What happens before determines everything.
+It's the result of a quiet decision-making process that happens long before someone touches your calendar.
 
-## The Invisible Journey
+Understanding that invisible journey is the key to improving conversion.
 
-**Stage 1: Discovery (0-10 seconds)**
-- "Is this relevant to me?"
-- "Does this look legitimate?"
-- "Should I keep scrolling?"
+## The Real Funnel Is Mental
 
-90% of visitors make this decision in under 10 seconds.
+Before booking, visitors ask themselves:
 
-**Stage 2: Evaluation (10 seconds - 3 minutes)**
-- "What exactly do they offer?"
-- "Have they solved problems like mine?"
-- "Can I trust them?"
+- Is this for someone like me?
+- Do they solve my specific problem?
+- What will this conversation be like?
+- Will this be worth my time?
 
-This is where most websites lose people. Too much jargon, not enough specifics.
+If the website doesn't answer those questions, booking feels risky.
 
-**Stage 3: Consideration (3-10 minutes)**
-- "What would working with them look like?"
-- "What are the risks?"
-- "Is this the right time?"
+## Most Websites Skip the Middle
 
-By this stage, they're interested. Now they need confidence.
+Many sites jump straight from:
+*"Here's what we do"*
+to
+*"Contact us"*
 
-**Stage 4: Decision (10+ minutes)**
-- "How do I take the next step?"
-- "What happens after I reach out?"
-- "Am I making the right choice?"
+What's missing is the bridge:
 
-Most websites make this step harder than it needs to be.
+- Who this is for
+- How it works
+- What happens next
+- What information is needed
+- How long it takes
 
-## The Optimization Opportunity
+Without that context, visitors hesitate—even if they're interested.
 
-Each stage has specific friction points and specific solutions. The businesses that understand this journey—and optimize for it—convert 3-5x better than those that don't.`,
+## Booking Is a Commitment
+
+For service businesses, booking a call means:
+
+- Time
+- Attention
+- Vulnerability
+
+The website's job is to make that commitment feel safe and worthwhile.
+
+## The Best Websites Pre-Qualify Naturally
+
+Instead of forcing qualification during the call, effective sites:
+
+- Set expectations upfront
+- Ask thoughtful intake questions
+- Signal professionalism and process
+- Filter out low-intent inquiries automatically
+
+The result is better conversations—not just more bookings.
+
+## The Website Is the First Conversation
+
+If the site doesn't do its part, every call starts from zero.
+
+When it does, conversations start halfway down the field.`,
   },
   {
     id: "6",
