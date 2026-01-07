@@ -835,7 +835,7 @@ const BlogPost = () => {
               </div>
               
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6 leading-tight">
-                {post.title}
+                <span className="text-gradient">{post.title}</span>
               </h1>
               
               <p className="text-xl text-muted-foreground leading-relaxed">
