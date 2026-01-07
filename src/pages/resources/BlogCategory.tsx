@@ -202,30 +202,33 @@ const BlogCategory = () => {
             
             <div className="grid gap-6 md:grid-cols-2">
               {posts.map((post) => (
-                <article
+                <Link
                   key={post.id}
-                  className="group p-6 rounded-xl border border-border/30 bg-card/20 hover:border-border/60 hover:bg-card/40 transition-all duration-300"
+                  to={`/resources/blog/post/${post.slug}`}
+                  className="group block"
                 >
-                  <div className="flex flex-col gap-3 h-full">
-                    <span
-                      className={cn(
-                        "inline-flex self-start px-2.5 py-1 rounded-full text-xs font-medium border",
-                        getCategoryColor(post.category)
-                      )}
-                    >
-                      {post.category}
-                    </span>
-                    <h2 className="text-xl font-semibold tracking-tight leading-snug group-hover:text-primary transition-colors">
-                      {post.title}
-                    </h2>
-                    <p className="text-sm text-muted-foreground leading-relaxed flex-grow">
-                      {post.excerpt}
-                    </p>
-                    <span className="inline-flex items-center text-sm font-medium text-primary group-hover:translate-x-1 transition-transform mt-auto pt-2">
-                      Read article →
-                    </span>
-                  </div>
-                </article>
+                  <article className="p-6 rounded-xl border border-border/30 bg-card/20 hover:border-border/60 hover:bg-card/40 transition-all duration-300 h-full">
+                    <div className="flex flex-col gap-3 h-full">
+                      <span
+                        className={cn(
+                          "inline-flex self-start px-2.5 py-1 rounded-full text-xs font-medium border",
+                          getCategoryColor(post.category)
+                        )}
+                      >
+                        {post.category}
+                      </span>
+                      <h2 className="text-xl font-semibold tracking-tight leading-snug group-hover:text-primary transition-colors">
+                        {post.title}
+                      </h2>
+                      <p className="text-sm text-muted-foreground leading-relaxed flex-grow">
+                        {post.excerpt}
+                      </p>
+                      <span className="inline-flex items-center text-sm font-medium text-primary group-hover:translate-x-1 transition-transform mt-auto pt-2">
+                        Read article →
+                      </span>
+                    </div>
+                  </article>
+                </Link>
               ))}
             </div>
           </div>
