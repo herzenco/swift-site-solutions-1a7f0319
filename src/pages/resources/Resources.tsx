@@ -3,6 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { SEO } from "@/components/SEO";
 import { ArrowRight } from "lucide-react";
+import { usePageTracking } from "@/hooks/usePageTracking";
 import {
   Accordion,
   AccordionContent,
@@ -54,6 +55,8 @@ const faqItems = [
 ];
 
 const Resources = () => {
+  usePageTracking();
+  
   return (
     <>
       <SEO

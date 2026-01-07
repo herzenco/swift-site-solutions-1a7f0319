@@ -9,8 +9,10 @@ import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 import { SEO } from "@/components/SEO";
 import { SkipToContent } from "@/components/SkipToContent";
+import { usePageTracking } from "@/hooks/usePageTracking";
 
 const Index = () => {
+  usePageTracking();
   return (
     <div className="h-screen overflow-y-auto overflow-x-hidden bg-background lg:snap-y lg:snap-mandatory">
       <SEO 

@@ -10,6 +10,7 @@ import { HeroWorkflowModal } from "@/components/HeroWorkflowModal";
 import { ArrowRight, CheckCircle2, Maximize2, X } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { usePageTracking } from "@/hooks/usePageTracking";
 const features = [
   {
     title: "Instant Job Booking",
@@ -34,6 +35,7 @@ const benefits = [
 ];
 
 const HomeServices = () => {
+  usePageTracking();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDemoFullscreen, setIsDemoFullscreen] = useState(false);
   const isMobile = useIsMobile();
