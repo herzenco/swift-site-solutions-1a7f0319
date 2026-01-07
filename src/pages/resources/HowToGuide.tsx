@@ -12,7 +12,7 @@ const guides = [
   { slug: "plan-your-content", number: "04", title: "What We Need Before We Start Building" },
   { slug: "organize-your-forms", number: "05", title: "What Happens During the Build" },
   { slug: "gather-your-assets", number: "06", title: "Review, Revisions, and Launch" },
-  { slug: "define-your-services", number: "07", title: "How to Define Your Services" },
+  { slug: "define-your-services", number: "07", title: "Life After Launch: Using Your Website as a System" },
   { slug: "prepare-for-launch", number: "08", title: "How to Prepare for Launch" },
 ];
 
@@ -50,7 +50,7 @@ const HowToGuide = () => {
     "plan-your-content": "To move quickly and build your website correctly the first time, we collect a small set of inputs before the build begins.",
     "organize-your-forms": "Once your inputs are confirmed, the build moves quickly and deliberately.",
     "gather-your-assets": "Your site is built. Now we refine, finalize, and go live.",
-    "define-your-services": "Structure your service offerings for maximum clarity and conversion on your website.",
+    "define-your-services": "Your site is live. Now it starts doing its real job.",
     "prepare-for-launch": "Final checklist and preparation steps before launching your new website.",
   };
 
@@ -818,6 +818,131 @@ const HowToGuide = () => {
         </section>
       </div>
     ),
+    "define-your-services": (
+      <div className="space-y-10">
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Overview</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            Once launched, your website becomes part of your operations.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            It's not something you "manage" constantly — it's something that quietly supports:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+            <li>Lead capture</li>
+            <li>Scheduling</li>
+            <li>First impressions</li>
+            <li>Decision-making</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">What Your Website Is Doing (Without You Touching It)</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">Your site works in the background by:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Capturing inquiries 24/7</li>
+            <li>Routing qualified prospects into booking</li>
+            <li>Setting expectations before conversations happen</li>
+            <li>Presenting your business clearly and professionally</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            This is intentional. Less friction. Fewer interruptions.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">What You Should Pay Attention To</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            You don't need to log in every day — but you should periodically review:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Booking volume</li>
+            <li>Lead quality</li>
+            <li>Common questions or objections</li>
+            <li>Drop-off points in the flow</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            These insights help guide refinements over time.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Small Improvements That Compound</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            Over time, minor adjustments can significantly improve results:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Refining messaging</li>
+            <li>Clarifying calls to action</li>
+            <li>Adjusting intake questions</li>
+            <li>Tightening page structure</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            These changes are about precision, not reinvention.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Maintenance & Reliability</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">If you're on a maintenance plan, we handle:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Updates</li>
+            <li>Monitoring</li>
+            <li>Reliability checks</li>
+            <li>Performance stability</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            Your focus stays on clients — not the website.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">When to Consider Optimization</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">Optimization makes sense when:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Traffic increases</li>
+            <li>Your offer evolves</li>
+            <li>You want higher-quality conversations</li>
+            <li>You notice patterns in who books (or doesn't)</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            Optimization is iterative and intentional.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">What Xyren Is (and Isn't)</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">Xyren is:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-6">
+            <li>A conversion-focused website system</li>
+            <li>Built around real sales behavior</li>
+            <li>Designed to reduce operational friction</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed mb-3">Xyren is not:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>A content platform</li>
+            <li>A custom software build</li>
+            <li>A constantly changing experiment</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            This clarity is what keeps the system effective.
+          </p>
+        </section>
+
+        <section className="bg-muted/30 p-6 rounded-xl border border-border/50">
+          <h2 className="text-2xl font-bold mb-4">Final Thought</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            A good website looks nice.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            A great website works quietly, consistently, and predictably.
+          </p>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            That's the goal.
+          </p>
+        </section>
+      </div>
+    ),
   };
 
   const defaultContent = (
@@ -898,6 +1023,8 @@ const HowToGuide = () => {
                 ? "Once your inputs are confirmed, the build moves quickly and deliberately."
                 : guide.slug === "gather-your-assets"
                 ? "Your site is built. Now we refine, finalize, and go live."
+                : guide.slug === "define-your-services"
+                ? "Your site is live. Now it starts doing its real job."
                 : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
             </p>
             <p className="text-muted-foreground leading-relaxed mt-4">
@@ -913,6 +1040,8 @@ const HowToGuide = () => {
                 ? "This guide walks through what happens behind the scenes, what you'll see, and what you don't need to worry about while we're building your site."
                 : guide.slug === "gather-your-assets"
                 ? "This guide explains what happens once your preview is ready, how feedback works, and what to expect on launch day."
+                : guide.slug === "define-your-services"
+                ? "This guide explains how to use your Xyren site day-to-day, what to monitor, and how to get the most value from it over time."
                 : null}
             </p>
           </div>
