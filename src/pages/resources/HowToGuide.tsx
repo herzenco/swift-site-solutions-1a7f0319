@@ -11,7 +11,7 @@ const guides = [
   { slug: "configure-scheduling", number: "03", title: "How to Configure Scheduling" },
   { slug: "plan-your-content", number: "04", title: "What We Need Before We Start Building" },
   { slug: "organize-your-forms", number: "05", title: "What Happens During the Build" },
-  { slug: "gather-your-assets", number: "06", title: "How to Gather Your Assets" },
+  { slug: "gather-your-assets", number: "06", title: "Review, Revisions, and Launch" },
   { slug: "define-your-services", number: "07", title: "How to Define Your Services" },
   { slug: "prepare-for-launch", number: "08", title: "How to Prepare for Launch" },
 ];
@@ -49,7 +49,7 @@ const HowToGuide = () => {
     "configure-scheduling": "Set up automated scheduling for your website. Learn to integrate calendars and booking systems.",
     "plan-your-content": "To move quickly and build your website correctly the first time, we collect a small set of inputs before the build begins.",
     "organize-your-forms": "Once your inputs are confirmed, the build moves quickly and deliberately.",
-    "gather-your-assets": "Collect and prepare images, logos, and brand assets for your website build.",
+    "gather-your-assets": "Your site is built. Now we refine, finalize, and go live.",
     "define-your-services": "Structure your service offerings for maximum clarity and conversion on your website.",
     "prepare-for-launch": "Final checklist and preparation steps before launching your new website.",
   };
@@ -691,6 +691,133 @@ const HowToGuide = () => {
         </section>
       </div>
     ),
+    "gather-your-assets": (
+      <div className="space-y-10">
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Overview</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            When your site is ready for review, it's already functional. Booking works. Forms work. The system is in place.
+          </p>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            The review phase is about alignment — not rebuilding.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 1: Preview & Walkthrough</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            You'll receive a live preview link to review your site.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">At this stage, you can:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Click through pages</li>
+            <li>Test booking and forms</li>
+            <li>Review messaging and structure</li>
+            <li>Experience the site as a visitor would</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            We recommend reviewing from both desktop and mobile.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 2: Provide Feedback</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Feedback is focused and intentional.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">Good feedback includes:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Messaging tweaks</li>
+            <li>Clarifications</li>
+            <li>Small structural adjustments</li>
+            <li>Visual refinements</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            This is not a redesign phase or a strategy reset. The core system stays intact to protect timelines and performance.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 3: Revisions</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            We apply agreed-upon changes quickly and cleanly.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">Revisions are:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Scoped</li>
+            <li>Efficient</li>
+            <li>Focused on clarity and conversion</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            Most revisions are completed within a short turnaround.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 4: Final Checks</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">Before launch, we confirm:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Booking and intake flows work correctly</li>
+            <li>Notifications are firing</li>
+            <li>Mobile responsiveness is solid</li>
+            <li>Links and calls to action are correct</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            Nothing goes live without being tested.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 5: Launch</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Once approved, we launch.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">This includes:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Making the site live</li>
+            <li>Connecting final domains (if applicable)</li>
+            <li>Activating live booking and lead capture</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            From this point on, your website is working as a system — not just a page.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">After Launch</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">After launch, you can:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Start directing traffic</li>
+            <li>Share your site confidently</li>
+            <li>Let inquiries book and route automatically</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            Ongoing services (maintenance, optimization, automation) depend on your selected plan.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">What to Expect Moving Forward</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">Your site is designed to:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+            <li>Capture leads consistently</li>
+            <li>Reduce back-and-forth communication</li>
+            <li>Present your business professionally</li>
+            <li>Support your sales process without constant attention</li>
+          </ul>
+        </section>
+
+        <section className="bg-muted/30 p-6 rounded-xl border border-border/50">
+          <h2 className="text-2xl font-bold mb-4">Final Note</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            Xyren isn't about endless customization or long projects.
+          </p>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            It's about clarity, execution, and a system that works the way your business actually operates.
+          </p>
+        </section>
+      </div>
+    ),
   };
 
   const defaultContent = (
@@ -769,6 +896,8 @@ const HowToGuide = () => {
                 ? "To move quickly and build your website correctly the first time, we collect a small set of inputs before the build begins."
                 : guide.slug === "organize-your-forms"
                 ? "Once your inputs are confirmed, the build moves quickly and deliberately."
+                : guide.slug === "gather-your-assets"
+                ? "Your site is built. Now we refine, finalize, and go live."
                 : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
             </p>
             <p className="text-muted-foreground leading-relaxed mt-4">
@@ -782,6 +911,8 @@ const HowToGuide = () => {
                 ? "This guide explains exactly what we need, why it matters, and how to prepare it without overthinking."
                 : guide.slug === "organize-your-forms"
                 ? "This guide walks through what happens behind the scenes, what you'll see, and what you don't need to worry about while we're building your site."
+                : guide.slug === "gather-your-assets"
+                ? "This guide explains what happens once your preview is ready, how feedback works, and what to expect on launch day."
                 : null}
             </p>
           </div>
