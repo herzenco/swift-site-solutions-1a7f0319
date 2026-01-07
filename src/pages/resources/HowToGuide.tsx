@@ -322,6 +322,124 @@ const HowToGuide = () => {
         </section>
       </div>
     ),
+    "configure-scheduling": (
+      <div className="space-y-10">
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Overview</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            Your website uses scheduling to convert serious inquiries into booked conversations automatically.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            You won't be setting up software or connecting tools yourself. Instead, you'll define how you want meetings to work, and we'll handle the technical setup as part of your site.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">By the end of this guide, you'll know:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+            <li>What type of meetings your site should allow</li>
+            <li>When people can book</li>
+            <li>How much context you want before a meeting is confirmed</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 1: Decide What Can Be Booked</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Start by defining what kind of appointment visitors should be able to schedule.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">Most businesses choose one primary option, such as:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Discovery Call</li>
+            <li>Initial Consultation</li>
+            <li>Estimate or Strategy Session</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Avoid offering multiple booking types unless absolutely necessary. A single, clear option converts better and keeps scheduling simple.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">Ask yourself:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+            <li>What is the first conversation I want to have with a new lead?</li>
+            <li>How long does that conversation usually take?</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 2: Set Your Availability Rules</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Next, decide when people are allowed to book time with you.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            You don't need to be overly specific, just clear.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">Consider:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Days of the week you're available</li>
+            <li>General time windows (for example, mornings only)</li>
+            <li>Buffer time between meetings, if needed</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            Your website will only show availability that fits these rules. You stay in control of your calendar.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 3: Choose the Right Meeting Length</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Shorter meetings reduce friction and increase show-up rates.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">Common options:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>15 minutes for quick qualification</li>
+            <li>30 minutes for standard discovery</li>
+            <li>45–60 minutes for higher-consideration services</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            Pick the shortest length that still allows a productive conversation.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 4: Decide What You Need to Know Before the Call</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Before a meeting is confirmed, your site can collect key details from the visitor.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">Typical questions include:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>What are you looking to accomplish?</li>
+            <li>What problem are you trying to solve?</li>
+            <li>Timeline or urgency</li>
+            <li>Budget range (optional)</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            This ensures conversations are productive and prevents unqualified calls from reaching your calendar.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 5: What Happens Next</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Once you've made these decisions, you're done.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">We'll:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Configure the scheduling system</li>
+            <li>Connect it to your website</li>
+            <li>Ensure bookings flow smoothly into your calendar</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            You don't need to install software or manage integrations. Scheduling will be fully handled as part of your site build.
+          </p>
+        </section>
+
+        <section className="bg-muted/30 p-6 rounded-xl border border-border/50">
+          <h2 className="text-2xl font-bold mb-4">Final Note</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            Your website isn't just booking time — it's protecting your time.
+          </p>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            Clear rules, thoughtful qualification, and controlled availability create better conversations and better outcomes.
+          </p>
+        </section>
+      </div>
+    ),
   };
 
   const defaultContent = (
@@ -394,6 +512,8 @@ const HowToGuide = () => {
                 ? "Your domain is the foundation of your website. Getting it set up correctly before we begin ensures a faster launch, fewer delays, and a smoother handoff once your site is live."
                 : guide.slug === "set-up-your-email"
                 ? "Your website relies on email to deliver inquiries, booking confirmations, and notifications. Setting this up correctly ensures nothing gets missed and your system works reliably from day one."
+                : guide.slug === "configure-scheduling"
+                ? "Scheduling is one of the most important parts of your website. It determines who gets through, when they book, and how prepared they are before you speak."
                 : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
             </p>
             <p className="text-muted-foreground leading-relaxed mt-4">
@@ -401,6 +521,8 @@ const HowToGuide = () => {
                 ? "This guide walks you through exactly what you need to do—and what you don't need to worry about—before we start building."
                 : guide.slug === "set-up-your-email"
                 ? "This guide explains what you need, what to avoid, and how we'll help once your site is ready."
+                : guide.slug === "configure-scheduling"
+                ? "This guide walks you through the decisions you'll make so we can configure scheduling correctly during your build."
                 : null}
             </p>
           </div>
