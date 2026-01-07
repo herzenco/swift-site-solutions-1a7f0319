@@ -10,7 +10,7 @@ const guides = [
   { slug: "set-up-your-email", number: "02", title: "How to Set Up Your Email" },
   { slug: "configure-scheduling", number: "03", title: "How to Configure Scheduling" },
   { slug: "plan-your-content", number: "04", title: "What We Need Before We Start Building" },
-  { slug: "organize-your-forms", number: "05", title: "How to Organize Your Forms" },
+  { slug: "organize-your-forms", number: "05", title: "What Happens During the Build" },
   { slug: "gather-your-assets", number: "06", title: "How to Gather Your Assets" },
   { slug: "define-your-services", number: "07", title: "How to Define Your Services" },
   { slug: "prepare-for-launch", number: "08", title: "How to Prepare for Launch" },
@@ -48,7 +48,7 @@ const HowToGuide = () => {
     "set-up-your-email": "Configure professional email for your business website. Complete guide to email setup and best practices.",
     "configure-scheduling": "Set up automated scheduling for your website. Learn to integrate calendars and booking systems.",
     "plan-your-content": "To move quickly and build your website correctly the first time, we collect a small set of inputs before the build begins.",
-    "organize-your-forms": "Design and set up forms that convert visitors into leads. Best practices for form optimization.",
+    "organize-your-forms": "Once your inputs are confirmed, the build moves quickly and deliberately.",
     "gather-your-assets": "Collect and prepare images, logos, and brand assets for your website build.",
     "define-your-services": "Structure your service offerings for maximum clarity and conversion on your website.",
     "prepare-for-launch": "Final checklist and preparation steps before launching your new website.",
@@ -558,6 +558,139 @@ const HowToGuide = () => {
         </section>
       </div>
     ),
+    "organize-your-forms": (
+      <div className="space-y-10">
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Overview</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            Xyren sites are built using a proven structure that adapts to your business — not from scratch, and not from generic templates.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            That's how we deliver high-quality, conversion-focused websites in days, not months.
+          </p>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            During the build phase, our goal is simple: Turn your inputs into a working system that reflects how you sell.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 1: System Configuration</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            We start by configuring the core system that powers your site, including:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Page structure and layout</li>
+            <li>Lead capture logic</li>
+            <li>Scheduling flow</li>
+            <li>Intake and qualification rules</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            This happens before visual design so everything works correctly from the start.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 2: Messaging & Page Assembly</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Next, we align messaging to your offer and audience.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">This includes:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Homepage structure</li>
+            <li>Clear calls to action</li>
+            <li>Trust and credibility sections</li>
+            <li>Service positioning</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            We write and place content to guide visitors toward action, not just explain what you do.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 3: Visual Design & Branding</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Once the structure is in place, we apply visual design:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Typography</li>
+            <li>Color usage</li>
+            <li>Spacing and hierarchy</li>
+            <li>Mobile responsiveness</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            The goal is a polished, professional presence that feels intentional and credible — without over-design.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 4: Booking & Intake Integration</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">We then connect:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Scheduling tools</li>
+            <li>Forms and intake flows</li>
+            <li>Notifications and confirmations</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed mb-3">Everything is tested to ensure:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+            <li>Bookings land correctly</li>
+            <li>Leads are captured reliably</li>
+            <li>You receive the right information upfront</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 5: Internal Testing</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">Before you see the site, we test:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Desktop and mobile layouts</li>
+            <li>Booking and form submissions</li>
+            <li>Edge cases and user flow</li>
+            <li>Basic performance and reliability</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            This ensures you're reviewing something functional, not half-finished.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">What You'll See During the Build</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">During the build, you may receive:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>A preview link</li>
+            <li>A short check-in if clarification is needed</li>
+            <li>A heads-up when review is ready</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            You won't be asked to micromanage or make constant decisions.
+          </p>
+        </section>
+
+        <section className="bg-muted/30 p-6 rounded-xl border border-border/50">
+          <h2 className="text-2xl font-bold mb-4">What You Don't Need to Do</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">You do not need to:</p>
+          <ul className="space-y-2 text-muted-foreground mb-4">
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Write copy
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Design pages
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Configure tools
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Set up automations
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-destructive">❌</span> Manage integrations
+            </li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            That's the system working as intended.
+          </p>
+        </section>
+      </div>
+    ),
   };
 
   const defaultContent = (
@@ -634,6 +767,8 @@ const HowToGuide = () => {
                 ? "Scheduling is one of the most important parts of your website. It determines who gets through, when they book, and how prepared they are before you speak."
                 : guide.slug === "plan-your-content"
                 ? "To move quickly and build your website correctly the first time, we collect a small set of inputs before the build begins."
+                : guide.slug === "organize-your-forms"
+                ? "Once your inputs are confirmed, the build moves quickly and deliberately."
                 : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
             </p>
             <p className="text-muted-foreground leading-relaxed mt-4">
@@ -645,6 +780,8 @@ const HowToGuide = () => {
                 ? "This guide walks you through the decisions you'll make so we can configure scheduling correctly during your build."
                 : guide.slug === "plan-your-content"
                 ? "This guide explains exactly what we need, why it matters, and how to prepare it without overthinking."
+                : guide.slug === "organize-your-forms"
+                ? "This guide walks through what happens behind the scenes, what you'll see, and what you don't need to worry about while we're building your site."
                 : null}
             </p>
           </div>
