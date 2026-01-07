@@ -672,49 +672,55 @@ When it does, conversations start halfway down the field.`,
     excerpt: "The math behind why doubling traffic to a 1% conversion site still leaves you with the same problem.",
     slug: "traffic-wont-fix-funnel",
     readTime: "4 min read",
-    content: `The most common response to a underperforming website? "We need more traffic."
+    content: `Traffic feels like progress.
 
-It's intuitive. More visitors = more leads, right?
+More visitors. More impressions. More clicks.
 
-Not exactly.
+But traffic doesn't fix structural problems—it amplifies them.
 
-## The Math Problem
+## The Math Is Brutal
 
-Let's say your website converts at 1% and you get 1,000 visitors/month. That's 10 leads.
+If your site converts at 1%, doubling traffic still leaves 99% of visitors doing nothing.
 
-Now let's say you double your traffic to 2,000 visitors/month. You get... 20 leads.
+More traffic to a broken funnel just means:
 
-But here's what you probably spent to get that traffic:
-- More ad spend
-- More content creation
-- More SEO investment
-- More time
+- More wasted ad spend
+- More unqualified inquiries
+- More frustration
 
-You 2x'd your input to 2x your output. That's not leverage. That's a treadmill.
+## Traffic Is a Force Multiplier
 
-## The Alternative
+Good systems scale.
+Bad systems leak.
 
-What if instead of doubling traffic, you doubled conversions?
+If your site:
 
-Same 1,000 visitors, but now converting at 2%. That's 20 leads.
+- Confuses visitors
+- Lacks a clear next step
+- Doesn't qualify leads
+- Creates manual follow-up work
 
-And here's the magic: conversion improvements are usually cheaper than traffic acquisition, and they apply to ALL future traffic.
+Then traffic increases cost, not results.
 
-## The Compounding Effect
+## Conversion Comes Before Growth
 
-Month 1: Fix friction, go from 1% to 2%
-Month 3: Add social proof, go from 2% to 3%
-Month 6: Implement booking system, go from 3% to 5%
+The highest-leverage improvements usually happen before traffic:
 
-Now your 1,000 visitors generate 50 leads instead of 10.
+- Clarifying the offer
+- Simplifying the path to action
+- Improving intake quality
+- Automating scheduling and follow-up
 
-Then add more traffic.
+Once those are in place, traffic becomes valuable.
 
-## The Order Matters
+## Why Businesses Get This Backwards
 
-Fix the funnel first. Scale traffic second.
+Marketing is exciting.
+Infrastructure is boring.
 
-The businesses that understand this outperform their competitors by orders of magnitude.`,
+But infrastructure is what allows marketing to work.
+
+The businesses that scale sustainably fix the system first—then turn up demand.`,
   },
   {
     id: "7",
