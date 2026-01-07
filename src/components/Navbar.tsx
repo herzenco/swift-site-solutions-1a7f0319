@@ -7,7 +7,6 @@ import logo from "@/assets/logo.png";
 const resourceLinks = [
   { title: "How-To Guides", href: "/resources/how-to", icon: BookOpen },
   { title: "Blog", href: "/resources/blog", icon: Lightbulb },
-  { title: "FAQ", href: "/resources/faq", icon: HelpCircle },
 ];
 
 export const Navbar = () => {
