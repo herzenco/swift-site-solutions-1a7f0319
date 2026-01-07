@@ -257,21 +257,27 @@ const HowToGuide = () => {
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold mb-4">Step 4: Do Not Configure Website Email Settings Yet</h2>
-          <p className="text-muted-foreground leading-relaxed mb-4 font-medium">This is important.</p>
+          <h2 className="text-2xl font-bold mb-4">Step 4: Keep Your Email Simple</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            You don't need to configure anything for your website.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">Do not:</p>
           <ul className="space-y-2 text-muted-foreground mb-4">
             <li className="flex items-center gap-2">
-              <span className="text-destructive">❌</span> Do not set up SMTP
+              <span className="text-destructive">❌</span> Set up SMTP or email servers
             </li>
             <li className="flex items-center gap-2">
-              <span className="text-destructive">❌</span> Do not connect forms
+              <span className="text-destructive">❌</span> Connect forms manually
             </li>
             <li className="flex items-center gap-2">
-              <span className="text-destructive">❌</span> Do not forward emails manually
+              <span className="text-destructive">❌</span> Create forwarding rules or automations
             </li>
           </ul>
-          <p className="text-muted-foreground leading-relaxed">
-            We'll configure secure email delivery as part of the website launch to ensure messages are reliable and don't land in spam.
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            Just make sure your inbox is active and receiving emails.
+          </p>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            Your website will handle the rest without custom email setup.
           </p>
         </section>
 
