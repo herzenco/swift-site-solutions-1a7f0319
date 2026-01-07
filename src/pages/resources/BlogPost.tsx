@@ -170,55 +170,162 @@ They quietly run it.`,
     categorySlug: "website-systems",
     excerpt: "A breakdown of hidden costs, missed opportunities, and what you're actually paying for when you choose friction over flow.",
     slug: "cost-of-just-a-website",
-    readTime: "6 min read",
-    content: `"We just need a simple website." 
+    readTime: "9 min read",
+    content: `On the surface, a website looks like a one-time expense.
 
-We hear this all the time. And on the surface, it makes sense. Why overcomplicate things?
+You pay for design, development, and hosting—and you're done.
 
-But there's a hidden cost to "simple" that most service businesses don't calculate until it's too late.
+But for service businesses, the real cost of a website isn't what you pay to build it. It's what happens after someone tries to take the next step.
 
-## The Visible Cost
+That's where the difference between "just a website" and a booking system becomes obvious.
 
-A basic website costs less upfront. Maybe $3,000-$5,000 for something decent. You get some pages, a contact form, maybe a phone number prominently displayed.
+## What "Just a Website" Really Delivers
 
-## The Invisible Cost
+A traditional website usually includes:
 
-What you don't see is what you're losing every single day:
+- Service pages
+- A contact form
+- A phone number
+- Maybe a portfolio or testimonials
 
-**Missed Leads**
-- 60% of website visitors never fill out a contact form
-- They leave, and you never know they existed
+When someone reaches out, the flow typically looks like this:
 
-**Qualification Time**
-- Every lead requires a phone call to determine fit
-- That's 15-30 minutes per lead, regardless of quality
+1. An inquiry comes in.
+2. You notice it later.
+3. You respond when you can.
+4. You go back and forth to schedule.
+5. You figure out what they want during the call.
 
-**Scheduling Friction**
-- Back-and-forth emails to find a time
-- No-shows because there's no automated reminder system
+Nothing here is broken—but none of it is efficient.
 
-**Trust Deficit**
-- Starting every call from scratch because your website didn't pre-qualify
+## The Hidden Costs Most Businesses Don't Account For
 
-## The Math
+The real cost of "just a website" shows up in daily operations.
 
-Let's say you get 100 website visitors per week. With a basic website:
-- 5 fill out the form (5% conversion)
-- 3 actually respond to follow-up
-- 1 becomes a customer
+### Time Drain
 
-With a booking system:
-- 15 book directly (15% conversion with lower friction)
-- 12 show up (automated reminders)
-- 4-5 become customers
+Every inquiry requires manual effort:
 
-Same traffic. 4-5x the results.
+- Reading messages
+- Responding
+- Coordinating schedules
+- Gathering context
 
-## The Real Question
+That's administrative work layered on top of your actual job.
 
-It's not "How much does a website cost?"
+### Low-Quality Conversations
 
-It's "How much is the friction costing you every week?"`,
+Without structure, every inquiry looks the same.
+You don't know:
+
+- Intent
+- Budget
+- Timeline
+- Fit
+
+You discover all of this after the call starts—when your time is already spent.
+
+### Missed Opportunities
+
+Leads don't wait for follow-ups.
+
+If someone can't:
+
+- Book quickly
+- Understand the next step
+- Get a clear response
+
+They move on quietly. You rarely know it happened.
+
+### Inconsistent Follow-Up
+
+Manual systems depend on memory and availability.
+That leads to:
+
+- Delayed replies
+- Missed follow-ups
+- An uneven experience depending on how busy you are
+
+These issues don't show up in analytics, but they impact revenue.
+
+## What a Booking System Changes
+
+A booking system isn't about convenience.
+It's about control.
+
+With structured booking in place:
+
+- Availability is clear
+- Scheduling happens on your terms
+- Boundaries are built into the process
+- Context is captured before the call
+
+The website stops asking visitors to "reach out" and starts guiding them through a defined next step.
+
+## Less Friction for Everyone Involved
+
+From the visitor's perspective:
+
+- No guessing
+- No waiting
+- No back-and-forth emails
+- Clear expectations
+
+From the business perspective:
+
+- Fewer interruptions
+- Better-prepared conversations
+- Fewer no-shows
+- A more predictable flow of inquiries
+
+The website does more of the work upfront.
+
+## Why This Compounds Over Time
+
+The value of a booking system isn't immediate—it compounds.
+
+Over time, it results in:
+
+- Hours saved each week
+- Higher-quality conversations
+- Better close rates
+- Less mental overhead
+- A calmer, more predictable workflow
+
+You stop reacting to inquiries and start managing demand.
+
+## This Isn't About Complexity
+
+A booking system doesn't mean:
+
+- Custom software
+- Heavy integrations
+- Over-engineering your site
+
+It means designing the website around how decisions actually happen.
+
+If your business depends on consultations, estimates, inspections, or discovery calls, your website's job is to make those conversations happen cleanly and consistently.
+
+## The Real Difference
+
+A basic website is passive.
+A booking system is operational.
+
+One waits for someone to reach out.
+The other guides them to the next step.
+
+One creates friction.
+The other removes it.
+
+The cost difference isn't in the build—it's in the work you avoid afterward.
+
+## Final Thought
+
+If your website only needs to exist, "just a website" is enough.
+
+If it needs to support growth, protect your time, and improve how your business runs, it has to function as part of your system.
+
+The cheapest website is often the most expensive one to live with.`,
   },
   {
     id: "3",
