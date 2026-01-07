@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ChevronDown, BookOpen, Lightbulb, Menu, X } from "lucide-react";
 import logo from "@/assets/logo.png";
 
@@ -12,10 +12,19 @@ const resourceLinks = [
 export const Navbar = () => {
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleNavClick = (id: string) => {
+  const handleSectionClick = (sectionId: string) => {
     setMobileMenuOpen(false);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    
+    // If we're on the homepage, just scroll
+    if (location.pathname === "/") {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Navigate to homepage with hash
+      navigate(`/#${sectionId}`);
+    }
   };
 
   return (
@@ -28,32 +37,24 @@ export const Navbar = () => {
     >
       <nav className="container-tight px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
         <div className="flex items-center justify-between">
-          <a href="/" aria-label="Xyren by Herzen Co. - Home" className="flex-shrink-0">
+          <Link to="/" aria-label="Xyren by Herzen Co. - Home" className="flex-shrink-0">
             <img src={logo} alt="Xyren by Herzen Co." className="h-10 sm:h-12 w-auto" />
-          </a>
+          </Link>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <Link 
-              to="#portfolio" 
+            <button 
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick('portfolio');
-              }}
+              onClick={() => handleSectionClick('portfolio')}
             >
               Industries
-            </Link>
-            <Link 
-              to="#pricing" 
+            </button>
+            <button 
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick('pricing');
-              }}
+              onClick={() => handleSectionClick('pricing')}
             >
               Packages
-            </Link>
+            </button>
             
             {/* Resources Dropdown */}
             <div 
@@ -116,26 +117,18 @@ export const Navbar = () => {
               className="md:hidden overflow-hidden"
             >
               <div className="pt-4 pb-2 flex flex-col gap-1">
-                <Link 
-                  to="#portfolio" 
-                  className="px-3 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded-lg transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick('portfolio');
-                  }}
+                <button 
+                  className="px-3 py-3 text-left text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded-lg transition-colors"
+                  onClick={() => handleSectionClick('portfolio')}
                 >
                   Industries
-                </Link>
-                <Link 
-                  to="#pricing" 
-                  className="px-3 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded-lg transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick('pricing');
-                  }}
+                </button>
+                <button 
+                  className="px-3 py-3 text-left text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded-lg transition-colors"
+                  onClick={() => handleSectionClick('pricing')}
                 >
                   Packages
-                </Link>
+                </button>
                 
                 {/* Mobile Resources Section */}
                 <div className="border-t border-border/30 mt-2 pt-2">
