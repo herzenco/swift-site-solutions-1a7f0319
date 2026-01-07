@@ -44,7 +44,7 @@ const HowToGuide = () => {
 
   // Generate unique descriptions based on guide
   const guideDescriptions: Record<string, string> = {
-    "prepare-your-domain": "Learn how to prepare your domain for a new website. Step-by-step guidance on DNS settings and domain configuration.",
+    "prepare-your-domain": "Your domain is the foundation of your website. Learn how to prepare it correctly for a faster launch and smoother handoff.",
     "set-up-your-email": "Configure professional email for your business website. Complete guide to email setup and best practices.",
     "configure-scheduling": "Set up automated scheduling for your website. Learn to integrate calendars and booking systems.",
     "plan-your-content": "Plan and organize content for your new website. Guidelines for effective copywriting and structure.",
@@ -55,6 +55,132 @@ const HowToGuide = () => {
   };
 
   const guideDescription = guideDescriptions[guide.slug] || "Practical, step-by-step guidance for your website setup.";
+
+  // Guide content mapping
+  const guideContent: Record<string, React.ReactNode> = {
+    "prepare-your-domain": (
+      <>
+        <h2>Overview</h2>
+        <p>
+          Before we can launch your website, you'll need access to your domain (yourwebsite.com). This does not mean you need technical expertise or to configure anything yourself. It simply ensures you own the domain and can connect it when your site is ready.
+        </p>
+        <p>
+          If you already have a domain, great. If not, we'll help you choose and purchase one correctly.
+        </p>
+
+        <h2>Step 1: Choose Your Domain</h2>
+        <p>If you don't already own a domain, start here.</p>
+        <h3>Best practices:</h3>
+        <ul>
+          <li>Keep it simple and readable</li>
+          <li>Avoid hyphens, numbers, or extra words</li>
+          <li>Use .com whenever possible</li>
+          <li>Match your business name or primary service</li>
+        </ul>
+        <h3>Examples</h3>
+        <ul>
+          <li>smithconstruction.com</li>
+          <li>atlasadvisory.com</li>
+          <li>greenvalleylandscaping.com</li>
+        </ul>
+        <p>
+          If your exact name isn't available, we recommend small, intentional variations rather than forcing complexity.
+        </p>
+
+        <h2>Step 2: Purchase the Domain</h2>
+        <p>We recommend using one of the following registrars:</p>
+        <ul>
+          <li>Google Domains</li>
+          <li>Namecheap</li>
+          <li>GoDaddy</li>
+        </ul>
+        <p>
+          Purchase the domain under your name or business, not a third party. This ensures you retain full ownership.
+        </p>
+        <p>
+          <strong>Tip:</strong> Domain purchases typically cost $10–$20 per year.
+        </p>
+
+        <h2>Step 3: Ensure You Have Login Access</h2>
+        <p>Once purchased, make sure you can log in to your domain provider.</p>
+        <p>You will need:</p>
+        <ul>
+          <li>The email address tied to the account</li>
+          <li>The account password</li>
+        </ul>
+        <p>
+          If someone else (a previous developer, agency, or employee) purchased the domain for you, ask them to either:
+        </p>
+        <ul>
+          <li>Transfer ownership, or</li>
+          <li>Grant you admin access</li>
+        </ul>
+        <p>Without this, we can't connect your site.</p>
+
+        <h2>Step 4: Do Not Change DNS Settings Yet</h2>
+        <p>This is important.</p>
+        <ul>
+          <li>❌ Do not edit DNS records</li>
+          <li>❌ Do not point the domain anywhere</li>
+          <li>❌ Do not try to "connect" it yourself</li>
+        </ul>
+        <p>
+          We'll handle all technical configuration when your site is ready to go live. Making changes early can cause downtime or delays.
+        </p>
+
+        <h2>Step 5: Share Access When Requested</h2>
+        <p>
+          When your website is complete and ready for launch, we'll ask for temporary access or specific DNS permissions.
+        </p>
+        <p>At that point, we will:</p>
+        <ul>
+          <li>Connect the domain</li>
+          <li>Verify security (SSL)</li>
+          <li>Ensure everything works correctly before going live</li>
+        </ul>
+        <p>You remain the owner of the domain at all times.</p>
+
+        <h2>Final Checklist</h2>
+        <p>Before we begin building, make sure you can check these off:</p>
+        <ul>
+          <li>✅ Domain name chosen</li>
+          <li>✅ Domain purchased under your ownership</li>
+          <li>✅ Login access confirmed</li>
+          <li>✅ No DNS changes made</li>
+        </ul>
+        <p>Once this is done, you're ready to move forward without delays.</p>
+      </>
+    ),
+  };
+
+  const defaultContent = (
+    <>
+      <h2>Overview</h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      </p>
+      
+      <h2>Step 1: Getting Started</h2>
+      <p>
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+      </p>
+      <ul>
+        <li>Lorem ipsum dolor sit amet consectetur</li>
+        <li>Adipiscing elit sed do eiusmod tempor</li>
+        <li>Incididunt ut labore et dolore magna</li>
+      </ul>
+
+      <h2>Step 2: Configuration</h2>
+      <p>
+        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.
+      </p>
+
+      <h2>Step 3: Final Steps</h2>
+      <p>
+        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+      </p>
+    </>
+  );
 
   return (
     <>
@@ -85,7 +211,14 @@ const HowToGuide = () => {
               {guide.title}
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              {guide.slug === "prepare-your-domain" 
+                ? "Your domain is the foundation of your website. Getting it set up correctly before we begin ensures a faster launch, fewer delays, and a smoother handoff once your site is live."
+                : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
+            </p>
+            <p className="text-muted-foreground leading-relaxed mt-4">
+              {guide.slug === "prepare-your-domain" 
+                ? "This guide walks you through exactly what you need to do—and what you don't need to worry about—before we start building."
+                : null}
             </p>
           </div>
         </section>
@@ -94,30 +227,7 @@ const HowToGuide = () => {
         <section className="pb-16 px-4">
           <div className="max-w-3xl mx-auto">
             <div className="prose prose-lg dark:prose-invert max-w-none">
-              <h2>Overview</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-              </p>
-              
-              <h2>Step 1: Getting Started</h2>
-              <p>
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
-              </p>
-              <ul>
-                <li>Lorem ipsum dolor sit amet consectetur</li>
-                <li>Adipiscing elit sed do eiusmod tempor</li>
-                <li>Incididunt ut labore et dolore magna</li>
-              </ul>
-
-              <h2>Step 2: Configuration</h2>
-              <p>
-                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.
-              </p>
-
-              <h2>Step 3: Final Steps</h2>
-              <p>
-                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
-              </p>
+              {guideContent[guide.slug] || defaultContent}
             </div>
           </div>
         </section>
