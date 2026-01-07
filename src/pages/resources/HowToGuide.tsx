@@ -9,7 +9,7 @@ const guides = [
   { slug: "prepare-your-domain", number: "01", title: "How to Prepare Your Domain" },
   { slug: "set-up-your-email", number: "02", title: "How to Set Up Your Email" },
   { slug: "configure-scheduling", number: "03", title: "How to Configure Scheduling" },
-  { slug: "plan-your-content", number: "04", title: "How to Plan Your Content" },
+  { slug: "plan-your-content", number: "04", title: "What We Need Before We Start Building" },
   { slug: "organize-your-forms", number: "05", title: "How to Organize Your Forms" },
   { slug: "gather-your-assets", number: "06", title: "How to Gather Your Assets" },
   { slug: "define-your-services", number: "07", title: "How to Define Your Services" },
@@ -47,7 +47,7 @@ const HowToGuide = () => {
     "prepare-your-domain": "Your domain is the foundation of your website. Learn how to prepare it correctly for a faster launch and smoother handoff.",
     "set-up-your-email": "Configure professional email for your business website. Complete guide to email setup and best practices.",
     "configure-scheduling": "Set up automated scheduling for your website. Learn to integrate calendars and booking systems.",
-    "plan-your-content": "Plan and organize content for your new website. Guidelines for effective copywriting and structure.",
+    "plan-your-content": "To move quickly and build your website correctly the first time, we collect a small set of inputs before the build begins.",
     "organize-your-forms": "Design and set up forms that convert visitors into leads. Best practices for form optimization.",
     "gather-your-assets": "Collect and prepare images, logos, and brand assets for your website build.",
     "define-your-services": "Structure your service offerings for maximum clarity and conversion on your website.",
@@ -440,6 +440,124 @@ const HowToGuide = () => {
         </section>
       </div>
     ),
+    "plan-your-content": (
+      <div className="space-y-10">
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Overview</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            Xyren websites are built fast because the decisions are made upfront.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">
+            You don't need to write copy, design layouts, or manage tools. You just need to provide a few key pieces of information so we can align the site to how you actually sell.
+          </p>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            Once these are in place, we handle the rest.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 1: Confirm Your Primary Offer</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Your website is built around one clear action.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">Before we start, we need to know:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>What service you want to promote first</li>
+            <li>What type of conversation or booking that service requires</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed mb-3">Examples:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Discovery call for a professional service</li>
+            <li>Estimate request for a home service</li>
+            <li>Consultation for a higher-consideration offer</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            This keeps the site focused and conversion-driven.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 2: Provide Your Domain Access</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            We'll need access to the domain you plan to use for the website.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">You don't need to configure anything yet — just:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Purchase the domain</li>
+            <li>Share access or permissions when requested</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            If you don't have a domain yet, follow Guide 01: How to Prepare Your Domain before continuing.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 3: Share Your Brand Basics (Lightweight)</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            This is not a full branding exercise.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-3">We'll ask for:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Business name</li>
+            <li>Logo (if you have one)</li>
+            <li>Preferred color direction (optional)</li>
+            <li>Any existing website or references (optional)</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            If you don't have branding finalized, that's okay. We'll design for clarity and credibility first.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 4: Define Your Scheduling Rules</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Before building, we need your answers from Guide 03: How to Configure Scheduling, including:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Meeting type</li>
+            <li>Availability windows</li>
+            <li>Call length</li>
+            <li>Pre-call questions</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            This allows us to configure booking correctly from day one.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 5: Confirm Contact & Intake Preferences</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">We'll also ask:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>Where inquiries should be sent (email or dashboard)</li>
+            <li>Whether you want simple contact forms or more detailed intake</li>
+            <li>Any specific questions you want leads to answer upfront</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            This ensures inquiries are useful, not just notifications.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Step 6: Final Review & Build Kickoff</h2>
+          <p className="text-muted-foreground leading-relaxed mb-3">Once everything above is confirmed:</p>
+          <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+            <li>We lock the scope</li>
+            <li>Begin the build</li>
+            <li>Deliver a working site in 5–10 days</li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed">
+            You won't be asked for ongoing input unless something needs clarification.
+          </p>
+        </section>
+
+        <section className="bg-muted/30 p-6 rounded-xl border border-border/50">
+          <h2 className="text-2xl font-bold mb-4">Final Note</h2>
+          <p className="text-muted-foreground leading-relaxed font-medium">
+            Preparation is what makes speed possible.
+          </p>
+        </section>
+      </div>
+    ),
   };
 
   const defaultContent = (
@@ -514,6 +632,8 @@ const HowToGuide = () => {
                 ? "Your website relies on email to deliver inquiries, booking confirmations, and notifications. Setting this up correctly ensures nothing gets missed and your system works reliably from day one."
                 : guide.slug === "configure-scheduling"
                 ? "Scheduling is one of the most important parts of your website. It determines who gets through, when they book, and how prepared they are before you speak."
+                : guide.slug === "plan-your-content"
+                ? "To move quickly and build your website correctly the first time, we collect a small set of inputs before the build begins."
                 : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
             </p>
             <p className="text-muted-foreground leading-relaxed mt-4">
@@ -523,6 +643,8 @@ const HowToGuide = () => {
                 ? "This guide explains what you need, what to avoid, and how we'll help once your site is ready."
                 : guide.slug === "configure-scheduling"
                 ? "This guide walks you through the decisions you'll make so we can configure scheduling correctly during your build."
+                : guide.slug === "plan-your-content"
+                ? "This guide explains exactly what we need, why it matters, and how to prepare it without overthinking."
                 : null}
             </p>
           </div>
