@@ -79,18 +79,18 @@ const HowTo = () => {
                 <Link
                   key={guide.number}
                   to={`/resources/how-to/${guide.slug}`}
-                  className="group relative p-6 rounded-2xl border border-border/40 bg-card/30 hover:bg-card/60 hover:border-border/60 transition-all duration-300"
+                  className="group relative p-6 rounded-2xl border border-border/40 bg-card/30 hover:bg-card/60 hover:border-border/60 transition-all duration-300 flex flex-col h-full"
                 >
                   <span className="text-xs font-mono text-primary/60 mb-4 block">
                     {guide.number}
                   </span>
-                  <h3 className="text-lg font-semibold mb-3 group-hover:text-primary transition-colors">
+                  <h3 className="text-lg font-semibold mb-3 group-hover:text-primary transition-colors min-h-[3.5rem]">
                     {guide.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-grow">
                     {guide.description}
                   </p>
-                  <span className="inline-flex items-center text-sm text-primary/80 group-hover:text-primary transition-colors">
+                  <span className="inline-flex items-center text-sm text-primary/80 group-hover:text-primary transition-colors mt-auto">
                     Read guide
                     <ArrowRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
                   </span>
