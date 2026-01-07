@@ -6,14 +6,7 @@ import { Footer } from "@/components/sections/Footer";
 import { SEO } from "@/components/SEO";
 import { BackButton } from "@/components/BackButton";
 import { Input } from "@/components/ui/input";
-import { Search, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Category = "Website Systems" | "Marketing & Conversion" | "Automation & AI" | "Trends & Strategy";
@@ -143,7 +136,7 @@ const blogPosts: BlogPost[] = [
   },
 ];
 
-type SortOption = "recent" | "relevant";
+
 
 const CategoryCarousel = ({ 
   category, 
@@ -268,7 +261,6 @@ const CategoryCarousel = ({
 const Blog = () => {
   usePageTracking();
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortBy, setSortBy] = useState<SortOption>("recent");
 
   const getCategoryColor = (category: Category) => {
     switch (category) {
@@ -294,24 +286,13 @@ const Blog = () => {
     if (!searchQuery.trim()) return null;
     
     const query = searchQuery.toLowerCase();
-    let posts = blogPosts.filter(
+    return blogPosts.filter(
       (post) =>
         post.title.toLowerCase().includes(query) ||
         post.excerpt.toLowerCase().includes(query) ||
         post.category.toLowerCase().includes(query)
     );
-
-    if (sortBy === "relevant") {
-      // Sort by title match first, then category match
-      posts.sort((a, b) => {
-        const aTitle = a.title.toLowerCase().includes(query) ? 0 : 1;
-        const bTitle = b.title.toLowerCase().includes(query) ? 0 : 1;
-        return aTitle - bTitle;
-      });
-    }
-
-    return posts;
-  }, [searchQuery, sortBy]);
+  }, [searchQuery]);
 
   return (
     <>
@@ -350,22 +331,6 @@ const Blog = () => {
                   className="pl-10 bg-card/20 border-border/30 focus:border-border/60 text-sm"
                 />
               </div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                    {sortBy === "recent" ? "Most Recent" : "Most Relevant"}
-                    <ChevronDown className="h-4 w-4 ml-1.5 opacity-50" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="bg-card border-border">
-                  <DropdownMenuItem onClick={() => setSortBy("recent")}>
-                    Most Recent
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setSortBy("relevant")}>
-                    Most Relevant
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
             </div>
           </div>
         </section>
