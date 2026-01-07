@@ -1,10 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { SEO } from "@/components/SEO";
 import { BackButton } from "@/components/BackButton";
 import { Input } from "@/components/ui/input";
-import { Search, ChevronDown } from "lucide-react";
+import { Search, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,11 +24,28 @@ interface BlogPost {
   slug: string;
 }
 
-const categories: Category[] = [
-  "Website Systems",
-  "Marketing & Conversion",
-  "Automation & AI",
-  "Trends & Strategy",
+interface CategorySection {
+  name: Category;
+  description: string;
+}
+
+const categoryData: CategorySection[] = [
+  {
+    name: "Website Systems",
+    description: "Websites as infrastructure, operations, and systems.",
+  },
+  {
+    name: "Marketing & Conversion",
+    description: "Demand capture, trust-building, and turning traffic into action.",
+  },
+  {
+    name: "Automation & AI",
+    description: "Lead handling, scheduling, workflows, and emerging AI use cases.",
+  },
+  {
+    name: "Trends & Strategy",
+    description: "Strategic thinking, tradeoffs, and where websites are heading.",
+  },
 ];
 
 const blogPosts: BlogPost[] = [
@@ -108,48 +125,130 @@ const blogPosts: BlogPost[] = [
   },
 ];
 
-type SortOption = "recent" | "category";
+type SortOption = "recent" | "relevant";
+
+const CategoryCarousel = ({ 
+  category, 
+  posts,
+  getCategoryColor 
+}: { 
+  category: CategorySection; 
+  posts: BlogPost[];
+  getCategoryColor: (category: Category) => string;
+}) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScrollability = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = 340;
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+      setTimeout(checkScrollability, 300);
+    }
+  };
+
+  return (
+    <div className="relative">
+      {/* Category Header */}
+      <div className="flex items-end justify-between mb-6">
+        <div>
+          <h2 className="text-2xl font-semibold tracking-tight mb-2">{category.name}</h2>
+          <p className="text-muted-foreground text-sm">{category.description}</p>
+        </div>
+        <a 
+          href={`#${category.name.toLowerCase().replace(/\s+/g, '-')}`}
+          className="text-sm text-muted-foreground hover:text-primary transition-colors hidden sm:block"
+        >
+          View all →
+        </a>
+      </div>
+
+      {/* Carousel Container */}
+      <div className="relative group">
+        {/* Left Arrow */}
+        {canScrollLeft && (
+          <button
+            onClick={() => scroll('left')}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 rounded-full bg-background/90 border border-border/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-card hover:border-border"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft className="h-5 w-5 text-foreground" />
+          </button>
+        )}
+
+        {/* Cards Container */}
+        <div 
+          ref={scrollRef}
+          onScroll={checkScrollability}
+          className="flex gap-5 overflow-x-auto scrollbar-hide pb-2 -mx-4 px-4"
+          style={{ scrollSnapType: 'x mandatory' }}
+        >
+          {posts.slice(0, 5).map((post) => (
+            <article
+              key={post.id}
+              className="group/card flex-shrink-0 w-[320px] p-5 rounded-xl border border-border/30 bg-card/20 hover:border-border/60 hover:bg-card/40 transition-all duration-300"
+              style={{ scrollSnapAlign: 'start' }}
+            >
+              <div className="flex flex-col gap-3 h-full">
+                {/* Category Tag */}
+                <span
+                  className={cn(
+                    "inline-flex self-start px-2.5 py-1 rounded-full text-xs font-medium border",
+                    getCategoryColor(post.category)
+                  )}
+                >
+                  {post.category}
+                </span>
+
+                {/* Title */}
+                <h3 className="text-lg font-semibold tracking-tight leading-snug group-hover/card:text-primary transition-colors line-clamp-2">
+                  {post.title}
+                </h3>
+
+                {/* Excerpt */}
+                <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 flex-grow">
+                  {post.excerpt}
+                </p>
+
+                {/* CTA */}
+                <span className="inline-flex items-center text-sm font-medium text-primary group-hover/card:translate-x-1 transition-transform mt-auto pt-2">
+                  Read article →
+                </span>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* Right Arrow */}
+        {canScrollRight && posts.length > 3 && (
+          <button
+            onClick={() => scroll('right')}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 rounded-full bg-background/90 border border-border/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-card hover:border-border"
+            aria-label="Scroll right"
+          >
+            <ChevronRight className="h-5 w-5 text-foreground" />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const Blog = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
   const [sortBy, setSortBy] = useState<SortOption>("recent");
-
-  const toggleCategory = (category: Category) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    );
-  };
-
-  const filteredPosts = useMemo(() => {
-    let posts = [...blogPosts];
-
-    // Filter by search
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      posts = posts.filter(
-        (post) =>
-          post.title.toLowerCase().includes(query) ||
-          post.excerpt.toLowerCase().includes(query) ||
-          post.category.toLowerCase().includes(query)
-      );
-    }
-
-    // Filter by categories
-    if (selectedCategories.length > 0) {
-      posts = posts.filter((post) => selectedCategories.includes(post.category));
-    }
-
-    // Sort
-    if (sortBy === "category") {
-      posts.sort((a, b) => a.category.localeCompare(b.category));
-    }
-    // "recent" keeps default order (already sorted by most recent)
-
-    return posts;
-  }, [searchQuery, selectedCategories, sortBy]);
 
   const getCategoryColor = (category: Category) => {
     switch (category) {
@@ -166,6 +265,34 @@ const Blog = () => {
     }
   };
 
+  const getPostsByCategory = (category: Category) => {
+    return blogPosts.filter((post) => post.category === category);
+  };
+
+  // Filtered posts for search results
+  const searchResults = useMemo(() => {
+    if (!searchQuery.trim()) return null;
+    
+    const query = searchQuery.toLowerCase();
+    let posts = blogPosts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(query) ||
+        post.excerpt.toLowerCase().includes(query) ||
+        post.category.toLowerCase().includes(query)
+    );
+
+    if (sortBy === "relevant") {
+      // Sort by title match first, then category match
+      posts.sort((a, b) => {
+        const aTitle = a.title.toLowerCase().includes(query) ? 0 : 1;
+        const bTitle = b.title.toLowerCase().includes(query) ? 0 : 1;
+        return aTitle - bTitle;
+      });
+    }
+
+    return posts;
+  }, [searchQuery, sortBy]);
+
   return (
     <>
       <SEO
@@ -178,136 +305,122 @@ const Blog = () => {
       <BackButton />
       <main id="main-content" className="min-h-screen bg-background">
         {/* Hero Section */}
-        <section className="pt-32 pb-12 px-4">
-          <div className="max-w-4xl mx-auto">
+        <section className="pt-32 pb-16 px-4">
+          <div className="max-w-5xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
               Insights on Websites, Marketing, and Automation
             </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-2">
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl">
               Strategic thinking on how modern websites drive growth, efficiency, and leverage for service businesses.
-            </p>
-            <p className="text-sm text-muted-foreground/70">
-              Written to help operators make smarter decisions, not chase trends.
             </p>
           </div>
         </section>
 
-        {/* Blog Controls */}
+        {/* Secondary Navigation - De-emphasized */}
         <section className="pb-8 px-4">
-          <div className="max-w-4xl mx-auto space-y-6">
-            {/* Search and Sort Row */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative flex-grow">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <div className="max-w-5xl mx-auto">
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+              <div className="relative w-full sm:max-w-xs">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/60" />
                 <Input
                   type="text"
                   placeholder="Search articles..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 bg-card/30 border-border/50 focus:border-primary/50"
+                  className="pl-10 bg-card/20 border-border/30 focus:border-border/60 text-sm"
                 />
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="bg-card/30 border-border/50 min-w-[140px] justify-between">
-                    {sortBy === "recent" ? "Most Recent" : "Category"}
-                    <ChevronDown className="h-4 w-4 ml-2 opacity-50" />
+                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                    {sortBy === "recent" ? "Most Recent" : "Most Relevant"}
+                    <ChevronDown className="h-4 w-4 ml-1.5 opacity-50" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent align="end" className="bg-card border-border">
                   <DropdownMenuItem onClick={() => setSortBy("recent")}>
                     Most Recent
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setSortBy("category")}>
-                    Category
+                  <DropdownMenuItem onClick={() => setSortBy("relevant")}>
+                    Most Relevant
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
+          </div>
+        </section>
 
-            {/* Category Pills */}
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
+        {/* Search Results or Category Sections */}
+        {searchResults ? (
+          <section className="pb-24 px-4">
+            <div className="max-w-5xl mx-auto">
+              <div className="mb-6 flex items-center justify-between">
+                <p className="text-sm text-muted-foreground">
+                  {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} for "{searchQuery}"
+                </p>
                 <button
-                  key={category}
-                  onClick={() => toggleCategory(category)}
-                  className={cn(
-                    "px-4 py-2 rounded-full text-sm font-medium transition-all border",
-                    selectedCategories.includes(category)
-                      ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-card/30 text-muted-foreground border-border/50 hover:border-primary/50 hover:text-foreground"
-                  )}
+                  onClick={() => setSearchQuery("")}
+                  className="text-sm text-primary hover:underline"
                 >
-                  {category}
+                  Clear search
                 </button>
-              ))}
-              {selectedCategories.length > 0 && (
-                <button
-                  onClick={() => setSelectedCategories([])}
-                  className="px-4 py-2 rounded-full text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Clear filters
-                </button>
+              </div>
+              
+              {searchResults.length === 0 ? (
+                <div className="text-center py-16">
+                  <p className="text-muted-foreground">No articles match your search.</p>
+                </div>
+              ) : (
+                <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                  {searchResults.map((post) => (
+                    <article
+                      key={post.id}
+                      className="group p-5 rounded-xl border border-border/30 bg-card/20 hover:border-border/60 hover:bg-card/40 transition-all duration-300"
+                    >
+                      <div className="flex flex-col gap-3 h-full">
+                        <span
+                          className={cn(
+                            "inline-flex self-start px-2.5 py-1 rounded-full text-xs font-medium border",
+                            getCategoryColor(post.category)
+                          )}
+                        >
+                          {post.category}
+                        </span>
+                        <h3 className="text-lg font-semibold tracking-tight leading-snug group-hover:text-primary transition-colors">
+                          {post.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed flex-grow">
+                          {post.excerpt}
+                        </p>
+                        <span className="inline-flex items-center text-sm font-medium text-primary group-hover:translate-x-1 transition-transform mt-auto pt-2">
+                          Read article →
+                        </span>
+                      </div>
+                    </article>
+                  ))}
+                </div>
               )}
             </div>
-          </div>
-        </section>
-
-        {/* Blog Posts Grid */}
-        <section className="pb-24 px-4">
-          <div className="max-w-4xl mx-auto">
-            {filteredPosts.length === 0 ? (
-              <div className="text-center py-16">
-                <p className="text-muted-foreground">No articles match your search.</p>
-                <button
-                  onClick={() => {
-                    setSearchQuery("");
-                    setSelectedCategories([]);
-                  }}
-                  className="mt-4 text-primary hover:underline"
-                >
-                  Clear all filters
-                </button>
-              </div>
-            ) : (
-              <div className="grid gap-6">
-                {filteredPosts.map((post) => (
-                  <article
-                    key={post.id}
-                    className="group p-6 rounded-xl border border-border/30 bg-card/20 hover:border-border/60 hover:bg-card/40 transition-all duration-300"
-                  >
-                    <div className="flex flex-col gap-4">
-                      {/* Category Tag */}
-                      <span
-                        className={cn(
-                          "inline-flex self-start px-3 py-1 rounded-full text-xs font-medium border",
-                          getCategoryColor(post.category)
-                        )}
-                      >
-                        {post.category}
-                      </span>
-
-                      {/* Title */}
-                      <h2 className="text-xl md:text-2xl font-semibold tracking-tight group-hover:text-primary transition-colors">
-                        {post.title}
-                      </h2>
-
-                      {/* Excerpt */}
-                      <p className="text-muted-foreground leading-relaxed">
-                        {post.excerpt}
-                      </p>
-
-                      {/* CTA */}
-                      <span className="inline-flex items-center text-sm font-medium text-primary group-hover:translate-x-1 transition-transform mt-2">
-                        Read article →
-                      </span>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            )}
-          </div>
-        </section>
+          </section>
+        ) : (
+          <section className="pb-24 px-4">
+            <div className="max-w-5xl mx-auto space-y-16">
+              {categoryData.map((category) => {
+                const posts = getPostsByCategory(category.name);
+                if (posts.length === 0) return null;
+                
+                return (
+                  <CategoryCarousel
+                    key={category.name}
+                    category={category}
+                    posts={posts}
+                    getCategoryColor={getCategoryColor}
+                  />
+                );
+              })}
+            </div>
+          </section>
+        )}
       </main>
       <Footer />
     </>
