@@ -4,6 +4,7 @@ import { Footer } from "@/components/sections/Footer";
 import { SEO } from "@/components/SEO";
 import { BackButton } from "@/components/BackButton";
 import { ArrowRight, Clock, CheckCircle2, Zap, Target } from "lucide-react";
+import { usePageTracking } from "@/hooks/usePageTracking";
 
 const phases = [
   {
@@ -58,6 +59,8 @@ const benefits = [
 ];
 
 const HowTo = () => {
+  usePageTracking();
+  
   return (
     <>
       <SEO

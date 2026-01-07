@@ -4,6 +4,7 @@ import { Footer } from "@/components/sections/Footer";
 import { SEO } from "@/components/SEO";
 import { BackButton } from "@/components/BackButton";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { usePageTracking } from "@/hooks/usePageTracking";
 
 const guides = [
   { slug: "prepare-your-domain", number: "01", title: "How to Prepare Your Domain" },
@@ -17,6 +18,7 @@ const guides = [
 ];
 
 const HowToGuide = () => {
+  usePageTracking();
   const { slug } = useParams<{ slug: string }>();
   
   const currentIndex = guides.findIndex((g) => g.slug === slug);
