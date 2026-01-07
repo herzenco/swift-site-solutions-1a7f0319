@@ -952,58 +952,116 @@ That's the real signal of a system working.`,
     categorySlug: "trends-strategy",
     excerpt: "Cutting through the buzzwords to define what actually matters in website strategy this year.",
     slug: "modern-websites-2026",
-    readTime: "5 min read",
-    content: `"Modern website" has become meaningless. Everyone claims to build them. Few can define what makes a website modern in 2026.
+    readTime: "8 min read",
+    content: `*"Modern website"* has become one of the most overused phrases in business.
 
-Let's fix that.
+It's usually shorthand for:
 
-## What Modern Actually Means
+- New design
+- Flashy animations
+- Trendy tech
+- AI slapped on somewhere
 
-**1. Operationally Integrated**
-A modern website isn't a standalone brochure. It's connected to your:
-- Booking system
-- CRM
-- Email marketing
-- Payment processing
-- Analytics
+But none of those things are what actually make a website modern in 2026.
 
-Everything flows. Nothing lives in silos.
+A modern website isn't defined by how it looks.
+It's defined by how it operates.
 
-**2. Conversion-Optimized**
-Not just "pretty" or "professional." Designed around a clear goal with measurable performance.
+## The Shift: From Pages to Systems
 
-Key metrics:
-- Visitor-to-lead conversion rate
-- Lead-to-booking conversion rate
-- Time-to-first-response
+The biggest change over the last few years isn't aesthetic—it's structural.
 
-**3. Continuously Improving**
-Launch isn't the finish line. Modern websites are iterated based on data:
-- A/B testing key pages
-- Analyzing user behavior
-- Optimizing based on results
+Websites are no longer static destinations. They're expected to:
 
-**4. Mobile-Native**
-Not "mobile-responsive" as an afterthought. Designed for mobile first, because that's where most traffic comes from.
+- Capture intent
+- Qualify interest
+- Route inquiries
+- Schedule conversations
+- Support follow-up
+- Feed real business operations
 
-**5. Fast**
-Sub-3-second load times. Not negotiable. Speed affects everything from user experience to SEO.
+A modern site behaves less like marketing collateral and more like infrastructure.
 
-**6. Accessible**
-Usable by everyone, including people with disabilities. This is both ethical and practical—accessible sites perform better.
+## "Modern" Does Not Mean More Complex
 
-## What Modern Doesn't Mean
+One of the biggest misconceptions is that modern equals complex.
 
-- Trendy design that ages poorly
-- Complex animations that slow things down
-- Technology for technology's sake
-- Features nobody asked for
+In reality, modern websites are often:
 
-## The Test
+- More focused
+- More constrained
+- More opinionated
+- More intentional about what they don't do
 
-Can you measure your website's impact on revenue? 
+They guide visitors toward one or two clear actions instead of presenting endless options.
 
-If yes, it might be modern. If no, it's probably just a brochure with better fonts.`,
+Complexity behind the scenes is fine. Complexity for the user is not.
+
+## What Actually Matters in 2026
+
+The websites that perform well today share a few common traits:
+
+### Clear intent paths
+
+Visitors immediately understand what the business does, who it's for, and what to do next.
+
+### Operational alignment
+
+The website matches how the business actually sells—estimates, consultations, inspections, discovery calls.
+
+### Built-in trust signals
+
+Not testimonials for the sake of testimonials, but clarity, structure, and confidence in presentation.
+
+### Quiet automation
+
+Scheduling, confirmations, routing, and reminders work without drawing attention to themselves.
+
+### Speed to value
+
+Both in load time and in how quickly a visitor gets what they came for.
+
+None of these are visual trends. They're behavioral.
+
+## Where "Modern" Often Goes Wrong
+
+Many sites chase modernity by adding layers:
+
+- More animations
+- More tools
+- More AI
+- More pages
+
+The result is usually distraction instead of clarity.
+
+A site that looks modern but slows decisions is not modern—it's inefficient.
+
+## Modern Websites Are Designed to Be Used
+
+In 2026, the most effective websites are designed around usage, not aesthetics.
+
+They assume:
+
+- Visitors are busy
+- Attention is limited
+- Trust must be earned quickly
+- Decisions happen before the first call
+
+The design supports that reality instead of fighting it.
+
+## The Real Definition of "Modern"
+
+A modern website is one that:
+
+- Reduces friction
+- Matches the sales process
+- Improves lead quality
+- Saves time for both sides
+- Works predictably
+
+If a site does those things, it's modern—regardless of how trendy it looks.
+
+And if it doesn't, no amount of polish will make it feel current for long.`,
   },
 ];
 
