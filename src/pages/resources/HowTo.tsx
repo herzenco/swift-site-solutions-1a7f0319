@@ -6,14 +6,14 @@ import { BackButton } from "@/components/BackButton";
 import { ArrowRight, Clock, CheckCircle2, Zap, Target } from "lucide-react";
 
 const guides = [
-  { slug: "prepare-your-domain", number: "01", title: "How to Prepare Your Domain", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt." },
-  { slug: "set-up-your-email", number: "02", title: "How to Set Up Your Email", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip." },
-  { slug: "configure-scheduling", number: "03", title: "How to Configure Scheduling", description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat." },
-  { slug: "plan-your-content", number: "04", title: "How to Plan Your Content", description: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt." },
-  { slug: "organize-your-forms", number: "05", title: "How to Organize Your Forms", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor." },
-  { slug: "gather-your-assets", number: "06", title: "How to Gather Your Assets", description: "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit." },
-  { slug: "define-your-services", number: "07", title: "How to Define Your Services", description: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit." },
-  { slug: "prepare-for-launch", number: "08", title: "How to Prepare for Launch", description: "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet consectetur." },
+  { slug: "prepare-your-domain", number: "01", title: "How to Prepare Your Domain", description: "Your domain is the foundation of your website. Learn what to do before we start building." },
+  { slug: "set-up-your-email", number: "02", title: "How to Set Up Your Email", description: "Configure professional email so your website can deliver inquiries and confirmations reliably." },
+  { slug: "configure-scheduling", number: "03", title: "How to Configure Scheduling", description: "Define when and how visitors can book time with you for better conversations." },
+  { slug: "plan-your-content", number: "04", title: "What We Need Before We Start Building", description: "The key inputs we collect upfront so your website can be built quickly and correctly." },
+  { slug: "organize-your-forms", number: "05", title: "What Happens During the Build", description: "What goes on behind the scenes and what you can expect while we build your site." },
+  { slug: "gather-your-assets", number: "06", title: "Review, Revisions, and Launch", description: "How feedback works, what to expect during revisions, and what happens on launch day." },
+  { slug: "define-your-services", number: "07", title: "Life After Launch", description: "How to use your website as a system and get the most value from it over time." },
+  { slug: "prepare-for-launch", number: "08", title: "How to Prepare for Launch", description: "Final checklist and preparation steps before your new website goes live." },
 ];
 
 const benefits = [
