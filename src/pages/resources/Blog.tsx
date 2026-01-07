@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { SEO } from "@/components/SEO";
@@ -26,24 +27,29 @@ interface BlogPost {
 
 interface CategorySection {
   name: Category;
+  slug: string;
   description: string;
 }
 
 const categoryData: CategorySection[] = [
   {
     name: "Website Systems",
+    slug: "website-systems",
     description: "Websites as infrastructure, operations, and systems.",
   },
   {
     name: "Marketing & Conversion",
+    slug: "marketing-conversion",
     description: "Demand capture, trust-building, and turning traffic into action.",
   },
   {
     name: "Automation & AI",
+    slug: "automation-ai",
     description: "Lead handling, scheduling, workflows, and emerging AI use cases.",
   },
   {
     name: "Trends & Strategy",
+    slug: "trends-strategy",
     description: "Strategic thinking, tradeoffs, and where websites are heading.",
   },
 ];
@@ -167,12 +173,12 @@ const CategoryCarousel = ({
           <h2 className="text-2xl font-semibold tracking-tight mb-2">{category.name}</h2>
           <p className="text-muted-foreground text-sm">{category.description}</p>
         </div>
-        <a 
-          href={`#${category.name.toLowerCase().replace(/\s+/g, '-')}`}
+        <Link 
+          to={`/resources/blog/${category.slug}`}
           className="text-sm text-muted-foreground hover:text-primary transition-colors hidden sm:block"
         >
           View all →
-        </a>
+        </Link>
       </div>
 
       {/* Carousel Container */}

@@ -18,6 +18,7 @@ import Resources from "./pages/resources/Resources";
 import HowTo from "./pages/resources/HowTo";
 import HowToGuide from "./pages/resources/HowToGuide";
 import Blog from "./pages/resources/Blog";
+import BlogCategory from "./pages/resources/BlogCategory";
 import FAQ from "./pages/resources/FAQ";
 
 const queryClient = new QueryClient();
@@ -41,6 +42,7 @@ const App = () => (
             <Route path="/resources/how-to" element={<HowTo />} />
             <Route path="/resources/how-to/:slug" element={<HowToGuide />} />
             <Route path="/resources/blog" element={<Blog />} />
+            <Route path="/resources/blog/:category" element={<BlogCategory />} />
             <Route path="/resources/faq" element={<FAQ />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
