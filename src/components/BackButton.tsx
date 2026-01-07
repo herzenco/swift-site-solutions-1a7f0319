@@ -13,8 +13,12 @@ export const BackButton = forwardRef<HTMLButtonElement, BackButtonProps>((
   const navigate = useNavigate();
 
   const handleBack = () => {
-    // Always send users back to the homepage for use-case pages
-    navigate("/");
+    // Navigate to previous page in history, or home if no history
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate("/");
+    }
   };
 
   return (
