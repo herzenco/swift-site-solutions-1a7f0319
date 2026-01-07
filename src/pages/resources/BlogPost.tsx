@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { usePageTracking } from "@/hooks/usePageTracking";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { SEO } from "@/components/SEO";
@@ -542,6 +543,7 @@ If yes, it might be modern. If no, it's probably just a brochure with better fon
 ];
 
 const BlogPost = () => {
+  usePageTracking();
   const { category, slug } = useParams<{ category: string; slug: string }>();
   
   const post = blogPosts.find(
