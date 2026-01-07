@@ -204,7 +204,7 @@ const BlogCategory = () => {
               {posts.map((post) => (
                 <Link
                   key={post.id}
-                  to={`/resources/blog/post/${post.slug}`}
+                  to={`/resources/blog/${categorySlug}/${post.slug}`}
                   className="group block"
                 >
                   <article className="p-6 rounded-xl border border-border/30 bg-card/20 hover:border-border/60 hover:bg-card/40 transition-all duration-300 h-full">
