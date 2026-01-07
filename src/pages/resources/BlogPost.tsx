@@ -29,42 +29,139 @@ const blogPosts: BlogPost[] = [
     categorySlug: "website-systems",
     excerpt: "Why treating your website like a brochure misses the point—and what changes when you see it as infrastructure.",
     slug: "website-as-operating-system",
-    readTime: "5 min read",
-    content: `Most service businesses treat their website like a digital brochure—something to check off the list, update once a year, and hope for the best.
+    readTime: "8 min read",
+    content: `For most service businesses, the website is treated like a finished product.
 
-But here's the truth: your website isn't a marketing asset. It's an operating system.
+It launches, looks decent, and then quietly sits there—waiting.
 
-## The Brochure Mindset
+That's a mistake.
 
-When you think of your website as a brochure, you focus on:
-- How it looks
-- What it says about you
-- Whether it's "modern" enough
+A modern service website shouldn't exist to look good.
+It should exist to run part of your business.
 
-These things matter, but they're table stakes. They don't create leverage.
+When you reframe your website as an operating system—not a marketing asset—everything changes: how it's designed, what it prioritizes, and how much value it actually delivers.
 
-## The Operating System Mindset
+## The Brochure Website Problem
 
-When you think of your website as an operating system, you focus on:
-- How it captures and qualifies leads automatically
-- How it schedules appointments without your involvement
-- How it builds trust before the first conversation
-- How it compounds value over time
+Traditional websites are built around one assumption:
 
-This shift changes everything.
+*"If we explain ourselves clearly enough, people will reach out."*
 
-## What Changes
+So you get:
 
-Instead of asking "Does our website look professional?" you start asking:
-- "How many qualified leads did our website generate this week?"
-- "What's our visitor-to-booking conversion rate?"
-- "How much time did we save on lead qualification?"
+- Long pages of copy
+- Generic contact forms
+- Phone numbers everywhere
+- No clear next step
+- No feedback loop
 
-These are operational questions. And operational thinking leads to operational results.
+These sites don't fail because they're ugly.
+They fail because they're passive.
 
-## The Bottom Line
+They require:
 
-Your competitors are still thinking about websites as brochures. When you start thinking about yours as an operating system, you create an unfair advantage that compounds over time.`,
+- Manual follow-up
+- Constant availability
+- Guesswork about lead quality
+- Extra admin work after every inquiry
+
+In other words, they create more work instead of reducing it.
+
+## What an Operating System Website Does Differently
+
+An operating system doesn't just display information.
+It coordinates actions.
+
+A website built as an operating system is designed to:
+
+- Capture intent
+- Qualify inquiries
+- Route people to the right next step
+- Reduce friction for both sides
+- Run consistently without attention
+
+Instead of asking, "What should this page say?"
+You ask, "What should happen next?"
+
+That's a subtle shift—but it changes everything.
+
+## Websites as Infrastructure, Not Campaigns
+
+Marketing assets are temporary.
+Campaigns come and go.
+
+Infrastructure compounds.
+
+When your website is treated as infrastructure, it becomes:
+
+- A scheduling layer
+- A lead intake system
+- A qualification filter
+- A communication hub
+- A source of operational clarity
+
+It works whether you're busy or not.
+It doesn't depend on perfect timing or constant response.
+
+And most importantly: it reflects how your business actually operates, not how you describe it.
+
+## Why This Matters More for Service Businesses
+
+Service businesses don't sell clicks.
+They sell time, expertise, and outcomes.
+
+That means:
+
+- Not every lead is equal
+- Not every inquiry should become a call
+- Not every visitor is ready right now
+
+A brochure website treats all visitors the same.
+An operating system website doesn't.
+
+It helps the right people move forward and quietly filters out the rest—without awkward conversations or wasted effort.
+
+## The Hidden Cost of "Just a Website"
+
+On paper, a simple website looks cheap.
+
+In reality, the cost shows up later as:
+
+- Missed calls
+- Low-quality inquiries
+- Slow response times
+- Admin overhead
+- Inconsistent follow-up
+- Lost opportunities you never see
+
+These costs don't appear on an invoice—but they compound over time.
+
+A website that functions as an operating system reduces these hidden costs by design.
+
+## The Shift: From Presence to Performance
+
+This isn't about adding more tools.
+It's about aligning the website with how decisions actually get made.
+
+When your website is built as a system:
+
+- Visitors don't wonder what to do
+- You don't wonder who's reaching out
+- Conversations start with context
+- Your calendar fills intentionally, not randomly
+
+The result isn't more traffic.
+It's better outcomes.
+
+## Final Thought
+
+If your website disappeared tomorrow, would your operations feel it?
+
+If the answer is "not really,"
+you don't have a website problem—you have a systems problem.
+
+Websites that act like operating systems don't just support the business.
+They quietly run it.`,
   },
   {
     id: "2",
