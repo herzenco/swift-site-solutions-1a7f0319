@@ -526,52 +526,74 @@ It becomes infrastructure.`,
     categorySlug: "marketing-conversion",
     excerpt: "The structural issues that kill conversions before a visitor ever reaches your contact page.",
     slug: "why-websites-dont-convert",
-    readTime: "7 min read",
-    content: `You've invested in a beautiful website. Professional photos. Clean design. Clear messaging.
+    readTime: "6 min read",
+    content: `When a service business website isn't converting, the first instinct is usually design.
 
-And yet... conversions are flat.
+*"It looks outdated."*
+*"It doesn't feel premium enough."*
+*"It probably needs a refresh."*
 
-Before you blame the design, let's look at what's actually killing your conversions.
+Design matters—but it's rarely the real problem.
 
-## The Real Problems
+Most service business websites fail to convert because they're missing structural clarity, not visual polish.
 
-**1. Friction in the Funnel**
+## Conversion Breaks Before the Contact Page
 
-Every step between "interested" and "booked" is a potential drop-off. Most websites have 5-7 friction points:
-- Finding the contact page
-- Filling out a form
-- Waiting for a response
-- Scheduling a call
-- Confirming the appointment
+By the time someone reaches your contact page, they've already made several decisions:
 
-Each step loses 20-40% of interested prospects.
+- Do I trust this business?
+- Do they understand my problem?
+- Do I know what happens if I reach out?
 
-**2. No Trust Acceleration**
+If those questions aren't answered earlier, no amount of button styling will fix the drop-off.
 
-Visitors don't know you. They're skeptical. And your website probably isn't doing enough to build trust before asking for their contact info.
+## The Real Issues Are Structural
 
-Trust elements that work:
-- Real results with specific numbers
-- Client testimonials with full names and companies
-- Process transparency
-- Risk reversal (guarantees, free consultations)
+Common conversion killers:
 
-**3. Unclear Next Steps**
+- No clear primary action
+- Multiple competing CTAs
+- Vague service descriptions
+- No explanation of what happens after submission
+- Forms that collect too little or too much information
 
-"Contact us" is not a clear next step. It's a vague invitation that puts all the work on the visitor.
+Visitors aren't confused because the site looks bad.
+They're confused because the site doesn't guide them.
 
-Clear next steps:
-- "Book your free 15-minute strategy call"
-- "Get your custom quote in 24 hours"
-- "Schedule a walkthrough this week"
+## Service Businesses Sell Conversations, Not Clicks
 
-## The Fix
+Unlike ecommerce, your website isn't trying to close a transaction.
 
-Don't redesign. Restructure.
+It's trying to:
 
-Map every step from first visit to booked appointment. Identify the friction. Remove it systematically.
+- Set expectations
+- Build confidence
+- Prepare both sides for a conversation
 
-That's where conversions live.`,
+If the website doesn't support that journey, visitors hesitate—even if they like what they see.
+
+## Why Design Gets Blamed
+
+Design is visible. Structure is invisible.
+
+It's easier to say "we need a redesign" than to admit:
+
+- The offer isn't clear
+- The next step isn't obvious
+- The site isn't aligned with how the business actually sells
+
+Conversion improves when structure improves.
+
+## The Fix Isn't a Redesign — It's a System
+
+High-converting service websites:
+
+- Drive one primary action
+- Collect the right context upfront
+- Explain the process clearly
+- Reduce uncertainty before contact
+
+Design supports that system—but it's not the system itself.`,
   },
   {
     id: "5",
