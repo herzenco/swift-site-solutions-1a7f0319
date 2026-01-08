@@ -108,7 +108,7 @@ const HowToGuide = () => {
             Purchase the domain under your name or business, not a third party. This ensures you retain full ownership.
           </p>
           <p className="text-muted-foreground leading-relaxed bg-muted/50 p-4 rounded-lg">
-            <span className="font-semibold">Tip:</span> Domain purchases typically cost $10–$20 per year.
+            <span className="font-semibold">Note:</span> Domain purchases typically cost $10–$20 per year.
           </p>
         </section>
 
