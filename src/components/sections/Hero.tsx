@@ -32,7 +32,7 @@ export const Hero = () => {
 
           {/* Subheadline */}
           <p className="text-lg sm:text-xl lg:text-2xl text-foreground/80 max-w-2xl mx-auto">
-            We build conversion-focused websites for service professionals. Leads captured, appointments booked—automatically. Launched in 5–10 days.
+            We build conversion-focused websites for service professionals. Leads captured, appointments booked. Launched in 5–10 days.
           </p>
         </motion.div>
 
