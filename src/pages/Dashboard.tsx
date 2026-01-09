@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -138,6 +138,7 @@ interface VercelAnalytics {
 export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
   const [leads, setLeads] = useState<Lead[]>([]);
   const [pageSessions, setPageSessions] = useState<PageSession[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -151,27 +152,53 @@ export default function Dashboard() {
   const { toast } = useToast();
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (!session?.user) {
-          navigate("/auth");
-        }
-      }
-    );
+    let isMounted = true;
+    const timeoutId = window.setTimeout(() => {
+      if (!isMounted) return;
+      // Fail-safe: never hang on a spinner if auth session retrieval fails.
+      setAuthLoading(false);
+    }, 4000);
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const clear = () => window.clearTimeout(timeoutId);
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!isMounted) return;
+      clear();
       setSession(session);
       setUser(session?.user ?? null);
-      
+      setAuthLoading(false);
+
       if (!session?.user) {
         navigate("/auth");
       }
     });
 
-    return () => subscription.unsubscribe();
+    (async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!isMounted) return;
+        clear();
+        setSession(session);
+        setUser(session?.user ?? null);
+        setAuthLoading(false);
+
+        if (!session?.user) {
+          navigate("/auth");
+        }
+      } catch (err) {
+        console.error("Auth session error:", err);
+        if (!isMounted) return;
+        clear();
+        setAuthLoading(false);
+        navigate("/auth");
+      }
+    })();
+
+    return () => {
+      isMounted = false;
+      clear();
+      subscription.unsubscribe();
+    };
   }, [navigate]);
 
   useEffect(() => {
@@ -415,12 +442,16 @@ export default function Dashboard() {
     count,
   }));
 
-  if (!user) {
+  if (authLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </div>
     );
+  }
+
+  if (!user) {
+    return <Navigate to="/auth" replace />;
   }
 
   return (
