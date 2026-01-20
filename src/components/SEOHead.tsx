@@ -16,7 +16,7 @@ interface SEOHeadProps {
   };
 }
 
-const BASE_URL = "https://www.xyren.me";
+const BASE_URL = "https://xyren.me";
 const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`;
 const SITE_NAME = "Xyren by Herzen Co.";
 const DEFAULT_DESCRIPTION = "Custom websites that capture leads and book appointments automatically. Built for service professionals. Delivered in 5-10 days.";
