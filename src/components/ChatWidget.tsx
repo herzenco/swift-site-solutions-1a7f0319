@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect, useMemo } from "react";
-import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -40,11 +39,7 @@ const generateSessionId = () => {
 };
 
 export const ChatWidget = () => {
-  const location = useLocation();
   const sessionId = useMemo(() => generateSessionId(), []);
-  
-  const hiddenPaths = ["/dashboard", "/auth"];
-  const shouldHide = hiddenPaths.some((path) => location.pathname.startsWith(path));
 
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<ChatStep>("greeting");
@@ -478,8 +473,6 @@ Format your response as:
       handleUserInput();
     }
   };
-
-  if (shouldHide) return null;
 
   return (
     <>

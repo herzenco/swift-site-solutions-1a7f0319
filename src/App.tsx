@@ -10,8 +10,6 @@ import { PageTracker } from "@/components/PageTracker";
 import { Analytics } from "@vercel/analytics/react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import Auth from "./pages/Auth";
-import Dashboard from "./pages/Dashboard";
 import ProfessionalServices from "./pages/use-cases/ProfessionalServices";
 import HomeServices from "./pages/use-cases/HomeServices";
 import Resources from "./pages/resources/Resources";
@@ -35,8 +33,6 @@ const App = () => (
           <PageTracker />
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/use-cases/professional-services" element={<ProfessionalServices />} />
             <Route path="/use-cases/home-services" element={<HomeServices />} />
             <Route path="/resources" element={<Resources />} />
