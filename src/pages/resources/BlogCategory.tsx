@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { usePageTracking } from "@/hooks/usePageTracking";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
-import { SEO } from "@/components/SEO";
+import { SEOHead } from "@/components/SEOHead";
 import { BackButton } from "@/components/BackButton";
 import { cn } from "@/lib/utils";
 
@@ -166,7 +166,7 @@ const BlogCategory = () => {
 
   return (
     <>
-      <SEO
+      <SEOHead
         title={`${categoryInfo.name} | Xyren Blog`}
         description={categoryInfo.description}
         canonical={`/resources/blog/${categorySlug}`}

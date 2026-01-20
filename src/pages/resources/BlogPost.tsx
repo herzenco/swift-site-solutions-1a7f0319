@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { usePageTracking } from "@/hooks/usePageTracking";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
-import { SEO } from "@/components/SEO";
+import { SEOHead } from "@/components/SEOHead";
 import { BackButton } from "@/components/BackButton";
 import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -1126,7 +1126,7 @@ const BlogPost = () => {
   if (!post) {
     return (
       <>
-        <SEO title="Article Not Found | Blog" />
+        <SEOHead title="Article Not Found | Blog" noIndex={true} />
         <Navbar />
         <BackButton />
         <main className="min-h-screen bg-background pt-32 pb-24 px-4">
@@ -1156,10 +1156,11 @@ const BlogPost = () => {
 
   return (
     <>
-      <SEO
-        title={`${post.title} | Blog`}
+      <SEOHead
+        title={`${post.title.replace(/\|\|/g, '')} | Blog`}
         description={post.excerpt}
         canonical={`/resources/blog/${category}/${slug}`}
+        type="article"
       />
       <Navbar />
       <BackButton />

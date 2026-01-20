@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import { SEOHead } from "@/components/SEOHead";
 
 const NotFound = () => {
   const location = useLocation();
@@ -51,7 +52,15 @@ const NotFound = () => {
   }, [location, navigate]);
 
   // Brief loading state while redirecting (users shouldn't see this)
-  return null;
+  return (
+    <>
+      <SEOHead 
+        title="Page Not Found"
+        description="The page you're looking for doesn't exist or has been moved."
+        noIndex={true}
+      />
+    </>
+  );
 };
 
 export default NotFound;

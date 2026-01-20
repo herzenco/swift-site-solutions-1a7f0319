@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { usePageTracking } from "@/hooks/usePageTracking";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
-import { SEO } from "@/components/SEO";
+import { SEOHead } from "@/components/SEOHead";
 import { BackButton } from "@/components/BackButton";
 import { Input } from "@/components/ui/input";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
@@ -296,7 +296,7 @@ const Blog = () => {
 
   return (
     <>
-      <SEO
+      <SEOHead
         title="Blog | Insights on Websites, Marketing, and Automation"
         description="Strategic thinking on how modern websites drive growth, efficiency, and leverage for service businesses. Written to help operators make smarter decisions."
         canonical="/resources/blog"

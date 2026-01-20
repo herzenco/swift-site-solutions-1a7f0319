@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
-import { SEO } from "@/components/SEO";
+import { SEOHead } from "@/components/SEOHead";
 import { ArrowRight } from "lucide-react";
 import { usePageTracking } from "@/hooks/usePageTracking";
 import {
@@ -59,7 +59,7 @@ const Resources = () => {
   
   return (
     <>
-      <SEO
+      <SEOHead
         title="Resources"
         description="Guides, FAQs, and insights to help you prepare for your website build. Understand the process, set expectations, and get the most out of your Xyren website."
         canonical="/resources"

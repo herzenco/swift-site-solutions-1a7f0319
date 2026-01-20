@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
-import { SEO } from "@/components/SEO";
+import { SEOHead } from "@/components/SEOHead";
 import { BackButton } from "@/components/BackButton";
 import { ArrowRight } from "lucide-react";
 
@@ -27,7 +27,7 @@ export const ResourcePageTemplate = ({
 }: ResourcePageTemplateProps) => {
   return (
     <>
-      <SEO title={`${title} | Xyren Resources`} description={description} />
+      <SEOHead title={`${title} | Xyren Resources`} description={description} />
       <Navbar />
       <BackButton />
       <main id="main-content" className="min-h-screen bg-background">
