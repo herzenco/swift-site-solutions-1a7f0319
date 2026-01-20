@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { ArrowRight, Phone, FileText, Rocket, CheckCircle2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, SUPABASE_FUNCTIONS_URL } from "@/lib/supabase";
 import { useToast } from "@/hooks/use-toast";
 import { sendLeadToZapier } from "@/lib/zapier";
 import { z } from "zod";

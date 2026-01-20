@@ -4,7 +4,7 @@ import { X, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, SUPABASE_FUNCTIONS_URL } from "@/lib/supabase";
 import { useToast } from "@/hooks/use-toast";
 import { sendLeadToZapier } from "@/lib/zapier";
 import ReactMarkdown from "react-markdown";
@@ -132,7 +132,7 @@ export const ChatWidget = () => {
       await logInteraction("url_scraped", { urlScraped: url });
       
       // Now get AI analysis
-      const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
+      const CHAT_URL = `${SUPABASE_FUNCTIONS_URL}/chat`;
       const analysisPrompt = `Based on this website content, provide exactly 3 quick, actionable fixes to improve conversions. Be specific and helpful. Keep each point to 1-2 sentences max.
 
 Website content:
@@ -147,7 +147,7 @@ Format your response as:
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5YXdnbGxhd3RqdGR0cWpuaGp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg5MTc2NTIsImV4cCI6MjA4NDQ5MzY1Mn0.qbYRqeZvdT3K7K5rMg-U7vrNeiMrZA1uaiJPIByjmhw`,
         },
         body: JSON.stringify({
           messages: [{ role: "user", content: analysisPrompt }],
