@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
-import { SEO } from "@/components/SEO";
+import { SEOHead } from "@/components/SEOHead";
 import { BackButton } from "@/components/BackButton";
 import {
   Accordion,
@@ -12,7 +12,7 @@ import {
 const FAQ = () => {
   return (
     <>
-      <SEO
+      <SEOHead
         title="Frequently Asked Questions"
         description="Answers to common questions about Xyren websites, pricing, timelines, and what's included. Everything you need to know before getting started."
         canonical="/resources/faq"

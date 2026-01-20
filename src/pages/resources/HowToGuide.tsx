@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
-import { SEO } from "@/components/SEO";
+import { SEOHead } from "@/components/SEOHead";
 import { BackButton } from "@/components/BackButton";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { usePageTracking } from "@/hooks/usePageTracking";
@@ -1126,7 +1126,7 @@ const HowToGuide = () => {
 
   return (
     <>
-      <SEO
+      <SEOHead
         title={guide.title}
         description={guideDescription}
         canonical={`/resources/how-to/${guide.slug}`}

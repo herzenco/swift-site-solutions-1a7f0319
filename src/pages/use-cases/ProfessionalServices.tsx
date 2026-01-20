@@ -4,7 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/BackButton";
-import { SEO } from "@/components/SEO";
+import { SEOHead } from "@/components/SEOHead";
 import { HeroWorkflowModal } from "@/components/HeroWorkflowModal";
 import { ProfessionalServicesDemo } from "@/components/demos/ProfessionalServicesDemo";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -52,7 +52,7 @@ const ProfessionalServices = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO
+      <SEOHead
         title="Websites for Consultants, Advisors, Experts"
         description="Websites that build trust and book qualified consultations. Designed for professional services where credibility matters. Launched in 5-10 days."
         canonical="/use-cases/professional-services"

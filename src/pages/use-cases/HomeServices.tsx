@@ -5,7 +5,7 @@ import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { BackButton } from "@/components/BackButton";
 import { HomeServicesDemo } from "@/components/demos/HomeServicesDemo";
-import { SEO } from "@/components/SEO";
+import { SEOHead } from "@/components/SEOHead";
 import { HeroWorkflowModal } from "@/components/HeroWorkflowModal";
 import { ArrowRight, CheckCircle2, Maximize2, X } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -42,7 +42,7 @@ const HomeServices = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO
+      <SEOHead
         title="Websites for Plumbers, Electricians, HVAC"
         description="Convert website visitors into booked jobs. Custom websites for home service providers with automated scheduling, follow-ups, and lead capture. Built in 5-10 days."
         canonical="/use-cases/home-services"

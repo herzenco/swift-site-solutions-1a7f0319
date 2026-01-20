@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/sections/Footer";
-import { SEO } from "@/components/SEO";
+import { SEOHead } from "@/components/SEOHead";
 import { BackButton } from "@/components/BackButton";
 import { ArrowRight, Clock, CheckCircle2, Zap, Target } from "lucide-react";
 import { usePageTracking } from "@/hooks/usePageTracking";
@@ -63,7 +63,7 @@ const HowTo = () => {
   
   return (
     <>
-      <SEO
+      <SEOHead
         title="How-To Guides"
         description="Step-by-step guides for domain setup, email configuration, scheduling, and website preparation. Get everything ready for a fast, smooth website build."
         canonical="/resources/how-to"
