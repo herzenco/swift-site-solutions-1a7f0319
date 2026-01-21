@@ -126,25 +126,39 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
         source: source,
       };
 
-      // NOTE: don't `.select()` after insert, since leads are not publicly readable.
-      const { error } = await supabase.from("leads").insert(leadPayload);
+       // NOTE: don't `.select()` after insert, since leads are not publicly readable.
+       const { error } = await supabase.from("leads").insert(leadPayload);
 
-      if (error) {
-        console.error("Error saving lead:", error);
-        toast({
-          title: "Something went wrong",
-          description: "Please try again or contact us directly.",
-          variant: "destructive",
-        });
-        setIsSubmitting(false);
-        return;
-      }
+       // If the DB enforces a unique email constraint, treat duplicate submissions as success
+       // (common during testing / repeat attempts) so the user isn't blocked.
+       if (error) {
+         const isDuplicateEmail =
+           error.code === "23505" &&
+           typeof error.message === "string" &&
+           error.message.includes("leads_email_unique");
 
-      // Send to Zapier
-      sendLeadToZapier(leadPayload);
+         if (!isDuplicateEmail) {
+           console.error("Error saving lead:", error);
+           toast({
+             title: "Something went wrong",
+             description: "Please try again or contact us directly.",
+             variant: "destructive",
+           });
+           setIsSubmitting(false);
+           return;
+         }
 
-      // Trigger lead enrichment if we have a URL
-      if (formData.website.trim()) {
+         // Duplicate email: continue as a successful submission.
+         console.warn("Duplicate lead email detected; continuing as success:", validated.email);
+       }
+
+       // Send to Zapier
+       // If this was a duplicate-email submission, omit the id (it wasn't inserted).
+       sendLeadToZapier(error ? { ...leadPayload, id: undefined } : leadPayload);
+
+       // Trigger lead enrichment only when the lead was inserted successfully.
+       // If this submission hit a duplicate-email constraint, the generated leadId won't exist.
+       if (!error && formData.website.trim()) {
         console.log("Triggering lead enrichment for:", leadId);
         supabase.functions.invoke("enrich-lead", {
           body: { leadId, url: formData.website.trim() }
