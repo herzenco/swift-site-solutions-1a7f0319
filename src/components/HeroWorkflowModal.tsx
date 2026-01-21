@@ -113,16 +113,21 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
     
     try {
       const validated = validation.data;
+      const leadId = crypto.randomUUID();
       
       // Save lead to database
-      const { data: leadData, error } = await supabase.from("leads").insert({
+      const leadPayload = {
+        id: leadId,
         full_name: validated.fullName,
         email: validated.email,
         phone: validated.phone || null,
         website: validated.website || null,
         notes: validated.notes || null,
         source: source,
-      }).select().single();
+      };
+
+      // NOTE: don't `.select()` after insert, since leads are not publicly readable.
+      const { error } = await supabase.from("leads").insert(leadPayload);
 
       if (error) {
         console.error("Error saving lead:", error);
@@ -136,23 +141,13 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
       }
 
       // Send to Zapier
-      if (leadData) {
-        sendLeadToZapier({
-          id: leadData.id,
-          full_name: leadData.full_name,
-          email: leadData.email,
-          phone: leadData.phone,
-          website: leadData.website,
-          source: leadData.source,
-          notes: leadData.notes,
-        });
-      }
+      sendLeadToZapier(leadPayload);
 
       // Trigger lead enrichment if we have a URL
-      if (leadData?.id && formData.website.trim()) {
-        console.log("Triggering lead enrichment for:", leadData.id);
+      if (formData.website.trim()) {
+        console.log("Triggering lead enrichment for:", leadId);
         supabase.functions.invoke("enrich-lead", {
-          body: { leadId: leadData.id, url: formData.website.trim() }
+          body: { leadId, url: formData.website.trim() }
         }).then(result => {
           console.log("Lead enrichment result:", result);
         }).catch(err => {
