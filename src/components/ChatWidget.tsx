@@ -91,7 +91,8 @@ export const ChatWidget = () => {
       urlScraped?: string;
       leadId?: string;
       metadata?: any;
-    }
+    },
+    currentMessages?: Message[]
   ) => {
     try {
       await supabase.from("chat_interactions").insert({
@@ -101,7 +102,12 @@ export const ChatWidget = () => {
         assistant_message: data.assistantMessage || null,
         url_scraped: data.urlScraped || null,
         lead_id: data.leadId || null,
-        metadata: data.metadata || null,
+        metadata: {
+          ...data.metadata,
+          conversation_history: currentMessages || [],
+          step: step,
+          collected_data: collectedData,
+        },
       } as any);
     } catch (error) {
       console.error("Error logging interaction:", error);
@@ -269,7 +275,7 @@ Format your response as:
           industry: collectedData.industry,
           hasWebsiteFeedback: !!collectedData.websiteFeedback,
         },
-      });
+      }, messages);
     } catch (error) {
       console.error("Error saving lead:", error);
     }
@@ -311,7 +317,9 @@ Format your response as:
     setInput("");
 
     // Log interaction without blocking the flow
-    logInteraction("message", { userMessage: userInput }).catch(console.error);
+    // Log interaction with full conversation history
+    const updatedMessages = [...messages, { role: "user" as const, content: userInput }];
+    logInteraction("message", { userMessage: userInput }, updatedMessages).catch(console.error);
 
     switch (step) {
       case "greeting":
@@ -434,7 +442,7 @@ Format your response as:
                 url: finalData.url,
                 hasWebsiteFeedback: !!finalData.websiteFeedback,
               },
-            });
+            }, messages);
 
             // Trigger lead enrichment if we have a URL
             if (leadData?.id && finalData.url) {
