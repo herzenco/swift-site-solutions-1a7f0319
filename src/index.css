@@ -93,6 +93,11 @@
     text-shadow: 0 0 40px hsl(190 100% 50% / 0.3), 0 0 80px hsl(190 100% 50% / 0.15);
   }
 
+  /* Offset for sticky header when scrolling to sections */
+  section[id] {
+    scroll-margin-top: 6rem;
+  }
+
   /* Enhanced focus styles for accessibility */
   :focus-visible {
     @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
