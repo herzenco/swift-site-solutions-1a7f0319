@@ -95,7 +95,7 @@
 
   /* Offset for sticky header when scrolling to sections */
   section[id] {
-    scroll-margin-top: 6rem;
+    scroll-margin-top: 80px;
   }
 
   /* Enhanced focus styles for accessibility */
