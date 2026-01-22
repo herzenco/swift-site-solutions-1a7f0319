@@ -10,9 +10,40 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, ArrowLeft, Check } from "lucide-react";
-import { supabase, SUPABASE_FUNCTIONS_URL } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { useToast } from "@/hooks/use-toast";
 import { sendLeadToZapier } from "@/lib/zapier";
+import { z } from "zod";
+
+const createUUID = (): string => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const c = (globalThis as any).crypto;
+    if (c?.randomUUID) return c.randomUUID();
+
+    if (c?.getRandomValues) {
+      const bytes = new Uint8Array(16);
+      c.getRandomValues(bytes);
+      bytes[6] = (bytes[6] & 0x0f) | 0x40;
+      bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+      const hex = Array.from(bytes, (b) => b.toString(16).padStart(2, "0"));
+      return `${hex.slice(0, 4).join("")}-${hex.slice(4, 6).join("")}-${hex
+        .slice(6, 8)
+        .join("")}-${hex.slice(8, 10).join("")}-${hex.slice(10, 16).join("")}`;
+    }
+  } catch {
+    // ignore
+  }
+
+  return `fallback-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+};
+
+const projectPlanContactSchema = z.object({
+  name: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name too long"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email too long"),
+  websiteUrl: z.string().trim().max(255, "URL too long").optional(),
+});
 
 interface ProjectPlanModalProps {
   open: boolean;
@@ -127,17 +158,17 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
       return;
     }
     
-    // Auto-advance to next question
+    // Auto-advance to next question (single click, no double-click required)
     if (currentQuestion < questions.length - 1) {
-      setTimeout(() => setCurrentQuestion(currentQuestion + 1), 300);
+      setCurrentQuestion((q) => q + 1);
     } else {
-      setTimeout(() => setStep("contact"), 300);
+      setStep("contact");
     }
   };
 
   const handleContinueWithUrl = () => {
     if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
+      setCurrentQuestion((q) => q + 1);
     } else {
       setStep("contact");
     }
@@ -157,40 +188,56 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
     setIsSubmitting(true);
 
     try {
-      const notes = `Business: ${formData.businessType}\nGoal: ${formData.primaryGoal}\nHas website: ${formData.hasWebsite}${formData.websiteUrl ? ` (${formData.websiteUrl})` : ""}\nChallenge: ${formData.biggestChallenge}\nTimeline: ${formData.timeline}\nPreference: ${formData.preference}`;
-
-      const { data: leadData, error } = await supabase.from("leads").insert({
-        full_name: formData.name,
+      const contactValidation = projectPlanContactSchema.safeParse({
+        name: formData.name,
         email: formData.email,
-        website: formData.websiteUrl || null,
-        notes: notes,
-        source: "project_plan_modal",
-      }).select().single();
+        websiteUrl: formData.websiteUrl || undefined,
+      });
 
-      if (error) throw error;
-
-      // Send to Zapier
-      if (leadData) {
-        sendLeadToZapier({
-          id: leadData.id,
-          full_name: leadData.full_name,
-          email: leadData.email,
-          website: leadData.website,
-          source: leadData.source,
-          notes: leadData.notes,
+      if (!contactValidation.success) {
+        const firstError = contactValidation.error.errors[0];
+        toast({
+          title: "Validation Error",
+          description: firstError.message,
+          variant: "destructive",
         });
+        return;
       }
 
-      // Trigger lead enrichment if we have a URL
-      if (leadData?.id && formData.websiteUrl) {
-        console.log("Triggering lead enrichment for:", leadData.id);
-        supabase.functions.invoke("enrich-lead", {
-          body: { leadId: leadData.id, url: formData.websiteUrl }
-        }).then(result => {
-          console.log("Lead enrichment result:", result);
-        }).catch(err => {
-          console.error("Lead enrichment error:", err);
-        });
+      const leadId = createUUID();
+      const notes = `Business: ${formData.businessType}\nGoal: ${formData.primaryGoal}\nHas website: ${formData.hasWebsite}${formData.websiteUrl ? ` (${formData.websiteUrl})` : ""}\nChallenge: ${formData.biggestChallenge}\nTimeline: ${formData.timeline}\nPreference: ${formData.preference}`;
+
+      // NOTE: don't `.select()` after insert, since leads are not publicly readable.
+      const leadPayload = {
+        id: leadId,
+        full_name: contactValidation.data.name,
+        email: contactValidation.data.email,
+        website: (contactValidation.data.websiteUrl || "").trim() ? contactValidation.data.websiteUrl : null,
+        notes,
+        source: "project_plan_modal",
+      };
+
+      const { error } = await supabase.from("leads").insert(leadPayload);
+
+      // Treat duplicate submissions as success (common during testing / repeat attempts)
+      if (error && error.code !== "23505") throw error;
+
+      // Send to Zapier (never block UI success)
+      sendLeadToZapier(error ? { ...leadPayload, id: undefined } : leadPayload);
+
+      // Trigger lead enrichment only when we inserted successfully.
+      if (!error && formData.websiteUrl.trim()) {
+        console.log("Triggering lead enrichment for:", leadId);
+        supabase.functions
+          .invoke("enrich-lead", {
+            body: { leadId, url: formData.websiteUrl.trim() },
+          })
+          .then((result) => {
+            console.log("Lead enrichment result:", result);
+          })
+          .catch((err) => {
+            console.error("Lead enrichment error:", err);
+          });
       }
 
       setStep("success");
@@ -265,6 +312,7 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
                   {currentQ.options.map((option) => (
                     <button
                       key={option}
+                      type="button"
                       onClick={() => handleOptionSelect(currentQ.id, option)}
                       className={`w-full text-left p-4 rounded-lg border transition-all duration-200 ${
                         formData[currentQ.id as keyof FormData] === option
@@ -295,6 +343,7 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
                       onClick={handleContinueWithUrl}
                       variant="hero"
                       className="w-full"
+                       type="button"
                     >
                       Continue
                       <ArrowRight className="w-4 h-4" />
