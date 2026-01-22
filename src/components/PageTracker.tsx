@@ -1,6 +1,6 @@
-import { usePageTracking } from "@/hooks/usePageTracking";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 export const PageTracker = () => {
-  usePageTracking();
+  useAnalytics();
   return null;
 };
