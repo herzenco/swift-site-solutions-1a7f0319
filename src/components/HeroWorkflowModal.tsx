@@ -11,10 +11,37 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { ArrowRight, Phone, FileText, Rocket, CheckCircle2 } from "lucide-react";
-import { supabase, SUPABASE_FUNCTIONS_URL } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { useToast } from "@/hooks/use-toast";
 import { sendLeadToZapier } from "@/lib/zapier";
 import { z } from "zod";
+
+const createUUID = (): string => {
+  // crypto.randomUUID() is not supported on some older browsers.
+  // Provide a safe fallback so lead capture never breaks.
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const c = (globalThis as any).crypto;
+    if (c?.randomUUID) return c.randomUUID();
+
+    if (c?.getRandomValues) {
+      const bytes = new Uint8Array(16);
+      c.getRandomValues(bytes);
+      bytes[6] = (bytes[6] & 0x0f) | 0x40; // version 4
+      bytes[8] = (bytes[8] & 0x3f) | 0x80; // variant
+
+      const hex = Array.from(bytes, (b) => b.toString(16).padStart(2, "0"));
+      return `${hex.slice(0, 4).join("")}-${hex.slice(4, 6).join("")}-${hex
+        .slice(6, 8)
+        .join("")}-${hex.slice(8, 10).join("")}-${hex.slice(10, 16).join("")}`;
+    }
+  } catch {
+    // ignore and fallback
+  }
+
+  // Last-resort fallback (non-crypto) to avoid runtime crashes.
+  return `fallback-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+};
 
 // Validation schema
 const leadSchema = z.object({
@@ -113,7 +140,7 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
     
     try {
       const validated = validation.data;
-      const leadId = crypto.randomUUID();
+      const leadId = createUUID();
       
       // Save lead to database
       const leadPayload = {
@@ -133,9 +160,7 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
        // (common during testing / repeat attempts) so the user isn't blocked.
        if (error) {
          const isDuplicateEmail =
-           error.code === "23505" &&
-           typeof error.message === "string" &&
-           error.message.includes("leads_email_unique");
+           error.code === "23505";
 
          if (!isDuplicateEmail) {
            console.error("Error saving lead:", error);
@@ -251,6 +276,7 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
                 variant="hero"
                 size="lg"
                 className="w-full"
+                type="button"
                 onClick={() => setStep("form")}
               >
                 Continue
