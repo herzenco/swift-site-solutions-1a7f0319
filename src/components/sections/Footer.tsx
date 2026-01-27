@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Linkedin, Instagram, Youtube, Mail, MapPin } from "lucide-react";
+import { Linkedin, Instagram, Youtube, Mail, MapPin, MessageCircle } from "lucide-react";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 const socialLinks = [
   { name: "LinkedIn", href: "https://linkedin.com/company/herzenco", icon: Linkedin },
@@ -68,6 +69,7 @@ export const Footer = () => {
                   <social.icon className="w-4 h-4" />
                 </a>
               ))}
+              <WhatsAppButton variant="icon" />
             </div>
           </div>
 

@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, MessageCircle } from "lucide-react";
 import { ProjectPlanModal } from "@/components/ProjectPlanModal";
+
+const WHATSAPP_NUMBER = "17865893484";
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, I'm interested in getting a free project plan.")}`;
 
 export const Contact = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -39,6 +42,19 @@ export const Contact = () => {
           <p className="mt-6 text-sm text-muted-foreground">
             Takes about 60 seconds.
           </p>
+
+          <div className="mt-8 flex items-center justify-center gap-2 text-sm text-muted-foreground">
+            <span>Or reach out directly via</span>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-[#25D366] hover:text-[#20BD5A] font-medium transition-colors"
+            >
+              <MessageCircle className="w-4 h-4" />
+              WhatsApp
+            </a>
+          </div>
         </motion.div>
       </div>
 
