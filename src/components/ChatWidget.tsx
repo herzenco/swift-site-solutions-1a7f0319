@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Loader2 } from "lucide-react";
+import { X, Send, Loader2, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -584,12 +584,13 @@ Format your response as:
                                     href={href}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className={`font-medium underline underline-offset-2 transition-colors ${
+                                    className={`inline-flex items-center gap-1 font-medium underline underline-offset-2 transition-colors ${
                                       isWhatsApp 
                                         ? "text-[#25D366] hover:text-[#20BD5A]" 
                                         : "text-primary hover:text-primary/80"
                                     }`}
                                   >
+                                    {isWhatsApp && <MessageCircle className="w-3.5 h-3.5" />}
                                     {children}
                                   </a>
                                 );
