@@ -524,7 +524,6 @@ Format your response as:
             className="fixed z-50 bg-card shadow-[0_20px_60px_-10px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden
               inset-0 w-full h-[100dvh]
               sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[380px] sm:max-w-[calc(100vw-48px)] sm:h-[540px] sm:max-h-[calc(100vh-100px)] sm:border sm:border-border sm:rounded-2xl"
-            style={{ display: 'flex', flexDirection: 'column' }}
           >
             {/* Header */}
             <div className="flex-shrink-0 flex items-center justify-between px-5 py-4 border-b border-border bg-card pt-[env(safe-area-inset-top,0px)]">
@@ -552,13 +551,13 @@ Format your response as:
 
             {/* Messages */}
             <ScrollArea 
-              className="flex-1 min-h-0 px-5 py-5" 
+              className="flex-1 min-h-0 px-4 sm:px-5 py-4 sm:py-5" 
               role="log"
               aria-label="Chat messages"
               aria-live="polite"
               viewportRef={scrollViewportRef}
             >
-              <div className="space-y-5 pb-2">
+              <div className="space-y-4 sm:space-y-5 pb-2">
                 {messages.map((message, index) => (
                   <motion.div
                     key={index}
@@ -568,10 +567,10 @@ Format your response as:
                     className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
                   >
                     <div
-                      className={`max-w-[85%] text-sm leading-relaxed ${
+                      className={`max-w-[88%] sm:max-w-[85%] text-sm leading-relaxed break-words ${
                         message.role === "user"
-                          ? "bg-foreground text-background px-4 py-3 rounded-2xl rounded-br-sm"
-                          : "bg-muted px-4 py-3 rounded-2xl rounded-bl-sm text-foreground"
+                          ? "bg-foreground text-background px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl rounded-br-sm"
+                          : "bg-muted px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl rounded-bl-sm text-foreground"
                       }`}
                       role="article"
                       aria-label={`${message.role === "user" ? "You" : "Xyren"} said`}
@@ -640,7 +639,7 @@ Format your response as:
             </ScrollArea>
 
             {/* Input Area */}
-            <div className="flex-shrink-0 p-4 border-t border-border bg-card pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
+            <div className="flex-shrink-0 p-3 sm:p-4 border-t border-border bg-card pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] sm:pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
               <div className="flex items-end gap-2">
                 <div className={`flex-1 bg-muted rounded-xl px-4 py-2 transition-all ${isLoading ? 'ring-2 ring-primary/50 animate-pulse' : 'focus-within:ring-1 focus-within:ring-foreground/20'}`}>
                   <label htmlFor="chat-input" className="sr-only">Type your message</label>
