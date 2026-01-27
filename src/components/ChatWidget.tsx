@@ -461,8 +461,8 @@ Format your response as:
         }
         
         const closingMessage = finalData.url 
-          ? `Thanks ${finalData.name}! You'll receive a more in-depth analysis of your site along with specific recommendations on how we can help within 24-48 hours. Talk soon! 🚀`
-          : `Thanks ${finalData.name}! We'll reach out within 24-48 hours with more information on how we can help. Talk soon! 🚀`;
+          ? `Thanks ${finalData.name}! You'll receive a more in-depth analysis of your site along with specific recommendations on how we can help within 24-48 hours.\n\nWant to chat sooner? [Message us on WhatsApp](https://wa.me/17865893484) anytime! 🚀`
+          : `Thanks ${finalData.name}! We'll reach out within 24-48 hours with more information on how we can help.\n\nWant to chat sooner? [Message us on WhatsApp](https://wa.me/17865893484) anytime! 🚀`;
         
         addAssistantMessage(closingMessage);
         setStep("complete");
@@ -470,7 +470,7 @@ Format your response as:
 
 
       case "complete":
-        addAssistantMessage("Thanks for chatting! We'll be in touch soon. Feel free to explore our website in the meantime.");
+        addAssistantMessage("Thanks for chatting! We'll be in touch soon. If you need anything, [reach out on WhatsApp](https://wa.me/17865893484).");
         break;
     }
   };
