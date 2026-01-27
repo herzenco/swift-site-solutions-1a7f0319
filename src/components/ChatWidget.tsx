@@ -44,6 +44,9 @@ export const ChatWidget = () => {
   const sessionId = useMemo(() => generateSessionId(), []);
   const isMobile = useIsMobile();
 
+  const fallbackWindowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+  const fallbackWindowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<ChatStep>("greeting");
   const [messages, setMessages] = useState<Message[]>([
@@ -68,9 +71,15 @@ export const ChatWidget = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { toast } = useToast();
 
-  // iOS Safari can behave oddly with fixed + 100dvh when the keyboard opens.
-  // Track the VisualViewport so the chat stays usable above the keyboard.
-  const [visualViewportHeight, setVisualViewportHeight] = useState<number | null>(null);
+  // iOS Safari can behave oddly with fixed positioning inside scrolling containers
+  // (and when the keyboard opens). Use the VisualViewport API to pin the chat to the
+  // *visible* viewport (width/height + offsets), not the layout viewport.
+  const [visualViewport, setVisualViewport] = useState<{
+    width: number;
+    height: number;
+    offsetTop: number;
+    offsetLeft: number;
+  } | null>(null);
   const [keyboardInset, setKeyboardInset] = useState<number>(0);
 
   const triggerHaptic = (pattern: number | number[] = 10) => {
@@ -87,27 +96,53 @@ export const ChatWidget = () => {
 
   useEffect(() => {
     if (!isOpen || !isMobile) {
-      setVisualViewportHeight(null);
+      setVisualViewport(null);
       setKeyboardInset(0);
       return;
     }
 
     const vv = window.visualViewport;
-    if (!vv) return;
 
     const update = () => {
-      setVisualViewportHeight(vv.height);
+      if (!vv) {
+        // Fallback (older browsers): pin to layout viewport
+        setVisualViewport({
+          width: window.innerWidth,
+          height: window.innerHeight,
+          offsetTop: 0,
+          offsetLeft: 0,
+        });
+        setKeyboardInset(0);
+        return;
+      }
+
+      setVisualViewport({
+        width: vv.width,
+        height: vv.height,
+        offsetTop: vv.offsetTop || 0,
+        offsetLeft: vv.offsetLeft || 0,
+      });
+
       // Best-effort keyboard height estimation (0 when keyboard is closed)
-      const inset = Math.max(0, window.innerHeight - vv.height - (vv.offsetTop || 0));
+      // Use vv.height + vv.offsetTop to compute the visible bottom edge.
+      const visibleBottom = (vv.height || 0) + (vv.offsetTop || 0);
+      const inset = Math.max(0, window.innerHeight - visibleBottom);
       setKeyboardInset(inset);
     };
 
     update();
-    vv.addEventListener("resize", update);
-    vv.addEventListener("scroll", update);
+    vv?.addEventListener("resize", update);
+    vv?.addEventListener("scroll", update);
+
+    // Prevent the page behind the overlay from scrolling on mobile (helps avoid
+    // layout viewport scroll causing the overlay to appear "hidden").
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     return () => {
-      vv.removeEventListener("resize", update);
-      vv.removeEventListener("scroll", update);
+      vv?.removeEventListener("resize", update);
+      vv?.removeEventListener("scroll", update);
+      document.body.style.overflow = prevOverflow;
     };
   }, [isOpen, isMobile]);
 
@@ -557,9 +592,18 @@ Format your response as:
             className="fixed z-50 bg-card shadow-[0_20px_60px_-10px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden
               inset-0 w-full
               sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[380px] sm:max-w-[calc(100vw-48px)] sm:h-[540px] sm:max-h-[calc(100vh-100px)] sm:border sm:border-border sm:rounded-2xl"
+            // Mobile: pin to the *visual* viewport (accounts for browser UI + keyboard)
+            // Desktop: rely on the fixed bottom-right card layout.
             style={
-              isMobile && visualViewportHeight
-                ? { height: visualViewportHeight }
+              isMobile
+                ? {
+                    top: visualViewport?.offsetTop ?? 0,
+                    left: visualViewport?.offsetLeft ?? 0,
+                    width: visualViewport?.width ?? fallbackWindowWidth,
+                    height: visualViewport?.height ?? fallbackWindowHeight,
+                    right: "auto",
+                    bottom: "auto",
+                  }
                 : undefined
             }
           >
