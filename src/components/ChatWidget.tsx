@@ -17,6 +17,7 @@ interface Message {
 
 type ChatStep = 
   | "greeting" 
+  | "ask_name"
   | "ask_url" 
   | "get_url" 
   | "analyzing" 
@@ -46,7 +47,7 @@ export const ChatWidget = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hey there! 👋 I can answer some quick questions, but if you'd prefer a real conversation, [reach out on WhatsApp](https://wa.me/17865893484) anytime.\n\nWhat's your name?",
+      content: "Hey there! 👋 I can answer some quick questions, but if you'd prefer a real conversation, [reach out on WhatsApp](https://wa.me/17865893484) anytime.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -323,6 +324,12 @@ Format your response as:
 
     switch (step) {
       case "greeting":
+        // User sent first message, now ask for their name
+        addAssistantMessage("Great to hear from you! What's your name?");
+        setStep("ask_name");
+        break;
+
+      case "ask_name":
         // User just provided their name
         setCollectedData((prev) => ({ ...prev, name: userInput }));
         addAssistantMessage(`Nice to meet you, ${userInput}! Do you have a website you'd like me to analyze? I can give you 3 quick fixes to improve it. (yes/no)`);
