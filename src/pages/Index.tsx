@@ -10,6 +10,7 @@ import { Footer } from "@/components/sections/Footer";
 import { SEOHead } from "@/components/SEOHead";
 import { SkipToContent } from "@/components/SkipToContent";
 import { usePageTracking } from "@/hooks/usePageTracking";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 // Schema.org structured data for the homepage
 const organizationSchema = {
@@ -175,6 +176,7 @@ const Index = () => {
         <section className="lg:snap-start" aria-labelledby="contact-heading"><Contact /></section>
       </main>
       <Footer />
+      <WhatsAppButton variant="floating" />
     </div>
   );
 };
