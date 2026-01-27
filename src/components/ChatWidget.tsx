@@ -577,6 +577,23 @@ Format your response as:
                               strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
                               ul: ({ children }) => <ul className="list-disc pl-4 mb-2">{children}</ul>,
                               li: ({ children }) => <li className="mb-1">{children}</li>,
+                              a: ({ href, children }) => {
+                                const isWhatsApp = href?.includes("wa.me");
+                                return (
+                                  <a
+                                    href={href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={`font-medium underline underline-offset-2 transition-colors ${
+                                      isWhatsApp 
+                                        ? "text-[#25D366] hover:text-[#20BD5A]" 
+                                        : "text-primary hover:text-primary/80"
+                                    }`}
+                                  >
+                                    {children}
+                                  </a>
+                                );
+                              },
                             }}
                           >
                             {message.content}
