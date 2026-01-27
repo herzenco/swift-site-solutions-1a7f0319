@@ -46,7 +46,7 @@ export const ChatWidget = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hey there! 👋 I'm Xyren. What's your name?",
+      content: "Hey there! 👋 I can answer some quick questions, but if you'd prefer a real conversation, [reach out on WhatsApp](https://wa.me/17865893484) anytime.\n\nWhat's your name?",
     },
   ]);
   const [input, setInput] = useState("");
