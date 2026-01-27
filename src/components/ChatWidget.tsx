@@ -6,6 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { supabase, SUPABASE_FUNCTIONS_URL } from "@/lib/supabase";
 import { useToast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { sendLeadToZapier } from "@/lib/zapier";
 import ReactMarkdown from "react-markdown";
 import { XyrenIcon } from "./XyrenIcon";
@@ -41,6 +42,7 @@ const generateSessionId = () => {
 
 export const ChatWidget = () => {
   const sessionId = useMemo(() => generateSessionId(), []);
+  const isMobile = useIsMobile();
 
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<ChatStep>("greeting");
@@ -66,6 +68,11 @@ export const ChatWidget = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { toast } = useToast();
 
+  // iOS Safari can behave oddly with fixed + 100dvh when the keyboard opens.
+  // Track the VisualViewport so the chat stays usable above the keyboard.
+  const [visualViewportHeight, setVisualViewportHeight] = useState<number | null>(null);
+  const [keyboardInset, setKeyboardInset] = useState<number>(0);
+
   const triggerHaptic = (pattern: number | number[] = 10) => {
     if (navigator.vibrate) {
       navigator.vibrate(pattern);
@@ -77,6 +84,32 @@ export const ChatWidget = () => {
       scrollViewportRef.current.scrollTop = scrollViewportRef.current.scrollHeight;
     }
   }, [messages]);
+
+  useEffect(() => {
+    if (!isOpen || !isMobile) {
+      setVisualViewportHeight(null);
+      setKeyboardInset(0);
+      return;
+    }
+
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    const update = () => {
+      setVisualViewportHeight(vv.height);
+      // Best-effort keyboard height estimation (0 when keyboard is closed)
+      const inset = Math.max(0, window.innerHeight - vv.height - (vv.offsetTop || 0));
+      setKeyboardInset(inset);
+    };
+
+    update();
+    vv.addEventListener("resize", update);
+    vv.addEventListener("scroll", update);
+    return () => {
+      vv.removeEventListener("resize", update);
+      vv.removeEventListener("scroll", update);
+    };
+  }, [isOpen, isMobile]);
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
@@ -522,8 +555,13 @@ Format your response as:
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
             className="fixed z-50 bg-card shadow-[0_20px_60px_-10px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden
-              inset-0 w-full h-[100dvh]
+              inset-0 w-full
               sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[380px] sm:max-w-[calc(100vw-48px)] sm:h-[540px] sm:max-h-[calc(100vh-100px)] sm:border sm:border-border sm:rounded-2xl"
+            style={
+              isMobile && visualViewportHeight
+                ? { height: visualViewportHeight }
+                : undefined
+            }
           >
             {/* Header */}
             <div className="flex-shrink-0 flex items-center justify-between px-5 py-4 border-b border-border bg-card pt-[env(safe-area-inset-top,0px)]">
@@ -550,96 +588,127 @@ Format your response as:
             </div>
 
             {/* Messages */}
-            <ScrollArea 
-              className="flex-1 min-h-0 px-4 sm:px-5 py-4 sm:py-5" 
-              role="log"
-              aria-label="Chat messages"
-              aria-live="polite"
-              viewportRef={scrollViewportRef}
-            >
-              <div className="space-y-4 sm:space-y-5 pb-2">
-                {messages.map((message, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.15 }}
-                    className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
-                  >
-                    <div
-                      className={`max-w-[88%] sm:max-w-[85%] text-sm leading-relaxed break-words ${
-                        message.role === "user"
-                          ? "bg-foreground text-background px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl rounded-br-sm"
-                          : "bg-muted px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl rounded-bl-sm text-foreground"
-                      }`}
-                      role="article"
-                      aria-label={`${message.role === "user" ? "You" : "Xyren"} said`}
+            {(() => {
+              const messageList = (
+                <div className="space-y-4 sm:space-y-5 pb-2">
+                  {messages.map((message, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.15 }}
+                      className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
                     >
-                      {message.content ? (
-                        message.role === "assistant" ? (
-                          <ReactMarkdown
-                            components={{
-                              p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
-                              strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
-                              ul: ({ children }) => <ul className="list-disc pl-4 mb-2">{children}</ul>,
-                              li: ({ children }) => <li className="mb-1">{children}</li>,
-                              a: ({ href, children }) => {
-                                const isWhatsApp = href?.includes("wa.me");
-                                return (
-                                  <a
-                                    href={href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={`inline-flex items-center gap-1 font-medium underline underline-offset-2 transition-colors ${
-                                      isWhatsApp 
-                                        ? "text-[#25D366] hover:text-[#20BD5A]" 
-                                        : "text-primary hover:text-primary/80"
-                                    }`}
-                                  >
-                                    {isWhatsApp && <MessageCircle className="w-3.5 h-3.5" />}
-                                    {children}
-                                  </a>
-                                );
-                              },
-                            }}
-                          >
-                            {message.content}
-                          </ReactMarkdown>
+                      <div
+                        className={`max-w-[88%] sm:max-w-[85%] text-sm leading-relaxed break-words ${
+                          message.role === "user"
+                            ? "bg-foreground text-background px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl rounded-br-sm"
+                            : "bg-muted px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl rounded-bl-sm text-foreground"
+                        }`}
+                        role="article"
+                        aria-label={`${message.role === "user" ? "You" : "Xyren"} said`}
+                      >
+                        {message.content ? (
+                          message.role === "assistant" ? (
+                            <ReactMarkdown
+                              components={{
+                                p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                                strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+                                ul: ({ children }) => <ul className="list-disc pl-4 mb-2">{children}</ul>,
+                                li: ({ children }) => <li className="mb-1">{children}</li>,
+                                a: ({ href, children }) => {
+                                  const isWhatsApp = href?.includes("wa.me");
+                                  return (
+                                    <a
+                                      href={href}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className={`inline-flex items-center gap-1 font-medium underline underline-offset-2 transition-colors ${
+                                        isWhatsApp
+                                          ? "text-[#25D366] hover:text-[#20BD5A]"
+                                          : "text-primary hover:text-primary/80"
+                                      }`}
+                                    >
+                                      {isWhatsApp && <MessageCircle className="w-3.5 h-3.5" />}
+                                      {children}
+                                    </a>
+                                  );
+                                },
+                              }}
+                            >
+                              {message.content}
+                            </ReactMarkdown>
+                          ) : (
+                            message.content
+                          )
                         ) : (
-                          message.content
-                        )
-                      ) : (
-                        <span className="flex items-center gap-2">
-                          <span className="flex gap-1">
-                            <span className="w-1.5 h-1.5 bg-current rounded-full animate-bounce [animation-delay:-0.3s]" />
-                            <span className="w-1.5 h-1.5 bg-current rounded-full animate-bounce [animation-delay:-0.15s]" />
-                            <span className="w-1.5 h-1.5 bg-current rounded-full animate-bounce" />
+                          <span className="flex items-center gap-2">
+                            <span className="flex gap-1">
+                              <span className="w-1.5 h-1.5 bg-current rounded-full animate-bounce [animation-delay:-0.3s]" />
+                              <span className="w-1.5 h-1.5 bg-current rounded-full animate-bounce [animation-delay:-0.15s]" />
+                              <span className="w-1.5 h-1.5 bg-current rounded-full animate-bounce" />
+                            </span>
                           </span>
+                        )}
+                      </div>
+                    </motion.div>
+                  ))}
+                  {isLoading && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex justify-start"
+                    >
+                      <div className="bg-muted px-4 py-3 rounded-2xl rounded-bl-sm">
+                        <span className="flex gap-1">
+                          <span className="w-1.5 h-1.5 bg-foreground/50 rounded-full animate-bounce [animation-delay:-0.3s]" />
+                          <span className="w-1.5 h-1.5 bg-foreground/50 rounded-full animate-bounce [animation-delay:-0.15s]" />
+                          <span className="w-1.5 h-1.5 bg-foreground/50 rounded-full animate-bounce" />
                         </span>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
-                {isLoading && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex justify-start"
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+              );
+
+              if (isMobile) {
+                return (
+                  <div
+                    ref={scrollViewportRef}
+                    className="flex-1 min-h-0 px-4 sm:px-5 py-4 sm:py-5 overflow-y-auto overscroll-contain"
+                    role="log"
+                    aria-label="Chat messages"
+                    aria-live="polite"
                   >
-                    <div className="bg-muted px-4 py-3 rounded-2xl rounded-bl-sm">
-                      <span className="flex gap-1">
-                        <span className="w-1.5 h-1.5 bg-foreground/50 rounded-full animate-bounce [animation-delay:-0.3s]" />
-                        <span className="w-1.5 h-1.5 bg-foreground/50 rounded-full animate-bounce [animation-delay:-0.15s]" />
-                        <span className="w-1.5 h-1.5 bg-foreground/50 rounded-full animate-bounce" />
-                      </span>
-                    </div>
-                  </motion.div>
-                )}
-              </div>
-            </ScrollArea>
+                    {messageList}
+                  </div>
+                );
+              }
+
+              return (
+                <ScrollArea
+                  className="flex-1 min-h-0 px-4 sm:px-5 py-4 sm:py-5"
+                  role="log"
+                  aria-label="Chat messages"
+                  aria-live="polite"
+                  viewportRef={scrollViewportRef}
+                >
+                  {messageList}
+                </ScrollArea>
+              );
+            })()}
 
             {/* Input Area */}
-            <div className="flex-shrink-0 p-3 sm:p-4 border-t border-border bg-card pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] sm:pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
+            <div
+              className="flex-shrink-0 p-3 sm:p-4 border-t border-border bg-card pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] sm:pb-[max(1rem,env(safe-area-inset-bottom,0px))]"
+              style={
+                isMobile && keyboardInset > 0
+                  ? {
+                      paddingBottom: `calc(max(0.75rem, env(safe-area-inset-bottom, 0px)) + ${keyboardInset}px)`,
+                    }
+                  : undefined
+              }
+            >
               <div className="flex items-end gap-2">
                 <div className={`flex-1 bg-muted rounded-xl px-4 py-2 transition-all ${isLoading ? 'ring-2 ring-primary/50 animate-pulse' : 'focus-within:ring-1 focus-within:ring-foreground/20'}`}>
                   <label htmlFor="chat-input" className="sr-only">Type your message</label>
