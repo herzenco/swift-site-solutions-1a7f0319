@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { HelmetProvider } from "react-helmet-async";
 import { ChatWidget } from "@/components/ChatWidget";
+import { MobileWhatsAppButton } from "@/components/MobileWhatsAppButton";
 import { PageTracker } from "@/components/PageTracker";
 import { Analytics } from "@vercel/analytics/react";
 import Index from "./pages/Index";
@@ -46,6 +47,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
           <ChatWidget />
+          <MobileWhatsAppButton />
           <Analytics />
         </BrowserRouter>
       </TooltipProvider>
