@@ -44,6 +44,11 @@ export const ChatWidget = () => {
   const sessionId = useMemo(() => generateSessionId(), []);
   const isMobile = useIsMobile();
 
+  // On mobile, we don't render the chat widget at all - WhatsApp is used instead
+  if (isMobile) {
+    return null;
+  }
+
   const fallbackWindowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
   const fallbackWindowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
 
