@@ -8,6 +8,7 @@ import { supabase, SUPABASE_FUNCTIONS_URL } from "@/lib/supabase";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { sendLeadToZapier } from "@/lib/zapier";
+import { validateUserInput, incrementSessionMessageCount } from "@/lib/inputValidation";
 import ReactMarkdown from "react-markdown";
 import { XyrenIcon } from "./XyrenIcon";
 
@@ -300,15 +301,26 @@ Format your response as:
   const handleUserInput = async () => {
     if (!input.trim() || isLoading) return;
 
-    const userInput = input.trim();
+    // Comprehensive input validation with sanitization, rate limiting, and pattern detection
+    const validation = validateUserInput(input);
     
-    // Bug 2 fix: Enforce max input length
-    const MAX_INPUT_LENGTH = 500;
-    if (userInput.length > MAX_INPUT_LENGTH) {
-      addAssistantMessage("That message is a bit too long. Could you keep it shorter?");
+    if (!validation.isValid) {
+      if (validation.errorMessage) {
+        addAssistantMessage(validation.errorMessage);
+      }
       setInput("");
       return;
     }
+
+    const userInput = validation.sanitizedInput;
+    
+    // Log suspicious patterns for monitoring (but allow the message)
+    if (validation.isSuspicious) {
+      console.warn("Suspicious input pattern detected:", userInput.slice(0, 50));
+    }
+    
+    // Increment rate limit counter
+    incrementSessionMessageCount();
     
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
     setInput("");
