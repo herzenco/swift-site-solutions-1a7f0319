@@ -236,7 +236,11 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
         website: (contactValidation.data.websiteUrl || "").trim() ? contactValidation.data.websiteUrl : null,
         notes,
         source: "project_plan_modal",
-        intent_signals: questionnaireAnswers,
+        questionnaire_answers: questionnaireAnswers, // Dedicated column for form responses
+        intent_signals: {
+          completedQuestionnaire: true,
+          submittedAt: new Date().toISOString(),
+        },
         lead_score: leadScore,
         qualification_status: leadScore >= 30 ? "warm" : "cool",
       };
