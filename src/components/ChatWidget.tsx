@@ -68,27 +68,17 @@ export const ChatWidget = () => {
   });
 
   useEffect(() => {
+    if (isMobile) return;
     if (scrollViewportRef.current) {
       scrollViewportRef.current.scrollTop = scrollViewportRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, isMobile]);
 
   useEffect(() => {
-    if (isOpen && inputRef.current) {
+    if (!isMobile && isOpen && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [isOpen]);
-
-  // On mobile, we don't render the chat widget at all - WhatsApp button is used instead
-  if (isMobile) {
-    return null;
-  }
-
-  useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isOpen]);
+  }, [isOpen, isMobile]);
 
   const logInteraction = async (
     type: "message" | "url_scraped" | "lead_captured",
@@ -494,6 +484,11 @@ Format your response as:
       handleUserInput();
     }
   };
+
+  // On mobile, we don't render the chat widget at all - WhatsApp button is used instead
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <>
