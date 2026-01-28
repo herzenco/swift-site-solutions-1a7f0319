@@ -143,6 +143,13 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
       const leadId = createUUID();
       
       // Save lead to database
+      // Calculate lead score based on data completeness
+      const leadScore = 
+        10 + // Base score for hero modal
+        (validated.phone ? 10 : 0) +
+        (validated.website ? 15 : 0) +
+        (validated.notes ? 5 : 0);
+
       const leadPayload = {
         id: leadId,
         full_name: validated.fullName,
@@ -151,6 +158,14 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
         website: validated.website || null,
         notes: validated.notes || null,
         source: source,
+        lead_score: leadScore,
+        qualification_status: leadScore >= 25 ? "warm" : "cool",
+        intent_signals: {
+          hasPhone: !!validated.phone,
+          hasWebsite: !!validated.website,
+          hasNotes: !!validated.notes,
+          submittedAt: new Date().toISOString(),
+        },
       };
 
        // NOTE: don't `.select()` after insert, since leads are not publicly readable.
