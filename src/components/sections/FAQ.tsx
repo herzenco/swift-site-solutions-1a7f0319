@@ -32,7 +32,7 @@ const faqs = [
 export const FAQ = () => {
   return (
     <section id="faq" className="py-16 md:py-20 bg-background relative">
-      <div className="container-tight max-w-2xl px-6">
+      <div className="container-tight max-w-2xl px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -40,7 +40,7 @@ export const FAQ = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 id="faq-heading" className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 id="faq-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             <span className="text-gradient">FAQ</span>
           </h2>
         </motion.div>

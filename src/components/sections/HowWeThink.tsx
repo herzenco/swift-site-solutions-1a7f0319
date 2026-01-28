@@ -22,7 +22,7 @@ const principles = [
 export const HowWeThink = () => {
   return (
     <section className="pt-12 md:pt-16 pb-16 md:pb-20 bg-background">
-      <div className="container-tight">
+      <div className="container-tight px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -30,10 +30,10 @@ export const HowWeThink = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 id="how-we-think-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+          <h2 id="how-we-think-heading" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 px-2 sm:px-0">
             Most websites look fine. <span className="text-gradient">They just don't do anything.</span>
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-2 sm:px-0">
             They collect form submissions, send you an email, and hope you follow up in time. 
             Meanwhile, leads go cold. We build sites that work differently.
           </p>

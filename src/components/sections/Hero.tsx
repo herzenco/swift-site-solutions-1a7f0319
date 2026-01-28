@@ -15,23 +15,23 @@ export const Hero = () => {
       {/* Single subtle orb */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[90vw] max-w-[800px] h-[60vw] max-h-[600px] bg-primary/5 rounded-full blur-3xl" />
 
-      <div className="container-tight section-padding relative z-10 flex flex-col items-center justify-between min-h-[80vh]">
+      <div className="container-tight section-padding relative z-10 flex flex-col items-center justify-between min-h-[80vh] px-4 sm:px-6">
         <div /> {/* Spacer */}
         
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.25, 0.1, 0, 1] }}
-          className="text-center max-w-4xl mx-auto"
+          className="text-center max-w-4xl mx-auto w-full"
         >
           {/* Headline */}
-          <h1 id="hero-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[0.95] text-center">
-            <span className="block text-foreground whitespace-nowrap">Websites that capture leads</span>
+          <h1 id="hero-heading" className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight sm:leading-[0.95] text-center">
+            <span className="block text-foreground">Websites that capture leads</span>
             <span className="block text-gradient">and book appointments</span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-lg sm:text-xl lg:text-2xl text-foreground/80 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg lg:text-2xl text-foreground/80 max-w-2xl mx-auto px-2 sm:px-0">
             We build conversion-focused websites for service professionals. Leads captured, appointments booked. Launched in 5–10 days.
           </p>
         </motion.div>

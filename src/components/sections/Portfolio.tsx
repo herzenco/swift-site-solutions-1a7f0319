@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export const Portfolio = () => {
   return (
     <section id="portfolio" className="pt-16 pb-12 bg-background relative">
-      <div className="container-tight px-6">
+      <div className="container-tight px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -13,10 +13,10 @@ export const Portfolio = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-6"
         >
-          <h2 id="portfolio-heading" className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 id="portfolio-heading" className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 px-2 sm:px-0">
             Two Service Models. <span className="text-gradient">Built to Fit Your Business.</span>
           </h2>
-          <p className="text-xl text-primary font-medium max-w-3xl mx-auto mb-4">
+          <p className="text-base sm:text-xl text-primary font-medium max-w-3xl mx-auto mb-4 px-2 sm:px-0">
             We design conversion-focused websites that feel custom because they're built around how your business actually operates.
           </p>
         </motion.div>

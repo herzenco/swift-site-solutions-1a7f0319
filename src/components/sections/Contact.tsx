@@ -15,7 +15,7 @@ export const Contact = () => {
       {/* Background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-3xl" />
       
-      <div className="container-tight max-w-xl px-6 relative z-10">
+      <div className="container-tight max-w-xl px-4 sm:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -23,10 +23,10 @@ export const Contact = () => {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <h2 id="contact-heading" className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 id="contact-heading" className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 px-2 sm:px-0">
             Get your <span className="text-gradient">free project plan</span>
           </h2>
-          <p className="text-xl text-muted-foreground mb-10">
+          <p className="text-base sm:text-xl text-muted-foreground mb-10 px-2 sm:px-0">
             Answer a few quick questions. We'll review and send back a clear plan. No sales pitch.
           </p>
 

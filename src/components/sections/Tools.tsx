@@ -27,18 +27,18 @@ const tools = [
 export const Tools = () => {
   return (
     <section id="tools" className="py-16 md:py-20 bg-background relative overflow-hidden">
-      <div className="container-tight px-6">
+      <div className="container-tight px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-20"
         >
-          <h2 id="tools-heading" className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 id="tools-heading" className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 px-2 sm:px-0">
             Built-in tools to <span className="text-gradient">automate your workflow</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-xl mx-auto">
+          <p className="text-base sm:text-xl text-muted-foreground max-w-xl mx-auto px-2 sm:px-0">
             Everything is configured during your build — no waiting weeks for setup.
           </p>
         </motion.div>

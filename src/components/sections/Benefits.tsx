@@ -26,9 +26,9 @@ const benefits = [
 
 export const Benefits = () => {
   return (
-    <section id="benefits" className="py-32 bg-background relative">
-      <div className="container-tight px-6">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+    <section id="benefits" className="py-20 sm:py-32 bg-background relative">
+      <div className="container-tight px-4 sm:px-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-12">
           {benefits.map((benefit, index) => (
             <motion.div
               key={index}
