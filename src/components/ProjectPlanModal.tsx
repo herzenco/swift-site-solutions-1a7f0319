@@ -205,7 +205,28 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
       }
 
       const leadId = createUUID();
+      
+      // Store structured questionnaire data
+      const questionnaireAnswers = {
+        businessType: formData.businessType,
+        primaryGoal: formData.primaryGoal,
+        hasWebsite: formData.hasWebsite,
+        websiteUrl: formData.websiteUrl || null,
+        biggestChallenge: formData.biggestChallenge,
+        timeline: formData.timeline,
+        preference: formData.preference,
+        submittedAt: new Date().toISOString(),
+      };
+      
+      // Human-readable notes for quick reference
       const notes = `Business: ${formData.businessType}\nGoal: ${formData.primaryGoal}\nHas website: ${formData.hasWebsite}${formData.websiteUrl ? ` (${formData.websiteUrl})` : ""}\nChallenge: ${formData.biggestChallenge}\nTimeline: ${formData.timeline}\nPreference: ${formData.preference}`;
+
+      // Determine initial lead score based on answers
+      const leadScore = 
+        (formData.timeline === "ASAP" ? 15 : formData.timeline === "Within a month" ? 10 : 5) +
+        (formData.hasWebsite.startsWith("Yes") ? 5 : 10) + // Starting fresh = higher intent
+        (formData.preference.includes("Automation") ? 10 : 5) +
+        10; // Base score for completing questionnaire
 
       // NOTE: don't `.select()` after insert, since leads are not publicly readable.
       const leadPayload = {
@@ -215,6 +236,9 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
         website: (contactValidation.data.websiteUrl || "").trim() ? contactValidation.data.websiteUrl : null,
         notes,
         source: "project_plan_modal",
+        intent_signals: questionnaireAnswers,
+        lead_score: leadScore,
+        qualification_status: leadScore >= 30 ? "warm" : "cool",
       };
 
       const { error } = await supabase.from("leads").insert(leadPayload);
