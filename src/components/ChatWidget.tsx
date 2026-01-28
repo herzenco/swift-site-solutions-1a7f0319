@@ -330,6 +330,27 @@ Format your response as:
     const updatedMessages = [...messages, { role: "user" as const, content: userInput }];
     logInteraction("message", { userMessage: userInput }, updatedMessages).catch(console.error);
 
+    // Helper to check if input looks like a name (1-4 words, no URLs, no long sentences)
+    const isLikelyName = (text: string): boolean => {
+      const cleaned = text.trim();
+      // Names are typically 1-4 words, no special characters except hyphens/apostrophes
+      const words = cleaned.split(/\s+/);
+      if (words.length > 4 || words.length === 0) return false;
+      // Reject if it looks like a sentence (contains common sentence words)
+      const sentenceIndicators = ["let's", "lets", "i'm", "im", "i am", "can you", "could you", "please", "want", "need", "help", "looking", "here", "there", "this", "that", "what", "how", "why", "when", "where", "keep", "have", "has", "does", "do", "is", "are", "was", "were", "would", "should"];
+      const lowerCleaned = cleaned.toLowerCase();
+      for (const indicator of sentenceIndicators) {
+        if (lowerCleaned.includes(indicator)) return false;
+      }
+      // Reject if it contains URLs
+      if (cleaned.includes("http") || cleaned.includes("www.") || isLikelyDomain(cleaned)) return false;
+      // Reject if it contains numbers (except simple things like "John 2nd" - but keep it strict)
+      if (/\d/.test(cleaned)) return false;
+      // Check if words look like name parts (start with capital or all lowercase is fine)
+      const namePattern = /^[A-Za-zÀ-ÿ'-]+$/;
+      return words.every(word => namePattern.test(word));
+    };
+
     switch (step) {
       case "greeting":
         // User sent first message, now ask for their name
@@ -338,9 +359,18 @@ Format your response as:
         break;
 
       case "ask_name":
-        // User just provided their name
-        setCollectedData((prev) => ({ ...prev, name: userInput }));
-        addAssistantMessage(`Nice to meet you, ${userInput}! Do you have a website you'd like me to analyze? I can give you 3 quick fixes to improve it. (yes/no)`);
+        // Check if this looks like an actual name
+        if (!isLikelyName(userInput)) {
+          // Doesn't look like a name - gently re-ask
+          addAssistantMessage("I'd love to know your name so I can personalize our chat! What should I call you?");
+          return;
+        }
+        // Capitalize the name properly
+        const formattedName = userInput.trim().split(/\s+/).map(word => 
+          word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        ).join(" ");
+        setCollectedData((prev) => ({ ...prev, name: formattedName }));
+        addAssistantMessage(`Nice to meet you, ${formattedName}! Do you have a website you'd like me to analyze? I can give you 3 quick fixes to improve it. (yes/no)`);
         setStep("ask_url");
         break;
 
