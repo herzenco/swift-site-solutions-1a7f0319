@@ -144,7 +144,7 @@ export const Pricing = () => {
 
   return (
     <section id="pricing" className="py-16 md:py-20 bg-card/30 relative">
-      <div className="container-tight px-6">
+      <div className="container-tight px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -152,15 +152,15 @@ export const Pricing = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 id="pricing-heading" className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 id="pricing-heading" className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 px-2 sm:px-0">
             Three levels of <span className="text-gradient">system maturity</span>
           </h2>
-          <p className="text-xl text-muted-foreground mb-8">
+          <p className="text-base sm:text-xl text-muted-foreground mb-8 px-2 sm:px-0">
             More capability. More automation. More leverage.
           </p>
-          <div className="inline-block bg-primary/10 border border-primary/20 rounded-xl px-6 py-4">
-            <p className="text-lg font-semibold text-foreground">$2,000 one-time setup</p>
-            <p className="text-sm text-muted-foreground">Strategy, design, build, configuration, and launch.</p>
+          <div className="inline-block bg-primary/10 border border-primary/20 rounded-xl px-4 sm:px-6 py-4 mx-2 sm:mx-0">
+            <p className="text-base sm:text-lg font-semibold text-foreground">$2,000 one-time setup</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">Strategy, design, build, configuration, and launch.</p>
           </div>
         </motion.div>
 
