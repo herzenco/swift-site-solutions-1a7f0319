@@ -43,14 +43,9 @@ const generateSessionId = () => {
 export const ChatWidget = () => {
   const sessionId = useMemo(() => generateSessionId(), []);
   const isMobile = useIsMobile();
-
-  // On mobile, we don't render the chat widget at all - WhatsApp is used instead
-  if (isMobile) {
-    return null;
-  }
-
-  const fallbackWindowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-  const fallbackWindowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+  const { toast } = useToast();
+  const scrollViewportRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<ChatStep>("greeting");
@@ -71,27 +66,6 @@ export const ChatWidget = () => {
     phone: "",
     industry: "",
   });
-  
-  const scrollViewportRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLTextAreaElement>(null);
-  const { toast } = useToast();
-
-  // iOS Safari can behave oddly with fixed positioning inside scrolling containers
-  // (and when the keyboard opens). Use the VisualViewport API to pin the chat to the
-  // *visible* viewport (width/height + offsets), not the layout viewport.
-  const [visualViewport, setVisualViewport] = useState<{
-    width: number;
-    height: number;
-    offsetTop: number;
-    offsetLeft: number;
-  } | null>(null);
-  const [keyboardInset, setKeyboardInset] = useState<number>(0);
-
-  const triggerHaptic = (pattern: number | number[] = 10) => {
-    if (navigator.vibrate) {
-      navigator.vibrate(pattern);
-    }
-  };
 
   useEffect(() => {
     if (scrollViewportRef.current) {
@@ -100,56 +74,15 @@ export const ChatWidget = () => {
   }, [messages]);
 
   useEffect(() => {
-    if (!isOpen || !isMobile) {
-      setVisualViewport(null);
-      setKeyboardInset(0);
-      return;
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
     }
+  }, [isOpen]);
 
-    const vv = window.visualViewport;
-
-    const update = () => {
-      if (!vv) {
-        // Fallback (older browsers): pin to layout viewport
-        setVisualViewport({
-          width: window.innerWidth,
-          height: window.innerHeight,
-          offsetTop: 0,
-          offsetLeft: 0,
-        });
-        setKeyboardInset(0);
-        return;
-      }
-
-      setVisualViewport({
-        width: vv.width,
-        height: vv.height,
-        offsetTop: vv.offsetTop || 0,
-        offsetLeft: vv.offsetLeft || 0,
-      });
-
-      // Best-effort keyboard height estimation (0 when keyboard is closed)
-      // Use vv.height + vv.offsetTop to compute the visible bottom edge.
-      const visibleBottom = (vv.height || 0) + (vv.offsetTop || 0);
-      const inset = Math.max(0, window.innerHeight - visibleBottom);
-      setKeyboardInset(inset);
-    };
-
-    update();
-    vv?.addEventListener("resize", update);
-    vv?.addEventListener("scroll", update);
-
-    // Prevent the page behind the overlay from scrolling on mobile (helps avoid
-    // layout viewport scroll causing the overlay to appear "hidden").
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      vv?.removeEventListener("resize", update);
-      vv?.removeEventListener("scroll", update);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [isOpen, isMobile]);
+  // On mobile, we don't render the chat widget at all - WhatsApp button is used instead
+  if (isMobile) {
+    return null;
+  }
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
@@ -573,10 +506,7 @@ Format your response as:
             exit={{ scale: 0, opacity: 0 }}
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.92 }}
-            onClick={() => {
-              triggerHaptic(15);
-              setIsOpen(true);
-            }}
+            onClick={() => setIsOpen(true)}
             className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl text-primary-foreground shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_30px_hsl(190_100%_50%/0.4)] transition-all duration-300 flex items-center justify-center"
             style={{ background: "linear-gradient(135deg, hsl(190 100% 50%) 0%, hsl(260 80% 65%) 100%)" }}
             aria-label="Open chat"
@@ -595,22 +525,8 @@ Format your response as:
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
             className="fixed z-50 bg-card shadow-[0_20px_60px_-10px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden
-              inset-0 w-full
-              sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[380px] sm:max-w-[calc(100vw-48px)] sm:h-[540px] sm:max-h-[calc(100vh-100px)] sm:border sm:border-border sm:rounded-2xl"
-            // Mobile: pin to the *visual* viewport (accounts for browser UI + keyboard)
-            // Desktop: rely on the fixed bottom-right card layout.
-            style={
-              isMobile
-                ? {
-                    top: visualViewport?.offsetTop ?? 0,
-                    left: visualViewport?.offsetLeft ?? 0,
-                    width: visualViewport?.width ?? fallbackWindowWidth,
-                    height: visualViewport?.height ?? fallbackWindowHeight,
-                    right: "auto",
-                    bottom: "auto",
-                  }
-                : undefined
-            }
+              sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[380px] sm:max-w-[calc(100vw-48px)] sm:h-[540px] sm:max-h-[calc(100vh-100px)] sm:border sm:border-border sm:rounded-2xl
+              bottom-6 right-6 w-[380px] max-w-[calc(100vw-48px)] h-[540px] max-h-[calc(100vh-100px)] border border-border rounded-2xl"
           >
             {/* Header */}
             <div className="flex-shrink-0 flex items-center justify-between px-5 py-4 border-b border-border bg-card pt-[env(safe-area-inset-top,0px)]">
@@ -626,10 +542,7 @@ Format your response as:
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => {
-                  triggerHaptic(10);
-                  setIsOpen(false);
-                }}
+                onClick={() => setIsOpen(false)}
                 className="h-8 w-8 rounded-lg hover:bg-muted"
               >
                 <X className="w-4 h-4" />
@@ -748,16 +661,7 @@ Format your response as:
             })()}
 
             {/* Input Area */}
-            <div
-              className="flex-shrink-0 p-3 sm:p-4 border-t border-border bg-card pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] sm:pb-[max(1rem,env(safe-area-inset-bottom,0px))]"
-              style={
-                isMobile && keyboardInset > 0
-                  ? {
-                      paddingBottom: `calc(max(0.75rem, env(safe-area-inset-bottom, 0px)) + ${keyboardInset}px)`,
-                    }
-                  : undefined
-              }
-            >
+            <div className="flex-shrink-0 p-4 border-t border-border bg-card pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
               <div className="flex items-end gap-2">
                 <div className={`flex-1 bg-muted rounded-xl px-4 py-2 transition-all ${isLoading ? 'ring-2 ring-primary/50 animate-pulse' : 'focus-within:ring-1 focus-within:ring-foreground/20'}`}>
                   <label htmlFor="chat-input" className="sr-only">Type your message</label>
