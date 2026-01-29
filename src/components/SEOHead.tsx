@@ -32,9 +32,9 @@ export const SEOHead = ({
   keywords,
   article,
 }: SEOHeadProps) => {
-  const fullTitle = title 
-    ? `${title} | ${SITE_NAME}` 
-    : `${SITE_NAME} | Websites That Convert`;
+const fullTitle = title 
+    ? `${title} | Xyren` 
+    : "Xyren: Websites for professionals";
   
   const canonicalUrl = canonical 
     ? canonical.startsWith("http") 
