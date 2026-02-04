@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Dialog,
@@ -10,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { ArrowRight, Phone, FileText, Rocket, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Phone, FileText, Rocket } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useToast } from "@/hooks/use-toast";
 import { sendLeadToZapier } from "@/lib/zapier";
@@ -58,7 +59,7 @@ interface HeroWorkflowModalProps {
   source?: string;
 }
 
-type Step = "process" | "form" | "success";
+type Step = "process" | "form";
 
 const processSteps = [
   {
@@ -94,6 +95,7 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
   const [honeypot, setHoneypot] = useState(""); // Bot trap
   const lastSubmitRef = useRef<number>(0); // Rate limiting
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -108,7 +110,9 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
     // Bot detection - honeypot filled means bot
     if (honeypot) {
       console.log("Bot detected via honeypot");
-      setStep("success"); // Fake success to not alert bots
+      // Redirect anyway to not alert bots
+      onOpenChange(false);
+      navigate("/success");
       return;
     }
     
@@ -210,16 +214,12 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
       }
 
       setIsSubmitting(false);
-      setStep("success");
       
-      // Redirect to Calendly after showing success
-      setTimeout(() => {
-        window.open("https://calendly.com/herzenco/website-consultation", "_blank");
-        onOpenChange(false);
-        // Reset for next time
-        setStep("process");
-        setFormData({ fullName: "", email: "", phone: "", website: "", notes: "" });
-      }, 2000);
+      // Close modal and navigate to success page
+      onOpenChange(false);
+      setStep("process");
+      setFormData({ fullName: "", email: "", phone: "", website: "", notes: "" });
+      navigate("/success");
     } catch (err) {
       console.error("Unexpected error:", err);
       toast({
@@ -409,33 +409,6 @@ export const HeroWorkflowModal = ({ open, onOpenChange, source = "hero_modal" }:
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </form>
-            </motion.div>
-          )}
-
-          {step === "success" && (
-            <motion.div
-              key="success"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.3 }}
-              className="text-center py-8"
-            >
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6"
-              >
-                <CheckCircle2 className="w-8 h-8 text-primary" />
-              </motion.div>
-              
-              <DialogTitle className="text-2xl font-bold text-foreground mb-3">
-                You're All Set!
-              </DialogTitle>
-              <p className="text-muted-foreground">
-                Redirecting you to schedule your discovery call...
-              </p>
             </motion.div>
           )}
         </AnimatePresence>
