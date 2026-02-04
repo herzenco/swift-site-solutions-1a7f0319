@@ -20,6 +20,37 @@ const getDeviceType = (): string => {
   return "desktop";
 };
 
+// Securely update session via edge function
+const updateSessionViaEdge = async (
+  sessionId: string,
+  pagePath: string,
+  data: { ended_at?: string; duration_seconds?: number; max_scroll_depth?: number }
+) => {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/update-session`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+        },
+        body: JSON.stringify({
+          session_id: sessionId,
+          page_path: pagePath,
+          ...data,
+        }),
+      }
+    );
+    
+    if (!response.ok) {
+      console.error("Session update failed:", await response.text());
+    }
+  } catch (err) {
+    console.error("Session update error:", err);
+  }
+};
+
 export const usePageTracking = () => {
   const location = useLocation();
   const sessionIdRef = useRef<string | null>(null);
@@ -59,25 +90,24 @@ export const usePageTracking = () => {
     startTimeRef.current = startTime;
     currentPathRef.current = location.pathname;
 
-    // Update duration on page unload or navigation
-    const updateDuration = async () => {
+    // Update duration on page unload or navigation via secure edge function
+    const updateDuration = () => {
       if (!sessionIdRef.current) return;
       
       const duration = Math.round((Date.now() - startTimeRef.current) / 1000);
       
-      try {
-        await supabase
-          .from("page_sessions")
-          .update({
-            ended_at: new Date().toISOString(),
-            duration_seconds: duration,
-          })
-          .eq("session_id", sessionIdRef.current)
-          .eq("page_path", currentPathRef.current)
-          .is("ended_at", null);
-      } catch (err) {
-        console.error("Duration update error:", err);
-      }
+      // Use sendBeacon for reliable delivery on page unload
+      const payload = JSON.stringify({
+        session_id: sessionIdRef.current,
+        page_path: currentPathRef.current,
+        ended_at: new Date().toISOString(),
+        duration_seconds: duration,
+      });
+      
+      navigator.sendBeacon(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/update-session`,
+        new Blob([payload], { type: "application/json" })
+      );
     };
 
     // Handle visibility change (tab switch, minimize)
