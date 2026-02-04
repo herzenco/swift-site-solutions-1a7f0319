@@ -26,8 +26,8 @@ export const Hero = () => {
         >
           {/* Headline */}
           <h1 id="hero-heading" className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight mb-6 leading-tight sm:leading-[0.95] text-center">
-            <span className="block lg:inline text-foreground">Websites that capture leads</span>
-            <span className="block lg:inline text-gradient"> and book appointments</span>
+            <span className="block text-foreground">Websites built to</span>
+            <span className="block text-gradient">capture, qualify, and convert.</span>
           </h1>
 
           {/* Subheadline */}
