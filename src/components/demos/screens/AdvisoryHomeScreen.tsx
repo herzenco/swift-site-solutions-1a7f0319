@@ -54,6 +54,27 @@ export const AdvisoryHomeScreen = ({ onViewServices, onBookConsultation }: Advis
         </motion.div>
       </div>
 
+      {/* Who We Are - Stats */}
+      <div className="px-5 py-6 border-t border-neutral-200">
+        <p className="text-[9px] text-neutral-900 font-semibold mb-4">
+          Decades of experience. Select clientele.
+        </p>
+        <div className="flex gap-8">
+          <div>
+            <p className="text-[18px] font-bold text-neutral-900">25+</p>
+            <p className="text-[7px] text-neutral-500">Years</p>
+          </div>
+          <div>
+            <p className="text-[18px] font-bold text-neutral-900">120+</p>
+            <p className="text-[7px] text-neutral-500">Clients</p>
+          </div>
+          <div>
+            <p className="text-[18px] font-bold text-amber-600">PE</p>
+            <p className="text-[7px] text-neutral-500">& Family</p>
+          </div>
+        </div>
+      </div>
+
       {/* What We Do */}
       <div className="px-5 py-6 border-t border-neutral-200">
         <p className="text-[9px] text-neutral-900 font-semibold mb-2">
@@ -82,27 +103,6 @@ export const AdvisoryHomeScreen = ({ onViewServices, onBookConsultation }: Advis
         >
           Explore our approach <ArrowRight className="w-3 h-3" />
         </button>
-      </div>
-
-      {/* Who We Are */}
-      <div className="px-5 py-6 border-t border-neutral-200">
-        <p className="text-[9px] text-neutral-900 font-semibold mb-4">
-          Decades of experience. Select clientele.
-        </p>
-        <div className="flex gap-8">
-          <div>
-            <p className="text-[18px] font-bold text-neutral-900">25+</p>
-            <p className="text-[7px] text-neutral-500">Years</p>
-          </div>
-          <div>
-            <p className="text-[18px] font-bold text-neutral-900">120+</p>
-            <p className="text-[7px] text-neutral-500">Clients</p>
-          </div>
-          <div>
-            <p className="text-[18px] font-bold text-amber-600">PE</p>
-            <p className="text-[7px] text-neutral-500">& Family</p>
-          </div>
-        </div>
       </div>
 
       {/* Process */}
