@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import advisoryHero from "@/assets/advisory-hero.jpg";
 
 interface AdvisoryHomeScreenProps {
@@ -17,94 +17,112 @@ export const AdvisoryHomeScreen = ({ onViewServices, onBookConsultation }: Advis
       className="h-full flex flex-col bg-[#faf9f7] overflow-y-auto overflow-x-hidden"
       style={{ scrollbarWidth: 'none' }}
     >
-      {/* Hero Image */}
-      <div className="relative h-[32%] min-h-[110px]">
+      {/* Hero */}
+      <div className="relative h-[30%] min-h-[100px]">
         <img 
           src={advisoryHero} 
           alt="" 
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-        <p className="absolute bottom-3 left-4 text-[7px] tracking-[0.3em] text-white/80 uppercase">
-          Blackwell Advisory
-        </p>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-4">
+          <p className="text-[6px] tracking-[0.3em] text-white/70 uppercase mb-1">Blackwell Advisory</p>
+          <h1 className="text-[18px] font-light text-white leading-[1.1]">
+            Clarity for <span className="font-semibold">what's next</span>
+          </h1>
+        </div>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 flex flex-col px-5 py-5">
-        {/* Headline */}
-        <h1 className="text-[20px] font-light text-neutral-900 leading-[1.15] tracking-tight mb-2">
-          Strategic clarity
-          <span className="block font-semibold text-neutral-800">for what's next</span>
-        </h1>
-        
-        <p className="text-[9px] text-neutral-500 leading-relaxed mb-5 max-w-[90%]">
+      {/* What We Do */}
+      <div className="px-5 py-5 border-b border-neutral-200">
+        <p className="text-[7px] tracking-[0.2em] text-amber-600 uppercase font-semibold mb-2">What We Do</p>
+        <p className="text-[10px] text-neutral-800 font-medium leading-relaxed mb-3">
           We guide leaders through high-stakes decisions with structure, experience, and discretion.
         </p>
-
-        {/* Advisory Focus */}
-        <div className="grid grid-cols-2 gap-2 mb-5">
-          {[
-            { title: "Strategy", desc: "Direction & positioning" },
-            { title: "Growth", desc: "Scaling & expansion" },
-            { title: "Leadership", desc: "Alignment & transitions" },
-            { title: "M&A", desc: "Acquisition & succession" },
-          ].map((area, i) => (
-            <motion.button
+        <div className="grid grid-cols-2 gap-2">
+          {["Strategy", "Growth", "Leadership", "Transitions"].map((area, i) => (
+            <button
               key={i}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25 + i * 0.06 }}
               onClick={onViewServices}
-              className="text-left p-3 rounded-lg bg-white border border-neutral-200 hover:border-amber-300 transition-colors"
+              className="text-left py-2 px-3 rounded bg-white border border-neutral-200 hover:border-amber-300 transition-colors"
             >
-              <p className="text-[9px] text-neutral-800 font-semibold">{area.title}</p>
-              <p className="text-[7px] text-neutral-400 mt-0.5">{area.desc}</p>
-            </motion.button>
+              <p className="text-[8px] text-neutral-800 font-medium">{area}</p>
+            </button>
           ))}
         </div>
+        <button 
+          onClick={onViewServices}
+          className="mt-3 text-[8px] text-amber-600 font-medium flex items-center gap-1"
+        >
+          Explore our approach <ArrowRight className="w-3 h-3" />
+        </button>
+      </div>
 
-        {/* Credibility */}
-        <div className="flex items-center gap-4 py-3 border-y border-neutral-200 mb-5">
+      {/* Who We Are */}
+      <div className="px-5 py-5 border-b border-neutral-200 bg-white">
+        <p className="text-[7px] tracking-[0.2em] text-amber-600 uppercase font-semibold mb-2">Who We Are</p>
+        <p className="text-[9px] text-neutral-600 leading-relaxed mb-4">
+          A small team of senior advisors with decades of experience across private equity, family offices, and founder-led businesses.
+        </p>
+        <div className="flex items-center gap-4">
           <div>
-            <p className="text-[13px] font-semibold text-neutral-900">25+</p>
+            <p className="text-[14px] font-semibold text-neutral-900">25+</p>
             <p className="text-[6px] text-neutral-400 uppercase tracking-wide">Years</p>
           </div>
-          <div className="w-px h-6 bg-neutral-200" />
+          <div className="w-px h-8 bg-neutral-200" />
           <div>
-            <p className="text-[13px] font-semibold text-neutral-900">120+</p>
+            <p className="text-[14px] font-semibold text-neutral-900">120+</p>
             <p className="text-[6px] text-neutral-400 uppercase tracking-wide">Clients</p>
           </div>
-          <div className="w-px h-6 bg-neutral-200" />
+          <div className="w-px h-8 bg-neutral-200" />
           <div>
-            <p className="text-[13px] font-semibold text-neutral-900">PE</p>
-            <p className="text-[6px] text-neutral-400 uppercase tracking-wide">& Family Office</p>
+            <p className="text-[14px] font-semibold text-neutral-900">PE</p>
+            <p className="text-[6px] text-neutral-400 uppercase tracking-wide">& Family</p>
           </div>
         </div>
+      </div>
 
-        {/* CTAs */}
-        <div className="mt-auto space-y-2">
-          <motion.button
-            whileTap={{ scale: 0.98 }}
-            onClick={onBookConsultation}
-            className="w-full py-3 bg-neutral-900 text-white text-[9px] font-semibold rounded tracking-wide"
-          >
-            Request a Conversation
-          </motion.button>
-          <motion.button
-            whileTap={{ scale: 0.98 }}
-            onClick={onViewServices}
-            className="w-full py-2.5 text-neutral-500 text-[8px] font-medium flex items-center justify-center gap-1 hover:text-neutral-800 transition-colors"
-          >
-            Explore Our Approach <ArrowRight className="w-2.5 h-2.5" />
-          </motion.button>
+      {/* How We Do It */}
+      <div className="px-5 py-5 border-b border-neutral-200">
+        <p className="text-[7px] tracking-[0.2em] text-amber-600 uppercase font-semibold mb-3">How We Work</p>
+        <div className="space-y-3">
+          {[
+            { step: "01", title: "Discovery", desc: "Understand your situation and goals" },
+            { step: "02", title: "Assessment", desc: "Identify priorities and opportunities" },
+            { step: "03", title: "Engagement", desc: "Ongoing advisory and support" },
+          ].map((item, i) => (
+            <div key={i} className="flex items-start gap-3">
+              <span className="text-[9px] text-amber-500 font-mono font-semibold">{item.step}</span>
+              <div>
+                <p className="text-[9px] text-neutral-800 font-medium">{item.title}</p>
+                <p className="text-[7px] text-neutral-500">{item.desc}</p>
+              </div>
+            </div>
+          ))}
         </div>
+      </div>
+
+      {/* Contact Us */}
+      <div className="px-5 py-5 bg-neutral-900">
+        <p className="text-[7px] tracking-[0.2em] text-amber-400 uppercase font-semibold mb-2">Contact Us</p>
+        <p className="text-[10px] text-white font-medium mb-1">Ready for a conversation?</p>
+        <p className="text-[8px] text-neutral-400 mb-4">
+          We respond within one business day.
+        </p>
+        <motion.button
+          whileTap={{ scale: 0.98 }}
+          onClick={onBookConsultation}
+          className="w-full py-3 bg-white text-neutral-900 text-[9px] font-semibold rounded tracking-wide flex items-center justify-center gap-2"
+        >
+          Request a Conversation
+          <ChevronRight className="w-3.5 h-3.5" />
+        </motion.button>
       </div>
 
       {/* Footer */}
-      <div className="px-5 py-2.5 border-t border-neutral-200 flex justify-between bg-white">
-        <p className="text-[6px] text-neutral-400 tracking-widest uppercase font-medium">Blackwell</p>
-        <p className="text-[6px] text-neutral-400">New York · London</p>
+      <div className="px-5 py-3 border-t border-neutral-800 bg-neutral-900 flex justify-between">
+        <p className="text-[6px] text-neutral-500 tracking-widest uppercase">Blackwell Advisory</p>
+        <p className="text-[6px] text-neutral-500">New York · London</p>
       </div>
     </motion.div>
   );
