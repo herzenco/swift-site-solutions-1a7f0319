@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
-
 // Get or create session ID
 const getSessionId = (): string => {
   let sessionId = sessionStorage.getItem("page_session_id");
@@ -158,27 +157,41 @@ export const useAnalytics = () => {
     const { browser, os } = getBrowserInfo();
     const deviceType = getDeviceType();
 
-    // Track enhanced page view
+    // Track enhanced page view via secure edge function
     const trackPageView = async () => {
       try {
-        await supabase.from("page_sessions").insert({
-          session_id: sessionId,
-          page_path: location.pathname,
-          referrer: document.referrer || null,
-          device_type: deviceType,
-          started_at: new Date().toISOString(),
-          utm_source: utmParams.utm_source,
-          utm_medium: utmParams.utm_medium,
-          utm_campaign: utmParams.utm_campaign,
-          utm_term: utmParams.utm_term,
-          utm_content: utmParams.utm_content,
-          browser,
-          os,
-          screen_width: window.screen.width,
-          screen_height: window.screen.height,
-          viewport_width: window.innerWidth,
-          viewport_height: window.innerHeight,
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-session`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            },
+            body: JSON.stringify({
+              session_id: sessionId,
+              page_path: location.pathname,
+              referrer: document.referrer || null,
+              device_type: deviceType,
+              started_at: new Date().toISOString(),
+              utm_source: utmParams.utm_source,
+              utm_medium: utmParams.utm_medium,
+              utm_campaign: utmParams.utm_campaign,
+              utm_term: utmParams.utm_term,
+              utm_content: utmParams.utm_content,
+              browser,
+              os,
+              screen_width: window.screen.width,
+              screen_height: window.screen.height,
+              viewport_width: window.innerWidth,
+              viewport_height: window.innerHeight,
+            }),
+          }
+        );
+        
+        if (!response.ok) {
+          console.error("Page tracking failed:", await response.text());
+        }
       } catch (err) {
         console.error("Page tracking error:", err);
       }
@@ -240,26 +253,25 @@ export const useAnalytics = () => {
       }
     };
 
-    // Update session on leave
-    const updateSession = async () => {
+    // Update session on leave via secure edge function
+    const updateSession = () => {
       if (!sessionIdRef.current) return;
       
       const duration = Math.round((Date.now() - startTimeRef.current) / 1000);
       
-      try {
-        await supabase
-          .from("page_sessions")
-          .update({
-            ended_at: new Date().toISOString(),
-            duration_seconds: duration,
-            max_scroll_depth: maxScrollRef.current,
-          })
-          .eq("session_id", sessionIdRef.current)
-          .eq("page_path", location.pathname)
-          .is("ended_at", null);
-      } catch (err) {
-        console.error("Session update error:", err);
-      }
+      // Use sendBeacon for reliable delivery on page unload
+      const payload = JSON.stringify({
+        session_id: sessionIdRef.current,
+        page_path: location.pathname,
+        ended_at: new Date().toISOString(),
+        duration_seconds: duration,
+        max_scroll_depth: maxScrollRef.current,
+      });
+      
+      navigator.sendBeacon(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/update-session`,
+        new Blob([payload], { type: "application/json" })
+      );
     };
 
     const handleVisibilityChange = () => {
