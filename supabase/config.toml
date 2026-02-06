@@ -17,3 +17,9 @@ verify_jwt = false
 
 [functions.zapier-webhook]
 verify_jwt = false
+
+[functions.create-session]
+verify_jwt = false
+
+[functions.update-session]
+verify_jwt = false
