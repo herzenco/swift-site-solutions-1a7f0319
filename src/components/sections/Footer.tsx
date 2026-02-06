@@ -22,6 +22,10 @@ const footerLinks = {
     { name: "Pricing", href: "/#pricing" },
     { name: "Contact", href: "/#contact" },
   ],
+  legal: [
+    { name: "Privacy Policy", href: "/legal/privacy-policy" },
+    { name: "Terms of Service", href: "/legal/terms-of-service" },
+  ],
 };
 
 export const Footer = () => {
@@ -29,7 +33,7 @@ export const Footer = () => {
     <footer className="border-t border-border/50 bg-background" role="contentinfo">
       <div className="container-tight px-6 py-16">
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-12">
           {/* Brand & Contact */}
           <div className="lg:col-span-2">
             <Link to="/" className="inline-block mb-4">
@@ -119,6 +123,23 @@ export const Footer = () => {
                   >
                     {link.name}
                   </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Legal */}
+          <nav aria-label="Legal navigation">
+            <h3 className="text-sm font-semibold text-foreground mb-4">Legal</h3>
+            <ul className="space-y-3">
+              {footerLinks.legal.map((link) => (
+                <li key={link.name}>
+                  <Link 
+                    to={link.href}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {link.name}
+                  </Link>
                 </li>
               ))}
             </ul>
