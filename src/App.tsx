@@ -21,6 +21,8 @@ import BlogCategory from "./pages/resources/BlogCategory";
 import BlogPost from "./pages/resources/BlogPost";
 import FAQ from "./pages/resources/FAQ";
 import Success from "./pages/Success";
+import PrivacyPolicy from "./pages/legal/PrivacyPolicy";
+import TermsOfService from "./pages/legal/TermsOfService";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +47,8 @@ const App = () => (
             <Route path="/resources/blog/:category/:slug" element={<BlogPost />} />
             <Route path="/resources/faq" element={<FAQ />} />
             <Route path="/success" element={<Success />} />
+            <Route path="/legal/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/legal/terms-of-service" element={<TermsOfService />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
