@@ -15,12 +15,12 @@ import { usePageTracking } from "@/hooks/usePageTracking";
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": "https://www.xyren.me/#organization",
+  "@id": "https://xyren.me/#organization",
   "name": "Xyren by Herzen Co.",
-  "url": "https://www.xyren.me",
+  "url": "https://xyren.me",
   "logo": {
     "@type": "ImageObject",
-    "url": "https://www.xyren.me/og-image.png",
+    "url": "https://xyren.me/og-image.png",
     "width": 1200,
     "height": 630
   },
@@ -46,22 +46,22 @@ const organizationSchema = {
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": "https://www.xyren.me/#website",
-  "url": "https://www.xyren.me",
+  "@id": "https://xyren.me/#website",
+  "url": "https://xyren.me",
   "name": "Xyren by Herzen Co.",
   "description": "Custom websites that capture leads and book appointments automatically.",
   "publisher": {
-    "@id": "https://www.xyren.me/#organization"
+    "@id": "https://xyren.me/#organization"
   }
 };
 
 const professionalServiceSchema = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "@id": "https://www.xyren.me/#service",
+  "@id": "https://xyren.me/#service",
   "name": "Xyren Web Design",
   "description": "Custom websites that capture leads and book appointments automatically. Built for service professionals.",
-  "url": "https://www.xyren.me",
+  "url": "https://xyren.me",
   "priceRange": "$150-$450/month",
   "areaServed": {
     "@type": "Country",
@@ -69,7 +69,7 @@ const professionalServiceSchema = {
   },
   "serviceType": "Web Design and Development",
   "provider": {
-    "@id": "https://www.xyren.me/#organization"
+    "@id": "https://xyren.me/#organization"
   },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
@@ -77,7 +77,7 @@ const professionalServiceSchema = {
     "itemListElement": [
       {
         "@type": "Offer",
-        "@id": "https://www.xyren.me/#core-plan",
+        "@id": "https://xyren.me/#core-plan",
         "name": "Core System",
         "description": "A reliable website system with secure hosting, maintenance, conversion-focused layout, and contact forms.",
         "price": "150",
@@ -91,7 +91,7 @@ const professionalServiceSchema = {
       },
       {
         "@type": "Offer",
-        "@id": "https://www.xyren.me/#active-plan",
+        "@id": "https://xyren.me/#active-plan",
         "name": "Active System",
         "description": "A system that captures leads and books automatically with AI chat, automated follow-ups, and CRM integration.",
         "price": "300",
@@ -105,7 +105,7 @@ const professionalServiceSchema = {
       },
       {
         "@type": "Offer",
-        "@id": "https://www.xyren.me/#optimized-plan",
+        "@id": "https://xyren.me/#optimized-plan",
         "name": "Optimized System",
         "description": "A performance-focused system with ongoing monitoring, optimization, and priority support.",
         "price": "450",

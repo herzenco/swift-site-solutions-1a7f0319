@@ -18,4 +18,4 @@ Disallow: /auth
 Disallow: /dashboard
 
 # Sitemap
-Sitemap: https://www.xyren.me/sitemap.xml
+Sitemap: https://xyren.me/sitemap.xml
