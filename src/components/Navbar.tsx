@@ -44,13 +44,13 @@ export const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             <button 
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors min-h-[44px] flex items-center"
               onClick={() => handleSectionClick('portfolio')}
             >
               Industries
             </button>
             <button 
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors min-h-[44px] flex items-center"
               onClick={() => handleSectionClick('pricing')}
             >
               Packages
@@ -64,7 +64,7 @@ export const Navbar = () => {
             >
               <Link 
                 to="/resources" 
-                className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="flex items-center gap-1 text-base font-medium text-muted-foreground hover:text-foreground transition-colors min-h-[44px]"
               >
                 Resources
                 <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${resourcesOpen ? 'rotate-180' : ''}`} />
@@ -97,7 +97,7 @@ export const Navbar = () => {
 
           {/* Mobile Hamburger Button */}
           <button
-            className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
+            className="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center text-foreground hover:text-primary transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}

@@ -382,7 +382,8 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
                 {currentQuestion > 0 && (
                   <button
                     onClick={handleBack}
-                    className="mt-6 flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    className="mt-6 flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors min-h-[44px]"
+                    aria-label="Go back to previous question"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     Back
@@ -439,7 +440,8 @@ export const ProjectPlanModal = ({ open, onOpenChange }: ProjectPlanModalProps) 
 
                 <button
                   onClick={handleBack}
-                  className="mt-4 flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="mt-4 flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors min-h-[44px]"
+                  aria-label="Go back to previous step"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Back
