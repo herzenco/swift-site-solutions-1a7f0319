@@ -49,7 +49,8 @@ export const Contact = () => {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-[#25D366] hover:text-[#20BD5A] font-medium transition-colors"
+              className="inline-flex items-center gap-1.5 text-[#25D366] hover:text-[#20BD5A] font-medium transition-colors min-h-[44px]"
+              aria-label="Contact us on WhatsApp"
             >
               <MessageCircle className="w-4 h-4" />
               WhatsApp

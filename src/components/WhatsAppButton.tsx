@@ -19,10 +19,10 @@ export const WhatsAppButton = ({ variant = "floating", message = "Hi, I'm intere
         href={fullUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="w-9 h-9 rounded-lg bg-muted/50 hover:bg-[#25D366]/20 flex items-center justify-center text-muted-foreground hover:text-[#25D366] transition-colors"
+        className="w-11 h-11 rounded-lg bg-muted/50 hover:bg-[#25D366]/20 flex items-center justify-center text-muted-foreground hover:text-[#25D366] transition-colors"
         aria-label="Contact us on WhatsApp"
       >
-        <MessageCircle className="w-4 h-4" />
+        <MessageCircle className="w-5 h-5" />
       </a>
     );
   }

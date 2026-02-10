@@ -31,6 +31,7 @@ export const Portfolio = () => {
           >
             <Link
               to="/use-cases/home-services"
+              aria-label="Learn more about websites for home service businesses"
               className="group block h-full p-8 rounded-2xl border border-border/50 hover:border-primary/40 bg-card/50 backdrop-blur-sm transition-all duration-500"
             >
               <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
@@ -61,6 +62,7 @@ export const Portfolio = () => {
           >
             <Link
               to="/use-cases/professional-services"
+              aria-label="Learn more about websites for professional service businesses"
               className="group block h-full p-8 rounded-2xl border border-border/50 hover:border-primary/40 bg-card/50 backdrop-blur-sm transition-all duration-500"
             >
               <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
